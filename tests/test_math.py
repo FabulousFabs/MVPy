@@ -9,48 +9,43 @@ import mvpy as mv
 import numpy as np
 import scipy
 
-def test_pearsonr_1d():
+def test_cosine_numpy():
     '''
     '''
     
-    x = np.random.normal(size = (100,))
-    y = np.random.normal(size = (100,))
+    # setup dims
+    sx, sy, sz = 100, 10, 5
     
-    r = mv.math.pearsonr(x, y)
-    s = scipy.stats.pearsonr(x, y).statistic
+    # test 1D
+    x, y = np.random.normal(size = (sx,)), np.random.normal(size = (sx,))
+    r_mv = mv.math.cosine_d(x, y)
+    r_sp = scipy.spatial.distance.cosine(x, y)
     
-    assert(np.isclose(r, s).all())
+    assert np.allclose(r_mv, r_sp)
+    
+    # test 2D
+    x, y = np.random.normal(size = (sx, sy)), np.random.normal(size = (sx, sy))
+    r_mv = mv.math.cosine_d(x, y)
+    r_sp = np.array([scipy.spatial.distance.cosine(x[i,:], y[i,:]) for i in range(sx)])
+    
+    assert np.allclose(r_mv, r_sp)
+    
+    # test 3D
+    x, y = np.random.normal(size = (sx, sy, sz)), np.random.normal(size = (sx, sy, sz))
+    r_mv = mv.math.cosine_d(x, y)
+    r_sp = np.array([[scipy.spatial.distance.cosine(x[i,j,:], y[i,j,:]) for j in range(sy)] for i in range(sx)])
+    
+    assert np.allclose(r_mv, r_sp)
 
-def test_pearsonr_2d():
+def test_cosine_shape_mismatch():
     '''
     '''
     
-    x = np.random.normal(size = (100, 10))
-    y = np.random.normal(size = (100, 10))
+    # setup dims
+    sx, sy, sz = 100, 10, 5
     
-    r = mv.math.pearsonr(x, y)
-    s = np.array([scipy.stats.pearsonr(x[i,:], y[i,:]).statistic for i in range(x.shape[0])])
-        
-    assert(np.isclose(r, s).all())
-
-def test_pearsonr_3d():
-    '''
-    '''
+    # run test
+    x, y = np.random.normal(size = (sx, sy)), np.random.normal(size = (sz, sy))
     
-    x = np.random.normal(size = (100, 10, 5))
-    y = np.random.normal(size = (100, 10, 5))
-    
-    r = mv.math.pearsonr(x, y)
-    s = np.array([[scipy.stats.pearsonr(x[i,j,:], y[i,j,:]).statistic for j in range(x.shape[1])] for i in range(x.shape[0])])
-    
-    assert(np.isclose(r, s).all())
-
-def test_pearson_higher_dim():
-    '''
-    '''
-    
-    x = np.random.normal(size = (100, 10, 5, 2))
-    y = np.random.normal(size = (100, 10, 5, 2))
-    
-    with pytest.raises(NotImplementedError):
-        mv.math.pearsonr(x, y)
+    with pytest.raises(ValueError):
+        mv.math.cosine_d(x, y)
