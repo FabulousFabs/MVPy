@@ -7,7 +7,8 @@ setup(
     install_requires=[
         "numpy>=1.19.0",
         "scipy>=1.10.1",
-        "torch>=2.5.1"
+        "torch>=2.5.1",
+        "scikit-learn>=1.2.1"
     ],
     extras_require={
         "dev": [

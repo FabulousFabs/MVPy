@@ -76,7 +76,7 @@ def mahalanobis(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.T
     INPUTS:
         x   -   Vector/Matrix/Tensor
         y   -   Vector/Matrix/Tensor
-        Σ   -   Inverse covariance matrix (default = None, if it should be computed here)
+        Σ   -   Inverse covariance matrix
     
     OUTPUTS:
         s   -   Distances
