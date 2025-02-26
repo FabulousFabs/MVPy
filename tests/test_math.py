@@ -514,6 +514,143 @@ def test_spearmanr_type_mismatch():
         mv.math.spearmanr_d(x, y)
 
 '''
+Cross-validated euclidean tests
+'''
+
+def test_cv_euclidean_numpy():
+    '''
+    Test that our estimator is truly unbiased.
+    '''
+    
+    # setup dims
+    sx, sy, sz = 100, 5, 50
+    
+    # run test
+    x, y = np.random.normal(size = (sx, sy, sz)), np.random.normal(size = (sx, sy, sz))
+    
+    assert np.isclose(mv.math.cv_euclidean(x, y).mean(), 0.0, rtol = 1.0, atol = 1.0)
+
+def test_cv_euclidean_torch():
+    '''
+    Test that our estimator is truly unbiased.
+    '''
+    
+    # setup dims
+    sx, sy, sz = 100, 5, 50
+    
+    # run test
+    x, y = torch.normal(0, 1, size = (sx, sy, sz)), torch.normal(0, 1, size = (sx, sy, sz))
+    
+    assert np.isclose(mv.math.cv_euclidean(x, y).mean(), 0.0, rtol = 1.0, atol = 1.0)
+
+def test_cv_euclidean_compare_numpy_torch():
+    '''
+    Ensure that numpy and torch agree.
+    '''
+    
+    # setup dims
+    sx, sy, sz = 100, 5, 50
+    
+    # run numpy
+    x, y = np.random.normal(size = (sx, sy, sz)), np.random.normal(size = (sx, sy, sz))
+    r_np = mv.math.cv_euclidean(x, y)
+    
+    # run torch
+    x_tr, y_tr = torch.from_numpy(x).to(torch.float64), torch.from_numpy(y).to(torch.float64)
+    r_tr = mv.math.cv_euclidean(x, y)
+    
+    # run test
+    assert np.allclose(r_np, r_tr, rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
+
+def test_cv_euclidean_mismatch_type():
+    '''
+    Make sure we correctly report type mismatches.
+    '''
+    
+    # setup dims
+    sx, sy, sz = 100, 5, 50
+    
+    # run test
+    x, y = np.random.normal(size = (sx, sy, sz)), torch.normal(0, 1, size = (sx, sy, sz))
+    
+    with pytest.raises(ValueError):
+        mv.math.cv_euclidean(x, y)
+
+'''
+Cross-validated mahalanobis tests
+'''
+
+def test_cv_mahalanobis_numpy():
+    '''
+    Test that our estimator is truly unbiased.
+    '''
+    
+    # setup dims
+    sx, sy, sz = 100, 5, 50
+    
+    # run test
+    x, y = np.random.normal(size = (sx, sy, sz)), np.random.normal(size = (sx, sy, sz))
+    p = np.array([np.cov(np.concatenate((x[i], y[i]), axis = 0).T) for i in range(sx)]).mean(axis = 0)
+    p = np.linalg.inv(p)
+    
+    assert np.isclose(mv.math.cv_mahalanobis(x, y, p).mean(), 0.0, rtol = 1.0, atol = 1.0)
+
+def test_cv_mahalanobis_torch():
+    '''
+    Test that our estimator is truly unbiased.
+    '''
+
+    # setup dims
+    sx, sy, sz = 100, 5, 50
+    
+    # run test
+    x, y = torch.normal(0, 1, size = (sx, sy, sz)), torch.normal(0, 1, size = (sx, sy, sz))
+    p = np.array([np.cov(np.concatenate((x[i].cpu().numpy(), y[i].cpu().numpy()), axis = 0).T) for i in range(sx)]).mean(axis = 0)
+    p = np.linalg.inv(p)
+    p = torch.from_numpy(p).to(x.dtype)
+    
+    assert np.isclose(mv.math.cv_mahalanobis(x, y, p).cpu().numpy().mean(), 0.0, rtol = 1.0, atol = 1.0)
+
+def test_cv_mahalanobis_compare_numpy_torch():
+    '''
+    Make sure numpy and torch backends converge in crossnobis.
+    '''
+    
+    # setup dims
+    sx, sy, sz = 100, 10, 5
+    
+    # solve numpy
+    x_np, y_np = np.random.normal(size = (sx, sy, sz)), np.random.normal(size = (sx, sy, sz))
+    p = np.array([np.cov(np.concatenate((x_np[i], y_np[i]), axis = 0).T) for i in range(sx)]).mean(axis = 0)
+    p = np.linalg.inv(p)
+    r_numpy = mv.math.cv_mahalanobis(x_np, y_np, p)
+    
+    # solve torch
+    x_tr, y_tr = torch.from_numpy(x_np).to(torch.float64), torch.from_numpy(y_np).to(torch.float64)
+    p_tr = torch.from_numpy(p).to(torch.float64)
+    r_torch = mv.math.cv_mahalanobis(x_tr, y_tr, p_tr).cpu().numpy()
+    
+    # run test
+    assert np.allclose(r_numpy, r_torch, rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
+
+def test_cv_mahalanobis_type_mismatch():
+    '''
+    Make sure errors are thrown for type mismatches.
+    '''
+    
+    # setup dims
+    sx, sy, sz = 100, 5, 50
+    
+    # run test
+    x, y = torch.normal(0, 1, size = (sx, sy, sz)), np.random.normal(size = (sx, sy, sz))
+    p = np.array([np.cov(np.concatenate((x[i].cpu().numpy(), y[i]), axis = 0).T) for i in range(sx)]).mean(axis = 0)
+    p = np.linalg.inv(p)
+    p = torch.from_numpy(p).to(x.dtype)
+
+    with pytest.raises(ValueError):
+        mv.math.cv_mahalanobis(x, y, p)
+    
+'''
 Allow direct calls
 '''
 
