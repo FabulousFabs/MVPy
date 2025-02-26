@@ -21,15 +21,15 @@ def _rank_numpy(x: np.ndarray) -> np.ndarray:
     '''
     
     # make sure x is floating point
-    if np.issubdtype(x.dtype, np.floating):
-        x = x.to(np.float)
+    if np.issubdtype(x.dtype, np.floating) == False:
+        x = x.astype(float)
     
     # get sorted indices
     sorted_idx = np.argsort(x, axis = -1)
     sorted_x = np.take_along_axis(x, sorted_idx, axis = -1)
     
     # create rank tensor
-    r = np.zeros_like(sorted_x, dtype=np.float64)
+    r = np.zeros_like(sorted_x, dtype = x.dtype)
     
     # compute ranks (without ties)
     for f_i in range(r.shape[-1]):

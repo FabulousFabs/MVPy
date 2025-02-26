@@ -1,3 +1,7 @@
+'''
+A series of unit tests for mvpy.math.*
+'''
+
 import pytest
 
 import sys
@@ -147,7 +151,10 @@ def test_euclidean_shape_mismatch():
     
     with pytest.raises(ValueError):
         mv.math.euclidean(x, y)
-
+    
+    with pytest.raises(ValueError):
+        mv.math.euclidean(torch.from_numpy(x).to(torch.float64), torch.from_numpy(y).to(torch.float64))
+    
 def test_euclidean_type_mismatch():
     '''
     Ensure that type mismatches throw a ValueError.
@@ -162,6 +169,114 @@ def test_euclidean_type_mismatch():
     
     with pytest.raises(ValueError):
         mv.math.euclidean(x, y)
+
+'''
+Mahalanobis tests
+'''
+
+def test_mahalanobis_numpy():
+    '''
+    Check correctness of our results from numpy against scipy.
+    '''
+    
+    # setup dims
+    sx, sy, sz = 100, 10, 5
+    
+    # test 1D
+    x, y = np.random.normal(size = (sx,)), np.random.normal(size = (sx,))
+    p = np.cov(np.stack((x, y), axis = 0).T)
+    p = np.linalg.inv(p)
+    
+    r_mv = mv.math.mahalanobis(x, y, p)
+    r_sp = scipy.spatial.distance.mahalanobis(x, y, p)
+
+    if np.isnan(np.array([r_mv, r_sp])).any():
+        assert np.isnan(np.array([r_mv, r_sp])).all()
+    else:
+        assert np.allclose(r_mv, r_sp, rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
+    
+    # test 2D
+    x, y = np.random.normal(size = (sx, sy)), np.random.normal(size = (sx, sy))
+    p = np.cov(np.concatenate((x, y), axis = 0).T)
+    p = np.linalg.inv(p)
+    
+    r_mv = mv.math.mahalanobis(x, y, p)
+    r_sp = np.array([scipy.spatial.distance.mahalanobis(x[i,:], y[i,:], p) for i in range(sx)])
+    
+    mask = ~(np.isnan(r_mv) | np.isnan(r_sp))
+    assert np.allclose(r_mv[mask], r_sp[mask], rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
+    
+    # test 3D
+    x, y = np.random.normal(size = (sx, sy, sz)), np.random.normal(size = (sx, sy, sz))
+    p = np.array([np.cov(np.concatenate((x[i], y[i]), axis = 0).T) for i in range(sx)]).mean(axis = 0)
+    p = np.linalg.inv(p)
+    
+    r_mv = mv.math.mahalanobis(x, y, p)
+    r_sp = np.array([[scipy.spatial.distance.mahalanobis(x[i,j,:], y[i,j,:], p) for j in range(sy)] for i in range(sx)])
+    
+    mask = ~(np.isnan(r_mv) | np.isnan(r_sp))
+    assert np.allclose(r_mv[mask], r_sp[mask], rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
+
+def test_mahalanobis_torch():
+    '''
+    Check correctness of our results from torch against scipy.
+    '''
+    
+    # setup dims
+    sx, sy, sz = 100, 10, 5
+    
+    # test 1D
+    x, y = torch.normal(0, 1, size = (sx,)), torch.normal(0, 1, size = (sx,))
+    p = torch.cov(torch.stack((x, y), 0).T)
+    p = torch.linalg.inv(p)
+    
+    with pytest.raises(NotImplementedError):
+        mv.math.mahalanobis(x, y, p)
+    
+    # test 2D
+    x, y = torch.normal(0, 1, size = (sx, sy)), torch.normal(0, 1, size = (sx, sy))
+    p = torch.cov(torch.cat((x, y), 0).T)
+    p = torch.linalg.inv(p)
+    
+    r_mv = mv.math.mahalanobis(x, y, p).cpu().numpy()
+    r_sp = np.array([scipy.spatial.distance.mahalanobis(x[i,:].cpu().numpy(), y[i,:].cpu().numpy(), p.cpu().numpy()) for i in range(sx)])
+    
+    mask = ~(np.isnan(r_mv) | np.isnan(r_sp))
+    assert np.allclose(r_mv[mask], r_sp[mask], rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
+    
+    # test 3D
+    x, y = torch.normal(0, 1, size = (sx, sy, sz)), torch.normal(0, 1, size = (sx, sy, sz))
+    p = np.array([np.cov(np.concatenate((x[i].cpu().numpy(), y[i].cpu().numpy()), axis = 0).T) for i in range(sx)]).mean(axis = 0)
+    p = np.linalg.inv(p)
+    p = torch.from_numpy(p).to(x.dtype)
+    
+    r_mv = mv.math.mahalanobis(x, y, p).cpu().numpy()
+    r_sp = np.array([[scipy.spatial.distance.mahalanobis(x[i,j,:].cpu().numpy(), y[i,j,:].cpu().numpy(), p.cpu().numpy()) for j in range(sy)] for i in range(sx)])
+    
+    mask = ~(np.isnan(r_mv) | np.isnan(r_sp))
+    assert np.allclose(r_mv[mask], r_sp[mask], rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
+
+def test_compare_mahalanobis_numpy_torch():
+    '''
+    Make sure torch and numpy agree in mahalanobis distance.
+    '''
+    
+    # setup dims
+    sx, sy, sz = 100, 10, 5
+    
+    # solve numpy
+    x_np, y_np = np.random.normal(size = (sx, sy, sz)), np.random.normal(size = (sx, sy, sz))
+    p = np.array([np.cov(np.concatenate((x_np[i], y_np[i]), axis = 0).T) for i in range(sx)]).mean(axis = 0)
+    p = np.linalg.inv(p)
+    r_numpy = mv.math.mahalanobis(x_np, y_np, p)
+    
+    # solve torch
+    x_tr, y_tr = torch.from_numpy(x_np).to(torch.float64), torch.from_numpy(y_np).to(torch.float64)
+    p_tr = torch.from_numpy(p).to(torch.float64)
+    r_torch = mv.math.mahalanobis(x_tr, y_tr, p_tr).cpu().numpy()
+    
+    # run test
+    assert np.allclose(r_numpy, r_torch, rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
 
 '''
 Cosine tests
@@ -201,6 +316,9 @@ def test_cosine_shape_mismatch():
     
     with pytest.raises(ValueError):
         mv.math.cosine_d(x, y)
+    
+    with pytest.raises(ValueError):
+        mv.math.cosine_d(torch.from_numpy(x).to(torch.float64), torch.from_numpy(y).to(torch.float64))
 
 def test_cosine_type_mismatch():
     '''
@@ -228,7 +346,7 @@ def test_pearsonr_numpy():
     
     _run_test_numpy(mv.math.pearsonr_d, lambda x, y: 1 - scipy.stats.pearsonr(x, y).statistic)
 
-def test_perasonr_torch():
+def test_pearsonr_torch():
     '''
     Check correctness of results between our implementation and scipy on torch backend.
     '''
@@ -255,6 +373,9 @@ def test_pearsonr_shape_mismatch():
     
     with pytest.raises(ValueError):
         mv.math.pearsonr_d(x, y)
+    
+    with pytest.raises(ValueError):
+        mv.math.pearsonr_d(torch.from_numpy(x).to(torch.float64), torch.from_numpy(y).to(torch.float64))
 
 def test_pearsonr_type_mismatch():
     '''
@@ -339,7 +460,58 @@ def test_rank_type_mismatch():
 Spearman rho tests
 '''
 
+def test_spearmanr_numpy():
+    '''
+    Check correctness of results between our implementation and scipy on numpy backend.
+    '''
+    
+    _run_test_numpy(mv.math.spearmanr_d, lambda x, y: 1 - scipy.stats.spearmanr(x, y).statistic)
 
+def test_spearmanr_torch():
+    '''
+    Check correctness of results between our implementation and scipy on torch backend.
+    '''
+    
+    _run_test_torch(mv.math.spearmanr_d, lambda x, y: 1 - scipy.stats.spearmanr(x, y).statistic)
+
+def test_spearmanr_compare_numpy_torch():
+    '''
+    Check that both numpy and torch arrive at the same values.
+    '''
+    
+    _run_comparison_numpy_torch(mv.math.spearmanr_d, mv.math.spearmanr_d)
+
+def test_spearmanr_shape_mismatch():
+    '''
+    Ensure that shape mismatches throw a ValueError.
+    '''
+    
+    # setup dims
+    sx, sy, sz = 100, 10, 5
+    
+    # run test
+    x, y = np.random.normal(size = (sx, sy)), np.random.normal(size = (sz, sy))
+    
+    with pytest.raises(ValueError):
+        mv.math.spearmanr_d(x, y)
+    
+    with pytest.raises(ValueError):
+        mv.math.spearmanr_d(torch.from_numpy(x).to(torch.float64), torch.from_numpy(y).to(torch.float64))
+
+def test_spearmanr_type_mismatch():
+    '''
+    Ensure that type mismatches throw a ValueError.
+    '''
+    
+    # setup dims
+    sx, sy = 100, 10
+    
+    # run test
+    x = np.random.normal(size = (sx, sy))
+    y = torch.normal(0, 1, size = (sx, sy))
+    
+    with pytest.raises(ValueError):
+        mv.math.spearmanr_d(x, y)
 
 '''
 Allow direct calls
