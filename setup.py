@@ -6,7 +6,8 @@ setup(
     packages=find_packages(),
     install_requires=[
         "numpy>=1.19.0",
-        "scipy>=1.10.1"
+        "scipy>=1.10.1",
+        "torch>=2.5.1"
     ],
     extras_require={
         "dev": [
