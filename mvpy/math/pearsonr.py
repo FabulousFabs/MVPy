@@ -1,5 +1,5 @@
 '''
-Functions to compute cosine (dis-)similarity in a 
+Functions to compute Pearson correlation or distance in a 
 nice and vectorised manner using either numpy or 
 torch.
 '''
@@ -9,9 +9,9 @@ import torch
 
 from typing import Union
 
-def _cosine_numpy(x: np.ndarray, y: np.ndarray) -> np.ndarray:
+def _pearsonr_numpy(x: np.ndarray, y: np.ndarray) -> np.ndarray:
     '''
-    Computes cosine similarity between vectors in x and y using
+    Computes pearson correlation between vectors in x and y using
     NumPy as a backend.
     
     INPUTS:
@@ -25,11 +25,13 @@ def _cosine_numpy(x: np.ndarray, y: np.ndarray) -> np.ndarray:
     if x.shape != y.shape:
         raise ValueError('`x` and `y` must have the same shape.')
     
-    return np.sum(x * y, axis = -1) / (np.linalg.norm(x, axis = -1) * np.linalg.norm(y, axis = -1))
+    Δx, Δy = (x - x.mean(-1, keepdims = True)), (y - y.mean(-1, keepdims = True))
+    
+    return np.sum(Δx * Δy, axis = -1) / np.sqrt(np.sum(Δx ** 2, axis = -1) * np.sum(Δy ** 2, axis = -1))
 
-def _cosine_torch(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
+def _pearsonr_torch(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
     '''
-    Computes cosine similarity between vectors in x and y using
+    Computes pearson correlation between vectors in x and y using
     torch as a backend.
     
     INPUTS:
@@ -43,12 +45,14 @@ def _cosine_torch(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
     if x.shape != y.shape:
         raise ValueError('`x` and `y` must have the same shape.')
     
-    return (x * y).sum(-1) / (torch.linalg.norm(x, dim = -1) * torch.linalg.norm(y, dim = -1))
+    Δx, Δy = (x - x.mean(-1, keepdim = True)), (y - y.mean(-1, keepdim = True))
+    
+    return torch.sum(Δx * Δy, -1) / torch.sqrt(torch.sum(Δx ** 2, -1) * torch.sum(Δy ** 2, -1))
 
-def cosine(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
+def pearsonr(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
     '''
-    Computes cosine similarity between `x` and `y`. Note that
-    similarity is always computed over the final dimension in
+    Computes Pearson r between `x` and `y`. Note that
+    correlation is always computed over the final dimension in
     your inputs.
     
     INPUTS:
@@ -60,16 +64,16 @@ def cosine(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor
     '''
     
     if isinstance(x, torch.Tensor) & isinstance(y, torch.Tensor):
-        return _cosine_torch(x, y)
+        return _pearsonr_torch(x, y)
     elif isinstance(x, np.ndarray) & isinstance(y, np.ndarray):
-        return _cosine_numpy(x, y)
+        return _pearsonr_numpy(x, y)
     
     raise ValueError(f'`x` and `y` must be of the same type, but got `{type(x)}` and `{type(y)}` instead.')
 
-def cosine_d(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
+def pearsonr_d(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
     '''
-    Computes cosine dissimilarity between `x` and `y`. Note that
-    dissimilarity is always computed over the final dimension in
+    Computes Pearson distance between `x` and `y`. Note that
+    distance is always computed over the final dimension in
     your inputs.
     
     INPUTS:
@@ -80,4 +84,4 @@ def cosine_d(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tens
         d   -   Distances
     '''
     
-    return 1 - cosine(x, y)
+    return 1 - pearsonr(x, y)

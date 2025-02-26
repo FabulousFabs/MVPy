@@ -7,10 +7,24 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 import mvpy as mv
 
 import numpy as np
+import torch
 import scipy
 
-def test_cosine_numpy():
+from typing import Callable
+
+# setup tolerance for np.allclose
+_ALLCLOSE_RTOL = 1e-3
+_ALLCLOSE_ATOL = 1e-3
+
+def _run_test_numpy(f_mv: Callable, f_sp: Callable) -> None:
     '''
+    Compute a batch of tests for 1D, 2D and 3D arrays
+    using the numpy backend and compare results to
+    those from scipy.
+    
+    INPUTS:
+        f_mv    -   Function from our package to test
+        f_sp    -   Corresponding function from scipy. Note that, if scipy returns more than just the metric, please use a lambda to wrap the function and return only the metric.
     '''
     
     # setup dims
@@ -18,27 +32,165 @@ def test_cosine_numpy():
     
     # test 1D
     x, y = np.random.normal(size = (sx,)), np.random.normal(size = (sx,))
-    r_mv = mv.math.cosine_d(x, y)
-    r_sp = scipy.spatial.distance.cosine(x, y)
+    r_mv = f_mv(x, y)
+    r_sp = f_sp(x, y)
     
-    assert np.allclose(r_mv, r_sp)
+    assert np.allclose(r_mv, r_sp, rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
     
     # test 2D
     x, y = np.random.normal(size = (sx, sy)), np.random.normal(size = (sx, sy))
-    r_mv = mv.math.cosine_d(x, y)
-    r_sp = np.array([scipy.spatial.distance.cosine(x[i,:], y[i,:]) for i in range(sx)])
+    r_mv = f_mv(x, y)
+    r_sp = np.array([f_sp(x[i,:], y[i,:]) for i in range(sx)])
     
-    assert np.allclose(r_mv, r_sp)
+    assert np.allclose(r_mv, r_sp, rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
     
     # test 3D
     x, y = np.random.normal(size = (sx, sy, sz)), np.random.normal(size = (sx, sy, sz))
-    r_mv = mv.math.cosine_d(x, y)
-    r_sp = np.array([[scipy.spatial.distance.cosine(x[i,j,:], y[i,j,:]) for j in range(sy)] for i in range(sx)])
+    r_mv = f_mv(x, y)
+    r_sp = np.array([[f_sp(x[i,j,:], y[i,j,:]) for j in range(sy)] for i in range(sx)])
     
-    assert np.allclose(r_mv, r_sp)
+    assert np.allclose(r_mv, r_sp, rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
+
+def _run_test_torch(f_mv: Callable, f_sp: Callable) -> None:
+    '''
+    Compute a batch of tests for 1D, 2D and 3D arrays
+    using the torch backend and compare results to
+    those from scipy.
+    
+    INPUTS:
+        f_mv    -   Function from our package to test
+        f_sp    -   Corresponding function from scipy. Note that, if scipy returns more than just the metric, please use a lambda to wrap the function and return only the metric.
+    '''
+    
+    # setup dims
+    sx, sy, sz = 100, 10, 5
+    
+    # test 1D
+    x, y = torch.normal(0, 1, size = (sx,)), torch.normal(0, 1, size = (sx,))
+    r_mv = f_mv(x, y).cpu().numpy()
+    r_sp = f_sp(x.cpu().numpy(), y.cpu().numpy())
+    
+    assert np.allclose(r_mv, r_sp, rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
+    
+    # test 2D
+    x, y = torch.normal(0, 1, size = (sx, sy)), torch.normal(0, 1, size = (sx, sy))
+    r_mv = f_mv(x, y).cpu().numpy()
+    r_sp = np.array([f_sp(x[i,:].cpu().numpy(), y[i,:].cpu().numpy()) for i in range(sx)])
+    
+    assert np.allclose(r_mv, r_sp, rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
+    
+    # test 3D
+    x, y = torch.normal(0, 1, size = (sx, sy, sz)), torch.normal(0, 1, size = (sx, sy, sz))
+    r_mv = f_mv(x, y).cpu().numpy()
+    r_sp = np.array([[f_sp(x[i,j,:].cpu().numpy(), y[i,j,:].cpu().numpy()) for j in range(sy)] for i in range(sx)])
+    
+    assert np.allclose(r_mv, r_sp, rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
+
+def _run_comparison_numpy_torch(f_numpy: Callable, f_torch: Callable) -> None:
+    '''
+    Compare the metrics between implementations in numpy and torch.
+    
+    INPUTS:
+        f_numpy     -   Which numpy function to use?
+        f_torch     -   Which torch function to use?
+    '''
+    
+    # setup dims
+    sx, sy, sz = 100, 10, 5
+    
+    # solve numpy
+    x_np, y_np = np.random.normal(size = (sx, sy, sz)), np.random.normal(size = (sx, sy, sz))
+    r_numpy = f_numpy(x_np, y_np)
+    
+    # solve torch
+    x_tr, y_tr = torch.from_numpy(x_np).to(torch.float64), torch.from_numpy(y_np).to(torch.float64)
+    r_torch = f_torch(x_tr, y_tr).cpu().numpy()
+    
+    # run test
+    assert np.allclose(r_numpy, r_torch, rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
+
+'''
+Euclidean tests
+'''
+
+def test_euclidean_numpy():
+    '''
+    Check correctness of results between our implementation and scipy on numpy backend.
+    '''
+    
+    _run_test_numpy(mv.math.euclidean, scipy.spatial.distance.euclidean)
+
+def test_euclidean_torch():
+    '''
+    Check correctness of results between our implementation and scipy on torch backend.
+    '''
+    
+    _run_test_torch(mv.math.euclidean, scipy.spatial.distance.euclidean)
+
+def test_euclidean_compare_numpy_torch():
+    '''
+    Check that both numpy and torch arrive at the same values.
+    '''
+    
+    _run_comparison_numpy_torch(mv.math.euclidean, mv.math.euclidean)
+
+def test_euclidean_shape_mismatch():
+    '''
+    Ensure that shape mismatches throw a ValueError.
+    '''
+    
+    # setup dims
+    sx, sy, sz = 100, 10, 5
+    
+    # run test
+    x, y = np.random.normal(size = (sx, sy)), np.random.normal(size = (sz, sy))
+    
+    with pytest.raises(ValueError):
+        mv.math.euclidean(x, y)
+
+def test_euclidean_type_mismatch():
+    '''
+    Ensure that type mismatches throw a ValueError.
+    '''
+    
+    # setup dims
+    sx, sy = 100, 10
+    
+    # run test
+    x = np.random.normal(size = (sx, sy))
+    y = torch.normal(0, 1, size = (sx, sy))
+    
+    with pytest.raises(ValueError):
+        mv.math.euclidean(x, y)
+
+'''
+Cosine tests
+'''
+
+def test_cosine_numpy():
+    '''
+    Check correctness of results between our implementation and scipy on numpy backend.
+    '''
+    
+    _run_test_numpy(mv.math.cosine_d, scipy.spatial.distance.cosine)
+
+def test_cosine_torch():
+    '''
+    Check correctness of results between our implementation and scipy on torch backend.
+    '''
+    
+    _run_test_torch(mv.math.cosine_d, scipy.spatial.distance.cosine)
+
+def test_cosine_compare_numpy_torch():
+    '''
+    Check that both numpy and torch arrive at the same values.
+    '''
+    
+    _run_comparison_numpy_torch(mv.math.cosine_d, mv.math.cosine_d)
 
 def test_cosine_shape_mismatch():
     '''
+    Ensure that shape mismatches throw a ValueError.
     '''
     
     # setup dims
@@ -49,3 +201,149 @@ def test_cosine_shape_mismatch():
     
     with pytest.raises(ValueError):
         mv.math.cosine_d(x, y)
+
+def test_cosine_type_mismatch():
+    '''
+    Ensure that type mismatches throw a ValueError.
+    '''
+    
+    # setup dims
+    sx, sy = 100, 10
+    
+    # run test
+    x = np.random.normal(size = (sx, sy))
+    y = torch.normal(0, 1, size = (sx, sy))
+    
+    with pytest.raises(ValueError):
+        mv.math.cosine_d(x, y)
+
+'''
+Pearson r tests
+'''
+
+def test_pearsonr_numpy():
+    '''
+    Check correctness of results between our implementation and scipy on numpy backend.
+    '''
+    
+    _run_test_numpy(mv.math.pearsonr_d, lambda x, y: 1 - scipy.stats.pearsonr(x, y).statistic)
+
+def test_perasonr_torch():
+    '''
+    Check correctness of results between our implementation and scipy on torch backend.
+    '''
+    
+    _run_test_torch(mv.math.pearsonr_d, lambda x, y: 1 - scipy.stats.pearsonr(x, y).statistic)
+
+def test_pearsonr_compare_numpy_torch():
+    '''
+    Check that both numpy and torch arrive at the same values.
+    '''
+    
+    _run_comparison_numpy_torch(mv.math.pearsonr_d, mv.math.pearsonr_d)
+
+def test_pearsonr_shape_mismatch():
+    '''
+    Ensure that shape mismatches throw a ValueError.
+    '''
+    
+    # setup dims
+    sx, sy, sz = 100, 10, 5
+    
+    # run test
+    x, y = np.random.normal(size = (sx, sy)), np.random.normal(size = (sz, sy))
+    
+    with pytest.raises(ValueError):
+        mv.math.pearsonr_d(x, y)
+
+def test_pearsonr_type_mismatch():
+    '''
+    Ensure that type mismatches throw a ValueError.
+    '''
+    
+    # setup dims
+    sx, sy = 100, 10
+    
+    # run test
+    x = np.random.normal(size = (sx, sy))
+    y = torch.normal(0, 1, size = (sx, sy))
+    
+    with pytest.raises(ValueError):
+        mv.math.pearsonr_d(x, y)
+
+'''
+Rank tests
+'''
+
+def test_rank_numpy():
+    '''
+    Ensure ranking works in numpy.
+    '''
+    
+    # setup dims
+    sx, sy = 1000, 100
+    
+    # run test
+    x = np.random.choice(np.arange(sy), replace = True, size = (sx, sy))
+    r_mv = mv.math.rank(x)
+    r_sp = scipy.stats.rankdata(x, axis = -1)
+
+    assert np.allclose(r_mv, r_sp, rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
+
+def test_rank_torch():
+    '''
+    Ensure rankign works in torch.
+    '''
+    
+    # setup dims
+    sx, sy = 1000, 10
+    
+    # run test
+    x = torch.randint(low = 0, high = sy, size = (sx, sy))
+    r_mv = mv.math.rank(x).cpu().numpy()
+    r_sp = scipy.stats.rankdata(x.cpu().numpy(), axis = -1)
+    
+    assert np.allclose(r_mv, r_sp, rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
+
+def test_compare_rank_numpy_torch():
+    '''
+    Ensure numpy and torch have same solutions.
+    '''
+    
+    # setup dims
+    sx, sy = 1000, 10
+    
+    # run test
+    x = np.random.choice(np.arange(sy), replace = True, size = (sx, sy))
+    r_np = mv.math.rank(x)
+    r_tr = mv.math.rank(torch.from_numpy(x))
+    
+    assert np.allclose(r_np, r_tr, rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
+
+def test_rank_type_mismatch():
+    '''
+    Ensure type errors are thrown while ranking data.
+    '''
+    
+    # setup dims
+    sx, sy = 1000, 10
+    
+    # run test
+    x = np.random.choice(np.arange(sy), replace = True, size = (sx, sy))
+    x = list(x)
+    
+    with pytest.raises(ValueError):
+        r_mv = mv.math.rank(x)
+
+'''
+Spearman rho tests
+'''
+
+
+
+'''
+Allow direct calls
+'''
+
+if __name__ == '__main__':
+    pytest.main([__file__])
