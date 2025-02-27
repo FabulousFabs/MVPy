@@ -7,7 +7,7 @@ import sklearn
 import numpy as np
 import torch
 
-from typing import Union
+from typing import Union, Any
 
 '''
 Track registered estimators 
@@ -47,8 +47,13 @@ class _Whitener_numpy(sklearn.base.BaseEstimator):
         # compute eigen-decomposition
         val, vec = np.linalg.eigh(self.covariance_)
         
+        # for stability, treat as only non-negative eigenvalues
+        nonzero = val > 0
+        val[~nonzero] = 0.0
+        
         # take inverse square root
-        inv_val = 1 / np.sqrt(val)
+        inv_val = np.zeros(val.shape)
+        inv_val[nonzero] = 1 / np.sqrt(val[nonzero])
         
         # compute whitening estimator
         self.whitener_ = vec @ np.diag(inv_val) @ vec.T
@@ -127,8 +132,13 @@ class _Whitener_torch(sklearn.base.BaseEstimator):
         # compute eigen-decomposition
         val, vec = torch.linalg.eigh(self.covariance_)
         
+        # for stability, treat as only non-negative eigenvalues
+        nonzero = val > 0
+        val[~nonzero] = 0.0
+        
         # take inverse square root
-        inv_val = 1 / np.sqrt(val)
+        inv_val = torch.zeros(val.shape)
+        inv_val[nonzero] = 1 / torch.sqrt(val[nonzero])
         
         # compute whitening estimator
         self.whitener_ = vec @ torch.diag(inv_val) @ vec.T
@@ -515,7 +525,7 @@ class Covariance(sklearn.base.BaseEstimator):
         
         raise ValueError(f'Got an unexpected combination of method=`{self.method}` and type=`{type(X)}`.') 
     
-    def fit(self, X: Union[np.ndarray, torch.Tensor]):
+    def fit(self, X: Union[np.ndarray, torch.Tensor], *args: Any):
         '''
         Fit the selected covariance estimator over `X`.
         
@@ -524,8 +534,21 @@ class Covariance(sklearn.base.BaseEstimator):
         '''
         
         return self._get_estimator(X)().fit(X)
+    
+    def transform(self, X: Union[np.ndarray, torch.Tensor], *args: Any) -> Union[np.ndarray, torch.Tensor]:
+        '''
+        Transform from estimator.
 
-    def fit_transform(self, X: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
+        INPUTS:
+            x   -   Matrix/Tensor
+
+        OUTPUTS:
+            ^x  -   Whitened data
+        '''
+
+        return self._get_estimator(X)().fit_transform(X)
+
+    def fit_transform(self, X: Union[np.ndarray, torch.Tensor], *args: Any) -> Union[np.ndarray, torch.Tensor]:
         '''
         Fit and transform from estimator.
         
