@@ -131,7 +131,7 @@ class _Scaler_numpy(sklearn.base.BaseEstimator):
             self.scale_ = np.sqrt(self.var_)
         else:
             self.mean_ = X.mean(axis = self.dims_, keepdims = True)
-            self.var_ = X.var(axis = self.dims_, keepdims = True)
+            self.var_ = X.var(axis = self.dims_, keepdims = True, ddof = 1)
             self.scale_ = np.sqrt(self.var_)
         
         return self

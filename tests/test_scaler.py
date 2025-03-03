@@ -18,8 +18,10 @@ import sklearn
 from typing import Any
 
 # setup tolerance for np.allclose
-_ALLCLOSE_RTOL = 1e-3
-_ALLCLOSE_ATOL = 1e-3
+# here, we're going a bit higher because
+# of DDoF corrections
+_ALLCLOSE_RTOL = 1e-2
+_ALLCLOSE_ATOL = 1e-2
 
 '''
 Test scaler estimators
@@ -57,9 +59,9 @@ def test_scaler_torch():
     Z1 = mv.estimators.Scaler().fit_transform(X1).cpu().numpy()
     
     assert np.allclose(Z0.mean(axis = (0, 2)), np.zeros((60,)), rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
-    assert np.allclose(Z0.std(axis = (0, 2)), np.ones((60,)), rtol = 100*_ALLCLOSE_RTOL, atol = 100*_ALLCLOSE_ATOL)
+    assert np.allclose(Z0.std(axis = (0, 2)), np.ones((60,)), rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
     assert np.allclose(Z1.mean(axis = 0), np.zeros((50,)), rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
-    assert np.allclose(Z1.std(axis = 0), np.ones((50,)), rtol = 100*_ALLCLOSE_RTOL, atol = 100*_ALLCLOSE_ATOL)
+    assert np.allclose(Z1.std(axis = 0), np.ones((50,)), rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
 
 def test_scaler_compare_numpy_torch():
     '''
@@ -74,7 +76,7 @@ def test_scaler_compare_numpy_torch():
     Z_np = mv.estimators.Scaler().fit_transform(X_np)
     Z_tr = mv.estimators.Scaler().fit_transform(X_tr).cpu().numpy()
     
-    assert np.allclose(Z_np, Z_tr, rtol = 10*_ALLCLOSE_RTOL, atol = 10*_ALLCLOSE_ATOL)
+    assert np.allclose(Z_np, Z_tr, rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
 
 '''
 Allow direct calls
