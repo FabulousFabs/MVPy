@@ -119,7 +119,7 @@ As you can see, the RDM is now stacked with all comparisons in the first dimensi
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.471 seconds)
+   **Total running time of the script:** (0 minutes 0.457 seconds)
 
 
 .. _sphx_glr_download_examples_rsa_1_rsa_intro.py:
