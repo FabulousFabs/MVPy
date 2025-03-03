@@ -1,4 +1,0 @@
-
-Encoders
-========
-Examples for encoders.
