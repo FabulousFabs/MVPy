@@ -19,26 +19,25 @@ Whitening estimators
 '''
 
 class _Whitener_numpy(sklearn.base.BaseEstimator):
-    '''
-    Class to compute whitening estimator from covariance matrix.
-    '''
+    """Implements a whitening estimator.
+    """
     
     def __init__(self):
-        '''
-        Constructor
-        '''
+        """Obtain a whitening estimator class.
+        """
         
         super().__init__()
         
         self.whitener_ = None
     
     def fit(self, X: np.ndarray):
-        '''
-        Fit the whitening estimator given covariance estimate.
+        """Fit the whitening estimator.
         
-        INPUTS:
-            X   -   Matrix/Tensor ([... [samples]] x features x samples)
-        '''
+        Parameters
+        ----------
+        X : np.ndarray
+            Matrix/Tensor ([... [samples]] x features x samples)
+        """
         
         # make sure covariance has been estimated
         if (hasattr(self, 'covariance_') == False) | (self.covariance_ is None):
@@ -61,15 +60,18 @@ class _Whitener_numpy(sklearn.base.BaseEstimator):
         return self
 
     def transform(self, X: np.ndarray) -> np.ndarray:
-        '''
-        Whiten the data in `X`.
+        """Whiten the data.
         
-        INPUTS:
-            X   -   Matrix/Tensor ([... [samples]] x features x samples)
+        Parameters
+        ----------
+        X : np.ndarray
+            The data to be whitened.
         
-        OUTPUTS:
-            ^X  -   Whitened matrix/tensor ([... [samples]] x features x samples)
-        '''
+        Returns
+        -------
+        np.ndarray
+            The whitened data.
+        """
         
         # make sure covariance has been estimated
         if (hasattr(self, 'covariance_') == False) | (self.covariance_ is None):
@@ -104,26 +106,25 @@ class _Whitener_numpy(sklearn.base.BaseEstimator):
         return X_w
 
 class _Whitener_torch(sklearn.base.BaseEstimator):
-    '''
-    Class to compute whitening estimator from covariance matrix.
-    '''
+    """Implements a whitening estimator.
+    """
     
     def __init__(self):
-        '''
-        Constructor
-        '''
+        """Obtain a whitening estimator.
+        """
         
         super().__init__()
         
         self.whitener_ = None
     
     def fit(self, X: torch.Tensor):
-        '''
-        Fit the whitening estimator given covariance estimate.
+        """Fit the whitening estimator.
         
-        INPUTS:
-            X   -   Matrix/Tensor ([... [samples]] x features x samples)
-        '''
+        Parameters
+        ----------
+        X : torch.Tensor
+            Matrix/Tensor ([... [samples]] x features x samples)
+        """
         
         # make sure covariance has been estimated
         if (hasattr(self, 'covariance_') == False) | (self.covariance_ is None):
@@ -146,15 +147,18 @@ class _Whitener_torch(sklearn.base.BaseEstimator):
         return self
     
     def transform(self, X: torch.Tensor) -> torch.Tensor:
-        '''
-        Whiten the data in `X`.
+        """Apply whitening to the data.
         
-        INPUTS:
-            X   -   Matrix/Tensor ([... [samples]] x features x samples)
+        Parameters
+        ----------
+        X : torch.Tensor
+            The data to be whitened.
         
-        OUTPUTS:
-            ^X  -   Whitened matrix/tensor ([... [samples]] x features x samples)
-        '''
+        Returns
+        -------
+        torch.Tensor
+            The whitened data.
+        """
         
         # make sure covariance has been estimated
         if (hasattr(self, 'covariance_') == False) | (self.covariance_ is None):
@@ -192,26 +196,26 @@ Empirical estimators
 '''
 
 class _Empirical_numpy(_Whitener_numpy):
-    '''
-    Implements an empirical covariance estimator.
-    '''
+    """Implementation of an empirical covariance estimator.
+    """
     
     def __init__(self):
-        '''
-        Constructor
-        '''
+        """Obtain an estimator class.
+        """
         
         super().__init__()
         
         self.covariance_ = None
+        self.precision_ = None
     
     def fit(self, X: np.ndarray):
-        '''
-        Fit the empirical estimator.
+        """Fit the estimator.
         
-        INPUTS:
-            X   -   Matrix/Tensor ([... [samples]] x features x samples)
-        '''
+        Parameters
+        ----------
+        X : np.ndarray
+            Training data.
+        """
         
         # check dims
         if len(X.shape) < 2:
@@ -230,45 +234,51 @@ class _Empirical_numpy(_Whitener_numpy):
         # compute sample covariance
         self.covariance_ = np.dot(X_h.T, X_h) / N
         
+        # compute precision matrix
+        self.precision_ = np.linalg.inv(self.covariance_)
+        
         # fit whitener class
         super().fit(X)
         
         return self
     
     def fit_transform(self, X: np.ndarray) -> np.ndarray:
-        '''
-        Fit the estimator and whiten data.
+        """Fit the estimator and whiten the data.
         
-        INPUTS:
-            X   -   Matrix/Tensor ([... [samples]] x features x samples)
+        Parameters
+        ----------
+        X : np.ndarray
+            Matrix/Tensor ([... [samples]] x features x samples)
         
-        OUTPUTS:
-            ^X  -   Whitened matrix/tensor ([... [samples]] x features x samples)
-        '''
+        Returns
+        -------
+        np.ndarray
+            Whitened matrix/tensor ([... [samples]] x features x samples)
+        """
         
         return self.fit(X).transform(X)
 
 class _Empirical_torch(_Whitener_torch):
-    '''
-    Implements an empirical covariance estimator.
-    '''
+    """Implements an empirical, biassed covariance estimator.
+    """
     
     def __init__(self):
-        '''
-        Constructor
-        '''
+        """Obtain an empirical estimator.
+        """
         
         super().__init__()
         
         self.covariance_ = None
+        self.precision_ = None
     
     def fit(self, X: torch.Tensor):
-        '''
-        Fit the empirical estimator.
+        """Fit the estimator.
         
-        INPUTS:
-            X   -   Matrix/Tensor ([... [samples]] x features x samples)
-        '''
+        Parameters
+        ----------
+        X : torch.Tensor
+            Matrix/Tensor ([... [samples]] x features x samples)
+        """
         
         # check dims
         if len(X.shape) < 2:
@@ -287,21 +297,27 @@ class _Empirical_torch(_Whitener_torch):
         # compute sample covariance
         self.covariance_ = torch.mm(X_h.T, X_h) / N
         
+        # compute precision matrix
+        self.precision_ = torch.linalg.inv(self.covariance_)
+        
         # fit whitener class
         super().fit(X)
         
         return self
     
-    def fit_transform(self, X: np.ndarray) -> np.ndarray:
-        '''
-        Fit the estimator and whiten data.
+    def fit_transform(self, X: torch.Tensor) -> torch.Tensor:
+        """Fit the estimator and whiten the data.
         
-        INPUTS:
-            X   -   Matrix/Tensor ([... [samples]] x features x samples)
+        Parameters
+        ----------
+        X : torch.Tensor
+            Training data
         
-        OUTPUTS:
-            ^X  -   Whitened matrix/tensor ([... [samples]] x features x samples)
-        '''
+        Returns
+        -------
+        W : torch.Tensor
+            Whitened data
+        """
         
         return self.fit(X).transform(X)
 
@@ -313,31 +329,27 @@ LedoitWolf estimators
 '''
 
 class _LedoitWolf_numpy(_Whitener_numpy):
-    '''
-    Implements the Ledoit-Wolf shrinkage estimation as detailed in:
-
-        Ledoit, O., & Wolf, M. (2004). A well-conditioned estimator for large-dimensional covariance matrices. Journal of Multivariate Analysis, 88, 365-411. 10.1016/S0047-259X(03)00096-4
-    
-    This class is based on the numpy backend.
-    '''
+    """Implements the Ledoit-Wolf estimator.
+    """
     
     def __init__(self):
-        '''
-        Constructor
-        '''
+        """Obtain a Ledoit-Wolf estimator.
+        """
         
         super().__init__()
         
         self.covariance_ = None
+        self.precision_ = None
         self.shrinkage_ = None
     
     def fit(self, X: np.ndarray):
-        '''
-        Fit the LedoitWolf estimator.
+        """Fit the estimator.
         
-        INPUTS:
-            X   -   Matrix/Tensor ([... [samples]] x features x samples)
-        '''
+        Parameters
+        ----------
+        X : np.ndarray
+            Training data
+        """
         
         # check dims
         if len(X.shape) < 2:
@@ -377,50 +389,52 @@ class _LedoitWolf_numpy(_Whitener_numpy):
         # compute covariance estimate
         self.covariance_ = self.shrinkage_ * F + (1 - self.shrinkage_) * S
         
+        # compute precision matrix
+        self.precision_ = np.linalg.inv(self.covariance_)
+        
         # fit whitener class
         super().fit(X)
         
         return self
     
     def fit_transform(self, X: np.ndarray) -> np.ndarray:
-        '''
-        Fit the estimator and whiten data.
+        """Fit the estimator and whiten the data.
         
-        INPUTS:
-            X   -   Matrix/Tensor ([... [samples]] x features x samples)
+        Parameters
+        ----------
+        X : np.ndarray
+            Matrix/Tensor ([... [samples]] x features x samples)
         
-        OUTPUTS:
-            ^X  -   Whitened matrix/tensor ([... [samples]] x features x samples)
-        '''
+        Returns
+        -------
+        np.ndarray
+            Whitened matrix/tensor ([... [samples]] x features x samples)
+        """
         
         return self.fit(X).transform(X)
 
 class _LedoitWolf_torch(_Whitener_torch):
-    '''
-    Implements the Ledoit-Wolf shrinkage estimation as detailed in:
-
-        Ledoit, O., & Wolf, M. (2004). A well-conditioned estimator for large-dimensional covariance matrices. Journal of Multivariate Analysis, 88, 365-411. 10.1016/S0047-259X(03)00096-4
-    
-    This class is based on the torch backend.
-    '''
+    """Implementation of the Ledoit-Wolf shrinkage estimator.
+    """
     
     def __init__(self):
-        '''
-        Constructor
-        '''
+        """Obtain the Ledoit-Wolf shrinkage estimator.
+        """
         
         super().__init__()
         
         self.covariance_ = None
+        self.precision_ = None
         self.shrinkage_ = None
     
     def fit(self, X: torch.Tensor):
-        '''
-        Fit the LedoitWolf estimator.
+        """Fit the estimator.
         
-        INPUTS:
-            X   -   Matrix/Tensor ([... [samples]] x features x samples)
-        '''
+        Parameters
+        ----------
+        X : torch.Tensor
+            Matrix/Tensor ([... [samples]] x features x samples)
+        """
         
         # check dims
         if X.ndim < 2:
@@ -459,6 +473,9 @@ class _LedoitWolf_torch(_Whitener_torch):
 
         # compute covariance estimate
         self.covariance_ = self.shrinkage_ * F + (1 - self.shrinkage_) * S
+        
+        # compute precision matrix
+        self.precision_ = torch.linalg.inv(self.covariance_)
 
         # fit whitener class
         super().fit(X)
@@ -466,15 +483,18 @@ class _LedoitWolf_torch(_Whitener_torch):
         return self
     
     def fit_transform(self, X: torch.Tensor):
-        '''
-        Fit the estimator and whiten data.
+        """Fit the estimator and whiten the data.
         
-        INPUTS:
-            X   -   Matrix/Tensor ([... [samples]] x features x samples)
-        
-        OUTPUTS:
-            ^X  -   Whitened matrix/tensor ([... [samples]] x features x samples)
-        '''
+        Parameters
+        ----------
+        X : torch.Tensor
+            Input data.
+
+        Returns
+        -------
+        W : torch.Tensor
+            Whitened data.
+        """
         
         return self.fit(X).transform(X)
 
@@ -486,17 +506,58 @@ Covariance estimator
 '''
 
 class Covariance(sklearn.base.BaseEstimator):
-    '''
-    Class for computing covariance estimates.
-    '''
+    """Class for computing covariance, precision and whitening matrices. Note that calling a transform from this clas will whiten the data.
+    
+    Parameters
+    ----------
+    method : str, default = 'LedoitWolf'
+        Which method should be applied for estimation of covariance? (default = LedoitWolf, available = [Empirical, LedoitWolf])
+    
+    Attributes
+    ----------
+    covariance_ : Union[np.ndarray, torch.Tensor]
+        Covariance matrix
+    precision_ : Union[np.ndarray, torch.Tensor]
+        Precision matrix (inverse of covariance matrix)
+    whitener_ : Union[np.ndarray, torch.Tensor]
+        Whitening matrix
+    shrinkage_ : float, optional
+        Shrinkage parameter, if used by method.
+    
+    Notes
+    -----
+    This class assumes features to be the second to last dimension of the data, unless there are only two dimensions (in which case it is assumed to be the last dimension).
+    
+    Currently, we support the following methods:
+    
+    - Empirical:
+        This method simply computes the biassed empirical covariance matrix.
+
+    - LedoitWolf:
+        This method computes the Ledoit-Wolf shrinkage estimator as detailed in [1]_.
+    
+    References
+    ----------
+    .. [1] Ledoit, O., & Wolf, M. (2004). A well-conditioned estimator for large-dimensional covariance matrices. Journal of Multivariate Analysis, 88, 365-411. 10.1016/S0047-259X(03)00096-4
+    
+    Examples
+    --------
+    >>> import torch
+    >>> from mvpy.estimators import Covariance
+    >>> X = torch.normal(0, 1, (100, 10, 100))
+    >>> cov = Covariance().fit(X)
+    >>> cov.covariance_.shape
+    torch.Size([10, 10])
+    """
     
     def __init__(self, method: str = 'LedoitWolf'):
-        '''
-        Return the covariance class.
+        """Create a new Covariance instance.
         
-        INPUTS:
-            method  -   Which method should be applied? (default = LedoitWolf, available = [Empirical, LedoitWolf])
-        '''
+        Parameters
+        ----------
+        method : str, default = 'LedoitWolf'
+            Which method should be applied for estimation of covariance? (default = LedoitWolf, available = [Empirical, LedoitWolf])
+        """
         
         if method not in _ESTIMATORS:
             raise ValueError(f'Unknown covariance estimation method {method}. Available methods: {_ESTIMATORS}.')
@@ -504,15 +565,18 @@ class Covariance(sklearn.base.BaseEstimator):
         self.method = method
     
     def _get_estimator(self, X: Union[np.ndarray, torch.Tensor]) -> sklearn.base.BaseEstimator:
-        '''
-        Obtain an appropriate estimator.
+        """Obtain an estimator based on the data type.
         
-        INPUTS:
-            X   -   Matrix/Tensor
+        Parameters
+        ----------
+        X : Union[np.ndarray, torch.Tensor]
+            Data to fit the estimator on.
         
-        OUTPUTS:
-            estimator   -   Appropriate class to construct
-        '''
+        Returns
+        -------
+        sklearn.base.BaseEstimator
+            Estimator to use.
+        """
         
         if isinstance(X, torch.Tensor) & (self.method == 'LedoitWolf'):
             return _LedoitWolf_torch
@@ -526,37 +590,54 @@ class Covariance(sklearn.base.BaseEstimator):
         raise ValueError(f'Got an unexpected combination of method=`{self.method}` and type=`{type(X)}`.') 
     
     def fit(self, X: Union[np.ndarray, torch.Tensor], *args: Any):
-        '''
-        Fit the selected covariance estimator over `X`.
+        """Fit the covariance estimator.
         
-        INPUTS:
-            X   -   Matrix/Tensor
-        '''
+        Parameters
+        ----------
+        X : Union[np.ndarray, torch.Tensor]
+            Data to fit the estimator on.
+        *args : Any
+            Additional arguments to pass to the estimator.
+        
+        Returns
+        -------
+        self : Covariance
+            Fitted covariance estimator.
+        """
         
         return self._get_estimator(X)().fit(X)
     
     def transform(self, X: Union[np.ndarray, torch.Tensor], *args: Any) -> Union[np.ndarray, torch.Tensor]:
-        '''
-        Transform from estimator.
-
-        INPUTS:
-            x   -   Matrix/Tensor
-
-        OUTPUTS:
-            ^x  -   Whitened data
-        '''
-
+        """Whiten data using the fitted covariance estimator.
+        
+        Parameters
+        ----------
+        X : Union[np.ndarray, torch.Tensor]
+            Data to transform.
+        *args : Any
+            Additional arguments to pass to the estimator.
+        
+        Returns
+        -------
+        W : Union[np.ndarray, torch.Tensor]
+            Whitened data.
+        """
         return self._get_estimator(X)().fit_transform(X)
 
     def fit_transform(self, X: Union[np.ndarray, torch.Tensor], *args: Any) -> Union[np.ndarray, torch.Tensor]:
-        '''
-        Fit and transform from estimator.
+        """Fit the covariance estimator and whiten the data.
         
-        INPUTS:
-            x   -   Matrix/Tensor
+        Parameters
+        ----------
+        X : Union[np.ndarray, torch.Tensor]
+            Data to fit the estimator on and transform.
+        *args : Any
+            Additional arguments to pass to the estimator.
         
-        OUTPUTS:
-            ^x  -   Whitened data
-        '''
+        Returns
+        -------
+        W : Union[np.ndarray, torch.Tensor]
+            Whitened data.
+        """
         
         return self._get_estimator(X)().fit_transform(X)

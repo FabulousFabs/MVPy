@@ -13,18 +13,38 @@ from .pearsonr import _pearsonr_numpy, _pearsonr_torch
 from .rank import _rank_numpy, _rank_torch
 
 def spearmanr(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
-    '''
-    Computes Spearman r between `x` and `y`. Note that
-    correlation is always computed over the final dimension in
-    your inputs.
+    """Compute Spearman correlation between x and y. Note that correlations are always computed over the final dimension in your inputs.
     
-    INPUTS:
-        x   -   Vector/Matrix/Tensor
-        y   -   Vector/Matrix/Tensor
+    Parameters
+    ----------
+    x : Union[np.ndarray, torch.Tensor]
+        Matrix to compute correlation with.
+    y : Union[np.ndarray, torch.Tensor]
+        Matrix to compute correlation with.
     
-    OUTPUTS:
-        s   -   Similarities
-    '''
+    Returns
+    -------
+    Union[np.ndarray, torch.Tensor]
+        Spearman correlations.
+    
+    Notes
+    -----
+    Spearman correlations are defined as Pearson correlations between the ranks of x and y.
+    
+    Examples
+    --------
+    >>> import torch
+    >>> from mvpy.math import spearmanr
+    >>> x = torch.tensor([1, 5, 9])
+    >>> y = torch.tensor([1, 50, 60])
+    >>> spearmanr(x, y)
+    tensor(1., dtype=torch.float64)
+    
+    See also
+    --------
+    :func:`mvpy.math.pearsonr`
+    :func:`mvpy.math.rank`
+    """
     
     if isinstance(x, torch.Tensor) & isinstance(y, torch.Tensor):
         return _pearsonr_torch(_rank_torch(x), _rank_torch(y))
@@ -34,17 +54,38 @@ def spearmanr(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Ten
     raise ValueError(f'`x` and `y` must be of the same type, but got `{type(x)}` and `{type(y)}` instead.')
 
 def spearmanr_d(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
-    '''
-    Computes Spearman distance between `x` and `y`. Note that
-    distance is always computed over the final dimension in
-    your inputs.
+    """Compute Spearman distance between x and y. Note that distances are always computed over the final dimension in your inputs.
     
-    INPUTS:
-        x   -   Vector/Matrix/Tensor
-        y   -   Vector/Matrix/Tensor
+    Parameters
+    ----------
+    x : Union[np.ndarray, torch.Tensor]
+        Matrix to compute distance with.
+    y : Union[np.ndarray, torch.Tensor]
+        Matrix to compute distance with.
     
-    OUTPUTS:
-        d   -   Distances
-    '''
+    Returns
+    -------
+    Union[np.ndarray, torch.Tensor]
+        Spearman distances.
+    
+    Notes
+    -----
+    Spearman distances are defined as :math:`1 - \\text{spearmanr}(x, y)`.
+    
+    Examples
+    --------
+    >>> import torch
+    >>> from mvpy.math import spearmanr
+    >>> x = torch.tensor([1, 5, 9])
+    >>> y = torch.tensor([1, 50, 60])
+    >>> spearmanr_d(x, y)
+    tensor(0., dtype=torch.float64)
+    
+    See also
+    --------
+    :func:`mvpy.math.spearmanr`
+    :func:`mvpy.math.pearsonr`
+    :func:`mvpy.math.rank`
+    """
     
     return 1 - spearmanr(x, y)

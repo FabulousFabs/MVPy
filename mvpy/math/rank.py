@@ -9,16 +9,18 @@ import torch
 from typing import Union
 
 def _rank_numpy(x: np.ndarray) -> np.ndarray:
-    '''
-    Rank data with ties as averages. Note
-    that features must be the final dimension.
-    
-    INPUTS:
-        x   -   Vector/Matrix/Tensor (numpy array)
+    """Rank numpy array along final dimension. Ties are computed as averages.
 
-    OUTPUTS:
-        r   -   Ranked data
-    '''
+    Parameters
+    ----------
+    x : np.ndarray
+        Tensor to rank.
+    
+    Returns
+    -------
+    np.ndarray
+        Ranked data.
+    """
     
     # make sure x is floating point
     if np.issubdtype(x.dtype, np.floating) == False:
@@ -47,16 +49,18 @@ def _rank_numpy(x: np.ndarray) -> np.ndarray:
     return r
 
 def _rank_torch(x: torch.Tensor) -> torch.Tensor:
-    '''
-    Rank data with ties as averages. Note
-    that features must be the final dimension.
-    
-    INPUTS:
-        x   -   Vector/Matrix/Tensor
+    """Rank torch tensor along final dimension. Ties are computed as averages.
 
-    OUTPUTS:
-        r   -   Ranked data
-    '''
+    Parameters
+    ----------
+    x : torch.Tensor
+        Tensor to rank.
+    
+    Returns
+    -------
+    torch.Tensor
+        Ranked data.
+    """
     
     # make sure x is a floating point tensor
     if torch.is_floating_point(x) == False:
@@ -84,16 +88,26 @@ def _rank_torch(x: torch.Tensor) -> torch.Tensor:
     return r
 
 def rank(x: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
-    '''
-    Ranka data in `x`. Ties are computed as
-    averages.
+    """Rank data in x along its final feature dimension. Ties are computed as averages.
     
-    INPUTS:
-        x   -   Unranked data (in torch or numpy).
+    Parameters
+    ----------
+    x : Union[np.ndarray, torch.Tensor]
+        Unranked data ([samples x ...] x features).
     
-    OUTPUTS:
-        r   -   Ranked data (in torch or numpy).
-    '''
+    Returns
+    -------
+    r : Union[np.ndarray, torch.Tensor]
+        Ranked data ([samples x ...] x features).
+    
+    Examples
+    --------
+    >>> import torch
+    >>> from mvpy.math import rank
+    >>> x = torch.tensor([2, 0.5, 1, 1])
+    >>> rank(x)
+    tensor([4.0000, 1.0000, 2.5000, 2.5000])
+    """
     
     if isinstance(x, torch.Tensor):
         return _rank_torch(x)

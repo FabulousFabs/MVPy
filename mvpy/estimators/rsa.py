@@ -1,9 +1,6 @@
 '''
 A collection of estimators for computing
-representational similarities. For more
-information, see:
-
-    Kriegeskorte, N. (2008). Representational similarity analaysis - connecting the branches of systems neuroscience. Frontiers in Systems Neuroscience. 10.3389/neuro.06.004.2008
+representational similarities.
 '''
 
 import sklearn
@@ -17,19 +14,19 @@ from typing import Union, Callable, Any
 from ..math import euclidean
 
 class _RSA_numpy(sklearn.base.BaseEstimator):
-    '''
-    Implements a trial-wise RSA estimator using numpy
-    as our backend. This is the default estimator.
-    '''
+    """Implements a representational similarity estimator using numpy backend.
+    """
     
     def __init__(self, estimator: Callable = euclidean, n_jobs: Union[int, None] = None):
-        '''
-        Constructor.
+        """Obtain a representational similarity estimator.
         
-        INPUTS:
-            estimator   -   The estimator to use for computing the RDM (default = mv.math.euclidean).
-            n_jobs      -   The number of parallel jobs to use (default = None).
-        '''
+        Parameters
+        ----------
+        estimator : Callable, optional
+            The estimator to use for computing the RDM (default = mv.math.euclidean).
+        n_jobs : Union[int, None], optional
+            The number of parallel jobs to use (default = None).
+        """
         
         self.estimator_ = estimator
         self.n_jobs_ = n_jobs
@@ -39,23 +36,26 @@ class _RSA_numpy(sklearn.base.BaseEstimator):
         self.rdm_ = None
 
     def fit(self, X: np.ndarray, *args: Any):
-        '''
-        Fit method (vacant).
-        '''
+        """Fit the estimator (vacant).
+        """
         
         return self
     
     def transform(self, X: np.ndarray, *args: Any) -> np.ndarray:
-        '''
-        Computes the RDM for a given trial-wise dataset.
+        """Transforms the data to representational similarity space.
         
-        INPUTS:
-            X       -   The data to compute the RDM for (samples x [...] x features [x time])
-            args    -   Additional arguments to pass to the estimator.
+        Parameters
+        ----------
+        X : np.ndarray
+            The data to compute the RDM for (samples x [...] x features [x time])
+        args : Any
+            Additional arguments to pass to the estimator
         
-        OUTPUTS:
-            rdm     -   The RDM (trials x [...] [x time])
-        '''
+        Returns
+        -------
+        rdm : np.ndarray
+            The RDM (trials x [...] [x time])
+        """
         
         # setup dimensions
         dims = X.shape
@@ -90,33 +90,37 @@ class _RSA_numpy(sklearn.base.BaseEstimator):
         return self.rdm_
     
     def fit_transform(self, X: np.ndarray, *args: Any) -> np.ndarray:
-        '''
-        Computes the RDM for a given trial-wise dataset.
+        """Fits the estimator and transforms data to representational similarity space.
         
-        INPUTS:
-            X       -   The data to compute the RDM for (samples x [...] x features [x time])
-            args    -   Additional arguments to pass to the estimator.
+        Parameters
+        ----------
+        X : np.ndarray
+            The data to compute the RDM for (samples x [...] x features [x time])
+        args : any
+            Additional arguments to pass to the estimator.
         
-        OUTPUTS:
-            rdm     -   The RDM (trials x [...] [x time])
-        '''
+        Returns
+        -------
+        rdm : np.ndarray
+            The RDM (trials x [...] [x time])
+        """
         
         return self.fit(X, *args).transform(X, *args)
 
 class _RSA_torch(sklearn.base.BaseEstimator):
-    '''
-    Implements a trial-wise RSA estimator using torch
-    as our backend. This is the default estimator.
-    '''
+    """Implements representational similarity estimation using torch as our backend.
+    """
     
     def __init__(self, estimator: Callable = euclidean, n_jobs: Union[int, None] = None):
-        '''
-        Constructor.
+        """Obtain a RSA estimator.
         
-        INPUTS:
-            estimator   -   The estimator to use for computing the RDM (default = mv.math.euclidean).
-            n_jobs      -   The number of parallel jobs to use (default = None).
-        '''
+        Parameters
+        ----------
+        estimator : Callable, optional
+            The estimator to use for computing the RDM (default = mv.math.euclidean).
+        n_jobs : Union[int, None], optional
+            The number of parallel jobs to use (default = None).
+        """
         
         self.estimator_ = estimator
         self.n_jobs_ = n_jobs
@@ -126,23 +130,26 @@ class _RSA_torch(sklearn.base.BaseEstimator):
         self.rdm_ = None
 
     def fit(self, X: torch.Tensor, *args: Any):
-        '''
-        Fit method (vacant).
-        '''
+        """Fit the estimator (vacant).
+        """
         
         return self
     
     def transform(self, X: torch.Tensor, *args: Any) -> torch.Tensor:
-        '''
-        Computes the RDM for a given trial-wise dataset.
+        """Transform the data to representational similarity space.
         
-        INPUTS:
-            X       -   The data to compute the RDM for (samples x [...] x features [x time])
-            args    -   Additional arguments to pass to the estimator.
+        Parameters
+        ----------
+        X : torch.Tensor
+            The data to compute the RDM for (samples x [...] x features [x time])
+        args : Any
+            Additional arguments to pass to the estimator.
         
-        OUTPUTS:
-            rdm     -   The RDM (trials x [...] [x time])
-        '''
+        Returns
+        -------
+        rdm : torch.Tensor
+            The RDM (trials x [...] [x time])
+        """
         
         # setup dimensions
         dims = X.shape
@@ -177,35 +184,38 @@ class _RSA_torch(sklearn.base.BaseEstimator):
         return self.rdm_
     
     def fit_transform(self, X: torch.Tensor, *args: Any) -> torch.Tensor:
-        '''
-        Computes the RDM for a given trial-wise dataset.
+        """Fit the estimator and transform data to representational similarity space.
         
-        INPUTS:
-            X       -   The data to compute the RDM for (samples x [...] x features [x time])
-            args    -   Additional arguments to pass to the estimator.
+        Parameters
+        ----------
+        X : torch.Tensor
+            The data to compute the RDM for (samples x [...] x features [x time]).
+        args : Any
+            Additional arguments to pass to the estimator.
         
-        OUTPUTS:
-            rdm     -   The RDM (trials x [...] [x time])
-        '''
+        Returns
+        -------
+        torch.Tensor
+            The RDM (trials x [...] [x time]).
+        """
         
         return self.fit(X, *args).transform(X, *args)
 
 class _GroupedRSA_numpy(sklearn.base.BaseEstimator):
-    '''
-    Implements a group-wise RSA estimator using numpy
-    as our backend. Note that grouped estimators are
-    required only for cross-validated metrics.
-    '''
+    """Implements a grouped RSA estimator using numpy as our backend.
+    """
     
     def __init__(self, estimator: Callable = euclidean, n_jobs: Union[int, None] = None):
-        '''
-        Constructor.
+        """Obtain a grouped RSA estimator.
         
-        INPUTS:
-            estimator   -   The estimator to use for computing the RDM (default = mv.math.euclidean).
-            n_jobs      -   The number of parallel jobs to use (default = None).
-        '''
-        
+        Parameters
+        ----------
+        estimator : Callable, optional
+            The estimator to use for computing the RDM (default = mv.math.euclidean).
+        n_jobs : int, optional
+            The number of parallel jobs to use (default = None).
+        """
+
         self.estimator_ = estimator
         self.n_jobs_ = n_jobs
         
@@ -214,23 +224,26 @@ class _GroupedRSA_numpy(sklearn.base.BaseEstimator):
         self.rdm_ = None
     
     def fit(self, *args):
-        '''
-        Fit method (vacant).
-        '''
+        """Fit the estimator (vacant).
+        """
         
         return self
 
     def transform(self, X: np.ndarray, *args: Any) -> np.ndarray:
-        '''
-        Computes the RDM for a given grouped dataset.
+        """Transform the data to representational similarity space.
         
-        INPUTS:
-            X       -   The data to compute the RDM for (samples x groups x [...] x features [x time])
-            args    -   Additional arguments to pass to the estimator.
+        Parameters
+        ----------
+        X : np.ndarray
+            The data to compute the RDM for (samples x groups x [...] x features [x time])
+        args : any
+            Additional arguments to pass to the estimator.
         
-        OUTPUTS:
-            rdm     -   The RDM (groupings x [...] [x time])
-        '''
+        Returns
+        -------
+        rdm : np.ndarray
+            The RDM (groupings x [...] [x time])
+        """
         
         # setup dimensions
         dims = X.shape
@@ -265,34 +278,37 @@ class _GroupedRSA_numpy(sklearn.base.BaseEstimator):
         return self.rdm_
     
     def fit_transform(self, X: np.ndarray, *args: Any) -> np.ndarray:
-        '''
-        Computes the RDM for a given grouped dataset.
+        """Fit the estimator and transform data to representational similarity.
         
-        INPUTS:
-            X       -   The data to compute the RDM for (samples x groups x [...] x features [x time])
-            args    -   Additional arguments to pass to the estimator.
+        Parameters
+        ----------
+        X : np.ndarray
+            The data to compute the RDM for (samples x groups x [...] x features [x time]).
+        args : Any
+            Additional arguments to pass to the estimator.
         
-        OUTPUTS:
-            rdm     -   The RDM (groupings x [...] [x time])
-        '''
+        Returns
+        -------
+        np.ndarray
+            The RDM (groupings x [...] [x time]).
+        """
         
         return self.fit(X, *args).transform(X, *args)
 
 class _GroupedRSA_torch(sklearn.base.BaseEstimator):
-    '''
-    Implements a group-wise RSA estimator using torch
-    as our backend. Note that grouped estimators are
-    required only for cross-validated metrics.
-    '''
+    """Implements a group-wise RSA estimator using torch as our backend.
+    """
     
     def __init__(self, estimator: Callable = euclidean, n_jobs: Union[int, None] = None):
-        '''
-        Constructor.
+        """Obtain a grouped RSA estimator.
         
-        INPUTS:
-            estimator   -   The estimator to use for computing the RDM (default = mv.math.euclidean).
-            n_jobs      -   The number of parallel jobs to use (default = None).
-        '''
+        Parameters
+        ----------
+        estimator : Callable, optional
+            The estimator to use for computing the RDM (default = mv.math.euclidean).
+        n_jobs : Union[int, None], optional
+            The number of parallel jobs to use. (default=None)
+        """
         
         self.estimator_ = estimator
         self.n_jobs_ = n_jobs
@@ -301,24 +317,26 @@ class _GroupedRSA_torch(sklearn.base.BaseEstimator):
         self.cy_ = None
         self.rdm_ = None
     
-    def fit(self, *args):
-        '''
-        Fit method (vacant).
-        '''
+    def fit(self, X: torch.Tensor, *args):
+        """Fit the estimator (vaccant)."""
         
         return self
 
     def transform(self, X: torch.Tensor, *args: Any) -> torch.Tensor:
-        '''
-        Computes the RDM for a given grouped dataset.
+        """Computes the RDM for a given grouped dataset.
         
-        INPUTS:
-            X       -   The data to compute the RDM for (samples x groups x [...] x features [x time])
-            args    -   Additional arguments to pass to the estimator.
+        Parameters
+        ----------
+        X : torch.Tensor
+            The data to compute the RDM for (samples x groups x [...] x features [x time])
+        args : Any
+            Additional arguments
         
-        OUTPUTS:
-            rdm     -   The RDM (groupings x [...] [x time])
-        '''
+        Returns
+        -------
+        rdm : torch.Tensor
+            The RDM (groupings x [...] [x time])
+        """
         
         # setup dimensions
         dims = X.shape
@@ -353,49 +371,129 @@ class _GroupedRSA_torch(sklearn.base.BaseEstimator):
         return self.rdm_
     
     def fit_transform(self, X: torch.Tensor, *args: Any) -> np.ndarray:
-        '''
-        Computes the RDM for a given grouped dataset.
+        """Fit the estimaotor and transform data to representational similarity.
         
-        INPUTS:
-            X       -   The data to compute the RDM for (samples x groups x [...] x features [x time])
-            args    -   Additional arguments to pass to the estimator.
+        Parameters
+        ----------
+        X : torch.Tensor
+            The data to compute the RDM for (samples x groups x [...] x features [x time]).
+        args : Any
+            Additional arguments to pass to the estimator.
         
-        OUTPUTS:
-            rdm     -   The RDM (groupings x [...] [x time])
-        '''
+        Returns
+        -------
+        rdm : torch.Tensor
+            The RDM (groupings x [...] [x time]).
+        """
         
         return self.fit(X, *args).transform(X, *args)
 
 class RSA(sklearn.base.BaseEstimator):
-    '''
-    Class managing the RSA estimators.
-    '''
+    """Implements representational similarity analysis as an estimator. Note that this class expects features to be the second to last dimension.
+    
+    Parameters
+    ----------
+    grouped : bool, default=False
+        Whether to use a grouped RSA (this is required for cross-validated metrics to make sense, irrelevant otherwise).
+    estimator : callable, default=mv.math.euclidean
+        The estimator/metric to use for RDM computation.
+    n_jobs : int, default=None
+        Number of jobs to run in parallel (default = None).
+    
+    Attributes
+    ----------
+    rdm_ : Union[np.ndarray, torch.Tensor]
+        The representational (dis)similarity matrix.
+    cx_ : Union[np.ndarray, torch.Tensor]
+        The upper triangular indices of the RDM.
+    cy_ : Union[np.ndarray, torch.Tensor]
+        The upper triangular indices of the RDM.
+    grouped_ : bool
+        Whether the RSA is grouped.
+    estimator_ : Callable
+        The estimator/metric to use for RDM computation.
+    n_jobs_ : int
+        Number of jobs to run in parallel.
+    
+    Notes
+    -----
+    If you would like to perform, for example, a cross-validated RSA using :func:`mvpy.math.cv_euclidean`, you should make sure that the first dimension in your data is trials, whereas the second dimension groups them meaningfully. The resulting RDM will then be computed over groups, with cross-validation over trials.
+    
+    For more information on representational similarity, please see [2]_.
+    
+    Examples
+    --------
+    Let's assume we have some data with 100 trials and 5 groups, recording 10 channels over 50 time points:
+    
+    >>> import torch
+    >>> from mvpy.math import euclidean, cv_euclidean
+    >>> from mvpy.estimators import RSA
+    >>> X = torch.normal(0, 1, (100, 5, 10, 50))
+    >>> rsa = RSA(estimator = euclidean)
+    >>> rsa.transform(X).shape
+    torch.Size([4950, 5, 50])
+    
+    If we want to compute a cross-validated RSA over the groups instead, we can use:
+    
+    >>> rsa = RSA(grouped = True, estimator = cv_euclidean)
+    >>> rsa.transform(X).shape
+    torch.Size([10, 50])
+    
+    Finally, if we want to plot the full RDM, we can do:
+    
+    >>> rdm = torch.zeros((5, 5, 50))
+    >>> rdm[rsa.cx_, rsa.cy_] = rsa.rdm_
+    >>> import matplotlib.pyplot as plt
+    >>> plt.imshow(rdm[...,0], cmap = 'RdBu_r')
+    
+    References
+    ----------
+    .. [2] Kriegeskorte, N. (2008). Representational similarity analaysis - connecting the branches of systems neuroscience. Frontiers in Systems Neuroscience. 10.3389/neuro.06.004.2008
+    
+    See also
+    --------
+    :func:`mvpy.math.euclidean`
+    :func:`mvpy.math.cv_euclidean`
+    :func:`mvpy.math.cosine`
+    :func:`mvpy.math.cosine_d`
+    :func:`mvpy.math.pearsonr`
+    :func:`mvpy.math.pearsonr_d`
+    :func:`mvpy.math.spearmanr`
+    :func:`mvpy.math.spearmanr_d`
+    """
     
     def __init__(self, grouped: bool = False, estimator: Callable = euclidean, n_jobs: Union[int, None] = None):
-        '''
-        Constructor.
+        """Obtain a representational similarity estimator.
         
-        INPUTS:
-            grouped     -   Do we need a grouped RSA (this is required for cross-validated metrics to make sense, irrelevant otherwise)?
-            estimator   -   The estimator/metric to use (default = mv.math.euclidean).
-            n_jobs      -   Number of jobs to run in parallel (default = None).
-        '''
+        Parameters
+        ----------
+        grouped : bool, default=False
+            Whether to use a grouped RSA (this is required for cross-validated metrics to make sense, irrelevant otherwise).
+        estimator : callable, default=mv.math.euclidean
+            The estimator to use.
+        n_jobs : int, default=None
+            Number of jobs to run in parallel (default = None).
+        """
         
         self.grouped_ = grouped
         self.estimator_ = estimator
         self.n_jobs_ = n_jobs
     
     def _get_estimator(self, X: np.ndarray, *args: Any) -> sklearn.base.BaseEstimator:
-        '''
-        Given grouping and data, decide which RSA estimator to supply.
+        """Given grouping and data, determine which estimator to use.
         
-        INPUTS:
-            X       -   The data.
-            args    -   Additional arguments.
+        Parameters
+        ----------
+        X : np.ndarray
+            The data to compute the RDM for.
+        args : Any
+            Additional arguments
         
-        OUTPUTS:
-            RSA     -   The estimator to use.
-        '''
+        Returns
+        -------
+        estimator : sklearn.base.BaseEstimator
+            The estimator to use.
+        """
         
         if self.grouped_ & isinstance(X, torch.Tensor):
             return _GroupedRSA_torch
@@ -409,34 +507,50 @@ class RSA(sklearn.base.BaseEstimator):
         raise ValueError(f'Got an unexpected combination of grouped=`{self.grouped_}` and type=`{type(X)}`.')
 
     def fit(self, X: Union[np.ndarray, torch.Tensor], *args: Any) -> Any:
-        '''
-        Call fit method on the estimator.
+        """Fit the estimator.
         
-        INPUTS:
-            X       -   The data (either [[samples] x ][samples] x features x time or [samples] x grouping [x samples [x samples]] x features x time).
-            args    -   Additional arguments to pass to estimator.
-        '''
+        Parameters
+        ----------
+        X : Union[np.ndarray, torch.Tensor]
+            The data to compute the RDM for.
+        args : Any
+            Additional arguments
+        """
         
         return self._get_estimator(X, *args)(estimator = self.estimator_, n_jobs = self.n_jobs_).fit(X, *args)
     
     def transform(self, X: Union[np.ndarray, torch.Tensor], *args: Any) -> Union[np.ndarray, torch.Tensor]:
-        '''
-        Call transform method on the estimator.
+        """Transform the data into representational similarity.
         
-        INPUTS:
-            X       -   The data (either [[samples] x ][samples] x features x time or [samples] x grouping [x samples [x samples]] x features x time).
-            args    -   Additional arguments to pass to estimator.
-        '''
+        Parameters
+        ----------
+        X : Union[np.ndarray, torch.Tensor]
+            The data to compute the RDM for.
+        args : Any
+            Additional arguments
+        
+        Returns
+        -------
+        rdm : Union[np.ndarray, torch.Tensor]
+            The representational similarity.
+        """
         
         return self._get_estimator(X, *args)(estimator = self.estimator_, n_jobs = self.n_jobs_).transform(X, *args)
     
     def fit_transform(self, X: Union[np.ndarray, torch.Tensor], *args: Any) -> Union[np.ndarray, torch.Tensor]:
-        '''
-        Call fit_transform methond on the estimator.
+        """Fit the estimator and transform data into representational similarity.
         
-        INPUTS:
-            X       -   The data (either [[samples] x ][samples] x features x time or [samples] x grouping [x samples [x samples]] x features x time).
-            args    -   Additional arguments to pass to estimator.
-        '''
+        Parameters
+        ----------
+        X : Union[np.ndarray, torch.Tensor]
+            The data to compute the RDM for.
+        args : Any
+            Additional arguments
+        
+        Returns
+        -------
+        rdm : Union[np.ndarray, torch.Tensor]
+            The representational similarity.
+        """
         
         return self._get_estimator(X, *args)(estimator = self.estimator_, n_jobs = self.n_jobs_).fit_transform(X, *args)

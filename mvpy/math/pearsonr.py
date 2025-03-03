@@ -10,17 +10,20 @@ import torch
 from typing import Union
 
 def _pearsonr_numpy(x: np.ndarray, y: np.ndarray) -> np.ndarray:
-    '''
-    Computes pearson correlation between vectors in x and y using
-    NumPy as a backend.
+    """Computes pearson correlations between final dimensions of x and y. Note that this function is not exported and should not be called directly.
     
-    INPUTS:
-        x   -   Tensor (samples x samples x features)
-        y   -   Tensor (samples x samples x features)
+    Parameters
+    ----------
+    x : np.ndarray
+        Matrix ([samples ...] x features)
+    y : np.ndarray
+        Matrix ([samples ...] x features)
     
-    OUTPUTS:
-        s   -   Similarities
-    '''
+    Returns
+    -------
+    np.ndarray
+        Vector or matrix of pearson correlations
+    """
     
     if x.shape != y.shape:
         raise ValueError('`x` and `y` must have the same shape.')
@@ -30,17 +33,20 @@ def _pearsonr_numpy(x: np.ndarray, y: np.ndarray) -> np.ndarray:
     return np.sum(Δx * Δy, axis = -1) / np.sqrt(np.sum(Δx ** 2, axis = -1) * np.sum(Δy ** 2, axis = -1))
 
 def _pearsonr_torch(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
-    '''
-    Computes pearson correlation between vectors in x and y using
-    torch as a backend.
+    """Computes pearson correlations between final dimensions of x and y. Note that this function is not exported and should not be called directly.
     
-    INPUTS:
-        x   -   Tensor (samples x samples x features)
-        y   -   Tensor (samples x samples x features)
+    Parameters
+    ----------
+    x : torch.Tensor
+        Matrix ([samples ...] x features)
+    y : torch.Tensor
+        Matrix ([samples ...] x features)
     
-    OUTPUTS:
-        s   -   Similarities
-    '''
+    Returns
+    -------
+    torch.Tensor
+        Pearson correlations.
+    """
     
     if x.shape != y.shape:
         raise ValueError('`x` and `y` must have the same shape.')
@@ -50,18 +56,37 @@ def _pearsonr_torch(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
     return torch.sum(Δx * Δy, -1) / torch.sqrt(torch.sum(Δx ** 2, -1) * torch.sum(Δy ** 2, -1))
 
 def pearsonr(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
-    '''
-    Computes Pearson r between `x` and `y`. Note that
-    correlation is always computed over the final dimension in
-    your inputs.
+    """Computes pearson correlations between x and y. Note that correlations are always computed over the final dimension.
     
-    INPUTS:
-        x   -   Vector/Matrix/Tensor
-        y   -   Vector/Matrix/Tensor
+    Parameters
+    ----------
+    x : Union[np.ndarray, torch.Tensor]
+        Matrix ([samples ...] x features)
+    y : Union[np.ndarray, torch.Tensor]
+        Matrix ([samples ...] x features)
     
-    OUTPUTS:
-        s   -   Similarities
-    '''
+    Returns
+    -------
+    Union[np.ndarray, torch.Tensor]
+        Vector or matrix of pearson correlations
+    
+    Notes
+    -----
+    Pearson correlations are defined as:
+
+    .. math:: r = \\frac{\\sum{(x_i - \\bar{x})(y_i - \\bar{y})}}{\\sqrt{\sum{(x_i - \\bar{x})^2} \\sum{(y_i - \\bar{y})^2}}}
+    
+    where :math:`x_i` and :math:`y_i` are the :math:`i`-th elements of :math:`x` and :math:`y`, respectively.
+    
+    Examples
+    --------
+    >>> import torch
+    >>> from mvpy.math import pearsonr
+    >>> x = torch.tensor([1, 2, 3])
+    >>> y = torch.tensor([4, 5, 6])
+    >>> pearsonr(x, y)
+    tensor(1., dtype=torch.float64)
+    """
     
     if isinstance(x, torch.Tensor) & isinstance(y, torch.Tensor):
         return _pearsonr_torch(x, y)
@@ -71,17 +96,36 @@ def pearsonr(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tens
     raise ValueError(f'`x` and `y` must be of the same type, but got `{type(x)}` and `{type(y)}` instead.')
 
 def pearsonr_d(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
-    '''
-    Computes Pearson distance between `x` and `y`. Note that
-    distance is always computed over the final dimension in
-    your inputs.
+    """Computes Pearson distance between x and y. Note that distances are always computed over the final dimension in your inputs.
     
-    INPUTS:
-        x   -   Vector/Matrix/Tensor
-        y   -   Vector/Matrix/Tensor
+    Parameters
+    ----------
+    x : Union[np.ndarray, torch.Tensor]
+        Vector/Matrix/Tensor
+    y : Union[np.ndarray, torch.Tensor]
+        Vector/Matrix/Tensor
     
-    OUTPUTS:
-        d   -   Distances
-    '''
+    Returns
+    -------
+    Union[np.ndarray, torch.Tensor]
+        Distances
+    
+    Notes
+    -----
+    Pearson distance is defined as :math:`1 - \\text{pearsonr}(x, y)`.
+    
+    Examples
+    --------
+    >>> import torch
+    >>> from mvpy.math import pearsonr_d
+    >>> x = torch.tensor([1, 2, 3])
+    >>> y = torch.tensor([-1, -2, -3])
+    >>> pearsonr_d(x, y)
+    tensor(2.0, dtype=torch.float64)
+    
+    See also
+    --------
+    :func:`mvpy.math.pearsonr`
+    """
     
     return 1 - pearsonr(x, y)

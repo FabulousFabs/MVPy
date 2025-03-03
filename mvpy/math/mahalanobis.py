@@ -10,18 +10,31 @@ import torch
 from typing import Union
 
 def _mahalanobis_numpy(x: np.ndarray, y: np.ndarray, Σ: np.ndarray) -> np.ndarray:
-    '''
-    Computes mahalanobis distance between vectors in x and y using
-    NumPy as a backend.
+    """Computes mahalanobis distance between x and y using inverse covariance matrix Σ. Note that this function is not exported and should not be called directly. See :func:`mahalanobis` instead.
+
+    Parameters
+    ----------
+    x : Union[np.ndarray, torch.Tensor]
+        Matrix ([samples ...] x features)
+    y : Union[np.ndarray, torch.Tensor]
+        Matrix ([samples ...] x features)
+    Σ : Union[np.ndarray, torch.Tensor]
+        Precision matrix (features x features)
     
-    INPUTS:
-        x   -   Tensor ([[samples x ]samples x ]features)
-        y   -   Tensor ([[samples x ]samples x ]features)
-        Σ   -   Precision matrix (features x features)
+    Returns
+    -------
+    Union[np.ndarray, torch.Tensor]
+        Vector or matrix of distances.
     
-    OUTPUTS:
-        s   -   Distance
-    '''
+    Notes
+    -----
+    Mahalanobis distance is defined as:
+    
+    .. math::
+        d(x, y) = \sqrt{(x - y)^T Σ^{-1} (x - y)}
+    
+    where :math:`x` and :math:`y` are the matrices to compute the distance between, and :math:`Σ` is the covariance matrix.
+    """
     
     if x.shape != y.shape:
         raise ValueError('`x` and `y` must have the same shape.')
@@ -36,18 +49,31 @@ def _mahalanobis_numpy(x: np.ndarray, y: np.ndarray, Σ: np.ndarray) -> np.ndarr
     return np.sqrt(S)
 
 def _mahalanobis_torch(x: torch.Tensor, y: torch.Tensor, Σ: torch.Tensor) -> torch.Tensor:
-    '''
-    Computes mahalanobis distance between vectors in x and y using
-    torch as a backend.
+    """Computes mahalanobis distance between x and y using inverse covariance matrix Σ. Note that this function is not exported and should not be called directly. See :func:`mahalanobis` instead.
+
+    Parameters
+    ----------
+    x : Union[np.ndarray, torch.Tensor]
+        Matrix ([samples ...] x features)
+    y : Union[np.ndarray, torch.Tensor]
+        Matrix ([samples ...] x features)
+    Σ : Union[np.ndarray, torch.Tensor]
+        Precision matrix (features x features)
     
-    INPUTS:
-        x   -   Tensor ([[samples x ]samples x ]features)
-        y   -   Tensor ([[samples x ]samples x ]features)
-        Σ   -   Precision matrix (features x features)
+    Returns
+    -------
+    Union[np.ndarray, torch.Tensor]
+        Vector or matrix of distances.
     
-    OUTPUTS:
-        s   -   Distance
-    '''
+    Notes
+    -----
+    Mahalanobis distance is defined as:
+    
+    .. math::
+        d(x, y) = \sqrt{(x - y)^T Σ^{-1} (x - y)}
+    
+    where :math:`x` and :math:`y` are the matrices to compute the distance between, and :math:`Σ` is the covariance matrix.
+    """
     
     if x.shape != y.shape:
         raise ValueError('`x` and `y` must have the same shape.')
@@ -68,19 +94,43 @@ def _mahalanobis_torch(x: torch.Tensor, y: torch.Tensor, Σ: torch.Tensor) -> to
     return torch.sqrt(S)
 
 def mahalanobis(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor], Σ: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
-    '''
-    Computes mahalanobis distance between `x` and `y`. Note that
-    distance is always computed over the final dimension in
-    your inputs.
+    """Computes mahalanobis distance between x and y using inverse covariance matrix Σ.
+
+    Parameters
+    ----------
+    x : Union[np.ndarray, torch.Tensor]
+        Matrix ([samples ...] x features)
+    y : Union[np.ndarray, torch.Tensor]
+        Matrix ([samples ...] x features)
+    Σ : Union[np.ndarray, torch.Tensor]
+        Precision matrix (features x features)
     
-    INPUTS:
-        x   -   Vector/Matrix/Tensor
-        y   -   Vector/Matrix/Tensor
-        Σ   -   Inverse covariance matrix
+    Returns
+    -------
+    Union[np.ndarray, torch.Tensor]
+        Vector or matrix of distances.
     
-    OUTPUTS:
-        s   -   Distances
-    '''
+    Notes
+    -----
+    Mahalanobis distance is defined as:
+    
+    .. math::
+        d(x, y) = \sqrt{(x - y)^T Σ^{-1} (x - y)}
+    
+    where :math:`x` and :math:`y` are the matrices to compute the distance between, and :math:`Σ` is the covariance matrix.
+    
+    Examples
+    --------
+    >>> import torch
+    >>> from mvpy.math import mahalanobis
+    >>> from mvpy.estimators import Covariance
+    >>> x, y = torch.normal(0, 1, (10, 50)), torch.normal(0, 1, (10, 50))
+    >>> Σ = Covariance().fit(torch.cat((x, y), 0)).covariance_
+    >>> Σ = torch.linalg.inv(Σ)
+    >>> d = mahalanobis(x, y, Σ)
+    >>> d.shape
+    torch.Size([10])
+    """
     
     if isinstance(x, torch.Tensor) & isinstance(y, torch.Tensor) & isinstance(Σ, torch.Tensor):
         return _mahalanobis_torch(x, y, Σ)

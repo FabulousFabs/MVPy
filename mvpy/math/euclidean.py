@@ -10,17 +10,30 @@ import torch
 from typing import Union
 
 def _euclidean_numpy(x: np.ndarray, y: np.ndarray) -> np.ndarray:
-    '''
-    Computes euclidean distance between vectors in x and y using
-    NumPy as a backend.
+    """Computes euclidean distances using NumPy. This function is not exported and should not be called directly. See :func:`euclidean` instead.
+
+    Parameters
+    ----------
+    x : np.ndarray
+        Matrix ([samples ...] x features)
+    y : np.ndarray
+        Matrix ([samples ...] x features)
     
-    INPUTS:
-        x   -   Tensor ([[samples x ]samples x ]features)
-        y   -   Tensor ([[samples x ]samples x ]features)
+    Returns
+    -------
+    np.ndarray
+        Vector or matrix of euclidean distances
     
-    OUTPUTS:
-        s   -   Distance
-    '''
+    Notes
+    -----
+    Euclidean distances are defined as:
+    
+    .. math::
+
+        d(x, y) = \sqrt{\sum_{i=1}^n (x_i - y_i)^2}
+
+    where :math:`x_i` and :math:`y_i` are the :math:`i`-th elements of :math:`x` and :math:`y`, respectively.
+    """
     
     if x.shape != y.shape:
         raise ValueError('`x` and `y` must have the same shape.')
@@ -28,17 +41,31 @@ def _euclidean_numpy(x: np.ndarray, y: np.ndarray) -> np.ndarray:
     return np.sqrt(np.sum((x - y) ** 2, axis = -1))
 
 def _euclidean_torch(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
-    '''
-    Computes euclidean distance between vectors in x and y using
-    torch as a backend.
+    """Computes euclidean distances using Torch. This function is not exported and should not be called directly. See :func:`euclidean` instead.
+
+    Parameters
+    ----------
+    x : torch.Tensor
+        Matrix ([samples ...] x features)
+    y : torch.Tensor
+        Matrix ([samples ...] x features)
     
-    INPUTS:
-        x   -   Tensor ([[samples x ]samples x ]features)
-        y   -   Tensor ([[samples x ]samples x ]features)
+    Returns
+    -------
+    torch.Tensor
+        Vector or matrix of euclidean distances
     
-    OUTPUTS:
-        s   -   Distance
-    '''
+    Notes
+    -----
+    
+    Euclidean distances are defined as:
+    
+    .. math::
+
+        d(x, y) = \sqrt{\sum_{i=1}^n (x_i - y_i)^2}
+
+    where :math:`x_i` and :math:`y_i` are the :math:`i`-th elements of :math:`x` and :math:`y`, respectively.
+    """
     
     if x.shape != y.shape:
         raise ValueError('`x` and `y` must have the same shape.')
@@ -46,18 +73,40 @@ def _euclidean_torch(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
     return torch.sqrt(torch.sum((x - y) ** 2, -1))
 
 def euclidean(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
-    '''
-    Computes euclidean distance between `x` and `y`. Note that
-    distance is always computed over the final dimension in
-    your inputs.
+    """Computes euclidean distances between x and y.
+
+    Parameters
+    ----------
+    x : Union[np.ndarray, torch.Tensor]
+        Matrix ([samples ...] x features)
+    y : Union[np.ndarray, torch.Tensor]
+        Matrix ([samples ...] x features)
     
-    INPUTS:
-        x   -   Vector/Matrix/Tensor
-        y   -   Vector/Matrix/Tensor
+    Returns
+    -------
+    Union[np.ndarray, torch.Tensor]
+        Vector or matrix of euclidean distances
     
-    OUTPUTS:
-        s   -   Similarities
-    '''
+    Notes
+    -----
+    
+    Euclidean distances are defined as:
+    
+    .. math::
+
+        d(x, y) = \sqrt{\sum_{i=1}^n (x_i - y_i)^2}
+
+    where :math:`x_i` and :math:`y_i` are the :math:`i`-th elements of :math:`x` and :math:`y`, respectively.
+    
+    Examples
+    --------
+    >>> import torch
+    >>> import mvpy as mv
+    >>> x, y = torch.normal(0, 1, (10, 50)), torch.normal(0, 1, (10, 50))
+    >>> d = mv.math.euclidean(x, y)
+    >>> d.shape
+    torch.Size([10])
+    """
     
     if isinstance(x, torch.Tensor) & isinstance(y, torch.Tensor):
         return _euclidean_torch(x, y)
