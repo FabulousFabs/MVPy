@@ -269,8 +269,10 @@ class RidgeCV(sklearn.base.BaseEstimator):
         # check model type
         if isinstance(alphas, torch.Tensor):
             return _RidgeCV_torch(alphas = alphas, fit_intercept = fit_intercept, normalise = normalise, alpha_per_target = alpha_per_target)
-        else:
+        elif isinstance(alphas, np.ndarray):
             return _RidgeCV_numpy(alphas = alphas, fit_intercept = fit_intercept, alpha_per_target = alpha_per_target)
+        
+        raise ValueError(f'Alphas should be of type np.ndarray or torch.tensor, but got {type(alphas)}.')
     
     def fit(self, X: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor]):
         """Fit the estimator.
