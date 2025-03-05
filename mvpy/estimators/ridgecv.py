@@ -131,6 +131,7 @@ class _RidgeCV_torch(sklearn.base.BaseEstimator):
         _, n_y = y.shape
         
         # preprocess
+        X, y = X.clone(), y.clone() # make sure we don't have in-place changes
         X, y, X_offset, X_scale, y_offset = self._preprocess(X, y)
         self.alphas = self.alphas.to(X.dtype).to(X.device)
         
@@ -200,6 +201,20 @@ class _RidgeCV_torch(sklearn.base.BaseEstimator):
             raise ValueError('Model has not been fit yet.')
 
         return X @ self.coef_.transpose(1, 0) + self.intercept_
+
+    def clone(self):
+        """Make a clone of this class.
+        
+        Returns
+        -------
+        RidgeCV
+            A clone of this class.
+        """
+        
+        return _RidgeCV_torch(alphas = self.alphas, 
+                              fit_intercept = self.fit_intercept, 
+                              normalsie = self.normalise, 
+                              alpha_per_target = self.alpha_per_target)
 
 class RidgeCV(sklearn.base.BaseEstimator):
     """Implements RidgeCV using torch as our backend.
@@ -299,6 +314,17 @@ class RidgeCV(sklearn.base.BaseEstimator):
         -------
         y : torch.Tensor
             The predictions.
+        """
+        
+        raise NotImplementedError('This method is not implemented in the base class.')
+    
+    def clone(self):
+        """Make a clone of this class.
+        
+        Returns
+        -------
+        RidgeCV
+            A clone of this class.
         """
         
         raise NotImplementedError('This method is not implemented in the base class.')

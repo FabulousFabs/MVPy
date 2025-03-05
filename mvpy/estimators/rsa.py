@@ -106,6 +106,17 @@ class _RSA_numpy(sklearn.base.BaseEstimator):
         """
         
         return self.fit(X, *args).transform(X, *args)
+    
+    def clone(self):
+        """Obtain a clone of this class.
+        
+        Returns
+        -------
+        _RSA_numpy
+            The cloned estimator.
+        """
+        
+        return _RSA_numpy(estimator = self.estimator_, n_jobs = self.n_jobs_)
 
 class _RSA_torch(sklearn.base.BaseEstimator):
     """Implements representational similarity estimation using torch as our backend.
@@ -200,6 +211,17 @@ class _RSA_torch(sklearn.base.BaseEstimator):
         """
         
         return self.fit(X, *args).transform(X, *args)
+    
+    def clone(self):
+        """Obtain a clone of this class.
+        
+        Returns
+        -------
+        _RSA_torch
+            The cloned estimator.
+        """
+        
+        return _RSA_torch(estimator = self.estimator_, n_jobs = self.n_jobs_)
 
 class _GroupedRSA_numpy(sklearn.base.BaseEstimator):
     """Implements a grouped RSA estimator using numpy as our backend.
@@ -294,6 +316,17 @@ class _GroupedRSA_numpy(sklearn.base.BaseEstimator):
         """
         
         return self.fit(X, *args).transform(X, *args)
+    
+    def clone(self):
+        """Obtain a clone of this class.
+        
+        Returns
+        -------
+        _GroupedRSA_numpy
+            The cloned estimator.
+        """
+        
+        return _GroupedRSA_numpy(estimator = self.estimator_, n_jobs = self.n_jobs_)
 
 class _GroupedRSA_torch(sklearn.base.BaseEstimator):
     """Implements a group-wise RSA estimator using torch as our backend.
@@ -387,6 +420,17 @@ class _GroupedRSA_torch(sklearn.base.BaseEstimator):
         """
         
         return self.fit(X, *args).transform(X, *args)
+    
+    def clone(self):
+        """Obtain a clone of this class.
+        
+        Returns
+        -------
+        _GroupedRSA_torch
+            The cloned estimator.
+        """
+        
+        return _GroupedRSA_torch(estimator = self.estimator_, n_jobs = self.n_jobs_)
 
 class RSA(sklearn.base.BaseEstimator):
     """Implements representational similarity analysis as an estimator. Note that this class expects features to be the second to last dimension.
@@ -554,3 +598,14 @@ class RSA(sklearn.base.BaseEstimator):
         """
         
         return self._get_estimator(X, *args)(estimator = self.estimator_, n_jobs = self.n_jobs_).fit_transform(X, *args)
+    
+    def clone(self):
+        """Clone this class.
+        
+        Returns
+        -------
+        RSA
+            A clone of this class.
+        """
+        
+        return RSA(grouped = self.grouped_, estimator = self.estimator_, n_jobs = self.n_jobs_)

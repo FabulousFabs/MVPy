@@ -257,6 +257,17 @@ class _Empirical_numpy(_Whitener_numpy):
         """
         
         return self.fit(X).transform(X)
+    
+    def clone(self):
+        """Clone this class.
+        
+        Returns
+        -------
+        _Empirical_numpy
+            The cloned object.
+        """
+        
+        return _Empirical_numpy()
 
 class _Empirical_torch(_Whitener_torch):
     """Implements an empirical, biassed covariance estimator.
@@ -320,6 +331,17 @@ class _Empirical_torch(_Whitener_torch):
         """
         
         return self.fit(X).transform(X)
+    
+    def clone(self):
+        """Clone this class.
+        
+        Returns
+        -------
+        _Empirical_torch
+            The cloned object.
+        """
+        
+        return _Empirical_torch()
 
 # add Empirical estimator
 _ESTIMATORS.append('Empirical')
@@ -412,6 +434,17 @@ class _LedoitWolf_numpy(_Whitener_numpy):
         """
         
         return self.fit(X).transform(X)
+    
+    def clone(self):
+        """Clone this class.
+        
+        Returns
+        -------
+        _LedoitWolf_numpy
+            The cloned object.
+        """
+        
+        return _LedoitWolf_numpy()
 
 class _LedoitWolf_torch(_Whitener_torch):
     """Implementation of the Ledoit-Wolf shrinkage estimator.
@@ -497,6 +530,17 @@ class _LedoitWolf_torch(_Whitener_torch):
         """
         
         return self.fit(X).transform(X)
+    
+    def clone(self):
+        """Clone this class.
+        
+        Returns
+        -------
+        _LedoitWolf_torch
+            The cloned object.
+        """
+        
+        return _LedoitWolf_torch()
 
 # add LedoitWolf estimator
 _ESTIMATORS.append('LedoitWolf')
@@ -641,3 +685,14 @@ class Covariance(sklearn.base.BaseEstimator):
         """
         
         return self._get_estimator(X)().fit_transform(X)
+    
+    def clone(self):
+        """Obtain a clone of this class.
+        
+        Returns
+        -------
+        Covariance
+            The cloned object.
+        """
+        
+        return Covariance(method = self.method)

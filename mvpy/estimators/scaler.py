@@ -215,6 +215,17 @@ class _Scaler_numpy(sklearn.base.BaseEstimator):
         """
         
         return self.fit(X, *args, sample_weight = sample_weight).transform(X, *args)
+    
+    def clone(self):
+        """Obtain a clone of this class.
+        
+        Returns
+        -------
+        _Scaler_numpy
+            The clone.
+        """
+        
+        return _Scaler_numpy(with_mean = self.with_mean, with_std = self.with_std_, dims = self.dims_, copy = self.copy_)
 
 class _Scaler_torch(sklearn.base.BaseEstimator):
     r"""A standard scaler for torch tensors. Note that this class is not exported and should not be called directly.
@@ -424,6 +435,17 @@ class _Scaler_torch(sklearn.base.BaseEstimator):
         
         return self.fit(X, *args, sample_weight = sample_weight).transform(X, *args)
 
+    def clone(self):
+        """Obtain a clone of this class.
+        
+        Returns
+        -------
+        _Scaler_torch
+            The clone.
+        """
+        
+        return _Scaler_torch(with_mean = self.with_mean, with_std = self.with_std_, dims = self.dims_, copy = self.copy_)
+
 class Scaler(sklearn.base.BaseEstimator):
     r"""A standard scaler akin to sklearn.preprocessing.StandardScaler. See notes for some differences.
     
@@ -596,3 +618,14 @@ class Scaler(sklearn.base.BaseEstimator):
         """
         
         return self._get_estimator(X, *args)(with_mean = self.with_mean_, with_std = self.with_std_, dims = self.dims_, copy = self.copy_).fit_transform(X, *args, sample_weight = sample_weight)
+    
+    def clone(self):
+        """Obtain a clone of this class.
+        
+        Returns
+        -------
+        Scaler
+            The clone.
+        """
+        
+        return Scaler(with_mean = self.with_mean_, with_std = self.with_std_, dims = self.dims_, copy = self.copy_)

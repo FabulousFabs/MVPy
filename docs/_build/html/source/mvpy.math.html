@@ -1,0 +1,846 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>mvpy.math package &#8212; MVPy 0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'source/mvpy.math';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="mvpy.signal package" href="mvpy.signal.html" />
+    <link rel="prev" title="mvpy.estimators package" href="mvpy.estimators.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">MVPy 0.1 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="mvpy.estimators.html">mvpy.estimators package</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">mvpy.math package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mvpy.signal.html">mvpy.signal package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mvpy.utilities.html">mvpy.utilities package</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../documentation/index.html" class="nav-link">Documentation</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="mvpy.html" class="nav-link">mvpy package</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">mvpy.math package</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="mvpy-math-package">
+<h1>mvpy.math package<a class="headerlink" href="#mvpy-math-package" title="Link to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-mvpy.math.cosine">
+<span id="mvpy-math-cosine-module"></span><h2>mvpy.math.cosine module<a class="headerlink" href="#module-mvpy.math.cosine" title="Link to this heading">#</a></h2>
+<p>Functions to compute cosine (dis-)similarity in a
+nice and vectorised manner using either numpy or
+torch.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mvpy.math.cosine.cosine">
+<span class="sig-prename descclassname"><span class="pre">mvpy.math.cosine.</span></span><span class="sig-name descname"><span class="pre">cosine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.cosine.cosine" title="Link to this definition">#</a></dt>
+<dd><p>Compute cosine similarities between x and y. Note that similarities are always computed over the final dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Vector/Matrix/Tensor</p></li>
+<li><p><strong>y</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Vector/Matrix/Tensor</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Similarities</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Cosine similarity is defined as:</p>
+<div class="math notranslate nohighlight">
+\[\text{cosine}(x, y) = \frac{\mathbf{x} \cdot \mathbf{y}}{\|\mathbf{x}\| \|\mathbf{y}\|}\]</div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.math</span><span class="w"> </span><span class="kn">import</span> <span class="n">cosine</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tesor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cosine</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="go">tensor([-1.])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mvpy.math.cosine.cosine_d">
+<span class="sig-prename descclassname"><span class="pre">mvpy.math.cosine.</span></span><span class="sig-name descname"><span class="pre">cosine_d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.cosine.cosine_d" title="Link to this definition">#</a></dt>
+<dd><p>Compute cosine distances between x and y. Note that distances are always computed over the final dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Vector/Matrix/Tensor</p></li>
+<li><p><strong>y</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Vector/Matrix/Tensor</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Distances</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Cosine distances are computed as <span class="math notranslate nohighlight">\(1 - \text{cosine}(x, y)\)</span>.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.math</span><span class="w"> </span><span class="kn">import</span> <span class="n">cosine_d</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tesor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cosine_d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="go">tensor([2.])</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#module-mvpy.math.cosine" title="mvpy.math.cosine"><code class="xref py py-func docutils literal notranslate"><span class="pre">mvpy.math.cosine()</span></code></a></p>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-mvpy.math.crossvalidated">
+<span id="mvpy-math-crossvalidated-module"></span><h2>mvpy.math.crossvalidated module<a class="headerlink" href="#module-mvpy.math.crossvalidated" title="Link to this heading">#</a></h2>
+<p>Wrapper functions to compute cross-validated metrics from
+the metrics already in this package.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mvpy.math.crossvalidated.cv_euclidean">
+<span class="sig-prename descclassname"><span class="pre">mvpy.math.crossvalidated.</span></span><span class="sig-name descname"><span class="pre">cv_euclidean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.crossvalidated.cv_euclidean" title="Link to this definition">#</a></dt>
+<dd><p>Computes cross-validated euclidean distances between vectors in x and y.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Tensor ([[samples x ]samples x ]features)</p></li>
+<li><p><strong>y</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Tensor ([[samples x ]samples x ]features)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Cross-validated distances</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Cross-validated euclidean distances are defined as:</p>
+<div class="math notranslate nohighlight">
+\[d(x, y)^2 = \sum (x_{i} - y_{i})(x_{j} - y_{j})\]</div>
+<p>where <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span> refer to the indices in the cross-validation folds. Note that this is, therefore, technically a squared measure. For more information, see <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+<p class="rubric">References</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Walther, A., Nili, H., Ejaz, N., Alink, A., Kriegeskorte, N., &amp; Diedrichsen, J. (2016). Reliability of dissimilarity measures for multi-voxel pattern analysis. NeuroImage, 137, 188-200. 10.1016/j.neuroimage.2015.12.012</p>
+</aside>
+</aside>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.math</span><span class="w"> </span><span class="kn">import</span> <span class="n">cv_euclidean</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">cv_euclidean</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">torch.Size([100])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mvpy.math.crossvalidated.cv_mahalanobis">
+<span class="sig-prename descclassname"><span class="pre">mvpy.math.crossvalidated.</span></span><span class="sig-name descname"><span class="pre">cv_mahalanobis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Σ</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.crossvalidated.cv_mahalanobis" title="Link to this definition">#</a></dt>
+<dd><p>Computes cross-validated mahalanobis distances between x and y. This is sometimes also referred to as the crossnobis distance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Matrix ([samples …] x features)</p></li>
+<li><p><strong>y</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Matrix ([samples …] x features)</p></li>
+<li><p><strong>Σ</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Precision matrix (features x features)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Vector or matrix of distances. Note that this will eliminate the trial dimension, too, during cross-validation.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Crossnobis distance is defined as:</p>
+<div class="math notranslate nohighlight">
+\[d(x, y)^2 = (x_i - y_i)^T Σ^{-1} (x_j - y_j)\]</div>
+<p>where <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> are the matrices to compute the distance between, and <span class="math notranslate nohighlight">\(Σ\)</span> is the covariance matrix. Note that here <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span> refer to folds of a cross-validation. Note also that, principally, this metric is a squared measure. For more information, see <a class="footnote-reference brackets" href="#id4" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
+<p class="rubric">References</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id4" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
+<p>Diedrichsen, J., Provost, S., &amp; Zareamoghaddam, H. (2016). On the distribution of cross-validated Mahalanobis distances. arXiv. 10.48550/arXiv.1607.01371</p>
+</aside>
+</aside>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.estimators</span><span class="w"> </span><span class="kn">import</span> <span class="n">Covariance</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.math</span><span class="w"> </span><span class="kn">import</span> <span class="n">cv_mahalanobis</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">)),</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Σ</span> <span class="o">=</span> <span class="n">Covariance</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">covariance_</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Σ</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">Σ</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">cv_mahalanobis</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">Σ</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">torch.Size([50])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-mvpy.math.euclidean">
+<span id="mvpy-math-euclidean-module"></span><h2>mvpy.math.euclidean module<a class="headerlink" href="#module-mvpy.math.euclidean" title="Link to this heading">#</a></h2>
+<p>Functions to compute euclidean distances in a
+nice and vectorised manner using either numpy
+or torch.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mvpy.math.euclidean.euclidean">
+<span class="sig-prename descclassname"><span class="pre">mvpy.math.euclidean.</span></span><span class="sig-name descname"><span class="pre">euclidean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.euclidean.euclidean" title="Link to this definition">#</a></dt>
+<dd><p>Computes euclidean distances between x and y.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Matrix ([samples …] x features)</p></li>
+<li><p><strong>y</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Matrix ([samples …] x features)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Vector or matrix of euclidean distances</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Euclidean distances are defined as:</p>
+<div class="math notranslate nohighlight">
+\[d(x, y) = \sqrt{\sum_{i=1}^n (x_i - y_i)^2}\]</div>
+<p>where <span class="math notranslate nohighlight">\(x_i\)</span> and <span class="math notranslate nohighlight">\(y_i\)</span> are the <span class="math notranslate nohighlight">\(i\)</span>-th elements of <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>, respectively.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">mvpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mv</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">)),</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">mv</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">euclidean</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">torch.Size([10])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-mvpy.math.mahalanobis">
+<span id="mvpy-math-mahalanobis-module"></span><h2>mvpy.math.mahalanobis module<a class="headerlink" href="#module-mvpy.math.mahalanobis" title="Link to this heading">#</a></h2>
+<p>Functions to compute mahalanobis distances in a
+nice and vectorised manner using either numpy
+or torch.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mvpy.math.mahalanobis.mahalanobis">
+<span class="sig-prename descclassname"><span class="pre">mvpy.math.mahalanobis.</span></span><span class="sig-name descname"><span class="pre">mahalanobis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Σ</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.mahalanobis.mahalanobis" title="Link to this definition">#</a></dt>
+<dd><p>Computes mahalanobis distance between x and y using inverse covariance matrix Σ.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Matrix ([samples …] x features)</p></li>
+<li><p><strong>y</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Matrix ([samples …] x features)</p></li>
+<li><p><strong>Σ</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Precision matrix (features x features)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Vector or matrix of distances.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Mahalanobis distance is defined as:</p>
+<div class="math notranslate nohighlight">
+\[d(x, y) = \sqrt{(x - y)^T Σ^{-1} (x - y)}\]</div>
+<p>where <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> are the matrices to compute the distance between, and <span class="math notranslate nohighlight">\(Σ\)</span> is the covariance matrix.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.math</span><span class="w"> </span><span class="kn">import</span> <span class="n">mahalanobis</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.estimators</span><span class="w"> </span><span class="kn">import</span> <span class="n">Covariance</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">)),</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Σ</span> <span class="o">=</span> <span class="n">Covariance</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">covariance_</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Σ</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">Σ</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">mahalanobis</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">Σ</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">torch.Size([10])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-mvpy.math.pearsonr">
+<span id="mvpy-math-pearsonr-module"></span><h2>mvpy.math.pearsonr module<a class="headerlink" href="#module-mvpy.math.pearsonr" title="Link to this heading">#</a></h2>
+<p>Functions to compute Pearson correlation or distance in a
+nice and vectorised manner using either numpy or
+torch.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mvpy.math.pearsonr.pearsonr">
+<span class="sig-prename descclassname"><span class="pre">mvpy.math.pearsonr.</span></span><span class="sig-name descname"><span class="pre">pearsonr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.pearsonr.pearsonr" title="Link to this definition">#</a></dt>
+<dd><p>Computes pearson correlations between x and y. Note that correlations are always computed over the final dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Matrix ([samples …] x features)</p></li>
+<li><p><strong>y</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Matrix ([samples …] x features)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Vector or matrix of pearson correlations</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Pearson correlations are defined as:</p>
+<div class="math notranslate nohighlight">
+\[r = \frac{\sum{(x_i - \bar{x})(y_i - \bar{y})}}{\sqrt{\sum{(x_i - \bar{x})^2} \sum{(y_i - \bar{y})^2}}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(x_i\)</span> and <span class="math notranslate nohighlight">\(y_i\)</span> are the <span class="math notranslate nohighlight">\(i\)</span>-th elements of <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>, respectively.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.math</span><span class="w"> </span><span class="kn">import</span> <span class="n">pearsonr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pearsonr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="go">tensor(1., dtype=torch.float64)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mvpy.math.pearsonr.pearsonr_d">
+<span class="sig-prename descclassname"><span class="pre">mvpy.math.pearsonr.</span></span><span class="sig-name descname"><span class="pre">pearsonr_d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.pearsonr.pearsonr_d" title="Link to this definition">#</a></dt>
+<dd><p>Computes Pearson distance between x and y. Note that distances are always computed over the final dimension in your inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Vector/Matrix/Tensor</p></li>
+<li><p><strong>y</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Vector/Matrix/Tensor</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Distances</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Pearson distance is defined as <span class="math notranslate nohighlight">\(1 - \text{pearsonr}(x, y)\)</span>.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.math</span><span class="w"> </span><span class="kn">import</span> <span class="n">pearsonr_d</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pearsonr_d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="go">tensor(2.0, dtype=torch.float64)</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#module-mvpy.math.pearsonr" title="mvpy.math.pearsonr"><code class="xref py py-func docutils literal notranslate"><span class="pre">mvpy.math.pearsonr()</span></code></a></p>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-mvpy.math.rank">
+<span id="mvpy-math-rank-module"></span><h2>mvpy.math.rank module<a class="headerlink" href="#module-mvpy.math.rank" title="Link to this heading">#</a></h2>
+<p>Functions to rank data in a nice and vectorised manner using
+either numpy or torch.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mvpy.math.rank.rank">
+<span class="sig-prename descclassname"><span class="pre">mvpy.math.rank.</span></span><span class="sig-name descname"><span class="pre">rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.rank.rank" title="Link to this definition">#</a></dt>
+<dd><p>Rank data in x along its final feature dimension. Ties are computed as averages.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Unranked data ([samples x …] x features).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>r</strong> – Ranked data ([samples x …] x features).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.math</span><span class="w"> </span><span class="kn">import</span> <span class="n">rank</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rank</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="go">tensor([4.0000, 1.0000, 2.5000, 2.5000])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-mvpy.math.spearmanr">
+<span id="mvpy-math-spearmanr-module"></span><h2>mvpy.math.spearmanr module<a class="headerlink" href="#module-mvpy.math.spearmanr" title="Link to this heading">#</a></h2>
+<p>Functions to compute Spearman correlation or distance in a
+nice and vectorised manner using either numpy or
+torch.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mvpy.math.spearmanr.spearmanr">
+<span class="sig-prename descclassname"><span class="pre">mvpy.math.spearmanr.</span></span><span class="sig-name descname"><span class="pre">spearmanr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.spearmanr.spearmanr" title="Link to this definition">#</a></dt>
+<dd><p>Compute Spearman correlation between x and y. Note that correlations are always computed over the final dimension in your inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Matrix to compute correlation with.</p></li>
+<li><p><strong>y</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Matrix to compute correlation with.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Spearman correlations.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Spearman correlations are defined as Pearson correlations between the ranks of x and y.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.math</span><span class="w"> </span><span class="kn">import</span> <span class="n">spearmanr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spearmanr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="go">tensor(1., dtype=torch.float64)</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#module-mvpy.math.pearsonr" title="mvpy.math.pearsonr"><code class="xref py py-func docutils literal notranslate"><span class="pre">mvpy.math.pearsonr()</span></code></a>, <a class="reference internal" href="#module-mvpy.math.rank" title="mvpy.math.rank"><code class="xref py py-func docutils literal notranslate"><span class="pre">mvpy.math.rank()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mvpy.math.spearmanr.spearmanr_d">
+<span class="sig-prename descclassname"><span class="pre">mvpy.math.spearmanr.</span></span><span class="sig-name descname"><span class="pre">spearmanr_d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.spearmanr.spearmanr_d" title="Link to this definition">#</a></dt>
+<dd><p>Compute Spearman distance between x and y. Note that distances are always computed over the final dimension in your inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Matrix to compute distance with.</p></li>
+<li><p><strong>y</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Matrix to compute distance with.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Spearman distances.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Spearman distances are defined as <span class="math notranslate nohighlight">\(1 - \text{spearmanr}(x, y)\)</span>.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.math</span><span class="w"> </span><span class="kn">import</span> <span class="n">spearmanr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spearmanr_d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="go">tensor(0., dtype=torch.float64)</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#module-mvpy.math.spearmanr" title="mvpy.math.spearmanr"><code class="xref py py-func docutils literal notranslate"><span class="pre">mvpy.math.spearmanr()</span></code></a>, <a class="reference internal" href="#module-mvpy.math.pearsonr" title="mvpy.math.pearsonr"><code class="xref py py-func docutils literal notranslate"><span class="pre">mvpy.math.pearsonr()</span></code></a>, <a class="reference internal" href="#module-mvpy.math.rank" title="mvpy.math.rank"><code class="xref py py-func docutils literal notranslate"><span class="pre">mvpy.math.rank()</span></code></a></p>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-mvpy.math">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mvpy.math" title="Link to this heading">#</a></h2>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="mvpy.estimators.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">mvpy.estimators package</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="mvpy.signal.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">mvpy.signal package</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.math.cosine">mvpy.math.cosine module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.math.cosine.cosine"><code class="docutils literal notranslate"><span class="pre">cosine()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.math.cosine.cosine_d"><code class="docutils literal notranslate"><span class="pre">cosine_d()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.math.crossvalidated">mvpy.math.crossvalidated module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.math.crossvalidated.cv_euclidean"><code class="docutils literal notranslate"><span class="pre">cv_euclidean()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.math.crossvalidated.cv_mahalanobis"><code class="docutils literal notranslate"><span class="pre">cv_mahalanobis()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.math.euclidean">mvpy.math.euclidean module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.math.euclidean.euclidean"><code class="docutils literal notranslate"><span class="pre">euclidean()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.math.mahalanobis">mvpy.math.mahalanobis module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.math.mahalanobis.mahalanobis"><code class="docutils literal notranslate"><span class="pre">mahalanobis()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.math.pearsonr">mvpy.math.pearsonr module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.math.pearsonr.pearsonr"><code class="docutils literal notranslate"><span class="pre">pearsonr()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.math.pearsonr.pearsonr_d"><code class="docutils literal notranslate"><span class="pre">pearsonr_d()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.math.rank">mvpy.math.rank module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.math.rank.rank"><code class="docutils literal notranslate"><span class="pre">rank()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.math.spearmanr">mvpy.math.spearmanr module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.math.spearmanr.spearmanr"><code class="docutils literal notranslate"><span class="pre">spearmanr()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.math.spearmanr.spearmanr_d"><code class="docutils literal notranslate"><span class="pre">spearmanr_d()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.math">Module contents</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/source/mvpy.math.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Fabian Schneider.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

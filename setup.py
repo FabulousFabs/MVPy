@@ -8,7 +8,8 @@ setup(
         "numpy>=1.19.0",
         "scipy>=1.10.1",
         "torch>=2.5.1",
-        "scikit-learn>=1.2.1"
+        "scikit-learn>=1.2.1",
+        "tqdm>=4.64.1"
     ],
     extras_require={
         "dev": [

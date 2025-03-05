@@ -15,7 +15,7 @@ class _Decoder_numpy(sklearn.base.BaseEstimator):
     
     Parameters
     ----------
-    alphas : np.ndarray
+    alpha : np.ndarray
         The penalties to use for estimation.
     fit_intercept : bool, default=True
         Whether to fit an intercept.
@@ -30,9 +30,15 @@ class _Decoder_numpy(sklearn.base.BaseEstimator):
         The ridge estimator.
     pattern_ : np.ndarray
         The decoded pattern.
+    coef_ : np.ndarray
+        The coefficeints of the decoder.
+    intercept_ : np.ndarray
+        The intercepts of the decoder.
+    alpha_ : np.ndarray
+        The penalties used for estimation.
     """
     
-    def __init__(self, alphas: np.ndarray, **kwargs):
+    def __init__(self, alpha: np.ndarray, **kwargs):
         """Obtain a new decoder.
         
         Parameters
@@ -44,14 +50,17 @@ class _Decoder_numpy(sklearn.base.BaseEstimator):
         """
         
         # setup opts
-        self.alpha = alphas
+        self.alpha = alpha
         self.fit_intercept = True if 'fit_intercept' not in kwargs else kwargs['fit_intercept']
         self.normalise = True if 'normalise' not in kwargs else kwargs['normalise']
         self.alpha_per_target = True if 'alpha_per_target' not in kwargs else kwargs['alpha_per_target']
         
         # setup estimator
-        self.estimator = RidgeCV(alphas = alphas, fit_intercept = self.fit_intercept, normalise = self.normalise, alpha_per_target = self.alpha_per_target)
+        self.estimator = RidgeCV(alphas = alpha, fit_intercept = self.fit_intercept, normalise = self.normalise, alpha_per_target = self.alpha_per_target)
         self.pattern_ = None
+        self.coef_ = None
+        self.intercept_ = None
+        self.alpha_ = None
         
     def fit(self, X: np.ndarray, y: np.ndarray):
         """Fit the decoder.
@@ -74,6 +83,9 @@ class _Decoder_numpy(sklearn.base.BaseEstimator):
         
         # fit the decoder
         self.estimator.fit(X, y)
+        self.alpha_ = self.estimator.alpha_
+        self.coef_ = self.estimator.coef_
+        self.intercept_ = self.estimator.intercept_
         
         # compute covariance of X
         X = (X - X.mean(axis = 0, keepdims = True))
@@ -117,13 +129,24 @@ class _Decoder_numpy(sklearn.base.BaseEstimator):
             raise ValueError('X and ß must have the same number of features.')
         
         return self.estimator.predict(X)
+    
+    def clone(self):
+        """Clone this class.
+        
+        Returns
+        -------
+        _Decoder_numpy
+            The cloned object.
+        """
+        
+        return _Decoder_numpy(alpha = self.alpha, fit_intercept = self.fit_intercept, normalise = self.normalise, alpha_per_target = self.alpha_per_target)
 
 class _Decoder_torch(sklearn.base.BaseEstimator):
     """Obtain a new ridge decoder.
     
     Parameters
     ----------
-    alphas : torch.Tensor
+    alpha : torch.Tensor
         The penalties to use for estimation.
     fit_intercept : bool, default=True
         Whether to fit an intercept.
@@ -138,9 +161,15 @@ class _Decoder_torch(sklearn.base.BaseEstimator):
         The ridge estimator.
     pattern_ : torch.Tensor
         The decoded pattern.
+    coef_ : torch.Tensor
+        The coefficeints of the decoder.
+    intercept_ : torch.Tensor
+        The intercepts of the decoder.
+    alpha_ : torch.Tensor
+        The penalties used for estimation.
     """
     
-    def __init__(self, alphas: torch.Tensor, **kwargs):
+    def __init__(self, alpha: torch.Tensor, **kwargs):
         """Obtain a new decoder.
         
         Parameters
@@ -152,14 +181,17 @@ class _Decoder_torch(sklearn.base.BaseEstimator):
         """
         
         # setup opts
-        self.alpha = alphas
+        self.alpha = alpha
         self.fit_intercept = True if 'fit_intercept' not in kwargs else kwargs['fit_intercept']
         self.normalise = True if 'normalise' not in kwargs else kwargs['normalise']
         self.alpha_per_target = True if 'alpha_per_target' not in kwargs else kwargs['alpha_per_target']
         
         # setup estimator
-        self.estimator = RidgeCV(alphas = alphas, fit_intercept = self.fit_intercept, normalise = self.normalise, alpha_per_target = self.alpha_per_target)
+        self.estimator = RidgeCV(alphas = alpha, fit_intercept = self.fit_intercept, normalise = self.normalise, alpha_per_target = self.alpha_per_target)
         self.pattern_ = None
+        self.coef_ = None
+        self.intercept_ = None
+        self.alpha_ = None
         
     def fit(self, X: torch.Tensor, y: torch.Tensor):
         """Fit the decoder.
@@ -182,6 +214,9 @@ class _Decoder_torch(sklearn.base.BaseEstimator):
         
         # fit the decoder
         self.estimator.fit(X, y)
+        self.coef_ = self.estimator.coef_
+        self.intercept_ = self.estimator.intercept_
+        self.alpha_ = self.estimator.alpha_
         
         # compute covariance of X
         X = (X - X.mean(0, keepdim = True))
@@ -226,6 +261,17 @@ class _Decoder_torch(sklearn.base.BaseEstimator):
         
         return self.estimator.predict(X)
     
+    def clone(self):
+        """Clone this class.
+        
+        Returns
+        -------
+        _Decoder_torch
+            The cloned object.
+        """
+        
+        return _Decoder_torch(alpha = self.alpha, fit_intercept = self.fit_intercept, normalise = self.normalise, alpha_per_target = self.alpha_per_target)
+    
 class Decoder(sklearn.base.BaseEstimator):
     """Implements a simple linear ridge decoder.
     
@@ -246,6 +292,12 @@ class Decoder(sklearn.base.BaseEstimator):
         The ridge estimator.
     pattern_ : Union[torch.Tensor, np.ndarray]
         The decoded pattern.
+    coef_ : Union[torch.Tensor, np.ndarray]
+        The coefficeints of the decoder.
+    intercept_ : Union[torch.Tensor, np.ndarray]
+        The intercepts of the decoder.
+    alpha_ : Union[torch.Tensor, np.ndarray]
+        The penalties used for estimation.
     
     Notes
     -----
@@ -294,9 +346,9 @@ class Decoder(sklearn.base.BaseEstimator):
         
         # determine estimator
         if isinstance(alphas, torch.Tensor):
-            return _Decoder_torch(alphas = alphas, **kwargs)
+            return _Decoder_torch(alpha = alphas, **kwargs)
         elif isinstance(alphas, np.ndarray):
-            return _Decoder_numpy(alphas = alphas, **kwargs)
+            return _Decoder_numpy(alpha = alphas, **kwargs)
         
         raise ValueError(f'Alphas should be of type np.ndarray or torch.tensor, but got {type(alphas)}.')
 
@@ -325,6 +377,17 @@ class Decoder(sklearn.base.BaseEstimator):
         -------
         Union[np.ndarray, torch.Tensor]
             The predictions.
+        """
+        
+        raise NotImplementedError('This method is not implemented in the base class.')
+    
+    def clone(self):
+        """Clone this class.
+        
+        Returns
+        -------
+        Decoder
+            The cloned object.
         """
         
         raise NotImplementedError('This method is not implemented in the base class.')
