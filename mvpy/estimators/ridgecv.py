@@ -180,10 +180,6 @@ class _RidgeCV_torch(sklearn.base.BaseEstimator):
         else:
             self.intercept_ = 0.0
         
-        # fix on some numpy versions
-        if len(self.coef_.shape) == 1:
-            self.coef_ = self.coef_[None,:]
-        
         return self
 
     def predict(self, X: torch.Tensor) -> torch.Tensor:

@@ -83,6 +83,12 @@ class _Decoder_numpy(sklearn.base.BaseEstimator):
         
         # fit the decoder
         self.estimator.fit(X, y)
+        
+        # on some machines, we need a quick fix
+        if len(self.estimator.coef_.shape) == 1:
+            self.estimator.coef_ = self.estimator.coef_[None,:]
+        
+        # copy attributes
         self.alpha_ = self.estimator.alpha_
         self.coef_ = self.estimator.coef_
         self.intercept_ = self.estimator.intercept_
