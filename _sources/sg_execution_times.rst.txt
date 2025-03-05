@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:00.453** total execution time for 4 files **from all galleries**:
+**00:00.452** total execution time for 4 files **from all galleries**:
 
 .. container::
 
@@ -39,8 +39,8 @@ Computation times
      - 00:00.001
      - 0.0
    * - :ref:`sphx_glr_examples_decoders_decoders_intro.py` (``../examples/decoders/decoders_intro.py``)
-     - 00:00.000
+     - 00:00.001
      - 0.0
    * - :ref:`sphx_glr_examples_encoders_encoders_intro.py` (``../examples/encoders/encoders_intro.py``)
-     - 00:00.000
+     - 00:00.001
      - 0.0
