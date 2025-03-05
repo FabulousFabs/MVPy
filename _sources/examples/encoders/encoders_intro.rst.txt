@@ -43,7 +43,7 @@ First, we will do some setup that won't be required on your system.
 
  .. code-block:: none
 
-    /Users/fabianschneider/Desktop/university/PhD/mvpy/MVPy/examples/encoders
+    /home/runner/work/MVPy/MVPy/examples/encoders
 
 
 

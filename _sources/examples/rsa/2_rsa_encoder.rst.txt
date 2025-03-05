@@ -43,7 +43,7 @@ First, we will do some setup that won't be required on your system.
 
  .. code-block:: none
 
-    /Users/fabianschneider/Desktop/university/PhD/mvpy/MVPy/examples/rsa
+    /home/runner/work/MVPy/MVPy/examples/rsa
 
 
 
@@ -51,7 +51,7 @@ First, we will do some setup that won't be required on your system.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.000 seconds)
+   **Total running time of the script:** (0 minutes 0.001 seconds)
 
 
 .. _sphx_glr_download_examples_rsa_2_rsa_encoder.py:
