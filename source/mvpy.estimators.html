@@ -423,6 +423,271 @@ pre-whitening of data.</p>
 </dd></dl>
 
 </section>
+<section id="module-mvpy.estimators.decoder">
+<span id="mvpy-estimators-decoder-module"></span><h2>mvpy.estimators.decoder module<a class="headerlink" href="#module-mvpy.estimators.decoder" title="Link to this heading">#</a></h2>
+<p>A collection of estimators for decoding features using ridge decoders.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvpy.estimators.decoder.Decoder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.estimators.decoder.</span></span><span class="sig-name descname"><span class="pre">Decoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alphas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.decoder.Decoder" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></p>
+<p>Implements a simple linear ridge decoder.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>alphas</strong> (<em>Union</em><em>[</em><em>torch.Tensor</em><em>, </em><em>np.ndarray</em><em>]</em>) – The penalties to use for estimation.</p></li>
+<li><p><strong>fit_intercept</strong> (<em>bool</em><em>, </em><em>default=True</em>) – Whether to fit an intercept.</p></li>
+<li><p><strong>normalise</strong> (<em>bool</em><em>, </em><em>default=True</em>) – Whether to normalise the data.</p></li>
+<li><p><strong>alpha_per_target</strong> (<em>bool</em><em>, </em><em>default=False</em>) – Whether to use a different penalty for each target.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.decoder.Decoder.estimator_">
+<span class="sig-name descname"><span class="pre">estimator_</span></span><a class="headerlink" href="#mvpy.estimators.decoder.Decoder.estimator_" title="Link to this definition">#</a></dt>
+<dd><p>The ridge estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mvpy.estimators.RidgeCV</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.decoder.Decoder.pattern_">
+<span class="sig-name descname"><span class="pre">pattern_</span></span><a class="headerlink" href="#mvpy.estimators.decoder.Decoder.pattern_" title="Link to this definition">#</a></dt>
+<dd><p>The decoded pattern.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[torch.Tensor, np.ndarray]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.decoder.Decoder.coef_">
+<span class="sig-name descname"><span class="pre">coef_</span></span><a class="headerlink" href="#mvpy.estimators.decoder.Decoder.coef_" title="Link to this definition">#</a></dt>
+<dd><p>The coefficeints of the decoder.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[torch.Tensor, np.ndarray]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.decoder.Decoder.intercept_">
+<span class="sig-name descname"><span class="pre">intercept_</span></span><a class="headerlink" href="#mvpy.estimators.decoder.Decoder.intercept_" title="Link to this definition">#</a></dt>
+<dd><p>The intercepts of the decoder.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[torch.Tensor, np.ndarray]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.decoder.Decoder.alpha_">
+<span class="sig-name descname"><span class="pre">alpha_</span></span><a class="headerlink" href="#mvpy.estimators.decoder.Decoder.alpha_" title="Link to this definition">#</a></dt>
+<dd><p>The penalties used for estimation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[torch.Tensor, np.ndarray]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Notes</p>
+<p>After fitting the decoder, this class will also estimate the decoded patterns. This follows the approach detailed in <a href="#id11"><span class="problematic" id="id3">[4]_</span></a>. Please also be aware that, while this class supports decoding multiple features at once, these will principally be separate regressions wherein individual contributions are not disentangled. If you would like to do this, please consider using a back-to-back decoder.</p>
+<p class="rubric">References</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id4" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></span>
+<p>Haufe, S., Meinecke, F., Görgen, K., Dähne, S., Haynes, J.D., Blankertz, B., &amp; Bießmann, F. (2014). On the interpretation of weight vectors of linear models in multivariate neuroimaging. NeuroImage, 87, 96-110. 10.1016/j.neuroimage.2013.10.067</p>
+</aside>
+</aside>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.estimators</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decoder</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ß</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">60</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">ß</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">60</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">decoder</span> <span class="o">=</span> <span class="n">Decoder</span><span class="p">(</span><span class="n">alphas</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">decoder</span><span class="o">.</span><span class="n">pattern_</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">torch.Size([60, 5])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">decoder</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">torch.size([100, 5])</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.decoder.Decoder.clone">
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.decoder.Decoder.clone" title="Link to this definition">#</a></dt>
+<dd><p>Clone this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The cloned object.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#mvpy.estimators.decoder.Decoder" title="mvpy.estimators.decoder.Decoder">Decoder</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.decoder.Decoder.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.decoder.Decoder.fit" title="Link to this definition">#</a></dt>
+<dd><p>Fit the estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – The features.</p></li>
+<li><p><strong>y</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – The targets.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.decoder.Decoder.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.decoder.Decoder.predict" title="Link to this definition">#</a></dt>
+<dd><p>Predict from the estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – The features.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The predictions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-mvpy.estimators.ridgecv">
+<span id="mvpy-estimators-ridgecv-module"></span><h2>mvpy.estimators.ridgecv module<a class="headerlink" href="#module-mvpy.estimators.ridgecv" title="Link to this heading">#</a></h2>
+<p>A collection of estimators for fitting cross-validated ridge regressions.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvpy.estimators.ridgecv.RidgeCV">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.estimators.ridgecv.</span></span><span class="sig-name descname"><span class="pre">RidgeCV</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alphas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fit_intercept</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalise</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_per_target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.ridgecv.RidgeCV" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></p>
+<p>Implements RidgeCV using torch as our backend.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>alphas</strong> (<em>Union</em><em>[</em><em>torch.Tensor</em><em>, </em><em>list</em><em>, </em><em>float</em><em>, </em><em>int</em><em>]</em><em>, </em><em>default=torch.Tensor</em><em>(</em><em>[</em><em>1</em><em>]</em><em>)</em>) – Penalties to use for estimation.</p></li>
+<li><p><strong>fit_intercept</strong> (<em>bool</em><em>, </em><em>default=True</em>) – Whether to fit an intercept.</p></li>
+<li><p><strong>normalise</strong> (<em>bool</em><em>, </em><em>default=True</em>) – Whether to normalise the data.</p></li>
+<li><p><strong>alpha_per_target</strong> (<em>bool</em><em>, </em><em>default=True</em>) – Whether to use a different penalty for each target.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.ridgecv.RidgeCV.alpha_">
+<span class="sig-name descname"><span class="pre">alpha_</span></span><a class="headerlink" href="#mvpy.estimators.ridgecv.RidgeCV.alpha_" title="Link to this definition">#</a></dt>
+<dd><p>The penalties used for estimation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.ridgecv.RidgeCV.intercept_">
+<span class="sig-name descname"><span class="pre">intercept_</span></span><a class="headerlink" href="#mvpy.estimators.ridgecv.RidgeCV.intercept_" title="Link to this definition">#</a></dt>
+<dd><p>The intercepts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.ridgecv.RidgeCV.coef_">
+<span class="sig-name descname"><span class="pre">coef_</span></span><a class="headerlink" href="#mvpy.estimators.ridgecv.RidgeCV.coef_" title="Link to this definition">#</a></dt>
+<dd><p>The coefficients.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Notes</p>
+<p>This class owes greatly to J.R. King’s RidgeCV implementation[3]_. If data are supplied as numpy, this class will fall back to :func:<a href="#id5"><span class="problematic" id="id6">`</span></a>sklearn.linear_model.RidgeCV`[4]_.</p>
+<p class="rubric">References</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id7" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></span>
+<p>King, J.R. (2020). torch_ridge. <a class="github reference external" href="https://github.com/kingjr/torch_ridge">kingjr/torch_ridge</a></p>
+</aside>
+<aside class="footnote brackets" id="id8" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></span>
+<p>Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., … &amp; Vanderplas, J. (2011). Scikit-learn: Machine learning in Python. Journal of Machine Learning Research, 12, 2825-2830.</p>
+</aside>
+</aside>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.estimators</span><span class="w"> </span><span class="kn">import</span> <span class="n">RidgeCV</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ß</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">240</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">ß</span> <span class="o">@</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">RidgeCV</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">coef_</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.ridgecv.RidgeCV.clone">
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.ridgecv.RidgeCV.clone" title="Link to this definition">#</a></dt>
+<dd><p>Make a clone of this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A clone of this class.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#mvpy.estimators.ridgecv.RidgeCV" title="mvpy.estimators.ridgecv.RidgeCV">RidgeCV</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.ridgecv.RidgeCV.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.ridgecv.RidgeCV.fit" title="Link to this definition">#</a></dt>
+<dd><p>Fit the estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>torch.Tensor</em>) – The features.</p></li>
+<li><p><strong>y</strong> (<em>torch.Tensor</em>) – The targets.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.ridgecv.RidgeCV.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.ridgecv.RidgeCV.predict" title="Link to this definition">#</a></dt>
+<dd><p>Predict from the estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>torch.Tensor</em>) – The features.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>y</strong> – The predictions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-mvpy.estimators.rsa">
 <span id="mvpy-estimators-rsa-module"></span><h2>mvpy.estimators.rsa module<a class="headerlink" href="#module-mvpy.estimators.rsa" title="Link to this heading">#</a></h2>
 <p>A collection of estimators for computing
@@ -509,7 +774,7 @@ representational similarities.</p>
 
 <p class="rubric">Notes</p>
 <p>If you would like to perform, for example, a cross-validated RSA using <code class="xref py py-func docutils literal notranslate"><span class="pre">mvpy.math.cv_euclidean()</span></code>, you should make sure that the first dimension in your data is trials, whereas the second dimension groups them meaningfully. The resulting RDM will then be computed over groups, with cross-validation over trials.</p>
-<p>For more information on representational similarity, please see <a class="footnote-reference brackets" href="#id4" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
+<p>For more information on representational similarity, please see <a class="footnote-reference brackets" href="#id10" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
 <p class="rubric">Examples</p>
 <p>Let’s assume we have some data with 100 trials and 5 groups, recording 10 channels over 50 time points:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
@@ -536,8 +801,8 @@ representational similarities.</p>
 </div>
 <p class="rubric">References</p>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id4" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id10" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">2</a><span class="fn-bracket">]</span></span>
 <p>Kriegeskorte, N. (2008). Representational similarity analaysis - connecting the branches of systems neuroscience. Frontiers in Systems Neuroscience. 10.3389/neuro.06.004.2008</p>
 </aside>
 </aside>
@@ -839,6 +1104,164 @@ sub-estimator of a meta-estimator, e.g. used inside a
 </dd></dl>
 
 </section>
+<section id="module-mvpy.estimators.sliding">
+<span id="mvpy-estimators-sliding-module"></span><h2>mvpy.estimators.sliding module<a class="headerlink" href="#module-mvpy.estimators.sliding" title="Link to this heading">#</a></h2>
+<p>A collection of estimators that allow for sliding other estimators over a dimension of the data.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvpy.estimators.sliding.Sliding">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.estimators.sliding.</span></span><span class="sig-name descname"><span class="pre">Sliding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">estimator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">BaseEstimator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dims</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.sliding.Sliding" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></p>
+<p>Implements a sliding estimator that allows you to fit estimators iteratively over a set of dimensions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>estimator</strong> (<em>Callable</em><em>, </em><em>sklearn.base.BaseEstimator</em>) – Estimator to use.</p></li>
+<li><p><strong>dims</strong> (<em>Union</em><em>[</em><em>int</em><em>, </em><em>tuple</em><em>, </em><em>list</em><em>, </em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em><em>, </em><em>default=-1</em>) – Dimensions to slide over.</p></li>
+<li><p><strong>n_jobs</strong> (<em>Union</em><em>[</em><em>int</em><em>, </em><em>None</em><em>]</em><em>, </em><em>default=None</em>) – Number of jobs to run in parallel.</p></li>
+<li><p><strong>top</strong> (<em>bool</em><em>, </em><em>default=True</em>) – Is this a top-level estimator?</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>default=False</em>) – Whether to print progress.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.sliding.Sliding.estimators_">
+<span class="sig-name descname"><span class="pre">estimators_</span></span><a class="headerlink" href="#mvpy.estimators.sliding.Sliding.estimators_" title="Link to this definition">#</a></dt>
+<dd><p>List of fitted estimators.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Notes</p>
+<p>This class generally expects that your input data is of shape (n_trials, […], n_channels, […]). Make sure that your data and dimension selection is appropriate for the estimator you wish to fit.
+Note also that, when fitting estimators, you _must_ have an equal number of dimensions in X and y. If you do not, please simply pad to the same dimension length.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.estimators</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sliding</span><span class="p">,</span> <span class="n">Decoder</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">240</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span> <span class="c1"># trials x searchlights x channels x time</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">240</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span> <span class="c1"># trials x searchlights x outcomes x time</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">decoder</span> <span class="o">=</span> <span class="n">Decoder</span><span class="p">(</span><span class="n">alphas</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sliding</span> <span class="o">=</span> <span class="n">Sliding</span><span class="p">(</span><span class="n">estimator</span> <span class="o">=</span> <span class="n">decoder</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">n_jobs</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span> <span class="c1"># slide over searchlights and time</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sliding</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">patterns</span> <span class="o">=</span> <span class="n">sliding</span><span class="o">.</span><span class="n">collect</span><span class="p">(</span><span class="s1">&#39;pattern_&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">patterns</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">torch.Size([50, 100, 4, 5])</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.sliding.Sliding.clone">
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.sliding.Sliding.clone" title="Link to this definition">#</a></dt>
+<dd><p>Clone this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Cloned class.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#mvpy.estimators.sliding.Sliding" title="mvpy.estimators.sliding.Sliding">Sliding</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.sliding.Sliding.collect">
+<span class="sig-name descname"><span class="pre">collect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attr</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.sliding.Sliding.collect" title="Link to this definition">#</a></dt>
+<dd><p>Collect the attribute of the estimators.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attr</strong> (<em>str</em>) – Attribute to collect.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Collected attribute.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.sliding.Sliding.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.sliding.Sliding.fit" title="Link to this definition">#</a></dt>
+<dd><p>Fit the estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Input data.</p></li>
+<li><p><strong>y</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Target data.</p></li>
+<li><p><strong>*args</strong> – Additional arguments.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.sliding.Sliding.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.sliding.Sliding.fit_transform" title="Link to this definition">#</a></dt>
+<dd><p>Fit and transform the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Input data.</p></li>
+<li><p><strong>y</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Target data.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Additional arguments.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Transformed data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.sliding.Sliding.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.sliding.Sliding.predict" title="Link to this definition">#</a></dt>
+<dd><p>Predict the targets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Input data.</p></li>
+<li><p><strong>y</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>, </em><em>None</em><em>]</em><em>, </em><em>default=None</em>) – Target data.</p></li>
+<li><p><strong>*args</strong> – Additional arguments.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Predicted targets.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.sliding.Sliding.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.sliding.Sliding.transform" title="Link to this definition">#</a></dt>
+<dd><p>Transform the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Input data.</p></li>
+<li><p><strong>y</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>, </em><em>None</em><em>]</em><em>, </em><em>default=None</em>) – Target data.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Additional arguments.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Transformed data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-mvpy.estimators">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mvpy.estimators" title="Link to this heading">#</a></h2>
 </section>
@@ -906,6 +1329,32 @@ sub-estimator of a meta-estimator, e.g. used inside a
 </li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.estimators.decoder">mvpy.estimators.decoder module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.decoder.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.decoder.Decoder.estimator_"><code class="docutils literal notranslate"><span class="pre">Decoder.estimator_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.decoder.Decoder.pattern_"><code class="docutils literal notranslate"><span class="pre">Decoder.pattern_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.decoder.Decoder.coef_"><code class="docutils literal notranslate"><span class="pre">Decoder.coef_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.decoder.Decoder.intercept_"><code class="docutils literal notranslate"><span class="pre">Decoder.intercept_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.decoder.Decoder.alpha_"><code class="docutils literal notranslate"><span class="pre">Decoder.alpha_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.decoder.Decoder.clone"><code class="docutils literal notranslate"><span class="pre">Decoder.clone()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.decoder.Decoder.fit"><code class="docutils literal notranslate"><span class="pre">Decoder.fit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.decoder.Decoder.predict"><code class="docutils literal notranslate"><span class="pre">Decoder.predict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.estimators.ridgecv">mvpy.estimators.ridgecv module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.ridgecv.RidgeCV"><code class="docutils literal notranslate"><span class="pre">RidgeCV</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.ridgecv.RidgeCV.alpha_"><code class="docutils literal notranslate"><span class="pre">RidgeCV.alpha_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.ridgecv.RidgeCV.intercept_"><code class="docutils literal notranslate"><span class="pre">RidgeCV.intercept_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.ridgecv.RidgeCV.coef_"><code class="docutils literal notranslate"><span class="pre">RidgeCV.coef_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.ridgecv.RidgeCV.clone"><code class="docutils literal notranslate"><span class="pre">RidgeCV.clone()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.ridgecv.RidgeCV.fit"><code class="docutils literal notranslate"><span class="pre">RidgeCV.fit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.ridgecv.RidgeCV.predict"><code class="docutils literal notranslate"><span class="pre">RidgeCV.predict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.estimators.rsa">mvpy.estimators.rsa module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.rsa.RSA"><code class="docutils literal notranslate"><span class="pre">RSA</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.rsa.RSA.rdm_"><code class="docutils literal notranslate"><span class="pre">RSA.rdm_</span></code></a></li>
@@ -934,6 +1383,19 @@ sub-estimator of a meta-estimator, e.g. used inside a
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.scaler.Scaler.inverse_transform"><code class="docutils literal notranslate"><span class="pre">Scaler.inverse_transform()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.scaler.Scaler.set_fit_request"><code class="docutils literal notranslate"><span class="pre">Scaler.set_fit_request()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.scaler.Scaler.transform"><code class="docutils literal notranslate"><span class="pre">Scaler.transform()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.estimators.sliding">mvpy.estimators.sliding module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding"><code class="docutils literal notranslate"><span class="pre">Sliding</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.estimators_"><code class="docutils literal notranslate"><span class="pre">Sliding.estimators_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.clone"><code class="docutils literal notranslate"><span class="pre">Sliding.clone()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.collect"><code class="docutils literal notranslate"><span class="pre">Sliding.collect()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.fit"><code class="docutils literal notranslate"><span class="pre">Sliding.fit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.fit_transform"><code class="docutils literal notranslate"><span class="pre">Sliding.fit_transform()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.predict"><code class="docutils literal notranslate"><span class="pre">Sliding.predict()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.transform"><code class="docutils literal notranslate"><span class="pre">Sliding.transform()</span></code></a></li>
 </ul>
 </li>
 </ul>

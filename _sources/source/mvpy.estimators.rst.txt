@@ -12,6 +12,22 @@ mvpy.estimators.covariance module
    :undoc-members:
    :show-inheritance:
 
+mvpy.estimators.decoder module
+------------------------------
+
+.. automodule:: mvpy.estimators.decoder
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.estimators.ridgecv module
+------------------------------
+
+.. automodule:: mvpy.estimators.ridgecv
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 mvpy.estimators.rsa module
 --------------------------
 
@@ -24,6 +40,14 @@ mvpy.estimators.scaler module
 -----------------------------
 
 .. automodule:: mvpy.estimators.scaler
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.estimators.sliding module
+------------------------------
+
+.. automodule:: mvpy.estimators.sliding
    :members:
    :undoc-members:
    :show-inheritance:

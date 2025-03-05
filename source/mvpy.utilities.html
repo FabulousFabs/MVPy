@@ -252,6 +252,33 @@
                   
   <section id="mvpy-utilities-package">
 <h1>mvpy.utilities package<a class="headerlink" href="#mvpy-utilities-package" title="Link to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-mvpy.utilities.progressbar">
+<span id="mvpy-utilities-progressbar-module"></span><h2>mvpy.utilities.progressbar module<a class="headerlink" href="#module-mvpy.utilities.progressbar" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvpy.utilities.progressbar.Progressbar">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.utilities.progressbar.</span></span><span class="sig-name descname"><span class="pre">Progressbar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enabled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.utilities.progressbar.Progressbar" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Simple class for progress bars that can be enabled or disabled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>enabled</strong> (<em>bool</em><em>, </em><em>default=True</em>) – Whether to enable the progress bar.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Additional arguments for tqdm.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mvpy.utilities.progressbar.tqdm_joblib">
+<span class="sig-prename descclassname"><span class="pre">mvpy.utilities.progressbar.</span></span><span class="sig-name descname"><span class="pre">tqdm_joblib</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tqdm_object</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.utilities.progressbar.tqdm_joblib" title="Link to this definition">#</a></dt>
+<dd><p>Context manager to patch joblib to report into tqdm progress bar given as argument</p>
+</dd></dl>
+
+</section>
 <section id="module-mvpy.utilities">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mvpy.utilities" title="Link to this heading">#</a></h2>
 </section>
@@ -295,6 +322,12 @@
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.utilities.progressbar">mvpy.utilities.progressbar module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.utilities.progressbar.Progressbar"><code class="docutils literal notranslate"><span class="pre">Progressbar</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.utilities.progressbar.tqdm_joblib"><code class="docutils literal notranslate"><span class="pre">tqdm_joblib()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.utilities">Module contents</a></li>
 </ul>
   </nav></div>
