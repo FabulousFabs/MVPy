@@ -752,7 +752,7 @@ class _ClassifierOvO_torch(sklearn.base.BaseEstimator):
         return _ClassifierOvO_torch(alpha = self.alpha, fit_intercept = self.fit_intercept, normalise = self.normalise, alpha_per_target = self.alpha_per_target)
 
 class Classifier(sklearn.base.BaseEstimator):
-    """Implements a ridge classifier. For multi-class classification, the One-vs-One strategy is used.
+    """Implements a ridge classifier.
     
     Parameters
     ----------
@@ -777,6 +777,10 @@ class Classifier(sklearn.base.BaseEstimator):
         The coefficients of the classifiers.
     pattern_ : Union[np.ndarray, torch.Tensor]
         The patterns of the classifiers.
+    
+    Notes
+    -----
+    For multi-class classification, the One-vs-One strategy is used. 
     """
     
     def __new__(self, alphas: Union[torch.Tensor, np.ndarray, float, int] = 1, **kwargs) -> sklearn.base.BaseEstimator:
