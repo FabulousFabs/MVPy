@@ -780,7 +780,19 @@ class Classifier(sklearn.base.BaseEstimator):
     
     Notes
     -----
-    For multi-class classification, the One-vs-One strategy is used. 
+    For multi-class classification, the One-vs-One strategy is used. Currently, we have no OvR alternative.
+    
+    Examples
+    --------
+    >>> import torch
+    >>> from mvpy.estimators import Classifier
+    >>> from sklearn.datasets import load_iris
+    >>> X, y = load_iris(return_X_y = True)
+    >>> X, y = torch.from_numpy(X).to(torch.float32), torch.from_numpy(y).to(torch.float32)
+    >>> clf = Classifier(alphas = torch.logspace(-5, 10, 20))
+    >>> clf.fit(X, y)
+    >>> clf.predict(X).shape
+    torch.Size([150])
     """
     
     def __new__(self, alphas: Union[torch.Tensor, np.ndarray, float, int] = 1, **kwargs) -> sklearn.base.BaseEstimator:
