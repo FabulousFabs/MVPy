@@ -47,10 +47,10 @@ def Xy():
     return (X, y)
 
 '''
-Test Classifiers
+Test Classifiers in OvR
 '''
 
-def test_Classifier_numpy(Xy):
+def test_Classifier_OvR_numpy(Xy):
     '''
     Make sure numpy classifiers work.
     '''
@@ -61,7 +61,7 @@ def test_Classifier_numpy(Xy):
     
     # setup classifier
     kf = sklearn.model_selection.StratifiedKFold(n_splits = n_folds)
-    clf = mv.estimators.Classifier(alphas = np.logspace(-5, 10, 20))
+    clf = mv.estimators.Classifier(alphas = np.logspace(-5, 10, 20), method = 'OvR')
     
     # run tests
     oos = np.zeros((n_folds,))
@@ -71,7 +71,7 @@ def test_Classifier_numpy(Xy):
     
     assert oos.mean() > 0.95
     
-def test_Classifier_torch(Xy):
+def test_Classifier_OvR_torch(Xy):
     '''
     Make sure torch classifiers work.
     '''
@@ -83,7 +83,7 @@ def test_Classifier_torch(Xy):
     
     # setup classifier
     kf = sklearn.model_selection.StratifiedKFold(n_splits = n_folds)
-    clf = mv.estimators.Classifier(alphas = torch.logspace(-5, 10, 20))
+    clf = mv.estimators.Classifier(alphas = torch.logspace(-5, 10, 20), method = 'OvR')
     
     # run tests
     oos = torch.zeros((n_folds,))
@@ -93,7 +93,7 @@ def test_Classifier_torch(Xy):
     
     assert oos.mean() > 0.95
 
-def test_Classifier_compare_numpy_torch(Xy):
+def test_Classifier_OvR_compare_numpy_torch(Xy):
     '''
     Make sure numpy and torch classifiers are the same.
     '''
@@ -105,8 +105,80 @@ def test_Classifier_compare_numpy_torch(Xy):
     
     # setup classifiers
     kf = sklearn.model_selection.StratifiedKFold(n_splits = n_folds)
-    clf_np = mv.estimators.Classifier(alphas = np.logspace(-5, 10, 20))
-    clf_tr = mv.estimators.Classifier(alphas = torch.logspace(-5, 10, 20))
+    clf_np = mv.estimators.Classifier(alphas = np.logspace(-5, 10, 20), method = 'OvR')
+    clf_tr = mv.estimators.Classifier(alphas = torch.logspace(-5, 10, 20), method = 'OvR')
+
+    # run tests
+    oos = np.zeros((n_folds,))
+    for f_i, (train, test) in enumerate(kf.split(X_np, y_np)):
+        clf_np.fit(X_np[train], y_np[train])
+        clf_tr.fit(X_tr[train], y_tr[train])
+        
+        oos[f_i] = mv.math.spearmanr(clf_np.predict(X_np[test]), clf_tr.predict(X_tr[test]).cpu().numpy())
+    
+    assert oos.mean() > 0.95
+
+'''
+Test Classifiers in OvO
+'''
+
+def test_Classifier_OvO_numpy(Xy):
+    '''
+    Make sure numpy classifiers work.
+    '''
+    
+    # unpack data
+    X, y = Xy
+    n_folds = 20
+    
+    # setup classifier
+    kf = sklearn.model_selection.StratifiedKFold(n_splits = n_folds)
+    clf = mv.estimators.Classifier(alphas = np.logspace(-5, 10, 20), method = 'OvO')
+    
+    # run tests
+    oos = np.zeros((n_folds,))
+    for f_i, (train, test) in enumerate(kf.split(X, y)):
+        clf.fit(X[train], y[train])
+        oos[f_i] = mv.math.spearmanr(clf.predict(X[test]), y[test])
+    
+    assert oos.mean() > 0.95
+    
+def test_Classifier_OvO_torch(Xy):
+    '''
+    Make sure torch classifiers work.
+    '''
+    
+    # unpack data
+    X, y = Xy
+    X, y = torch.from_numpy(X).to(torch.float32), torch.from_numpy(y).to(torch.float32)
+    n_folds = 20
+    
+    # setup classifier
+    kf = sklearn.model_selection.StratifiedKFold(n_splits = n_folds)
+    clf = mv.estimators.Classifier(alphas = torch.logspace(-5, 10, 20), method = 'OvO')
+    
+    # run tests
+    oos = torch.zeros((n_folds,))
+    for f_i, (train, test) in enumerate(kf.split(X, y)):
+        clf.fit(X[train], y[train])
+        oos[f_i] = mv.math.spearmanr(clf.predict(X[test]), y[test])
+    
+    assert oos.mean() > 0.95
+
+def test_Classifier_OvO_compare_numpy_torch(Xy):
+    '''
+    Make sure numpy and torch classifiers are the same.
+    '''
+
+    # unpack data
+    X_np, y_np = Xy
+    X_tr, y_tr = torch.from_numpy(X_np).to(torch.float32), torch.from_numpy(y_np).to(torch.float32)
+    n_folds = 20
+    
+    # setup classifiers
+    kf = sklearn.model_selection.StratifiedKFold(n_splits = n_folds)
+    clf_np = mv.estimators.Classifier(alphas = np.logspace(-5, 10, 20), method = 'OvO')
+    clf_tr = mv.estimators.Classifier(alphas = torch.logspace(-5, 10, 20), method = 'OvO')
 
     # run tests
     oos = np.zeros((n_folds,))

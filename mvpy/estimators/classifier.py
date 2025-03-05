@@ -552,7 +552,7 @@ class _ClassifierOvO_torch(sklearn.base.BaseEstimator):
     
     Parameters
     ----------
-    alpha : np.ndarray
+    alpha : torch.Tensor
         The penalties to use for estimation.
     fit_intercept : bool, default=True
         Whether to fit an intercept.
@@ -575,12 +575,12 @@ class _ClassifierOvO_torch(sklearn.base.BaseEstimator):
         The pattern.
     """
     
-    def __init__(self, alpha: np.ndarray, **kwargs):
+    def __init__(self, alpha: torch.Tensor, **kwargs):
         """Obtain a new classifier.
         
         Parameters
         ----------
-        alphas : np.ndarray
+        alphas : torch.Tensor
             The penalties to use for estimation.
         kwargs : Any
             Additional arguments.
@@ -751,12 +751,12 @@ class _ClassifierOvO_torch(sklearn.base.BaseEstimator):
         
         return _ClassifierOvO_torch(alpha = self.alpha, fit_intercept = self.fit_intercept, normalise = self.normalise, alpha_per_target = self.alpha_per_target)
 
-class Classifier(sklearn.base.BaseEstimator):
-    """Implements a ridge classifier.
-    
+class _ClassifierOvR_numpy(sklearn.base.BaseEstimator):
+    """Implements a one-vs-rest classifier.
+
     Parameters
     ----------
-    alphas : Union[torch.Tensor, np.ndarray, float, int], default=1
+    alpha : Union[torch.Tensor, np.ndarray, float, int], default=1
         The penalties to use for estimation.
     fit_intercept : bool, default=True
         Whether to fit an intercept.
@@ -764,7 +764,7 @@ class Classifier(sklearn.base.BaseEstimator):
         Whether to normalise the data.
     alpha_per_target : bool, default=False
         Whether to use a different penalty for each target.
-    
+
     Attributes
     ----------
     estimators_ : List[sklearn.base.BaseEstimator]
@@ -777,10 +777,336 @@ class Classifier(sklearn.base.BaseEstimator):
         The coefficients of the classifiers.
     pattern_ : Union[np.ndarray, torch.Tensor]
         The patterns of the classifiers.
+    """
+
+    def __init__(self, alpha: np.ndarray, **kwargs):
+        """Obtain a new classifier.
+        
+        Parameters
+        ----------
+        alpha : np.ndarray
+            The penalties to use for estimation.
+        kwargs : Any
+            Additional arguments.
+        """
+        
+        # setup opts
+        self.alpha = alpha
+        self.fit_intercept = True if 'fit_intercept' not in kwargs else kwargs['fit_intercept']
+        self.normalise = True if 'normalise' not in kwargs else kwargs['normalise']
+        self.alpha_per_target = True if 'alpha_per_target' not in kwargs else kwargs['alpha_per_target']
+        
+        # setup attributes
+        self.classes_ = None
+        self.estimator_ = _Decoder_numpy(alpha = self.alpha, fit_intercept = self.fit_intercept, normalise = self.normalise, alpha_per_target = self.alpha_per_target)
+        self.intercept_ = None
+        self.coef_ = None
+        self.pattern_ = None
+    
+    def _get_mapped(self, y: np.ndarray) -> np.ndarray:
+        """Find the mapping of this classifier.
+
+        Parameters
+        ----------
+        y : np.ndarray
+            The target data.
+
+        Returns
+        -------
+        mapping : dict
+            The mapping of the classifier.
+        """
+
+        # check if classes exist
+        if self.classes_ is None:
+            # get unique classes
+            classes = np.unique(y).astype(int)
+
+            # set classes
+            self.classes_ = {i: j for i, j in zip(classes, np.arange(classes.shape[0]).astype(y.dtype))}
+        
+        # convert y to classes
+        y = y.copy()
+        
+        for k in self.classes_:
+            y[(y == k).astype(bool)] = self.classes_[k]
+        
+        return y
+    
+    def fit(self, X: np.ndarray, y: np.ndarray):
+        """Fit the classifier.
+        
+        Parameters
+        ----------
+        X : np.ndarray
+            The input data.
+        y : np.ndarray
+            The target data
+        """
+        
+        # obtain mapping
+        y = self._get_mapped(y)
+        
+        # setup y masks
+        y_l = np.ones((y.shape[0], len(self.classes_)), dtype = y.dtype) * -1.
+        
+        for k in self.classes_:
+            y_l[(y == k).astype(bool).squeeze(),self.classes_[k].astype(int)] = 1.0
+        
+        # fit estimators
+        self.estimator_.fit(X, y_l)
+        
+        # get attributes
+        self.intercept_ = self.estimator_.intercept_
+        self.coef_ = self.estimator_.coef_
+        self.pattern_ = self.estimator_.pattern_
+        
+        return self
+    
+    def predict(self, X: np.ndarray) -> np.ndarray:
+        """Predict the target data.
+
+        Parameters
+        ----------
+        X : np.ndarray
+            The input data.
+
+        Returns
+        -------
+        y : np.ndarray
+            The predicted target data.
+        """
+
+        # predict
+        y = self.estimator_.predict(X)
+
+        # get predictions
+        y = np.argmax(y, axis = 1)
+        
+        return y
+
+    def predict_proba(self, X: np.ndarray) -> np.ndarray:
+        """Predict the target data.
+
+        Parameters
+        ----------
+        X : np.ndarray
+            The input data.
+
+        Returns
+        -------
+        y : np.ndarray
+            The predicted target data.
+        """
+        
+        return self.estimator_.predict(X)
+    
+    def clone(self):
+        """Clone the classifier.
+        
+        Returns
+        -------
+        _ClassifierOvR_numpy
+            The cloned classifier.
+        """
+        
+        return _ClassifierOvR_numpy(alpha = self.alpha, fit_intercept = self.fit_intercept, normalise = self.normalise, alpha_per_target = self.alpha_per_target)
+
+class _ClassifierOvR_torch(sklearn.base.BaseEstimator):
+    """Implements a one-vs-rest classifier.
+
+    Parameters
+    ----------
+    alpha : Union[torch.Tensor, np.ndarray, float, int], default=1
+        The penalties to use for estimation.
+    fit_intercept : bool, default=True
+        Whether to fit an intercept.
+    normalise : bool, default=True
+        Whether to normalise the data.
+    alpha_per_target : bool, default=False
+        Whether to use a different penalty for each target.
+
+    Attributes
+    ----------
+    estimators_ : List[sklearn.base.BaseEstimator]
+        The estimators.
+    classes_ : Dict[int, int]
+        The classes.
+    intercept_ : Union[np.ndarray, torch.Tensor]
+        The intercepts of the classifiers.
+    coef_ : Union[np.ndarray, torch.Tensor]
+        The coefficients of the classifiers.
+    pattern_ : Union[np.ndarray, torch.Tensor]
+        The patterns of the classifiers.
+    """
+
+    def __init__(self, alpha: torch.Tensor, **kwargs):
+        """Obtain a new classifier.
+        
+        Parameters
+        ----------
+        alpha : np.ndarray
+            The penalties to use for estimation.
+        kwargs : Any
+            Additional arguments.
+        """
+        
+        # setup opts
+        self.alpha = alpha
+        self.fit_intercept = True if 'fit_intercept' not in kwargs else kwargs['fit_intercept']
+        self.normalise = True if 'normalise' not in kwargs else kwargs['normalise']
+        self.alpha_per_target = True if 'alpha_per_target' not in kwargs else kwargs['alpha_per_target']
+        
+        # setup attributes
+        self.classes_ = None
+        self.estimator_ = _Decoder_torch(alpha = self.alpha, fit_intercept = self.fit_intercept, normalise = self.normalise, alpha_per_target = self.alpha_per_target)
+        self.intercept_ = None
+        self.coef_ = None
+        self.pattern_ = None
+    
+    def _get_mapped(self, y: torch.Tensor) -> torch.Tensor:
+        """Find the mapping of this classifier.
+
+        Parameters
+        ----------
+        y : torch.Tensor
+            The target data.
+
+        Returns
+        -------
+        mapping : dict
+            The mapping of the classifier.
+        """
+
+        # check if classes exist
+        if self.classes_ is None:
+            # get unique classes
+            classes = torch.unique(y).to(torch.int32)
+
+            # set classes
+            self.classes_ = {i: j for i, j in zip(classes, torch.arange(classes.shape[0]).to(y.dtype).to(y.device))}
+        
+        # convert y to classes
+        y = y.clone()
+        
+        for k in self.classes_:
+            y[(y == k).to(torch.bool)] = self.classes_[k]
+        
+        return y
+    
+    def fit(self, X: torch.Tensor, y: torch.Tensor):
+        """Fit the classifier.
+        
+        Parameters
+        ----------
+        X : torch.Tensor
+            The input data.
+        y : torch.Tensor
+            The target data
+        """
+        
+        # obtain mapping
+        y = self._get_mapped(y)
+        
+        # setup y masks
+        y_l = torch.ones((y.shape[0], len(self.classes_)), dtype = y.dtype, device = y.device) * -1.
+        
+        for k in self.classes_:
+            y_l[(y == k).to(torch.bool).squeeze(),self.classes_[k].to(torch.int32).item()] = 1.0
+        
+        # fit estimators
+        self.estimator_.fit(X, y_l)
+        
+        # get attributes
+        self.intercept_ = self.estimator_.intercept_
+        self.coef_ = self.estimator_.coef_
+        self.pattern_ = self.estimator_.pattern_
+        
+        return self
+    
+    def predict(self, X: torch.Tensor) -> torch.Tensor:
+        """Predict the target data.
+
+        Parameters
+        ----------
+        X : torch.Tensor
+            The input data.
+
+        Returns
+        -------
+        y : torch.Tensor
+            The predicted target data.
+        """
+
+        # predict
+        y = self.estimator_.predict(X)
+
+        # get predictions
+        y = torch.argmax(y, dim = 1)
+        
+        return y
+
+    def predict_proba(self, X: torch.Tensor) -> torch.Tensor:
+        """Predict the target data.
+
+        Parameters
+        ----------
+        X : torch.Tensor
+            The input data.
+
+        Returns
+        -------
+        y : torch
+            The predicted target data.
+        """
+        
+        return self.estimator_.predict(X)
+    
+    def clone(self):
+        """Clone the classifier.
+        
+        Returns
+        -------
+        _ClassifierOvR_torch
+            The cloned classifier.
+        """
+        
+        return _ClassifierOvR_torch(self.alpha, fit_intercept = self.fit_intercept, normalise = self.normalise, alpha_per_target = self.alpha_per_target)
+
+class Classifier(sklearn.base.BaseEstimator):
+    """Implements a ridge classifier.
+    
+    Parameters
+    ----------
+    alphas : Union[torch.Tensor, np.ndarray, float, int], default=1
+        The penalties to use for estimation.
+    method : str, default='OvR'
+        The method to use for estimation (available: 'OvR', 'OvO').
+    fit_intercept : bool, default=True
+        Whether to fit an intercept.
+    normalise : bool, default=True
+        Whether to normalise the data.
+    alpha_per_target : bool, default=False
+        Whether to use a different penalty for each target.
+    
+    Attributes
+    ----------
+    estimators_ : List[sklearn.base.BaseEstimator], optional (only for OvO)
+        The estimators.
+    estimator_ : sklearn.base.BaseEstimator, optional (only for OvR)
+        The estimator.
+    classes_ : Dict[int, int]
+        The classes.
+    intercept_ : Union[np.ndarray, torch.Tensor]
+        The intercepts of the classifiers.
+    coef_ : Union[np.ndarray, torch.Tensor]
+        The coefficients of the classifiers.
+    pattern_ : Union[np.ndarray, torch.Tensor]
+        The patterns of the classifiers.
     
     Notes
     -----
-    For multi-class classification, the One-vs-One strategy is used. Currently, we have no OvR alternative.
+    For multi-class classification, the One-vs-Rest strategy is used by default.
     
     Examples
     --------
@@ -795,13 +1121,15 @@ class Classifier(sklearn.base.BaseEstimator):
     torch.Size([150])
     """
     
-    def __new__(self, alphas: Union[torch.Tensor, np.ndarray, float, int] = 1, **kwargs) -> sklearn.base.BaseEstimator:
+    def __new__(self, alphas: Union[torch.Tensor, np.ndarray, float, int] = 1, method: str = 'OvR', **kwargs) -> sklearn.base.BaseEstimator:
         """Obtain a new classifier.
         
         Parameters
         ----------
         alphas : Union[torch.Tensor, np.ndarray, float, int], default=1
             The penalties to use for estimation.
+        method: str, default='OvR'
+            The method to use for multi-class classification (OvR for One-vs-Rest or OvO for One-vs-One).
         kwargs : Any
             Additional arguments.
         
@@ -819,12 +1147,16 @@ class Classifier(sklearn.base.BaseEstimator):
             alphas = torch.tensor(alphas)
         
         # determine estimator
-        if isinstance(alphas, torch.Tensor):
+        if isinstance(alphas, torch.Tensor) & (method == 'OvR'):
+            return _ClassifierOvR_torch(alpha = alphas, **kwargs)
+        elif isinstance(alphas, np.ndarray) & (method == 'OvR'):
+            return _ClassifierOvR_numpy(alpha = alphas, **kwargs)
+        elif isinstance(alphas, torch.Tensor) & (method == 'OvO'):
             return _ClassifierOvO_torch(alpha = alphas, **kwargs)
-        elif isinstance(alphas, np.ndarray):
+        elif isinstance(alphas, np.ndarray) & (method == 'OvO'):
             return _ClassifierOvO_numpy(alpha = alphas, **kwargs)
         
-        raise ValueError(f'Alphas should be of type np.ndarray or torch.tensor, but got {type(alphas)}.')
+        raise ValueError(f'Unknown combination of method=`{method}` and alpha type `{type(alphas)}`.')
 
     def fit(self, X: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor]):
         """Fit the estimator.
