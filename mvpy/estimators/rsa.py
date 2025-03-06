@@ -125,11 +125,11 @@ class _RSA_numpy(sklearn.base.BaseEstimator):
         """
         
         # check transform
-        if None in [self.dims_, self.cx_, self.cy_, self.rdm_]:
+        if (self.dims_ is None) | (self.cx_ is None) | (self.cy_ is None) | (self.rdm_ is None):
             raise RuntimeError('`transform` must be called before `full_rdm`.')
         
         # setup rdm
-        rdm = np.zeros((self.dims_[0], self.dims_[0], *self.dims_[1:-2], self.dims[-1])) * np.nan
+        rdm = np.zeros((self.dims_[0], self.dims_[0], *self.dims_[1:-2], self.dims_[-1])) * np.nan
         rdm[self.cx_, self.cy_] = rdm[self.cy_, self.cx_] = self.rdm_
         
         return rdm
@@ -256,7 +256,7 @@ class _RSA_torch(sklearn.base.BaseEstimator):
         """
 
         # check transform
-        if None in [self.dims_, self.cx_, self.cy_, self.rdm_]:
+        if (self.dims_ is None) | (self.cx_ is None) | (self.cy_ is None) | (self.rdm_ is None):
             raise RuntimeError('`transform` must be called before `full_rdm`.')
         
         # setup rdm
@@ -386,11 +386,12 @@ class _GroupedRSA_numpy(sklearn.base.BaseEstimator):
             The full RDM (grouping x grouping [x ... x time]).
         """
         
-        if None in [self.dims_, self.rdm_, self.cx_, self.cy_]:
+        if (self.dims_ is None) | (self.cx_ is None) | (self.cy_ is None) | (self.rdm_ is None):
             raise RuntimeError('`transform` must be called before `full_rdm`.')
         
         # setup rdm
-        rdm = np.zeros((self.dims_[1], self.dims_[1], *self.dims_[2:-2], *self.dims_[-1])) * np.nan
+        shape = (self.dims_[1], self.dims_[1], self.dims_[-1]) if len(self.dims_) == 4 else (self.dims_[1], self.dims_[1], *self.dims_[2:-2], *self.dims_[-1])
+        rdm = np.zeros(shape) * np.nan
         rdm[self.cx_, self.cy_] = rdm[self.cy_, self.cx_] = self.rdm_
         
         return rdm
@@ -520,11 +521,12 @@ class _GroupedRSA_torch(sklearn.base.BaseEstimator):
         """
         
         # check transform
-        if None in [self.dims_, self.rdm_, self.cx_, self.cy_]:
+        if (self.dims_ is None) | (self.cx_ is None) | (self.cy_ is None) | (self.rdm_ is None):
             raise RuntimeError('`transform` must be called before `full_rdm`.')
         
         # setup place holder
-        rdm = torch.zeros((self.dims_[1], self.dims_[1], *self.dims_[2:-2], self.dims_[-1]), dtype = self.rdm_.dtype, device = self.rdm_.device) * torch.nan
+        shape = (self.dims_[1], self.dims_[1], self.dims_[-1]) if len(self.dims_) == 4 else (self.dims_[1], self.dims_[1], *self.dims_[2:-2], *self.dims_[-1])
+        rdm = torch.zeros(shape, dtype = self.rdm_.dtype, device = self.rdm_.device) * torch.nan
         rdm[self.cx_, self.cy_] = rdm[self.cy_, self.cx_] = self.rdm_
         
         return rdm
@@ -744,7 +746,7 @@ class RSA(sklearn.base.BaseEstimator):
             The estimator.
         """
 
-        return self._get_estimator(np.array([1]))(estimator = self.estimator, n_jobs = self.n_jobs, verbose = self.verbose)
+        return self._get_estimator(np.array([1]))(estimator_ = self.estimator, n_jobs_ = self.n_jobs, verbose_ = self.verbose)
     
     def full_rdm(self) -> Union[np.ndarray, torch.Tensor]:
         """Obtain the full representational similartiy matrix.

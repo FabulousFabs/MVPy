@@ -97,7 +97,6 @@ class _Whitener_numpy(sklearn.base.BaseEstimator):
         
         # whiten
         X_w = X_h.dot(self.whitener_).reshape(dims)
-        print(X_w.shape)
         
         # reshape
         if len(dims) > 2:

@@ -794,6 +794,7 @@ class Sliding(sklearn.base.BaseEstimator):
     -----
     This class generally expects that your input data is of shape (n_trials, [...], n_channels, [...]). Make sure that your data and dimension selection is appropriate for the estimator you wish to fit.
     Note also that, when fitting estimators, you _must_ have an equal number of dimensions in X and y. If you do not, please simply pad to the same dimension length.
+    Finally, be aware that, if you want to use numpy as your backend, you _must_ supply `dims` as a numpy array.
     
     Examples
     --------
