@@ -7,8 +7,10 @@ setup(
     install_requires=[
         "numpy>=1.19.0",
         "scipy>=1.10.1",
+        "pandas>=1.5.3",
         "torch>=2.5.1",
         "scikit-learn>=1.2.1",
+        "mne>=1.8.0",
         "tqdm>=4.64.1"
     ],
     extras_require={
