@@ -950,7 +950,7 @@ representational similarities.</p>
 <p>A collection of estimators for scaling data.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="mvpy.estimators.scaler.Scaler">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.estimators.scaler.</span></span><span class="sig-name descname"><span class="pre">Scaler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">with_mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_std</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dims</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.scaler.Scaler" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.estimators.scaler.</span></span><span class="sig-name descname"><span class="pre">Scaler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">with_mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_std</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dims</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.scaler.Scaler" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></p>
 <p>A standard scaler akin to sklearn.preprocessing.StandardScaler. See notes for some differences.</p>
 <dl class="field-list simple">
@@ -1036,6 +1036,20 @@ and use a degrees-of-freedom correction for computing variances (without the ste
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The clone.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#mvpy.estimators.scaler.Scaler" title="mvpy.estimators.scaler.Scaler">Scaler</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.scaler.Scaler.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.scaler.Scaler.copy" title="Link to this definition">#</a></dt>
+<dd><p>Obtain a copy of this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The copy.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference internal" href="#mvpy.estimators.scaler.Scaler" title="mvpy.estimators.scaler.Scaler">Scaler</a></p>
@@ -1138,6 +1152,34 @@ sub-estimator of a meta-estimator, e.g. used inside a
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.scaler.Scaler.to_numpy">
+<span class="sig-name descname"><span class="pre">to_numpy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.scaler.Scaler.to_numpy" title="Link to this definition">#</a></dt>
+<dd><p>Selet the numpy scaler. Note that this cannot be called for conversion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The numpy scaler.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>_Scaler_numpy</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.scaler.Scaler.to_torch">
+<span class="sig-name descname"><span class="pre">to_torch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.scaler.Scaler.to_torch" title="Link to this definition">#</a></dt>
+<dd><p>Selet the torch scaler. Note that this cannot be called for conversion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The torch scaler.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>_Scaler_torch</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1465,10 +1507,13 @@ Finally, be aware that, if you want to use numpy as your backend, you _must_ sup
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.scaler.Scaler.var_"><code class="docutils literal notranslate"><span class="pre">Scaler.var_</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.scaler.Scaler.scale_"><code class="docutils literal notranslate"><span class="pre">Scaler.scale_</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.scaler.Scaler.clone"><code class="docutils literal notranslate"><span class="pre">Scaler.clone()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.scaler.Scaler.copy"><code class="docutils literal notranslate"><span class="pre">Scaler.copy()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.scaler.Scaler.fit"><code class="docutils literal notranslate"><span class="pre">Scaler.fit()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.scaler.Scaler.fit_transform"><code class="docutils literal notranslate"><span class="pre">Scaler.fit_transform()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.scaler.Scaler.inverse_transform"><code class="docutils literal notranslate"><span class="pre">Scaler.inverse_transform()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.scaler.Scaler.set_fit_request"><code class="docutils literal notranslate"><span class="pre">Scaler.set_fit_request()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.scaler.Scaler.to_numpy"><code class="docutils literal notranslate"><span class="pre">Scaler.to_numpy()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.scaler.Scaler.to_torch"><code class="docutils literal notranslate"><span class="pre">Scaler.to_torch()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.scaler.Scaler.transform"><code class="docutils literal notranslate"><span class="pre">Scaler.transform()</span></code></a></li>
 </ul>
 </li>
