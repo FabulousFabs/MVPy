@@ -296,6 +296,69 @@ class _Sliding_numpy(sklearn.base.BaseEstimator):
 
             # make predictions
             return np.stack(Parallel(n_jobs = self.n_jobs)
+                                    (delayed(self.estimators_[i].predict)
+                                        (X[...,i], 
+                                         *args)
+                                     for i in range(X.shape[-1])), self.dims[0])
+        else:
+            # move sliding axis to final dimension
+            X = np.moveaxis(X, self.dims[0], -1)
+            y = np.moveaxis(y, self.dims[0], -1)
+
+            # setup our estimator depending on dims
+            effective_dims = tuple((np.arange(len(X.shape))[list(self.dims)] - 1).tolist())
+            estimator_ = _Sliding_numpy(estimator = self.estimator, dims = effective_dims[1:], n_jobs = None, top = False).predict if len(self.dims) > 1 else self.estimator
+            
+            # fit estimators
+            X_i = np.arange(X.shape[-1]).astype(int) if X.shape[-1] > 1 else np.zeros((y.shape[-1],)).astype(int)
+            y_i = np.arange(y.shape[-1]).astype(int) if y.shape[-1] > 1 else np.zeros((X.shape[-1],)).astype(int)
+
+            Z = np.stack(Parallel(n_jobs = self.n_jobs)
+                                (delayed(estimator_)
+                                    (X[...,i], 
+                                     y[...,j], 
+                                     *args)
+                                 for i, j in zip(X_i, y_i)), self.dims[0] - 1)
+            
+            # if we're the top level, make sure trials remain first dimension
+            if self.top:
+                return Z.swapaxes(0, 1)
+            else:
+                return Z
+    
+    def predict_proba(self, X: np.ndarray, y: Union[np.ndarray, None] = None, *args) -> np.ndarray:
+        """Make predictions from all estimators.
+        
+        Parameters
+        ----------
+        X : np.ndarray
+            Input data.
+        y : np.ndarray, default=None
+            Target data.
+        *args : Any
+            Additional arguments.
+        
+        Returns
+        -------
+        np.ndarray
+            Predictions.
+        """
+        
+        # check types
+        if (isinstance(X, np.ndarray) == False):
+            raise ValueError(f'X must be of type np.ndarray but got {type(X)}.')
+        
+        # check estimator
+        if (self.estimators_ is None) & (callable(self.estimator) == False):
+            raise ValueError('Estimators not fitted yet.')
+
+        # check estimator type
+        if isinstance(self.estimator, sklearn.base.BaseEstimator):
+            # move sliding axis to final dimension
+            X = np.moveaxis(X, self.dims[0], -1)
+
+            # make predictions
+            return np.stack(Parallel(n_jobs = self.n_jobs)
                                     (delayed(self.estimators_[i].predict_proba)
                                         (X[...,i], 
                                          *args)
