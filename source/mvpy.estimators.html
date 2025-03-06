@@ -694,7 +694,7 @@ pre-whitening of data.</p>
 representational similarities.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="mvpy.estimators.rsa.RSA">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.estimators.rsa.</span></span><span class="sig-name descname"><span class="pre">RSA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grouped=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimator=&lt;function</span> <span class="pre">euclidean&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs=None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.rsa.RSA" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.estimators.rsa.</span></span><span class="sig-name descname"><span class="pre">RSA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grouped=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimator=&lt;function</span> <span class="pre">euclidean&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose=False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.rsa.RSA" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></p>
 <p>Implements representational similarity analysis as an estimator. Note that this class expects features to be the second to last dimension.</p>
 <dl class="field-list simple">
@@ -703,6 +703,7 @@ representational similarities.</p>
 <li><p><strong>grouped</strong> (<em>bool</em><em>, </em><em>default=False</em>) – Whether to use a grouped RSA (this is required for cross-validated metrics to make sense, irrelevant otherwise).</p></li>
 <li><p><strong>estimator</strong> (<em>callable</em><em>, </em><em>default=mv.math.euclidean</em>) – The estimator/metric to use for RDM computation.</p></li>
 <li><p><strong>n_jobs</strong> (<em>int</em><em>, </em><em>default=None</em>) – Number of jobs to run in parallel (default = None).</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>default=False</em>) – Whether to print progress information.</p></li>
 </ul>
 </dd>
 </dl>
@@ -740,8 +741,8 @@ representational similarities.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="mvpy.estimators.rsa.RSA.grouped_">
-<span class="sig-name descname"><span class="pre">grouped_</span></span><a class="headerlink" href="#mvpy.estimators.rsa.RSA.grouped_" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="mvpy.estimators.rsa.RSA.grouped">
+<span class="sig-name descname"><span class="pre">grouped</span></span><a class="headerlink" href="#mvpy.estimators.rsa.RSA.grouped" title="Link to this definition">#</a></dt>
 <dd><p>Whether the RSA is grouped.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -751,8 +752,8 @@ representational similarities.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="mvpy.estimators.rsa.RSA.estimator_">
-<span class="sig-name descname"><span class="pre">estimator_</span></span><a class="headerlink" href="#mvpy.estimators.rsa.RSA.estimator_" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="mvpy.estimators.rsa.RSA.estimator">
+<span class="sig-name descname"><span class="pre">estimator</span></span><a class="headerlink" href="#mvpy.estimators.rsa.RSA.estimator" title="Link to this definition">#</a></dt>
 <dd><p>The estimator/metric to use for RDM computation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -762,12 +763,23 @@ representational similarities.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="mvpy.estimators.rsa.RSA.n_jobs_">
-<span class="sig-name descname"><span class="pre">n_jobs_</span></span><a class="headerlink" href="#mvpy.estimators.rsa.RSA.n_jobs_" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="mvpy.estimators.rsa.RSA.n_jobs">
+<span class="sig-name descname"><span class="pre">n_jobs</span></span><a class="headerlink" href="#mvpy.estimators.rsa.RSA.n_jobs" title="Link to this definition">#</a></dt>
 <dd><p>Number of jobs to run in parallel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.rsa.RSA.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><a class="headerlink" href="#mvpy.estimators.rsa.RSA.verbose" title="Link to this definition">#</a></dt>
+<dd><p>Whether to print progress information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -797,6 +809,13 @@ representational similarities.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">rdm</span><span class="p">[</span><span class="n">rsa</span><span class="o">.</span><span class="n">cx_</span><span class="p">,</span> <span class="n">rsa</span><span class="o">.</span><span class="n">cy_</span><span class="p">]</span> <span class="o">=</span> <span class="n">rsa</span><span class="o">.</span><span class="n">rdm_</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">rdm</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;RdBu_r&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that if you would like to perform a decoding RSA, you can use a OvR classifier instead. For example, let’s assume we have data from 100 trials, 60 channels and 50 time points. Data are from 5 distinct classes.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.estimators</span><span class="w"> </span><span class="kn">import</span> <span class="n">Classifier</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
 <p class="rubric">References</p>
@@ -857,6 +876,48 @@ representational similarities.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.rsa.RSA.full_rdm">
+<span class="sig-name descname"><span class="pre">full_rdm</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.rsa.RSA.full_rdm" title="Link to this definition">#</a></dt>
+<dd><p>Obtain the full representational similartiy matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rdm</strong> – The representational similarity matrix in full.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.rsa.RSA.to_numpy">
+<span class="sig-name descname"><span class="pre">to_numpy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.rsa.RSA.to_numpy" title="Link to this definition">#</a></dt>
+<dd><p>Make this estimator use the numpy backend. Note that this method does not support conversion between types.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The estimator.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>sklearn.base.BaseEstimator</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.rsa.RSA.to_torch">
+<span class="sig-name descname"><span class="pre">to_torch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.rsa.RSA.to_torch" title="Link to this definition">#</a></dt>
+<dd><p>Make this estimator use the torch backend. Note that this method does not support conversion between types.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The estimator.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>sklearn.base.BaseEstimator</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1239,6 +1300,27 @@ Note also that, when fitting estimators, you _must_ have an equal number of dime
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.sliding.Sliding.predict_proba">
+<span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.sliding.Sliding.predict_proba" title="Link to this definition">#</a></dt>
+<dd><p>Predict the probabilities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Input data.</p></li>
+<li><p><strong>y</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>, </em><em>None</em><em>]</em><em>, </em><em>default=None</em>) – Target data.</p></li>
+<li><p><strong>*args</strong> – Additional arguments.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Predicted probabilities.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="mvpy.estimators.sliding.Sliding.transform">
 <span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.sliding.Sliding.transform" title="Link to this definition">#</a></dt>
 <dd><p>Transform the data.</p>
@@ -1360,12 +1442,16 @@ Note also that, when fitting estimators, you _must_ have an equal number of dime
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.rsa.RSA.rdm_"><code class="docutils literal notranslate"><span class="pre">RSA.rdm_</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.rsa.RSA.cx_"><code class="docutils literal notranslate"><span class="pre">RSA.cx_</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.rsa.RSA.cy_"><code class="docutils literal notranslate"><span class="pre">RSA.cy_</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.rsa.RSA.grouped_"><code class="docutils literal notranslate"><span class="pre">RSA.grouped_</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.rsa.RSA.estimator_"><code class="docutils literal notranslate"><span class="pre">RSA.estimator_</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.rsa.RSA.n_jobs_"><code class="docutils literal notranslate"><span class="pre">RSA.n_jobs_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.rsa.RSA.grouped"><code class="docutils literal notranslate"><span class="pre">RSA.grouped</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.rsa.RSA.estimator"><code class="docutils literal notranslate"><span class="pre">RSA.estimator</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.rsa.RSA.n_jobs"><code class="docutils literal notranslate"><span class="pre">RSA.n_jobs</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.rsa.RSA.verbose"><code class="docutils literal notranslate"><span class="pre">RSA.verbose</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.rsa.RSA.clone"><code class="docutils literal notranslate"><span class="pre">RSA.clone()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.rsa.RSA.fit"><code class="docutils literal notranslate"><span class="pre">RSA.fit()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.rsa.RSA.fit_transform"><code class="docutils literal notranslate"><span class="pre">RSA.fit_transform()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.rsa.RSA.full_rdm"><code class="docutils literal notranslate"><span class="pre">RSA.full_rdm()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.rsa.RSA.to_numpy"><code class="docutils literal notranslate"><span class="pre">RSA.to_numpy()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.rsa.RSA.to_torch"><code class="docutils literal notranslate"><span class="pre">RSA.to_torch()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.rsa.RSA.transform"><code class="docutils literal notranslate"><span class="pre">RSA.transform()</span></code></a></li>
 </ul>
 </li>
@@ -1395,6 +1481,7 @@ Note also that, when fitting estimators, you _must_ have an equal number of dime
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.fit"><code class="docutils literal notranslate"><span class="pre">Sliding.fit()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.fit_transform"><code class="docutils literal notranslate"><span class="pre">Sliding.fit_transform()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.predict"><code class="docutils literal notranslate"><span class="pre">Sliding.predict()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.predict_proba"><code class="docutils literal notranslate"><span class="pre">Sliding.predict_proba()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.transform"><code class="docutils literal notranslate"><span class="pre">Sliding.transform()</span></code></a></li>
 </ul>
 </li>
