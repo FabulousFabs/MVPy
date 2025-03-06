@@ -286,7 +286,6 @@ class _ClassifierSingle_torch(sklearn.base.BaseEstimator):
         self.intercept_ = self.estimator.intercept_
         self.pattern_ = self.estimator.pattern_
         
-        
     def decision_function(self, X: torch.Tensor) -> torch.Tensor:
         """Predict the target.
         

@@ -263,6 +263,69 @@ class _Sliding_numpy(sklearn.base.BaseEstimator):
             else:
                 return Z
     
+    def predict(self, X: np.ndarray, y: Union[np.ndarray, None] = None, *args) -> np.ndarray:
+        """Make predictions from all estimators.
+        
+        Parameters
+        ----------
+        X : np.ndarray
+            Input data.
+        y : np.ndarray, default=None
+            Target data.
+        *args : Any
+            Additional arguments.
+        
+        Returns
+        -------
+        np.ndarray
+            Predictions.
+        """
+        
+        # check types
+        if (isinstance(X, np.ndarray) == False):
+            raise ValueError(f'X must be of type np.ndarray but got {type(X)}.')
+        
+        # check estimator
+        if (self.estimators_ is None) & (callable(self.estimator) == False):
+            raise ValueError('Estimators not fitted yet.')
+
+        # check estimator type
+        if isinstance(self.estimator, sklearn.base.BaseEstimator):
+            # move sliding axis to final dimension
+            X = np.moveaxis(X, self.dims[0], -1)
+
+            # make predictions
+            return np.stack(Parallel(n_jobs = self.n_jobs)
+                                    (delayed(self.estimators_[i].predict_proba)
+                                        (X[...,i], 
+                                         *args)
+                                     for i in range(X.shape[-1])), self.dims[0])
+        else:
+            # move sliding axis to final dimension
+            X = np.moveaxis(X, self.dims[0], -1)
+            y = np.moveaxis(y, self.dims[0], -1)
+
+            # setup our estimator depending on dims
+            effective_dims = tuple((np.arange(len(X.shape))[list(self.dims)] - 1).tolist())
+            estimator_ = _Sliding_numpy(estimator = self.estimator, dims = effective_dims[1:], n_jobs = None, top = False).predict_proba if len(self.dims) > 1 else self.estimator
+            
+            # fit estimators
+            X_i = np.arange(X.shape[-1]).astype(int) if X.shape[-1] > 1 else np.zeros((y.shape[-1],)).astype(int)
+            y_i = np.arange(y.shape[-1]).astype(int) if y.shape[-1] > 1 else np.zeros((X.shape[-1],)).astype(int)
+
+            Z = np.stack(Parallel(n_jobs = self.n_jobs)
+                                (delayed(estimator_)
+                                    (X[...,i], 
+                                     y[...,j], 
+                                     *args)
+                                 for i, j in zip(X_i, y_i)), self.dims[0] - 1)
+            
+            # if we're the top level, make sure trials remain first dimension
+            if self.top:
+                return Z.swapaxes(0, 1)
+            else:
+                return Z
+    
     def collect(self, attr: str) -> np.ndarray:
         """Collect an attribute from all fitted estimators.
         
@@ -547,6 +610,69 @@ class _Sliding_torch(sklearn.base.BaseEstimator):
             else:
                 return Z
     
+    def predict_proba(self, X: torch.Tensor, y: Union[torch.Tensor, None] = None, *args) -> torch.Tensor:
+        """Make predictions from all estimators.
+        
+        Parameters
+        ----------
+        X : torch.Tensor
+            Input data.
+        y : torch.Tensor, default=None
+            Target data.
+        *args : Any
+            Additional arguments.
+        
+        Returns
+        -------
+        torch.Tensor
+            Predictions.
+        """
+        
+        # check types
+        if (isinstance(X, torch.Tensor) == False):
+            raise ValueError(f'X must be of type torch.Tensor but got {type(X)}.')
+        
+        # check estimator
+        if (self.estimators_ is None) & (callable(self.estimator) == False):
+            raise ValueError('Estimators not fitted yet.')
+
+        # check estimator type
+        if isinstance(self.estimator, sklearn.base.BaseEstimator):
+            # move sliding axis to final dimension
+            X = torch.moveaxis(X, self.dims[0], -1)
+
+            # make predictions
+            return torch.stack(Parallel(n_jobs = self.n_jobs)
+                                    (delayed(self.estimators_[i].predict_proba)
+                                        (X[...,i], 
+                                         *args)
+                                     for i in range(X.shape[-1])), self.dims[0])
+        else:
+            # move sliding axis to final dimension
+            X = torch.moveaxis(X, self.dims[0], -1)
+            y = torch.moveaxis(y, self.dims[0], -1)
+
+            # setup our estimator depending on dims
+            effective_dims = tuple((torch.arange(len(X.shape))[list(self.dims)] - 1).tolist())
+            estimator_ = _Sliding_torch(estimator = self.estimator, dims = effective_dims[1:], n_jobs = None, top = False).predict_proba if len(self.dims) > 1 else self.estimator
+            
+            # fit estimators
+            X_i = torch.arange(X.shape[-1]).to(torch.int32) if X.shape[-1] > 1 else torch.zeros((y.shape[-1],)).to(torch.int32)
+            y_i = torch.arange(y.shape[-1]).to(torch.int32) if y.shape[-1] > 1 else torch.zeros((X.shape[-1],)).to(torch.int32)
+
+            Z = torch.stack(Parallel(n_jobs = self.n_jobs)
+                                (delayed(estimator_)
+                                    (X[...,i], 
+                                     y[...,j], 
+                                     *args)
+                                 for i, j in zip(X_i, y_i)), self.dims[0] - 1)
+            
+            # if we're the top level, make sure trials remain first dimension
+            if self.top:
+                return Z.swapaxes(0, 1)
+            else:
+                return Z
+    
     def collect(self, attr: str) -> torch.Tensor:
         """Collect an attribute from all fitted estimators.
         
@@ -740,6 +866,26 @@ class Sliding(sklearn.base.BaseEstimator):
 
         raise NotImplementedError('This method is not implemented for the base class.')
     
+    def predict_proba(self, X: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor, None] = None, *args) -> Union[np.ndarray, torch.Tensor]:
+        """Predict the probabilities.
+
+        Parameters
+        ----------
+        X : Union[np.ndarray, torch.Tensor]
+            Input data.
+        y : Union[np.ndarray, torch.Tensor, None], default=None
+            Target data.
+        *args :
+            Additional arguments.
+        
+        Returns
+        -------
+        Union[np.ndarray, torch.Tensor]
+            Predicted probabilities.
+        """
+        
+        raise NotImplementedError('This method is not implemented for the base class.')
+        
     def collect(self, attr: str) -> Union[np.ndarray, torch.Tensor]:
         """Collect the attribute of the estimators.
         
