@@ -257,6 +257,170 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 </section>
+<section id="module-mvpy.estimators.classifier">
+<span id="mvpy-estimators-classifier-module"></span><h2>mvpy.estimators.classifier module<a class="headerlink" href="#module-mvpy.estimators.classifier" title="Link to this heading">#</a></h2>
+<p>A collection of estimators for decoding features using ridge classifiers.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvpy.estimators.classifier.Classifier">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.estimators.classifier.</span></span><span class="sig-name descname"><span class="pre">Classifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alphas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'OvR'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.classifier.Classifier" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></p>
+<p>Implements a ridge classifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>alphas</strong> (<em>Union</em><em>[</em><em>torch.Tensor</em><em>, </em><em>np.ndarray</em><em>, </em><em>float</em><em>, </em><em>int</em><em>]</em><em>, </em><em>default=1</em>) – The penalties to use for estimation.</p></li>
+<li><p><strong>method</strong> (<em>str</em><em>, </em><em>default='OvR'</em>) – The method to use for estimation (available: ‘OvR’, ‘OvO’).</p></li>
+<li><p><strong>fit_intercept</strong> (<em>bool</em><em>, </em><em>default=True</em>) – Whether to fit an intercept.</p></li>
+<li><p><strong>normalise</strong> (<em>bool</em><em>, </em><em>default=True</em>) – Whether to normalise the data.</p></li>
+<li><p><strong>alpha_per_target</strong> (<em>bool</em><em>, </em><em>default=False</em>) – Whether to use a different penalty for each target.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.classifier.Classifier.estimators_">
+<span class="sig-name descname"><span class="pre">estimators_</span></span><a class="headerlink" href="#mvpy.estimators.classifier.Classifier.estimators_" title="Link to this definition">#</a></dt>
+<dd><p>The estimators.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[sklearn.base.BaseEstimator], optional (only for OvO)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.classifier.Classifier.estimator_">
+<span class="sig-name descname"><span class="pre">estimator_</span></span><a class="headerlink" href="#mvpy.estimators.classifier.Classifier.estimator_" title="Link to this definition">#</a></dt>
+<dd><p>The estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>sklearn.base.BaseEstimator, optional (only for OvR)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.classifier.Classifier.classes_">
+<span class="sig-name descname"><span class="pre">classes_</span></span><a class="headerlink" href="#mvpy.estimators.classifier.Classifier.classes_" title="Link to this definition">#</a></dt>
+<dd><p>The classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[int, int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.classifier.Classifier.intercept_">
+<span class="sig-name descname"><span class="pre">intercept_</span></span><a class="headerlink" href="#mvpy.estimators.classifier.Classifier.intercept_" title="Link to this definition">#</a></dt>
+<dd><p>The intercepts of the classifiers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.classifier.Classifier.coef_">
+<span class="sig-name descname"><span class="pre">coef_</span></span><a class="headerlink" href="#mvpy.estimators.classifier.Classifier.coef_" title="Link to this definition">#</a></dt>
+<dd><p>The coefficients of the classifiers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.classifier.Classifier.pattern_">
+<span class="sig-name descname"><span class="pre">pattern_</span></span><a class="headerlink" href="#mvpy.estimators.classifier.Classifier.pattern_" title="Link to this definition">#</a></dt>
+<dd><p>The patterns of the classifiers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Notes</p>
+<p>For multi-class classification, the One-vs-Rest strategy is used by default.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.estimators</span><span class="w"> </span><span class="kn">import</span> <span class="n">Classifier</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_iris</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">(</span><span class="n">return_X_y</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">clf</span> <span class="o">=</span> <span class="n">Classifier</span><span class="p">(</span><span class="n">alphas</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">torch.Size([150])</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.classifier.Classifier.clone">
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.classifier.Classifier.clone" title="Link to this definition">#</a></dt>
+<dd><p>Clone this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The cloned object.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#mvpy.estimators.decoder.Decoder" title="mvpy.estimators.decoder.Decoder">Decoder</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.classifier.Classifier.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.classifier.Classifier.fit" title="Link to this definition">#</a></dt>
+<dd><p>Fit the estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – The features.</p></li>
+<li><p><strong>y</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – The targets.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.classifier.Classifier.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.classifier.Classifier.predict" title="Link to this definition">#</a></dt>
+<dd><p>Predict from the estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – The features.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The predictions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.classifier.Classifier.predict_proba">
+<span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.classifier.Classifier.predict_proba" title="Link to this definition">#</a></dt>
+<dd><p>Predict from the estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – The features.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The predictions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-mvpy.estimators.covariance">
 <span id="mvpy-estimators-covariance-module"></span><h2>mvpy.estimators.covariance module<a class="headerlink" href="#module-mvpy.estimators.covariance" title="Link to this heading">#</a></h2>
 <p>A collection of estimators for covariance estimation and
@@ -396,6 +560,34 @@ pre-whitening of data.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.covariance.Covariance.to_numpy">
+<span class="sig-name descname"><span class="pre">to_numpy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.covariance.Covariance.to_numpy" title="Link to this definition">#</a></dt>
+<dd><p>Create the numpy estimator. Note that this function cannot be used for conversion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The numpy estimator.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#mvpy.estimators.covariance.Covariance" title="mvpy.estimators.covariance.Covariance">Covariance</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.covariance.Covariance.to_torch">
+<span class="sig-name descname"><span class="pre">to_torch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.covariance.Covariance.to_torch" title="Link to this definition">#</a></dt>
+<dd><p>Create the torch estimator. Note that this function cannot be used for conversion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The torch estimator.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#mvpy.estimators.covariance.Covariance" title="mvpy.estimators.covariance.Covariance">Covariance</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1285,6 +1477,16 @@ Finally, be aware that, if you want to use numpy as your backend, you _must_ sup
 </dl>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.sliding.Sliding.dims">
+<span class="sig-name descname"><span class="pre">dims</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(-1,)</span></em><a class="headerlink" href="#mvpy.estimators.sliding.Sliding.dims" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.sliding.Sliding.estimator">
+<span class="sig-name descname"><span class="pre">estimator</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">_ClassifierOvR_torch(alpha=tensor([1.0000e-05,</span> <span class="pre">6.1585e-05,</span> <span class="pre">3.7927e-04,</span> <span class="pre">2.3357e-03,</span> <span class="pre">1.4384e-02,</span> <span class="pre">8.8587e-02,</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">5.4556e-01,</span> <span class="pre">3.3598e+00,</span> <span class="pre">2.0691e+01,</span> <span class="pre">1.2743e+02,</span> <span class="pre">7.8476e+02,</span> <span class="pre">4.8329e+03,</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">2.9764e+04,</span> <span class="pre">1.8330e+05,</span> <span class="pre">1.1288e+06,</span> <span class="pre">6.9519e+06,</span> <span class="pre">4.2813e+07,</span> <span class="pre">2.6367e+08,</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">1.6238e+09,</span> <span class="pre">1.0000e+10]))</span></em><a class="headerlink" href="#mvpy.estimators.sliding.Sliding.estimator" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="mvpy.estimators.sliding.Sliding.fit">
 <span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.sliding.Sliding.fit" title="Link to this definition">#</a></dt>
@@ -1363,6 +1565,11 @@ Finally, be aware that, if you want to use numpy as your backend, you _must_ sup
 </dl>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.sliding.Sliding.top">
+<span class="sig-name descname"><span class="pre">top</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#mvpy.estimators.sliding.Sliding.top" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="mvpy.estimators.sliding.Sliding.transform">
 <span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.sliding.Sliding.transform" title="Link to this definition">#</a></dt>
@@ -1383,6 +1590,11 @@ Finally, be aware that, if you want to use numpy as your backend, you _must_ sup
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.sliding.Sliding.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#mvpy.estimators.sliding.Sliding.verbose" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -1440,6 +1652,22 @@ Finally, be aware that, if you want to use numpy as your backend, you _must_ sup
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.estimators.classifier">mvpy.estimators.classifier module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.classifier.Classifier"><code class="docutils literal notranslate"><span class="pre">Classifier</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.classifier.Classifier.estimators_"><code class="docutils literal notranslate"><span class="pre">Classifier.estimators_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.classifier.Classifier.estimator_"><code class="docutils literal notranslate"><span class="pre">Classifier.estimator_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.classifier.Classifier.classes_"><code class="docutils literal notranslate"><span class="pre">Classifier.classes_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.classifier.Classifier.intercept_"><code class="docutils literal notranslate"><span class="pre">Classifier.intercept_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.classifier.Classifier.coef_"><code class="docutils literal notranslate"><span class="pre">Classifier.coef_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.classifier.Classifier.pattern_"><code class="docutils literal notranslate"><span class="pre">Classifier.pattern_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.classifier.Classifier.clone"><code class="docutils literal notranslate"><span class="pre">Classifier.clone()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.classifier.Classifier.fit"><code class="docutils literal notranslate"><span class="pre">Classifier.fit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.classifier.Classifier.predict"><code class="docutils literal notranslate"><span class="pre">Classifier.predict()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.classifier.Classifier.predict_proba"><code class="docutils literal notranslate"><span class="pre">Classifier.predict_proba()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.estimators.covariance">mvpy.estimators.covariance module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.covariance.Covariance"><code class="docutils literal notranslate"><span class="pre">Covariance</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.covariance.Covariance.covariance_"><code class="docutils literal notranslate"><span class="pre">Covariance.covariance_</span></code></a></li>
@@ -1449,6 +1677,8 @@ Finally, be aware that, if you want to use numpy as your backend, you _must_ sup
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.covariance.Covariance.clone"><code class="docutils literal notranslate"><span class="pre">Covariance.clone()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.covariance.Covariance.fit"><code class="docutils literal notranslate"><span class="pre">Covariance.fit()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.covariance.Covariance.fit_transform"><code class="docutils literal notranslate"><span class="pre">Covariance.fit_transform()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.covariance.Covariance.to_numpy"><code class="docutils literal notranslate"><span class="pre">Covariance.to_numpy()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.covariance.Covariance.to_torch"><code class="docutils literal notranslate"><span class="pre">Covariance.to_torch()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.covariance.Covariance.transform"><code class="docutils literal notranslate"><span class="pre">Covariance.transform()</span></code></a></li>
 </ul>
 </li>
@@ -1524,11 +1754,15 @@ Finally, be aware that, if you want to use numpy as your backend, you _must_ sup
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.estimators_"><code class="docutils literal notranslate"><span class="pre">Sliding.estimators_</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.clone"><code class="docutils literal notranslate"><span class="pre">Sliding.clone()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.collect"><code class="docutils literal notranslate"><span class="pre">Sliding.collect()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.dims"><code class="docutils literal notranslate"><span class="pre">Sliding.dims</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.estimator"><code class="docutils literal notranslate"><span class="pre">Sliding.estimator</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.fit"><code class="docutils literal notranslate"><span class="pre">Sliding.fit()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.fit_transform"><code class="docutils literal notranslate"><span class="pre">Sliding.fit_transform()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.predict"><code class="docutils literal notranslate"><span class="pre">Sliding.predict()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.predict_proba"><code class="docutils literal notranslate"><span class="pre">Sliding.predict_proba()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.top"><code class="docutils literal notranslate"><span class="pre">Sliding.top</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.transform"><code class="docutils literal notranslate"><span class="pre">Sliding.transform()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.verbose"><code class="docutils literal notranslate"><span class="pre">Sliding.verbose</span></code></a></li>
 </ul>
 </li>
 </ul>
