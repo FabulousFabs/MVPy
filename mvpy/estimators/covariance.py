@@ -137,7 +137,7 @@ class _Whitener_torch(sklearn.base.BaseEstimator):
         val[~nonzero] = 0.0
         
         # take inverse square root
-        inv_val = torch.zeros(val.shape)
+        inv_val = torch.zeros(val.shape, dtype = X.dtype, device = X.device)
         inv_val[nonzero] = 1 / torch.sqrt(val[nonzero])
         
         # compute whitening estimator

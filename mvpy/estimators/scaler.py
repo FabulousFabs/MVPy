@@ -52,7 +52,7 @@ class _Scaler_numpy(sklearn.base.BaseEstimator):
     where :math:`\mu` is the mean and :math:`\sigma` is the standard deviation of the data.
     """
     
-    def __init__(self, with_mean: bool = True, with_std: bool = True, dims: Union[list, tuple, int, None] = None, copy: bool = False):
+    def __init__(self, with_mean: bool = True, with_std: bool = True, dims: Union[list, tuple, int, None] = None):
         """Obtain a scaler.
         
         Parameters
@@ -68,10 +68,9 @@ class _Scaler_numpy(sklearn.base.BaseEstimator):
         """
 
         # store options
-        self.dims_ = dims
-        self.with_mean_ = with_mean
-        self.with_std_ = with_std
-        self.copy_ = copy
+        self.dims = self.dims_ = dims
+        self.with_mean = self.with_mean_ = with_mean
+        self.with_std = self.with_std_ = with_std
         
         self.shape_ = None
         self.mean_ = None
@@ -100,7 +99,7 @@ class _Scaler_numpy(sklearn.base.BaseEstimator):
             self.dims_ = np.array([0])
         
         # set type
-        self.dims_ = self.dims_.astype(int)
+        self.dims_ = np.array(self.dims_).astype(int)
         self.dims_ = tuple(self.dims_)
         
         # check sample weights
@@ -225,7 +224,7 @@ class _Scaler_numpy(sklearn.base.BaseEstimator):
             The clone.
         """
         
-        return _Scaler_numpy(with_mean = self.with_mean, with_std = self.with_std_, dims = self.dims_, copy = self.copy_)
+        return _Scaler_numpy(with_mean = self.with_mean_, with_std = self.with_std_, dims = self.dims_)
 
 class _Scaler_torch(sklearn.base.BaseEstimator):
     r"""A standard scaler for torch tensors. Note that this class is not exported and should not be called directly.
@@ -271,7 +270,7 @@ class _Scaler_torch(sklearn.base.BaseEstimator):
     where :math:`\mu` is the mean and :math:`\sigma` is the standard deviation of the data.
     """
     
-    def __init__(self, with_mean: bool = True, with_std: bool = True, dims: Union[list, tuple, int, None] = None, copy: bool = False):
+    def __init__(self, with_mean: bool = True, with_std: bool = True, dims: Union[list, tuple, int, None] = None):
         """Obtain a scaler.
         
         Parameters
@@ -287,11 +286,10 @@ class _Scaler_torch(sklearn.base.BaseEstimator):
         """
 
         # store options
-        self.dims_ = dims
-        self.with_mean_ = with_mean
-        self.with_std_ = with_std
-        self.copy_ = copy
-        
+        self.dims = self.dims_ = dims
+        self.with_mean = self.with_mean_ = with_mean
+        self.with_std = self.with_std_ = with_std
+                
         self.shape_ = None
         self.mean_ = None
         self.var_ = None
@@ -319,7 +317,7 @@ class _Scaler_torch(sklearn.base.BaseEstimator):
             self.dims_ = torch.tensor([0])
         
         # set type
-        self.dims_ = self.dims_.to(torch.int32)
+        self.dims_ = torch.tensor(self.dims_).to(torch.int32)
         self.dims_ = tuple(self.dims_.cpu().numpy())
         
         # check sample weights
@@ -375,6 +373,9 @@ class _Scaler_torch(sklearn.base.BaseEstimator):
         if (self.with_mean_ & (self.mean_ is None)) | (self.with_std_ & (self.scale_ is None)):
             raise ValueError('The scaler has not been fitted yet.')
         
+        # make sure we don't in-place anything
+        X = X.clone()
+        
         # demean
         if self.with_mean_:
             X = X - self.mean_
@@ -404,6 +405,9 @@ class _Scaler_torch(sklearn.base.BaseEstimator):
         # check fit
         if (self.with_mean_ & (self.mean_ is None)) | (self.with_std_ & (self.scale_ is None)):
             raise ValueError('The scaler has not been fitted yet.')
+        
+        # make sure we don't in-place anything
+        X = X.clone()
         
         # re-scale
         if self.with_std_:
@@ -444,7 +448,7 @@ class _Scaler_torch(sklearn.base.BaseEstimator):
             The clone.
         """
         
-        return _Scaler_torch(with_mean = self.with_mean, with_std = self.with_std_, dims = self.dims_, copy = self.copy_)
+        return _Scaler_torch(with_mean = self.with_mean, with_std = self.with_std_, dims = self.dims_)
 
 class Scaler(sklearn.base.BaseEstimator):
     r"""A standard scaler akin to sklearn.preprocessing.StandardScaler. See notes for some differences.
@@ -505,7 +509,7 @@ class Scaler(sklearn.base.BaseEstimator):
     tensor([ 9.7033, 10.2510, 10.2483, 10.1274, 10.2013])
     """
 
-    def __init__(self, with_mean: bool = True, with_std: bool = True, dims: Union[list, tuple, int, None] = None, copy: bool = False):
+    def __init__(self, with_mean: bool = True, with_std: bool = True, dims: Union[list, tuple, int, None] = None):
         """Obtain a scaler.
         
         Parameters
@@ -516,14 +520,11 @@ class Scaler(sklearn.base.BaseEstimator):
             If True, scale the data to unit variance.
         dims : int, list or tuple of ints, default=None
             The dimensions over which to scale (None for first dimension).
-        copy : bool, default=False
-            If True, the data will be copied.
         """
 
-        self.with_mean_ = with_mean
-        self.with_std_ = with_std
-        self.dims_ = dims
-        self.copy_ = copy
+        self.with_mean = with_mean
+        self.with_std = with_std
+        self.dims = dims
     
     def _get_estimator(self, X: Union[np.ndarray, torch.Tensor], *args: Any) -> sklearn.base.BaseEstimator:
         """Given the data, determine which scaler to use.
@@ -561,7 +562,7 @@ class Scaler(sklearn.base.BaseEstimator):
             The sample weights.
         """
         
-        return self._get_estimator(X, *args)(with_mean = self.with_mean_, with_std = self.with_std_, dims = self.dims_, copy = self.copy_).fit(X, *args, sample_weight = sample_weight)
+        return self._get_estimator(X, *args)(with_mean = self.with_mean, with_std = self.with_std, dims = self.dims).fit(X, *args, sample_weight = sample_weight)
     
     def transform(self, X: Union[np.ndarray, torch.Tensor], *args: Any) -> Union[np.ndarray, torch.Tensor]:
         """Transform the data using scaler.
@@ -579,7 +580,7 @@ class Scaler(sklearn.base.BaseEstimator):
             The transformed data.
         """
 
-        return self._get_estimator(X, *args)(with_mean = self.with_mean_, with_std = self.with_std_, dims = self.dims_, copy = self.copy_).transform(X, *args)
+        return self._get_estimator(X, *args)(with_mean = self.with_mean, with_std = self.with_std, dims = self.dims).transform(X, *args)
     
     def inverse_transform(self, X: Union[np.ndarray, torch.Tensor], *args: Any) -> Union[np.ndarray, torch.Tensor]:
         """Invert the transform of the data.
@@ -597,7 +598,7 @@ class Scaler(sklearn.base.BaseEstimator):
             The inverse transformed data.
         """
         
-        return self._get_estimator(X, *args)(with_mean = self.with_mean_, with_std = self.with_std_, dims = self.dims_, copy = self.copy_).inverse_transform(X, *args)
+        return self._get_estimator(X, *args)(with_mean = self.with_mean, with_std = self.with_std, dims = self.dims).inverse_transform(X, *args)
     
     def fit_transform(self, X: Union[np.ndarray, torch.Tensor], *args: Any, sample_weight: Union[np.ndarray, torch.Tensor, None] = None) -> Union[np.ndarray, torch.Tensor]:
         """Fit and transform the data in one step.
@@ -617,7 +618,29 @@ class Scaler(sklearn.base.BaseEstimator):
             The transformed data.
         """
         
-        return self._get_estimator(X, *args)(with_mean = self.with_mean_, with_std = self.with_std_, dims = self.dims_, copy = self.copy_).fit_transform(X, *args, sample_weight = sample_weight)
+        return self._get_estimator(X, *args)(with_mean = self.with_mean, with_std = self.with_std, dims = self.dims).fit_transform(X, *args, sample_weight = sample_weight)
+    
+    def to_torch(self):
+        """Selet the torch scaler. Note that this cannot be called for conversion.
+        
+        Returns
+        -------
+        _Scaler_torch
+            The torch scaler.
+        """
+        
+        return self._get_estimator(torch.tensor([1]))(with_mean = self.with_mean, with_std = self.with_std, dims = self.dims)
+    
+    def to_numpy(self):
+        """Selet the numpy scaler. Note that this cannot be called for conversion.
+
+        Returns
+        -------
+        _Scaler_numpy
+            The numpy scaler.
+        """
+
+        return self._get_estimator(np.array([1]))(with_mean = self.with_mean, with_std = self.with_std, dims = self.dims)
     
     def clone(self):
         """Obtain a clone of this class.
@@ -628,4 +651,15 @@ class Scaler(sklearn.base.BaseEstimator):
             The clone.
         """
         
-        return Scaler(with_mean = self.with_mean_, with_std = self.with_std_, dims = self.dims_, copy = self.copy_)
+        return Scaler(with_mean = self.with_mean, with_std = self.with_std, dims = self.dims)
+    
+    def copy(self):
+        """Obtain a copy of this class.
+
+        Returns
+        -------
+        Scaler
+            The copy.
+        """
+        
+        return self.clone()
