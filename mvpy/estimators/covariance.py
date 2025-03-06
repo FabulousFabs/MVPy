@@ -418,7 +418,7 @@ class _LedoitWolf_numpy(_Whitener_numpy):
         
         return self
     
-    def fit_transform(self, X: np.ndarray) -> np.ndarray:
+    def fit_transform(self, X: np.ndarray, *args: Any) -> np.ndarray:
         """Fit the estimator and whiten the data.
         
         Parameters
@@ -514,7 +514,7 @@ class _LedoitWolf_torch(_Whitener_torch):
         
         return self
     
-    def fit_transform(self, X: torch.Tensor):
+    def fit_transform(self, X: torch.Tensor, *args: Any):
         """Fit the estimator and whiten the data.
         
         Parameters
@@ -684,6 +684,28 @@ class Covariance(sklearn.base.BaseEstimator):
         """
         
         return self._get_estimator(X)().fit_transform(X)
+    
+    def to_torch(self):
+        """Create the torch estimator. Note that this function cannot be used for conversion.
+        
+        Returns
+        -------
+        Covariance
+            The torch estimator.
+        """
+        
+        return self._get_estimator(torch.tensor([1]))()
+    
+    def to_numpy(self):
+        """Create the numpy estimator. Note that this function cannot be used for conversion.
+
+        Returns
+        -------
+        Covariance
+            The numpy estimator.
+        """
+
+        return self._get_estimator(np.array([1]))()
     
     def clone(self):
         """Obtain a clone of this class.

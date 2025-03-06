@@ -317,7 +317,9 @@ class _Scaler_torch(sklearn.base.BaseEstimator):
             self.dims_ = torch.tensor([0])
         
         # set type
-        self.dims_ = torch.tensor(self.dims_).to(torch.int32)
+        if isinstance(self.dims_, torch.Tensor) == False:
+            self.dims_ = torch.tensor(self.dims_)
+        self.dims_ = self.dims_.to(torch.int32)
         self.dims_ = tuple(self.dims_.cpu().numpy())
         
         # check sample weights
