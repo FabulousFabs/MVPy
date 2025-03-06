@@ -4,6 +4,14 @@ mvpy.estimators package
 Submodules
 ----------
 
+mvpy.estimators.classifier module
+---------------------------------
+
+.. automodule:: mvpy.estimators.classifier
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 mvpy.estimators.covariance module
 ---------------------------------
 
