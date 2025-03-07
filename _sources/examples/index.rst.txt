@@ -85,18 +85,18 @@ Examples for decoders.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="We will begin our look at decoders by using an MEG dataset of humans performing a visual categorization task. Briefly, participants saw a list of 92 images. Here, we will only use 24 of these images, either of faces or not faces. For more information, consult MNE&#x27;s documentation &lt;https://mne.tools/1.8/auto_examples/decoding/decoding_rsa_sgskip.html&gt; or the original paper &lt;https://dx.doi.org/10.1038/nn.3635&gt;.">
+    <div class="sphx-glr-thumbcontainer" tooltip="We will begin our look at decoders by using an MEG dataset of humans performing a visual categorization task. Briefly, participants saw a list of 92 images. Here, we will only use 24 of these images, either of faces or not faces. For more information, consult MNE&#x27;s documentation or the original paper.">
 
 .. only:: html
 
-  .. image:: /examples/decoders/images/thumb/sphx_glr_decoders_intro_thumb.png
+  .. image:: /examples/decoders/images/thumb/sphx_glr_1_decoders_intro_thumb.png
     :alt:
 
-  :ref:`sphx_glr_examples_decoders_decoders_intro.py`
+  :ref:`sphx_glr_examples_decoders_1_decoders_intro.py`
 
 .. raw:: html
 
-      <div class="sphx-glr-thumbnail-title">Decoders</div>
+      <div class="sphx-glr-thumbnail-title">1. Classification</div>
     </div>
 
 

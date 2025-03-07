@@ -1,8 +1,8 @@
 """
-Decoders
-========
+1. Classification
+=================
 
-We will begin our look at decoders by using an MEG dataset of humans performing a visual categorization task. Briefly, participants saw a list of 92 images. Here, we will only use 24 of these images, either of faces or not faces. For more information, consult `MNE's documentation <https://mne.tools/1.8/auto_examples/decoding/decoding_rsa_sgskip.html>` or the `original paper <https://dx.doi.org/10.1038/nn.3635>`.
+We will begin our look at decoders by using an MEG dataset of humans performing a visual categorization task. Briefly, participants saw a list of 92 images. Here, we will only use 24 of these images, either of faces or not faces. For more information, consult `MNE's documentation <https://mne.tools/1.8/auto_examples/decoding/decoding_rsa_sgskip.html>`_ or the `original paper <https://dx.doi.org/10.1038/nn.3635>`_.
 
 For convenience, we will consider only gradiometer channels from the dataset, though you are free to change this, of course. The goal will be to build a classifier that can distinguish between faces/not-faces.
 
@@ -66,6 +66,7 @@ epochs = mne.Epochs(
 )
 
 # %% [markdown]
+# 
 # Now that we have succesfully loaded the data, we will quickly bring the data into a format that we can work with (i.e., arrays) and produce a vector of target labels as well:
 
 #%%
@@ -114,8 +115,8 @@ pipeline = make_pipeline(Scaler().to_torch(),
                                  verbose = True))
 
 # setup our output data structures: out-of-sample accuracy, and the patterns the classifier used.
-oos = torch.zeros((n_splits, X.shape[-1]), dtype = X_tr.dtype, device = X_tr.device)
-patterns = torch.zeros((n_splits, X.shape[1], X.shape[-1]), dtype = X_tr.dtype, device = X_tr.device)
+oos = torch.zeros((n_splits, X.shape[-1]), dtype = X_tr.dtype, device = X_tr.device) # (folds, time points)
+patterns = torch.zeros((n_splits, X.shape[1], X.shape[-1]), dtype = X_tr.dtype, device = X_tr.device) # (folds, channels, time points)
 
 # loop over cross-validation folds
 for f_i, (train, test) in enumerate(skf.split(X_tr[:,0,0], y_tr[:,0,0])):
