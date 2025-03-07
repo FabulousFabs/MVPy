@@ -449,7 +449,7 @@ class _ClassifierOvO_numpy(sklearn.base.BaseEstimator):
                 if i <= j: continue
                 
                 # fit this classifier
-                indc = ((y == class_i) | (y == class_j)).astype(bool).squeeze()
+                indc = ((y == self.classes_[class_i]) | (y == self.classes_[class_j])).astype(bool).squeeze()
                 estimator = _ClassifierSingle_numpy(alpha = self.alpha, fit_intercept = self.fit_intercept, normalise = self.normalise, alpha_per_target = self.alpha_per_target)
                 estimator.fit(X[indc], y[indc])
                 self.estimators_.append(estimator)
@@ -653,7 +653,7 @@ class _ClassifierOvO_torch(sklearn.base.BaseEstimator):
                 if i <= j: continue
                 
                 # fit this classifier
-                indc = ((y == class_i) | (y == class_j)).to(torch.bool).squeeze()
+                indc = ((y == self.classes_[class_i]) | (y == self.classes_[class_j])).to(torch.bool).squeeze()
                 estimator = _ClassifierSingle_torch(alpha = self.alpha, fit_intercept = self.fit_intercept, normalise = self.normalise, alpha_per_target = self.alpha_per_target)
                 estimator.fit(X[indc], y[indc])
                 self.estimators_.append(estimator)
