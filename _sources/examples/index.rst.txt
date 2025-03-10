@@ -33,7 +33,7 @@ In the following couple of sections, we will walk through the steps required to 
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Before we turn to real data, we&#x27;ll briefly familiarise ourselves with the syntax around computing RDMs.">
+    <div class="sphx-glr-thumbcontainer" tooltip="As we did for classification, we will use an MEG dataset of humans performing a visual categorization task. Briefly, participants saw a list of 92 images. Effectively, these images are faces, not faces, human, not human, artificial, etc. For more information, consult MNE&#x27;s documentation or the original paper. Our goal here will be to create a neural RDM and a hypothesis RDM based on the neural data and the corresponding categories and see if we find some similarity between the two.">
 
 .. only:: html
 
