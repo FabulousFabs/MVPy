@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**19:22.214** total execution time for 4 files **from all galleries**:
+**04:46.627** total execution time for 4 files **from all galleries**:
 
 .. container::
 
@@ -33,14 +33,14 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_examples_decoders_1_decoders_intro.py` (``../examples/decoders/1_decoders_intro.py``)
-     - 19:21.647
+     - 04:46.172
      - 0.0
    * - :ref:`sphx_glr_examples_rsa_1_rsa_intro.py` (``../examples/rsa/1_rsa_intro.py``)
-     - 00:00.565
-     - 0.0
-   * - :ref:`sphx_glr_examples_encoders_encoders_intro.py` (``../examples/encoders/encoders_intro.py``)
-     - 00:00.001
+     - 00:00.453
      - 0.0
    * - :ref:`sphx_glr_examples_rsa_2_rsa_encoder.py` (``../examples/rsa/2_rsa_encoder.py``)
+     - 00:00.001
+     - 0.0
+   * - :ref:`sphx_glr_examples_encoders_encoders_intro.py` (``../examples/encoders/encoders_intro.py``)
      - 00:00.001
      - 0.0
