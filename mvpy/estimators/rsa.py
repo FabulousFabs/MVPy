@@ -260,10 +260,10 @@ class _RSA_torch(sklearn.base.BaseEstimator):
             raise RuntimeError('`transform` must be called before `full_rdm`.')
         
         # setup rdm
-        rdm = torch.zeros((self.dims_[0], self.dims_[0], *self.dims_[1:-2], self.dims_[-1])) * torch.nan
+        rdm = torch.zeros((self.dims_[0], self.dims_[0], *self.dims_[1:-2], self.dims_[-1]), dtype = self.rdm_.dtype, device = self.rdm_.device) * torch.nan
         rdm[self.cx_, self.cy_] = rdm[self.cy_, self.cx_] = self.rdm_
         
-        return self.rdm_
+        return rdm
     
     def clone(self):
         """Obtain a clone of this class.
