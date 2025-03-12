@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**01:09.718** total execution time for 1 file **from examples/decoders**:
+**01:09.294** total execution time for 1 file **from examples/decoders**:
 
 .. container::
 
@@ -33,5 +33,5 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_examples_decoders_1_decoders_intro.py` (``1_decoders_intro.py``)
-     - 01:09.718
+     - 01:09.294
      - 0.0
