@@ -8,3 +8,5 @@ from .pearsonr import pearsonr, pearsonr_d
 from .spearmanr import spearmanr, spearmanr_d
 from .rank import rank
 from .crossvalidated import cv_euclidean, cv_mahalanobis
+from .accuracy import accuracy
+from .roc_auc import roc_auc
