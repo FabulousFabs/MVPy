@@ -186,6 +186,13 @@ def roc_auc(y_true: Union[np.ndarray, torch.Tensor], y_score: Union[np.ndarray, 
     >>> y_score = torch.tensor([-1., 1.])
     >>> roc_auc(y_true, y_score)
     tensor(0.)
+    
+    >>> import torch
+    >>> from mvpy.math import roc_auc
+    >>> y_true = torch.tensor([0., 1., 2.])
+    >>> y_score = torch.tensor([[-1., 1., 1.], [1., -1., 1.], [1., 1., -1.]])
+    >>> roc_auc(y_true, y_score)
+    tensor(0.)
     """
     
     if isinstance(y_true, torch.Tensor) & isinstance(y_score, torch.Tensor):

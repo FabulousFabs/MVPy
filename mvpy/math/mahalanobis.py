@@ -10,7 +10,7 @@ import torch
 from typing import Union
 
 def _mahalanobis_numpy(x: np.ndarray, y: np.ndarray, Σ: np.ndarray) -> np.ndarray:
-    """Computes mahalanobis distance between x and y using inverse covariance matrix Σ. Note that this function is not exported and should not be called directly. See :func:`mahalanobis` instead.
+    r"""Computes mahalanobis distance between x and y using inverse covariance matrix Σ. Note that this function is not exported and should not be called directly. See :func:`mahalanobis` instead.
 
     Parameters
     ----------
@@ -42,14 +42,22 @@ def _mahalanobis_numpy(x: np.ndarray, y: np.ndarray, Σ: np.ndarray) -> np.ndarr
     if Σ.shape != (x.shape[-1], x.shape[-1]):
         raise ValueError(f'`Σ` must be of size `(x[-1], x[-1])`, but received x={x.shape} and Σ={Σ.shape}.')
     
+    # compute differences
     Δ = x - y
+    
+    # compute mahalanobis distance
     L = np.matmul(Δ[...,np.newaxis,:], Σ)
     S = np.matmul(L, Δ[...,np.newaxis]).squeeze(-1).squeeze(-1)
     
-    return np.sqrt(S)
+    # mask to avoid NaNs
+    M = np.full(S.shape, np.nan)
+    mask = (S >= 0).astype(bool)
+    M[mask] = np.sqrt(S[mask])
+    
+    return M
 
 def _mahalanobis_torch(x: torch.Tensor, y: torch.Tensor, Σ: torch.Tensor) -> torch.Tensor:
-    """Computes mahalanobis distance between x and y using inverse covariance matrix Σ. Note that this function is not exported and should not be called directly. See :func:`mahalanobis` instead.
+    r"""Computes mahalanobis distance between x and y using inverse covariance matrix Σ. Note that this function is not exported and should not be called directly. See :func:`mahalanobis` instead.
 
     Parameters
     ----------
@@ -87,14 +95,22 @@ def _mahalanobis_torch(x: torch.Tensor, y: torch.Tensor, Σ: torch.Tensor) -> to
     if x.dim() == 1:
         raise NotImplementedError(f'Mahalanobis distance currently unavailable for 1d vectors on torch.')
     
+    # compute differences
     Δ = x - y
+    
+    # compute mahalanobis distance
     L = torch.matmul(Δ[...,None,:], Σ)
     S = torch.matmul(L, Δ[...,None]).squeeze(-1).squeeze(-1)
     
-    return torch.sqrt(S)
+    # mask to avoid NaNs
+    M = torch.full(S.shape, torch.nan, dtype = S.dtype, device = S.device)
+    mask = (S >= 0).to(torch.bool)
+    M[mask] = torch.sqrt(S[mask])
+    
+    return M
 
 def mahalanobis(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor], Σ: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
-    """Computes mahalanobis distance between x and y using inverse covariance matrix Σ.
+    r"""Computes mahalanobis distance between x and y using inverse covariance matrix Σ.
 
     Parameters
     ----------
