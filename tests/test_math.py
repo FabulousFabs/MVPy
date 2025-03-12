@@ -649,7 +649,239 @@ def test_cv_mahalanobis_type_mismatch():
 
     with pytest.raises(ValueError):
         mv.math.cv_mahalanobis(x, y, p)
+
+'''
+Accuracy tests
+'''
+
+def test_accuracy_torch():
+    '''
+    Make sure torch computes accuracy correctly.
+    '''
     
+    from sklearn.metrics import accuracy_score
+    
+    # setup data
+    y_true = np.random.choice([0, 1], size = (100, 50))
+    y_score = np.random.choice([0, 1], size = (100, 50))
+    
+    # run test
+    r_sk = np.array([accuracy_score(y_true[i], y_score[i]) for i in range(y_true.shape[0])])
+    r_mv = mv.math.accuracy(torch.from_numpy(y_true).to(torch.float32), torch.from_numpy(y_score).to(torch.float32)).cpu().numpy()
+
+    assert np.allclose(r_sk, r_mv, rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
+
+def test_accuracy_numpy():
+    '''
+    Make sure numpy computes accuracy correctly.
+    '''
+
+    from sklearn.metrics import accuracy_score
+
+    # setup data
+    y_true = np.random.choice([0, 1], size = (100, 50))
+    y_score = np.random.choice([0, 1], size = (100, 50))
+
+    # run test
+    r_sk = np.array([accuracy_score(y_true[i], y_score[i]) for i in range(y_true.shape[0])])
+    r_mv = mv.math.accuracy(y_true, y_score)
+    
+    assert np.allclose(r_sk, r_mv, rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
+
+def test_accuracy_compare_numpy_torch():
+    '''
+    Make sure numpy and torch backends converge in accuracy.
+    '''
+
+    # setup data
+    y_true = np.random.choice([0, 1], size = (100, 50))
+    y_score = np.random.choice([0, 1], size = (100, 50))
+
+    # run test
+    r_np = mv.math.accuracy(y_true, y_score)
+    r_tr = mv.math.accuracy(torch.from_numpy(y_true).to(torch.float32), torch.from_numpy(y_score).to(torch.float32)).cpu().numpy()
+    
+    assert np.allclose(r_np, r_tr, rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
+
+def test_accuracy_shape_mismatch():
+    '''
+    Make sure functions fail when shapes are mismatched.
+    '''
+    
+    # setup data
+    y_true = np.random.choice([0, 1], size = (100, 50))
+    y_score = np.random.choice([0, 1], size = (100, 40))
+    
+    # run tests
+    with pytest.raises(ValueError):
+        mv.math.accuracy(y_true, y_score)
+    
+    with pytest.raises(ValueError):
+        mv.math.accuracy(torch.from_numpy(y_true).to(torch.float32), torch.from_numpy(y_score).to(torch.float32))
+
+def test_accuracy_type_mismatch():
+    '''
+    Make sure functions fail when types are mismatched.
+    '''
+    
+    # setup data
+    y_true = np.random.choice([0, 1], size = (100, 50))
+    y_score = torch.from_numpy(np.random.choice([0, 1], size = (100, 50))).to(torch.float32)
+    
+    # run tests
+    with pytest.raises(ValueError):
+        mv.math.accuracy(y_true, y_score)
+
+'''
+ROC-AUC tests
+'''
+
+def test_roc_auc_numpy():
+    '''
+    Make sure numpy computes roc-auc correctly.
+    '''
+    
+    from sklearn.metrics import roc_auc_score
+    
+    # setup data
+    y_true = np.random.choice([0, 1], size = (100, 50))
+    y_score = np.random.normal(size = (100, 50))
+    
+    # run test
+    r_sk = np.array([roc_auc_score(y_true[i], y_score[i]) for i in range(y_true.shape[0])])
+    r_mv = mv.math.roc_auc(y_true, y_score)
+    
+    assert np.allclose(r_sk, r_mv, rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
+
+def test_roc_auc_torch():
+    '''
+    Make sure torch computes roc-auc correctly.
+    '''
+    
+    from sklearn.metrics import roc_auc_score
+    
+    # setup data
+    y_true = np.random.choice([0, 1], size = (100, 50))
+    y_score = np.random.normal(size = (100, 50))
+    
+    # run test
+    r_sk = np.array([roc_auc_score(y_true[i], y_score[i]) for i in range(y_true.shape[0])])
+    r_mv = mv.math.roc_auc(torch.from_numpy(y_true).to(torch.float32), torch.from_numpy(y_score).to(torch.float32)).cpu().numpy()
+    
+    assert np.allclose(r_sk, r_mv, rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
+
+def test_roc_auc_compare_numpy_torch():
+    '''
+    Make sure numpy and torch backends converge in roc-auc.
+    '''
+
+    # setup
+    y_true = np.random.choice([0, 1], size = (100, 50))
+    y_score = np.random.normal(size = (100, 50))
+    
+    # run test
+    r_np = mv.math.roc_auc(y_true, y_score)
+    r_tr = mv.math.roc_auc(torch.from_numpy(y_true).to(torch.float32), torch.from_numpy(y_score).to(torch.float32)).cpu().numpy()
+    
+    assert np.allclose(r_np, r_tr, rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
+
+def test_roc_auc_multiclass_numpy():
+    '''
+    Make sure numpy computes roc-auc correctly in multiclass case.
+    '''
+    
+    from sklearn.metrics import roc_auc_score
+    
+    # setup data
+    y_true = np.random.choice([0, 1, 2, 3], size = (100, 50))
+    y_score = np.abs(np.random.normal(size = (100, 4, 50)))
+    y_score = y_score / y_score.sum(axis = 1, keepdims = True)
+
+    # run test
+    r_sk = np.array([roc_auc_score(y_true[i].T, y_score[i].T, multi_class = 'ovr') for i in range(y_true.shape[0])])
+    r_mv = mv.math.roc_auc(y_true, y_score)
+    
+    assert np.allclose(r_sk, r_mv, rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
+
+def test_roc_auc_multiclass_torch():
+    '''
+    Make sure torch computes roc-auc correctly in multiclass case.
+    '''
+    
+    from sklearn.metrics import roc_auc_score
+    
+    # setup data
+    y_true = np.random.choice([0, 1, 2, 3], size = (100, 50))
+    y_score = np.abs(np.random.normal(size = (100, 4, 50)))
+    y_score = y_score / y_score.sum(axis = 1, keepdims = True)
+    
+    # run test
+    r_sk = np.array([roc_auc_score(y_true[i].T, y_score[i].T, multi_class = 'ovr') for i in range(y_true.shape[0])])
+    r_mv = mv.math.roc_auc(torch.from_numpy(y_true).to(torch.float32), torch.from_numpy(y_score).to(torch.float32)).cpu().numpy()
+    
+    assert np.allclose(r_sk, r_mv, rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
+
+def test_roc_auc_multiclass_compare_numpy_torch():
+    '''
+    Make sure numpy and torch agree in their multiclass scoring.
+    '''
+    
+    # setup data
+    y_true = np.random.choice([0, 1, 2, 3], size = (100, 50))
+    y_score = np.abs(np.random.normal(size = (100, 4, 50)))
+    y_score = y_score / y_score.sum(axis = 1, keepdims = True)
+    
+    # run test
+    r_np = mv.math.roc_auc(y_true, y_score)
+    r_tr = mv.math.roc_auc(torch.from_numpy(y_true).to(torch.float32), torch.from_numpy(y_score).to(torch.float32)).cpu().numpy()
+    
+    assert np.allclose(r_np, r_tr, rtol = _ALLCLOSE_RTOL, atol = _ALLCLOSE_ATOL)
+
+def test_roc_auc_shape_mismatch():
+    '''
+    Make sure functions fail when shapes are mismatched.
+    '''
+    
+    # setup data
+    y_true = np.random.choice([0, 1], size = (100, 50))
+    y_score = np.random.normal(size = (80, 50))
+    
+    # run tests
+    with pytest.raises(ValueError):
+        mv.math.roc_auc(y_true, y_score)
+    
+    with pytest.raises(ValueError):
+        mv.math.roc_auc(torch.from_numpy(y_true).to(torch.float32), torch.from_numpy(y_score).to(torch.float32))
+
+def test_roc_auc_multiclass_shape_mismatch():
+    '''
+    Make sure functions fail when shapes are mismatched in the multiclass case, i.e. we have fewer logits than classes.
+    '''
+    
+    # setup data
+    y_true = np.random.choice([0, 1, 2, 3], size = (100, 50))
+    y_score = np.abs(np.random.normal(size = (100, 3, 50)))
+    
+    # run tests
+    with pytest.raises(ValueError):
+        mv.math.roc_auc(y_true, y_score)
+        
+    with pytest.raises(ValueError):
+        mv.math.roc_auc(torch.from_numpy(y_true).to(torch.float32), torch.from_numpy(y_score).to(torch.float32))
+
+def test_roc_auc_type_mismatch():
+    '''
+    Make sure functions fail when types are mismatched.
+    '''
+
+    # setup data
+    y_true = np.random.choice([0, 1], size = (100, 50))
+    y_score = np.random.normal(size = (100, 50))
+    
+    # run tests
+    with pytest.raises(ValueError):
+        mv.math.roc_auc(y_true, torch.from_numpy(y_score).to(torch.float32))
+
 '''
 Allow direct calls
 '''

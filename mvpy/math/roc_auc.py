@@ -1,5 +1,5 @@
 '''
-Functions to compute accuracy in a 
+Functions to compute roc-auc in a 
 nice and vectorised manner using either numpy or 
 torch.
 '''
@@ -37,7 +37,7 @@ def _roc_auc_numpy(y_true: np.ndarray, y_score: np.ndarray) -> np.ndarray:
     # if multi-label, we need to create a new axis for an OvR style approach
     if L.shape[0] > 2:
         # add our new dimension
-        y = np.full(y_true.shape, -1)[...,np.newaxis]
+        y = np.full((*y_true.shape, L.shape[0]), -1)
         
         # loop over each class
         for i, L_i in enumerate(L):
@@ -45,6 +45,14 @@ def _roc_auc_numpy(y_true: np.ndarray, y_score: np.ndarray) -> np.ndarray:
         
         # update labels
         y_true = y.swapaxes(-1, -2)
+        
+        # check dimensions in y_score
+        if y_score.shape[-2] != y_true.shape[-2]:
+            raise ValueError(f'For multiclass to work, `y_score` must have the same number of dimensions as there are labels in `y_true`, but got {y_score.shape[-2]} and {y_true.shape[-2]}.')
+    
+    # make sure dimensions agree
+    if y_score.shape != y_true.shape:
+        raise ValueError(f'`y_true` and `y_score` must have the same shape, but got {y_true.shape} and {y_score.shape}.')
     
     # update unique labels
     L_a = np.unique(y_true)
@@ -68,7 +76,7 @@ def _roc_auc_numpy(y_true: np.ndarray, y_score: np.ndarray) -> np.ndarray:
     roc_auc[mask] = (R_pos[mask] - P[mask] * (P[mask] + 1) / 2) / (P[mask] * N[mask])
     
     # take macro average if multi-class
-    if len(L.shape) != len(L_a.shape):
+    if L.shape[0] != L_a.shape[0]:
         roc_auc = np.nanmean(roc_auc, axis = -1)
     
     return roc_auc
@@ -99,14 +107,22 @@ def _roc_auc_torch(y_true: torch.Tensor, y_score: torch.Tensor) -> torch.Tensor:
     # if multi-label, we need to create a new axis for an OvR style approach
     if L.shape[0] > 2:
         # add our new dimension
-        y = torch.full(y_true.shape, -1, dtype = y_true.dtype, device = y_true.device).unsqueeze(-1)
+        y = torch.full((*y_true.shape, L.shape[0]), -1, dtype = y_true.dtype, device = y_true.device)
         
         # loop over each class
         for i, L_i in enumerate(L):
-            y[y_true == L_i,i] = 1
+            y[...,i] = (y_true == L_i).to(y_true.dtype) * 2 - 1
         
         # update labels
         y_true = y.swapaxes(-1, -2)
+                
+        # check dimensions in y_score
+        if y_score.shape[-2] != y_true.shape[-2]:
+            raise ValueError(f'For multiclass to work, `y_score` must have the same number of dimensions as there are labels in `y_true`, but got {y_score.shape[-2]} and {y_true.shape[-2]}.')
+    
+    # make sure dimensions agree
+    if y_score.shape != y_true.shape:
+        raise ValueError(f'`y_true` and `y_score` must have the same shape, but got {y_true.shape} and {y_score.shape}.')
     
     # update unique labels
     L_a = torch.unique(y_true)
@@ -130,7 +146,7 @@ def _roc_auc_torch(y_true: torch.Tensor, y_score: torch.Tensor) -> torch.Tensor:
     roc_auc[mask] = (R_pos[mask] - P[mask] * (P[mask] + 1) / 2) / (P[mask] * N[mask])
     
     # take macro average if multi-class
-    if len(L.shape) != len(L_a.shape):
+    if L.shape[0] != L_a.shape[0]:
         roc_auc = torch.nanmean(roc_auc, -1)
     
     return roc_auc
