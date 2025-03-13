@@ -177,6 +177,7 @@ class _TimeDelayed_numpy(sklearn.base.BaseEstimator):
         
         # obtain coefficients
         self.coef_ = self.estimator.coef_.reshape((self.f_, self.c_, self.w_))
+        self.coef_ = np.flip(self.coef_, axis = -1)
 
         # if desired, also get the patterns
         if self.patterns:
@@ -204,7 +205,8 @@ class _TimeDelayed_numpy(sklearn.base.BaseEstimator):
             
             # reshape patterns
             self.pattern_ = self.pattern_.reshape((self.f_, self.c_, self.w_))
-
+            self.pattern_ = np.flip(self.pattern_, axis = -1)
+        
         return self
     
     def predict(self, X: np.ndarray, reshape: bool = True) -> np.ndarray:
@@ -424,6 +426,7 @@ class _TimeDelayed_torch(sklearn.base.BaseEstimator):
         
         # obtain coefficients
         self.coef_ = self.estimator.coef_.reshape((self.f_, self.c_, self.w_))
+        self.coef_ = self.coef_.flip(-1)
         
         # if desired, also get the patterns
         if self.patterns:
@@ -451,6 +454,7 @@ class _TimeDelayed_torch(sklearn.base.BaseEstimator):
             
             # reshape patterns
             self.pattern_ = self.pattern_.reshape((self.f_, self.c_, self.w_))
+            self.pattern_ = self.pattern_.flip(-1)
 
         return self
     

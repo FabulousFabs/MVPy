@@ -69,7 +69,7 @@ def test_TimeDelayed_trf_numpy(Xyß):
     trf = mv.estimators.TimeDelayed(-10, 10, 1, alphas = np.logspace(-5, 10, 20))
     trf.fit(X, y)
     
-    assert mv.math.pearsonr(ß, trf.coef_[...,1:]).mean() > .95
+    assert mv.math.pearsonr(ß, trf.coef_[...,::-1][...,1:]).mean() > .95
 
 def test_TimeDelayed_trf_torch(Xyß):
     '''
@@ -83,7 +83,7 @@ def test_TimeDelayed_trf_torch(Xyß):
     trf = mv.estimators.TimeDelayed(-10, 10, 1, alphas = torch.logspace(-5, 10, 20))
     trf.fit(X, y)
     
-    assert mv.math.pearsonr(ß, trf.coef_[...,1:]).mean() > .95
+    assert mv.math.pearsonr(ß, trf.coef_.flip(-1)[...,1:]).mean() > .95
 
 def test_TimeDelayed_trf_compare_numpy_torch(Xyß):
     '''
