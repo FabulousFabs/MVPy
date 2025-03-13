@@ -217,11 +217,11 @@ Now that we have our data in a nicely structured format, let's look at building 
 
  .. code-block:: none
 
-    Fitting estimators...:   0%|          | 0/601 [00:00<?, ?it/s]    Fitting estimators...:   0%|          | 0/601 [00:09<?, ?it/s]
     Fitting estimators...:   0%|          | 0/601 [00:00<?, ?it/s]    Fitting estimators...:   0%|          | 0/601 [00:10<?, ?it/s]
-    Fitting estimators...:   0%|          | 0/601 [00:00<?, ?it/s]    Fitting estimators...:   0%|          | 0/601 [00:09<?, ?it/s]
-    Fitting estimators...:   0%|          | 0/601 [00:00<?, ?it/s]    Fitting estimators...:   0%|          | 0/601 [00:09<?, ?it/s]
-    Fitting estimators...:   0%|          | 0/601 [00:00<?, ?it/s]    Fitting estimators...:   0%|          | 0/601 [00:09<?, ?it/s]
+    Fitting estimators...:   0%|          | 0/601 [00:00<?, ?it/s]    Fitting estimators...:   0%|          | 0/601 [00:10<?, ?it/s]
+    Fitting estimators...:   0%|          | 0/601 [00:00<?, ?it/s]    Fitting estimators...:   0%|          | 0/601 [00:10<?, ?it/s]
+    Fitting estimators...:   0%|          | 0/601 [00:00<?, ?it/s]    Fitting estimators...:   0%|          | 0/601 [00:10<?, ?it/s]
+    Fitting estimators...:   0%|          | 0/601 [00:00<?, ?it/s]    Fitting estimators...:   0%|          | 0/601 [00:10<?, ?it/s]
 
 
 
@@ -286,7 +286,7 @@ Finally, we would also like to visualise the patterns that the classifier used. 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (1 minutes 6.838 seconds)
+   **Total running time of the script:** (1 minutes 7.484 seconds)
 
 
 .. _sphx_glr_download_examples_decoders_1_decoders_intro.py:

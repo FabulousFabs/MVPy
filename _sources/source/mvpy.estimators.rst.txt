@@ -36,6 +36,14 @@ mvpy.estimators.decoder module
    :undoc-members:
    :show-inheritance:
 
+mvpy.estimators.encoder module
+------------------------------
+
+.. automodule:: mvpy.estimators.encoder
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 mvpy.estimators.ridgecv module
 ------------------------------
 

@@ -390,9 +390,10 @@
 <p>The back-to-back estimator is a two-step estimator that consists of a decoder and an encoder. Effectively, the idea is to first decode all features, then use predictions from the decoder to encode all true features from all predictions. Consequently, this allows us to obtain a disentangled estimate of the causal contribution of each feature.</p>
 <p>In practice, this is implemented as:</p>
 <div class="math notranslate nohighlight">
-\[\hat{G} = (Y_1^T Y_i + \alpha_Y)^{-1}Y^T X
-\hat{H} = (X^T X + \alpha_X)^{-1}X^T Y\hat{G}\]</div>
-<p>where <span class="math notranslate nohighlight">\(\hat{G}\)</span> is the decoder and <span class="math notranslate nohighlight">\(\hat{H}\)</span> is the encoder, and <span class="math notranslate nohighlight">\(\alpha\)</span> are regularisation parameters. Note also that, in practice, we do two additional steps:</p>
+\[\begin{split}\\hat{G} = (Y_1^T Y_i + \\alpha_Y)^{-1}Y^T X\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}\\hat{H} = (X^T X + \\alpha_X)^{-1}X^T Y\hat{G}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\\hat{G}\)</span> is the decoder and <span class="math notranslate nohighlight">\(\\hat{H}\)</span> is the encoder, and <span class="math notranslate nohighlight">\(\\alpha\)</span> are regularisation parameters. Note also that, in practice, we do two additional steps:</p>
 <p>Firstly, we split the data in half and train the decoder on the first half and the encoder on the second half of the data. This is done to avoid overfitting.</p>
 <p>Secondly, we also (offer an option to) normalise the outputs from our decoder. This isn’t technically required, but it can be helpful if you are using, for example, different alpha penalties per target.</p>
 <p>For more information on B2B regression, please see <a href="#id17"><span class="problematic" id="id1">[1]_</span></a>.</p>
@@ -948,6 +949,153 @@ pre-whitening of data.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mvpy.estimators.decoder.Decoder.predict">
 <span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.decoder.Decoder.predict" title="Link to this definition">#</a></dt>
+<dd><p>Predict from the estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – The features.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The predictions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-mvpy.estimators.encoder">
+<span id="mvpy-estimators-encoder-module"></span><h2>mvpy.estimators.encoder module<a class="headerlink" href="#module-mvpy.estimators.encoder" title="Link to this heading">#</a></h2>
+<p>A collection of estimators for encoding features using ridge regressions.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvpy.estimators.encoder.Encoder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.estimators.encoder.</span></span><span class="sig-name descname"><span class="pre">Encoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alphas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.encoder.Encoder" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></p>
+<p>Implements a simple linear ridge encoder. This class essentially just wraps <cite>mvpy.estimators.RidgeCV</cite>, exposing this as a more convenient name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>alphas</strong> (<em>Union</em><em>[</em><em>torch.Tensor</em><em>, </em><em>np.ndarray</em><em>, </em><em>float</em><em>, </em><em>int</em><em>]</em><em>, </em><em>default=1</em>) – The penalties to use for estimation.</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – Additional arguments.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.encoder.Encoder.alphas">
+<span class="sig-name descname"><span class="pre">alphas</span></span><a class="headerlink" href="#mvpy.estimators.encoder.Encoder.alphas" title="Link to this definition">#</a></dt>
+<dd><p>The penalties to use for estimation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.encoder.Encoder.kwargs">
+<span class="sig-name descname"><span class="pre">kwargs</span></span><a class="headerlink" href="#mvpy.estimators.encoder.Encoder.kwargs" title="Link to this definition">#</a></dt>
+<dd><p>Additional arguments for the estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.encoder.Encoder.estimator">
+<span class="sig-name descname"><span class="pre">estimator</span></span><a class="headerlink" href="#mvpy.estimators.encoder.Encoder.estimator" title="Link to this definition">#</a></dt>
+<dd><p>The estimator to use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mvpy.estimators.RidgeCV</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.encoder.Encoder.intercept_">
+<span class="sig-name descname"><span class="pre">intercept_</span></span><a class="headerlink" href="#mvpy.estimators.encoder.Encoder.intercept_" title="Link to this definition">#</a></dt>
+<dd><p>The intercepts of the encoder.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.encoder.Encoder.coef_">
+<span class="sig-name descname"><span class="pre">coef_</span></span><a class="headerlink" href="#mvpy.estimators.encoder.Encoder.coef_" title="Link to this definition">#</a></dt>
+<dd><p>The coefficients of the encoder.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Notes</p>
+<p>This class is a wrapper around <cite>mvpy.estimators.RidgeCV</cite>. Really, it exists mostly to make the code more readable.</p>
+<p>However, this class may also be used for a temporally expanded encoder. This may be useful in cases where you would like to encode in time, but would like to impose the constraint that alpha should be fit over all time points. To use this class in this manner, simply supply 3D <cite>X</cite> and <cite>y</cite> tensors.</p>
+<p class="rubric">Examples</p>
+<p>Let’s say we want to do a very simple encoding:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.estimators</span><span class="w"> </span><span class="kn">import</span> <span class="n">Encoder</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ß</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">50</span><span class="p">,))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">ß</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">encoder</span> <span class="o">=</span> <span class="n">Encoder</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">encoder</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">torch.Size([1, 50])</span>
+</pre></div>
+</div>
+<p>Next, let’s assume we want to do a temporally expanded encoding instead:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.estimators</span><span class="w"> </span><span class="kn">import</span> <span class="n">Encoder</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">240</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ß</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">X</span><span class="p">[:,:,</span><span class="n">i</span><span class="p">]</span> <span class="o">@</span> <span class="n">ß</span><span class="p">[</span><span class="n">j</span><span class="p">,:,</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])],</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ß</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])],</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">encoder</span> <span class="o">=</span> <span class="n">Encoder</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">encoder</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">torch.Size([60, 5, 100])</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.encoder.Encoder.clone">
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.encoder.Encoder.clone" title="Link to this definition">#</a></dt>
+<dd><p>Clone this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The cloned object.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#mvpy.estimators.encoder.Encoder" title="mvpy.estimators.encoder.Encoder">Encoder</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.encoder.Encoder.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.encoder.Encoder.fit" title="Link to this definition">#</a></dt>
+<dd><p>Fit the estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – The features.</p></li>
+<li><p><strong>y</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – The targets.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.encoder.Encoder.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.encoder.Encoder.predict" title="Link to this definition">#</a></dt>
 <dd><p>Predict from the estimator.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1984,12 +2132,12 @@ Finally, be aware that, if you want to use numpy as your backend, you _must_ sup
 <p>This class allows estimation of either multivariate temporal response functions (mTRF) or stimulus reconstruction (SR) models.</p>
 <p>mTRFs are estimated as:</p>
 <div class="math notranslate nohighlight">
-\[r(t,n) = \sum_\tau w(\tau, n) s(t - \tau) + \epsilon\]</div>
-<p>where <span class="math notranslate nohighlight">\(r(t,n)\)</span> is the reconstructed signal at timepoint <span class="math notranslate nohighlight">\(t\)</span> for channel <span class="math notranslate nohighlight">\(n\)</span>, <span class="math notranslate nohighlight">\(s(t)\)</span> is the stimulus at time <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(w(    au, n)\)</span> is the weight at time delay :math:`     au` for channel <span class="math notranslate nohighlight">\(n\)</span>, and <span class="math notranslate nohighlight">\(\epsilon\)</span> is the error.</p>
+\[\begin{split}r(t,n) = \\sum_\\tau w(\\tau, n) s(t - \\tau) + \\epsilon\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(r(t,n)\)</span> is the reconstructed signal at timepoint <span class="math notranslate nohighlight">\(t\)</span> for channel <span class="math notranslate nohighlight">\(n\)</span>, <span class="math notranslate nohighlight">\(s(t)\)</span> is the stimulus at time <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(w(\tau, n)\)</span> is the weight at time delay <span class="math notranslate nohighlight">\(\tau\)</span> for channel <span class="math notranslate nohighlight">\(n\)</span>, and <span class="math notranslate nohighlight">\(\epsilon\)</span> is the error.</p>
 <p>SR models are estimated as:</p>
 <div class="math notranslate nohighlight">
-\[s(t) = \sum_n\sum_\tau r(t + \tau, n) g(\tau, n)\]</div>
-<p>where <span class="math notranslate nohighlight">\(s(t)\)</span> is the reconstructed stimulus at time <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(r(t,n)\)</span> is the neural response at <span class="math notranslate nohighlight">\(t\)</span> and lagged by <span class="math notranslate nohighlight">\(\tau\)</span> for channel <span class="math notranslate nohighlight">\(n\)</span>, <span class="math notranslate nohighlight">\(g(  au, n)\)</span> is the weight at time delay :math:`     au` for channel <span class="math notranslate nohighlight">\(n\)</span>.</p>
+\[\begin{split}s(t) = \\sum_n\\sum_\\tau r(t + \\tau, n) g(\\tau, n)\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(s(t)\)</span> is the reconstructed stimulus at time <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(r(t,n)\)</span> is the neural response at <span class="math notranslate nohighlight">\(t\)</span> and lagged by <span class="math notranslate nohighlight">\(\\tau\)</span> for channel <span class="math notranslate nohighlight">\(n\)</span>, <span class="math notranslate nohighlight">\(g(\tau, n)\)</span> is the weight at time delay <span class="math notranslate nohighlight">\(\tau\)</span> for channel <span class="math notranslate nohighlight">\(n\)</span>.</p>
 <p>For more information on mTRF or SR models, see <a href="#id21"><span class="problematic" id="id13">[1]_</span></a>.</p>
 <p>Note that for SR models it is recommended to also pass <cite>patterns=True</cite> to estimate not only the coefficients but also the patterns that were actually used for reconstructing stimuli. For more information, see <a href="#id22"><span class="problematic" id="id14">[2]_</span></a>.</p>
 <p class="rubric">References</p>
@@ -2004,37 +2152,31 @@ Finally, be aware that, if you want to use numpy as your backend, you _must_ sup
 </aside>
 </aside>
 <p class="rubric">Examples</p>
-<p>For mTRF estimation, we can do:
-&gt;&gt;&gt; import torch
-&gt;&gt;&gt; from mvpy.estimators import TimeDelayed
-&gt;&gt;&gt; ß = torch.tensor([1., 2., 3., 2., 1.])
-&gt;&gt;&gt; X = torch.normal(0, 1, (100, 1, 50))
-&gt;&gt;&gt; y = torch.nn.functional.conv1d(X, ß[None,None,:], padding = ‘same’)
-&gt;&gt;&gt; y = y + torch.normal(0, 1, y.shape)
-&gt;&gt;&gt; trf = TimeDelayed(-2, 2, 1, alphas = 1e-5)
-&gt;&gt;&gt; trf.fit(X, y).coef_
-tensor([[[0.9290, 1.9101, 2.8802, 1.9790, 0.9453]]])</p>
-<p>For stimulus reconstruction, we can do:
-&gt;&gt;&gt; import torch
-&gt;&gt;&gt; from mvpy.estimators import TimeDelayed
-&gt;&gt;&gt; ß = torch.tensor([1., 2., 3., 2., 1.])
-&gt;&gt;&gt; X = torch.arange(50)[None,None,:] * torch.ones((100, 1, 50))
-&gt;&gt;&gt; y = torch.nn.functional.conv1d(X, ß[None,None,:], padding = ‘same’)
-&gt;&gt;&gt; y = y + torch.normal(0, 1, y.shape)
-&gt;&gt;&gt; X, y = y, X
-&gt;&gt;&gt; sr = TimeDelayed(-2, 2, 1, alphas = 1e-3, patterns = True).fit(X, y)
-&gt;&gt;&gt; sr.predict(X).mean(0)[0,:]
-tensor([ 1.3591,  1.2549,  1.5662,  2.3544,  3.3440,  4.3683,  5.4097,  6.4418,</p>
-<blockquote>
-<div><blockquote>
-<div><p>7.4454,  8.4978,  9.5206, 10.5374, 11.5841, 12.6102, 13.6254, 14.6939,</p>
-</div></blockquote>
-<p>15.6932, 16.7168, 17.7619, 18.8130, 19.8182, 20.8687, 21.8854, 22.9310,
-23.9270, 24.9808, 26.0085, 27.0347, 28.0728, 29.0828, 30.1400, 31.1452,
-32.1793, 33.2047, 34.2332, 35.2717, 36.2945, 37.3491, 38.3800, 39.3817,
-40.3962, 41.4489, 42.4854, 43.4965, 44.5346, 45.5716, 46.7301, 47.2251,
-48.4449, 48.8793])</p>
-</div></blockquote>
+<p>For mTRF estimation, we can do:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.estimators</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeDelayed</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ß</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">conv1d</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">ß</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">,:],</span> <span class="n">padding</span> <span class="o">=</span> <span class="s1">&#39;same&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trf</span> <span class="o">=</span> <span class="n">TimeDelayed</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">alphas</span> <span class="o">=</span> <span class="mf">1e-5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">coef_</span>
+<span class="go">tensor([[[0.9290, 1.9101, 2.8802, 1.9790, 0.9453]]])</span>
+</pre></div>
+</div>
+<p>For stimulus reconstruction, we can do:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.estimators</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeDelayed</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ß</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">50</span><span class="p">)[</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">,:]</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">conv1d</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">ß</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">,:],</span> <span class="n">padding</span> <span class="o">=</span> <span class="s1">&#39;same&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> <span class="n">X</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sr</span> <span class="o">=</span> <span class="n">TimeDelayed</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">alphas</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="n">patterns</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">,:]</span>
+<span class="go">tensor([ 1.3591,  1.2549,  1.5662,  2.3544,  3.3440,  4.3683,  5.4097,  6.4418, 7.4454,  8.4978,  9.5206, 10.5374, 11.5841, 12.6102, 13.6254, 14.6939, 15.6932, 16.7168, 17.7619, 18.8130, 19.8182, 20.8687, 21.8854, 22.9310, 23.9270, 24.9808, 26.0085, 27.0347, 28.0728, 29.0828, 30.1400, 31.1452, 32.1793, 33.2047, 34.2332, 35.2717, 36.2945, 37.3491, 38.3800, 39.3817, 40.3962, 41.4489, 42.4854, 43.4965, 44.5346, 45.5716, 46.7301, 47.2251, 48.4449, 48.8793])</span>
+</pre></div>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="mvpy.estimators.timedelayed.TimeDelayed.clone">
 <span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.timedelayed.TimeDelayed.clone" title="Link to this definition">#</a></dt>
@@ -2197,6 +2339,20 @@ tensor([ 1.3591,  1.2549,  1.5662,  2.3544,  3.3440,  4.3683,  5.4097,  6.4418,<
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.decoder.Decoder.clone"><code class="docutils literal notranslate"><span class="pre">Decoder.clone()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.decoder.Decoder.fit"><code class="docutils literal notranslate"><span class="pre">Decoder.fit()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.decoder.Decoder.predict"><code class="docutils literal notranslate"><span class="pre">Decoder.predict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.estimators.encoder">mvpy.estimators.encoder module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.encoder.Encoder"><code class="docutils literal notranslate"><span class="pre">Encoder</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.encoder.Encoder.alphas"><code class="docutils literal notranslate"><span class="pre">Encoder.alphas</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.encoder.Encoder.kwargs"><code class="docutils literal notranslate"><span class="pre">Encoder.kwargs</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.encoder.Encoder.estimator"><code class="docutils literal notranslate"><span class="pre">Encoder.estimator</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.encoder.Encoder.intercept_"><code class="docutils literal notranslate"><span class="pre">Encoder.intercept_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.encoder.Encoder.coef_"><code class="docutils literal notranslate"><span class="pre">Encoder.coef_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.encoder.Encoder.clone"><code class="docutils literal notranslate"><span class="pre">Encoder.clone()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.encoder.Encoder.fit"><code class="docutils literal notranslate"><span class="pre">Encoder.fit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.encoder.Encoder.predict"><code class="docutils literal notranslate"><span class="pre">Encoder.predict()</span></code></a></li>
 </ul>
 </li>
 </ul>
