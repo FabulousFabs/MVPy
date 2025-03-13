@@ -104,7 +104,7 @@ def test_Encoder_compare_numpy_torch(Xyß_2d):
     encoder_np = mv.estimators.Encoder(alphas = np.logspace(-5, 10, 20)).fit(X_np, y_np)
     encoder_tr = mv.estimators.Encoder(alphas = torch.logspace(-5, 10, 20)).fit(X_tr, y_tr)
     
-    assert mv.math.pearsonr(encoder_np.coef_, encoder_tr.coef_.cpu().numpy()).mean() > .9
+    assert mv.math.pearsonr(encoder_np.coef_.squeeze(), encoder_tr.coef_.cpu().numpy().squeeze()).mean() > .9
 
 def test_Encoder_expanded_numpy(Xyß_3d):
     '''
@@ -145,8 +145,8 @@ def test_Encoder_expanded_compare_numpy_torch(Xyß_3d):
     # run tests
     encoder_np = mv.estimators.Encoder(alphas = np.logspace(-5, 10, 20)).fit(X_np, y_np)
     encoder_tr = mv.estimators.Encoder(alphas = torch.logspace(-5, 10, 20)).fit(X_tr, y_tr)
-    
-    assert mv.math.pearsonr(encoder_np.coef_, encoder_tr.coef_.cpu().numpy()).mean() > .9
+
+    assert mv.math.pearsonr(encoder_np.coef_.squeeze(), encoder_tr.coef_.cpu().numpy().squeeze()).mean() > .9
 
 '''
 Allow direct calls
