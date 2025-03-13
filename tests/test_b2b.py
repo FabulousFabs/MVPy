@@ -1,5 +1,5 @@
 '''
-A series of unit tests for mvpy.estimators.Decoder
+A series of unit tests for mvpy.estimators.B2B
 '''
 
 import pytest
