@@ -320,7 +320,7 @@ class B2B(sklearn.base.BaseEstimator):
     
     Notes
     -----
-    The back-to-back estimator is a two-step estimator that constis of a decoder and an encoder. Effectively, the idea is to first decode all features, then use predictions from the decoder to encode all true features from all predictions. Consequently, this allows us to obtain a disentangled estimate of the causal contribution of each feature.
+    The back-to-back estimator is a two-step estimator that consists of a decoder and an encoder. Effectively, the idea is to first decode all features, then use predictions from the decoder to encode all true features from all predictions. Consequently, this allows us to obtain a disentangled estimate of the causal contribution of each feature.
     
     In practice, this is implemented as:
 
@@ -356,7 +356,7 @@ class B2B(sklearn.base.BaseEstimator):
     """
     
     def __new__(self, alphas: Union[torch.Tensor, np.ndarray, float, int] = 1, **kwargs) -> sklearn.base.BaseEstimator:
-        """Obtain a new decoder.
+        """Obtain a new B2B estimator.
         
         Parameters
         ----------
