@@ -4,6 +4,14 @@ mvpy.math package
 Submodules
 ----------
 
+mvpy.math.accuracy module
+-------------------------
+
+.. automodule:: mvpy.math.accuracy
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 mvpy.math.cosine module
 -----------------------
 
@@ -48,6 +56,14 @@ mvpy.math.rank module
 ---------------------
 
 .. automodule:: mvpy.math.rank
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.math.roc\_auc module
+-------------------------
+
+.. automodule:: mvpy.math.roc_auc
    :members:
    :undoc-members:
    :show-inheritance:

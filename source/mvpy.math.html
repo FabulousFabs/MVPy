@@ -257,6 +257,45 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 </section>
+<section id="module-mvpy.math.accuracy">
+<span id="mvpy-math-accuracy-module"></span><h2>mvpy.math.accuracy module<a class="headerlink" href="#module-mvpy.math.accuracy" title="Link to this heading">#</a></h2>
+<p>Functions to compute accuracy in a
+nice and vectorised manner using either numpy or
+torch.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mvpy.math.accuracy.accuracy">
+<span class="sig-prename descclassname"><span class="pre">mvpy.math.accuracy.</span></span><span class="sig-name descname"><span class="pre">accuracy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.accuracy.accuracy" title="Link to this definition">#</a></dt>
+<dd><p>Compute accuracy between x and y. Note that accuracy is always computed over the final dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Vector/Matrix/Tensor</p></li>
+<li><p><strong>y</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Vector/Matrix/Tensor</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Accuracy</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Accuracy is defined as:</p>
+<div class="math notranslate nohighlight">
+\[\text{accuracy}(x, y) = \frac{1}{N}\sum_i^N{1(x_i = y_i)}\]</div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.math</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">accuracy</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="go">tensor([0.5])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
 <section id="module-mvpy.math.cosine">
 <span id="mvpy-math-cosine-module"></span><h2>mvpy.math.cosine module<a class="headerlink" href="#module-mvpy.math.cosine" title="Link to this heading">#</a></h2>
 <p>Functions to compute cosine (dis-)similarity in a
@@ -612,6 +651,55 @@ either numpy or torch.</p>
 </dd></dl>
 
 </section>
+<section id="module-mvpy.math.roc_auc">
+<span id="mvpy-math-roc-auc-module"></span><h2>mvpy.math.roc_auc module<a class="headerlink" href="#module-mvpy.math.roc_auc" title="Link to this heading">#</a></h2>
+<p>Functions to compute roc-auc in a
+nice and vectorised manner using either numpy or
+torch.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mvpy.math.roc_auc.roc_auc">
+<span class="sig-prename descclassname"><span class="pre">mvpy.math.roc_auc.</span></span><span class="sig-name descname"><span class="pre">roc_auc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_score</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.roc_auc.roc_auc" title="Link to this definition">#</a></dt>
+<dd><p>Compute ROC AUC score between y_true and y_score. Note that ROC AUC is always computed over the final dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Vector/Matrix/Tensor</p></li>
+<li><p><strong>y_score</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – Vector/Matrix/Tensor</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Accuracy</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>ROC AUC is computed using the Mann-Whitney U formula:</p>
+<div class="math notranslate nohighlight">
+\[\text{ROCAUC}(y, \hat{y}) = \frac{R_{+} - \frac{P * (P + 1)}{2}}}{P * N}\]</div>
+<p>where <span class="math notranslate nohighlight">\(R_{+}\)</span> is the sum of ranks for positive classes, <span class="math notranslate nohighlight">\(P\)</span> is the number of positive samples, and <span class="math notranslate nohighlight">\(N\)</span> is the number of negative samples.</p>
+<p>In the case that labels are not binary, we create unique binary labels by one-hot encoding the labels and then take the macro-average over classes.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.math</span><span class="w"> </span><span class="kn">import</span> <span class="n">roc_auc</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_true</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_score</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">roc_auc</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_score</span><span class="p">)</span>
+<span class="go">tensor(0.)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.math</span><span class="w"> </span><span class="kn">import</span> <span class="n">roc_auc</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_true</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_score</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">roc_auc</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_score</span><span class="p">)</span>
+<span class="go">tensor(0.)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
 <section id="module-mvpy.math.spearmanr">
 <span id="mvpy-math-spearmanr-module"></span><h2>mvpy.math.spearmanr module<a class="headerlink" href="#module-mvpy.math.spearmanr" title="Link to this heading">#</a></h2>
 <p>Functions to compute Spearman correlation or distance in a
@@ -741,6 +829,10 @@ torch.</p>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.math.accuracy">mvpy.math.accuracy module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.math.accuracy.accuracy"><code class="docutils literal notranslate"><span class="pre">accuracy()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.math.cosine">mvpy.math.cosine module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.math.cosine.cosine"><code class="docutils literal notranslate"><span class="pre">cosine()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.math.cosine.cosine_d"><code class="docutils literal notranslate"><span class="pre">cosine_d()</span></code></a></li>
@@ -766,6 +858,10 @@ torch.</p>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.math.rank">mvpy.math.rank module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.math.rank.rank"><code class="docutils literal notranslate"><span class="pre">rank()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.math.roc_auc">mvpy.math.roc_auc module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.math.roc_auc.roc_auc"><code class="docutils literal notranslate"><span class="pre">roc_auc()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.math.spearmanr">mvpy.math.spearmanr module</a><ul class="nav section-nav flex-column">

@@ -4,6 +4,14 @@ mvpy.estimators package
 Submodules
 ----------
 
+mvpy.estimators.b2b module
+--------------------------
+
+.. automodule:: mvpy.estimators.b2b
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 mvpy.estimators.classifier module
 ---------------------------------
 
@@ -56,6 +64,14 @@ mvpy.estimators.sliding module
 ------------------------------
 
 .. automodule:: mvpy.estimators.sliding
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.estimators.timedelayed module
+----------------------------------
+
+.. automodule:: mvpy.estimators.timedelayed
    :members:
    :undoc-members:
    :show-inheritance:

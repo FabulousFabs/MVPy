@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**04:50.927** total execution time for 2 files **from examples/rsa**:
+**03:41.270** total execution time for 2 files **from examples/rsa**:
 
 .. container::
 
@@ -33,7 +33,7 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_examples_rsa_1_rsa_intro.py` (``1_rsa_intro.py``)
-     - 04:50.926
+     - 03:41.269
      - 0.0
    * - :ref:`sphx_glr_examples_rsa_2_rsa_encoder.py` (``2_rsa_encoder.py``)
      - 00:00.001

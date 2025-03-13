@@ -257,6 +257,213 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 </section>
+<section id="module-mvpy.estimators.b2b">
+<span id="mvpy-estimators-b2b-module"></span><h2>mvpy.estimators.b2b module<a class="headerlink" href="#module-mvpy.estimators.b2b" title="Link to this heading">#</a></h2>
+<p>A collection of estimators for decoding and disentangling features using back2back regression.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvpy.estimators.b2b.B2B">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.estimators.b2b.</span></span><span class="sig-name descname"><span class="pre">B2B</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alphas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.b2b.B2B" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></p>
+<p>Implements a back-to-back regression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>alphas</strong> (<em>Union</em><em>[</em><em>torch.Tensor</em><em>, </em><em>np.ndarray</em><em>]</em><em>, </em><em>default=torch.tensor</em><em>(</em><em>[</em><em>1</em><em>]</em><em>)</em>) – The penalties to use for estimation.</p></li>
+<li><p><strong>fit_intercept</strong> (<em>bool</em><em>, </em><em>default=True</em>) – Whether to fit an intercept.</p></li>
+<li><p><strong>normalise</strong> (<em>bool</em><em>, </em><em>default=True</em>) – Whether to normalise the data.</p></li>
+<li><p><strong>alpha_per_target</strong> (<em>bool</em><em>, </em><em>default=False</em>) – Whether to use a different penalty for each target.</p></li>
+<li><p><strong>normalise_decoder</strong> (<em>bool</em><em>, </em><em>default=True</em>) – Whether to normalise decoder ouputs.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.b2b.B2B.alphas">
+<span class="sig-name descname"><span class="pre">alphas</span></span><a class="headerlink" href="#mvpy.estimators.b2b.B2B.alphas" title="Link to this definition">#</a></dt>
+<dd><p>The penalties to use for estimation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[torch.Tensor, np.ndarray]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.b2b.B2B.fit_intercept">
+<span class="sig-name descname"><span class="pre">fit_intercept</span></span><a class="headerlink" href="#mvpy.estimators.b2b.B2B.fit_intercept" title="Link to this definition">#</a></dt>
+<dd><p>Whether to fit an intercept.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.b2b.B2B.normalise">
+<span class="sig-name descname"><span class="pre">normalise</span></span><a class="headerlink" href="#mvpy.estimators.b2b.B2B.normalise" title="Link to this definition">#</a></dt>
+<dd><p>Whether to normalise the data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.b2b.B2B.alpha_per_target">
+<span class="sig-name descname"><span class="pre">alpha_per_target</span></span><a class="headerlink" href="#mvpy.estimators.b2b.B2B.alpha_per_target" title="Link to this definition">#</a></dt>
+<dd><p>Whether to use a different penalty for each target.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.b2b.B2B.normalise_decoder">
+<span class="sig-name descname"><span class="pre">normalise_decoder</span></span><a class="headerlink" href="#mvpy.estimators.b2b.B2B.normalise_decoder" title="Link to this definition">#</a></dt>
+<dd><p>Whether to normalise decoder ouputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.b2b.B2B.decoder_">
+<span class="sig-name descname"><span class="pre">decoder_</span></span><a class="headerlink" href="#mvpy.estimators.b2b.B2B.decoder_" title="Link to this definition">#</a></dt>
+<dd><p>The decoder.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mvpy.estimators.Decoder</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.b2b.B2B.encoder_">
+<span class="sig-name descname"><span class="pre">encoder_</span></span><a class="headerlink" href="#mvpy.estimators.b2b.B2B.encoder_" title="Link to this definition">#</a></dt>
+<dd><p>The encoder.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mvpy.estimators.Decoder</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.b2b.B2B.scaler_">
+<span class="sig-name descname"><span class="pre">scaler_</span></span><a class="headerlink" href="#mvpy.estimators.b2b.B2B.scaler_" title="Link to this definition">#</a></dt>
+<dd><p>The scaler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mvpy.estimators.Scaler</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.b2b.B2B.causal_">
+<span class="sig-name descname"><span class="pre">causal_</span></span><a class="headerlink" href="#mvpy.estimators.b2b.B2B.causal_" title="Link to this definition">#</a></dt>
+<dd><p>The causal contribution of each feature.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[torch.Tensor, np.ndarray]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.b2b.B2B.pattern_">
+<span class="sig-name descname"><span class="pre">pattern_</span></span><a class="headerlink" href="#mvpy.estimators.b2b.B2B.pattern_" title="Link to this definition">#</a></dt>
+<dd><p>The decoded patterns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[torch.Tensor, np.ndarray]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Notes</p>
+<p>The back-to-back estimator is a two-step estimator that consists of a decoder and an encoder. Effectively, the idea is to first decode all features, then use predictions from the decoder to encode all true features from all predictions. Consequently, this allows us to obtain a disentangled estimate of the causal contribution of each feature.</p>
+<p>In practice, this is implemented as:</p>
+<div class="math notranslate nohighlight">
+\[\hat{G} = (Y_1^T Y_i + \alpha_Y)^{-1}Y^T X
+\hat{H} = (X^T X + \alpha_X)^{-1}X^T Y\hat{G}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\hat{G}\)</span> is the decoder and <span class="math notranslate nohighlight">\(\hat{H}\)</span> is the encoder, and <span class="math notranslate nohighlight">\(\alpha\)</span> are regularisation parameters. Note also that, in practice, we do two additional steps:</p>
+<p>Firstly, we split the data in half and train the decoder on the first half and the encoder on the second half of the data. This is done to avoid overfitting.</p>
+<p>Secondly, we also (offer an option to) normalise the outputs from our decoder. This isn’t technically required, but it can be helpful if you are using, for example, different alpha penalties per target.</p>
+<p>For more information on B2B regression, please see <a href="#id17"><span class="problematic" id="id1">[1]_</span></a>.</p>
+<p class="rubric">References</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<p>King, J.R., Charton, F., Lopez-Paz, D., &amp; Oquab, M. (2020). Back-to-back regression: Disentangling the influence of correlated factors from multivariate observations. NeuroImage, 220, 117028. 10.1016/j.neuroimage.2020.117028</p>
+</aside>
+</aside>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.estimators</span><span class="w"> </span><span class="kn">import</span> <span class="n">B2B</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ß</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">60</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">ß</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">60</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> <span class="n">X</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">y</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">))),</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b2b</span> <span class="o">=</span> <span class="n">B2B</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b2b</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">causal_</span>
+<span class="go">tensor([0.4470, 0.4594, 0.0060])</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.b2b.B2B.clone">
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.b2b.B2B.clone" title="Link to this definition">#</a></dt>
+<dd><p>Clone this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The cloned object.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#mvpy.estimators.decoder.Decoder" title="mvpy.estimators.decoder.Decoder">Decoder</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.b2b.B2B.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.b2b.B2B.fit" title="Link to this definition">#</a></dt>
+<dd><p>Fit the estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – The features.</p></li>
+<li><p><strong>y</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – The targets.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.b2b.B2B.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.b2b.B2B.predict" title="Link to this definition">#</a></dt>
+<dd><p>Predict from the estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – The features.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The predictions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-mvpy.estimators.classifier">
 <span id="mvpy-estimators-classifier-module"></span><h2>mvpy.estimators.classifier module<a class="headerlink" href="#module-mvpy.estimators.classifier" title="Link to this heading">#</a></h2>
 <p>A collection of estimators for decoding features using ridge classifiers.</p>
@@ -489,15 +696,15 @@ pre-whitening of data.</p>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>LedoitWolf:</dt><dd><p>This method computes the Ledoit-Wolf shrinkage estimator as detailed in <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+<dt>LedoitWolf:</dt><dd><p>This method computes the Ledoit-Wolf shrinkage estimator as detailed in <a href="#id18"><span class="problematic" id="id3">[1]_</span></a>.</p>
 </dd>
 </dl>
 </li>
 </ul>
 <p class="rubric">References</p>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id2" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id4" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
 <p>Ledoit, O., &amp; Wolf, M. (2004). A well-conditioned estimator for large-dimensional covariance matrices. Journal of Multivariate Analysis, 88, 365-411. 10.1016/S0047-259X(03)00096-4</p>
 </aside>
 </aside>
@@ -689,10 +896,10 @@ pre-whitening of data.</p>
 </dd></dl>
 
 <p class="rubric">Notes</p>
-<p>After fitting the decoder, this class will also estimate the decoded patterns. This follows the approach detailed in <a href="#id11"><span class="problematic" id="id3">[4]_</span></a>. Please also be aware that, while this class supports decoding multiple features at once, these will principally be separate regressions wherein individual contributions are not disentangled. If you would like to do this, please consider using a back-to-back decoder.</p>
+<p>After fitting the decoder, this class will also estimate the decoded patterns. This follows the approach detailed in <a href="#id19"><span class="problematic" id="id5">[4]_</span></a>. Please also be aware that, while this class supports decoding multiple features at once, these will principally be separate regressions wherein individual contributions are not disentangled. If you would like to do this, please consider using a back-to-back decoder.</p>
 <p class="rubric">References</p>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id4" role="doc-footnote">
+<aside class="footnote brackets" id="id6" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></span>
 <p>Haufe, S., Meinecke, F., Görgen, K., Dähne, S., Haynes, J.D., Blankertz, B., &amp; Bießmann, F. (2014). On the interpretation of weight vectors of linear models in multivariate neuroimaging. NeuroImage, 87, 96-110. 10.1016/j.neuroimage.2013.10.067</p>
 </aside>
@@ -810,14 +1017,14 @@ pre-whitening of data.</p>
 </dd></dl>
 
 <p class="rubric">Notes</p>
-<p>This class owes greatly to J.R. King’s RidgeCV implementation[3]_. If data are supplied as numpy, this class will fall back to :func:<a href="#id5"><span class="problematic" id="id6">`</span></a>sklearn.linear_model.RidgeCV`[4]_.</p>
+<p>This class owes greatly to J.R. King’s RidgeCV implementation[3]_. If data are supplied as numpy, this class will fall back to :func:<a href="#id7"><span class="problematic" id="id8">`</span></a>sklearn.linear_model.RidgeCV`[4]_.</p>
 <p class="rubric">References</p>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id7" role="doc-footnote">
+<aside class="footnote brackets" id="id9" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></span>
 <p>King, J.R. (2020). torch_ridge. <a class="github reference external" href="https://github.com/kingjr/torch_ridge">kingjr/torch_ridge</a></p>
 </aside>
-<aside class="footnote brackets" id="id8" role="doc-footnote">
+<aside class="footnote brackets" id="id10" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></span>
 <p>Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., … &amp; Vanderplas, J. (2011). Scikit-learn: Machine learning in Python. Journal of Machine Learning Research, 12, 2825-2830.</p>
 </aside>
@@ -978,7 +1185,7 @@ representational similarities.</p>
 
 <p class="rubric">Notes</p>
 <p>If you would like to perform, for example, a cross-validated RSA using <code class="xref py py-func docutils literal notranslate"><span class="pre">mvpy.math.cv_euclidean()</span></code>, you should make sure that the first dimension in your data is trials, whereas the second dimension groups them meaningfully. The resulting RDM will then be computed over groups, with cross-validation over trials.</p>
-<p>For more information on representational similarity, please see <a class="footnote-reference brackets" href="#id10" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
+<p>For more information on representational similarity, please see <a href="#id20"><span class="problematic" id="id11">[2]_</span></a>.</p>
 <p class="rubric">Examples</p>
 <p>Let’s assume we have some data with 100 trials and 5 groups, recording 10 channels over 50 time points:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
@@ -1012,8 +1219,8 @@ representational similarities.</p>
 </div>
 <p class="rubric">References</p>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id10" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">2</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id12" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></span>
 <p>Kriegeskorte, N. (2008). Representational similarity analaysis - connecting the branches of systems neuroscience. Frontiers in Systems Neuroscience. 10.3389/neuro.06.004.2008</p>
 </aside>
 </aside>
@@ -1599,6 +1806,283 @@ Finally, be aware that, if you want to use numpy as your backend, you _must_ sup
 </dd></dl>
 
 </section>
+<section id="module-mvpy.estimators.timedelayed">
+<span id="mvpy-estimators-timedelayed-module"></span><h2>mvpy.estimators.timedelayed module<a class="headerlink" href="#module-mvpy.estimators.timedelayed" title="Link to this heading">#</a></h2>
+<p>A collection of estimators for decoding and disentangling features using back2back regression.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvpy.estimators.timedelayed.TimeDelayed">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.estimators.timedelayed.</span></span><span class="sig-name descname"><span class="pre">TimeDelayed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alphas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">tensor([1])</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patterns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.timedelayed.TimeDelayed" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></p>
+<p>Implements TimeDelayed regression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t_min</strong> (<em>float</em>) – The minimum time delay. Note that positive values indicate X is delayed relative to y. This is unlike MNE’s behaviour.</p></li>
+<li><p><strong>t_max</strong> (<em>float</em>) – The maximum time delay. Note that positive values indicate X is delayed relative to y. This is unlike MNE’s behaviour.</p></li>
+<li><p><strong>fs</strong> (<em>int</em>) – The sampling frequency.</p></li>
+<li><p><strong>alphas</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em><em>, </em><em>default=torch.tensor</em><em>(</em><em>[</em><em>1</em><em>]</em><em>)</em>) – The penalties to use for estimation.</p></li>
+<li><p><strong>patterns</strong> (<em>bool</em><em>, </em><em>default=False</em>) – Should patterns be estimated?</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – Additional arguments for the estimator.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.timedelayed.TimeDelayed.alphas">
+<span class="sig-name descname"><span class="pre">alphas</span></span><a class="headerlink" href="#mvpy.estimators.timedelayed.TimeDelayed.alphas" title="Link to this definition">#</a></dt>
+<dd><p>The penalties to use for estimation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.timedelayed.TimeDelayed.kwargs">
+<span class="sig-name descname"><span class="pre">kwargs</span></span><a class="headerlink" href="#mvpy.estimators.timedelayed.TimeDelayed.kwargs" title="Link to this definition">#</a></dt>
+<dd><p>Additional arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.timedelayed.TimeDelayed.patterns">
+<span class="sig-name descname"><span class="pre">patterns</span></span><a class="headerlink" href="#mvpy.estimators.timedelayed.TimeDelayed.patterns" title="Link to this definition">#</a></dt>
+<dd><p>Should patterns be estimated?</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.timedelayed.TimeDelayed.t_min">
+<span class="sig-name descname"><span class="pre">t_min</span></span><a class="headerlink" href="#mvpy.estimators.timedelayed.TimeDelayed.t_min" title="Link to this definition">#</a></dt>
+<dd><p>The minimum time delay. Note that positive values indicate X is delayed relative to y. This is unlike MNE’s behaviour.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.timedelayed.TimeDelayed.t_max">
+<span class="sig-name descname"><span class="pre">t_max</span></span><a class="headerlink" href="#mvpy.estimators.timedelayed.TimeDelayed.t_max" title="Link to this definition">#</a></dt>
+<dd><p>The maximum time delay. Note that positive values indicate X is delayed relative to y. This is unlike MNE’s behaviour.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.timedelayed.TimeDelayed.fs">
+<span class="sig-name descname"><span class="pre">fs</span></span><a class="headerlink" href="#mvpy.estimators.timedelayed.TimeDelayed.fs" title="Link to this definition">#</a></dt>
+<dd><p>The sampling frequency.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.timedelayed.TimeDelayed.window">
+<span class="sig-name descname"><span class="pre">window</span></span><a class="headerlink" href="#mvpy.estimators.timedelayed.TimeDelayed.window" title="Link to this definition">#</a></dt>
+<dd><p>The window to use for estimation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.timedelayed.TimeDelayed.estimator">
+<span class="sig-name descname"><span class="pre">estimator</span></span><a class="headerlink" href="#mvpy.estimators.timedelayed.TimeDelayed.estimator" title="Link to this definition">#</a></dt>
+<dd><p>The estimator to use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mvpy.estimators.RidgeCV</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.timedelayed.TimeDelayed.f_">
+<span class="sig-name descname"><span class="pre">f_</span></span><a class="headerlink" href="#mvpy.estimators.timedelayed.TimeDelayed.f_" title="Link to this definition">#</a></dt>
+<dd><p>The number of output features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.timedelayed.TimeDelayed.c_">
+<span class="sig-name descname"><span class="pre">c_</span></span><a class="headerlink" href="#mvpy.estimators.timedelayed.TimeDelayed.c_" title="Link to this definition">#</a></dt>
+<dd><p>The number of input features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.timedelayed.TimeDelayed.w_">
+<span class="sig-name descname"><span class="pre">w_</span></span><a class="headerlink" href="#mvpy.estimators.timedelayed.TimeDelayed.w_" title="Link to this definition">#</a></dt>
+<dd><p>The number of time delays.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.timedelayed.TimeDelayed.intercept_">
+<span class="sig-name descname"><span class="pre">intercept_</span></span><a class="headerlink" href="#mvpy.estimators.timedelayed.TimeDelayed.intercept_" title="Link to this definition">#</a></dt>
+<dd><p>The intercepts of the estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.timedelayed.TimeDelayed.coef_">
+<span class="sig-name descname"><span class="pre">coef_</span></span><a class="headerlink" href="#mvpy.estimators.timedelayed.TimeDelayed.coef_" title="Link to this definition">#</a></dt>
+<dd><p>The coefficients of the estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mvpy.estimators.timedelayed.TimeDelayed.pattern_">
+<span class="sig-name descname"><span class="pre">pattern_</span></span><a class="headerlink" href="#mvpy.estimators.timedelayed.TimeDelayed.pattern_" title="Link to this definition">#</a></dt>
+<dd><p>The patterns of the estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Notes</p>
+<p>This class allows estimation of either multivariate temporal response functions (mTRF) or stimulus reconstruction (SR) models.</p>
+<p>mTRFs are estimated as:</p>
+<div class="math notranslate nohighlight">
+\[r(t,n) = \sum_\tau w(\tau, n) s(t - \tau) + \epsilon\]</div>
+<p>where <span class="math notranslate nohighlight">\(r(t,n)\)</span> is the reconstructed signal at timepoint <span class="math notranslate nohighlight">\(t\)</span> for channel <span class="math notranslate nohighlight">\(n\)</span>, <span class="math notranslate nohighlight">\(s(t)\)</span> is the stimulus at time <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(w(    au, n)\)</span> is the weight at time delay :math:`     au` for channel <span class="math notranslate nohighlight">\(n\)</span>, and <span class="math notranslate nohighlight">\(\epsilon\)</span> is the error.</p>
+<p>SR models are estimated as:</p>
+<div class="math notranslate nohighlight">
+\[s(t) = \sum_n\sum_\tau r(t + \tau, n) g(\tau, n)\]</div>
+<p>where <span class="math notranslate nohighlight">\(s(t)\)</span> is the reconstructed stimulus at time <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(r(t,n)\)</span> is the neural response at <span class="math notranslate nohighlight">\(t\)</span> and lagged by <span class="math notranslate nohighlight">\(\tau\)</span> for channel <span class="math notranslate nohighlight">\(n\)</span>, <span class="math notranslate nohighlight">\(g(  au, n)\)</span> is the weight at time delay :math:`     au` for channel <span class="math notranslate nohighlight">\(n\)</span>.</p>
+<p>For more information on mTRF or SR models, see <a href="#id21"><span class="problematic" id="id13">[1]_</span></a>.</p>
+<p>Note that for SR models it is recommended to also pass <cite>patterns=True</cite> to estimate not only the coefficients but also the patterns that were actually used for reconstructing stimuli. For more information, see <a href="#id22"><span class="problematic" id="id14">[2]_</span></a>.</p>
+<p class="rubric">References</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id15" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<p>Crosse, M.J., Di Liberto, G.M., Bednar, A., &amp; Lalor, E.C. (2016). The multivariate temporal response function (mTRF) toolbox: A MATLAB toolbox for relating neural signals to continuous stimuli. Frontiers in Human Neuroscience, 10, 604. 10.3389/fnhum.2016.00604</p>
+</aside>
+<aside class="footnote brackets" id="id16" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></span>
+<p>Haufe, S., Meinecke, F., Görgen, K., Dähne, S., Haynes, J.D., Blankertz, B., &amp; Bießmann, F. (2014). On the interpretation of weight vectors of linear models in multivariate neuroimaging. NeuroImage, 87, 96-110. 10.1016/j.neuroimage.2013.10.067</p>
+</aside>
+</aside>
+<p class="rubric">Examples</p>
+<p>For mTRF estimation, we can do:
+&gt;&gt;&gt; import torch
+&gt;&gt;&gt; from mvpy.estimators import TimeDelayed
+&gt;&gt;&gt; ß = torch.tensor([1., 2., 3., 2., 1.])
+&gt;&gt;&gt; X = torch.normal(0, 1, (100, 1, 50))
+&gt;&gt;&gt; y = torch.nn.functional.conv1d(X, ß[None,None,:], padding = ‘same’)
+&gt;&gt;&gt; y = y + torch.normal(0, 1, y.shape)
+&gt;&gt;&gt; trf = TimeDelayed(-2, 2, 1, alphas = 1e-5)
+&gt;&gt;&gt; trf.fit(X, y).coef_
+tensor([[[0.9290, 1.9101, 2.8802, 1.9790, 0.9453]]])</p>
+<p>For stimulus reconstruction, we can do:
+&gt;&gt;&gt; import torch
+&gt;&gt;&gt; from mvpy.estimators import TimeDelayed
+&gt;&gt;&gt; ß = torch.tensor([1., 2., 3., 2., 1.])
+&gt;&gt;&gt; X = torch.arange(50)[None,None,:] * torch.ones((100, 1, 50))
+&gt;&gt;&gt; y = torch.nn.functional.conv1d(X, ß[None,None,:], padding = ‘same’)
+&gt;&gt;&gt; y = y + torch.normal(0, 1, y.shape)
+&gt;&gt;&gt; X, y = y, X
+&gt;&gt;&gt; sr = TimeDelayed(-2, 2, 1, alphas = 1e-3, patterns = True).fit(X, y)
+&gt;&gt;&gt; sr.predict(X).mean(0)[0,:]
+tensor([ 1.3591,  1.2549,  1.5662,  2.3544,  3.3440,  4.3683,  5.4097,  6.4418,</p>
+<blockquote>
+<div><blockquote>
+<div><p>7.4454,  8.4978,  9.5206, 10.5374, 11.5841, 12.6102, 13.6254, 14.6939,</p>
+</div></blockquote>
+<p>15.6932, 16.7168, 17.7619, 18.8130, 19.8182, 20.8687, 21.8854, 22.9310,
+23.9270, 24.9808, 26.0085, 27.0347, 28.0728, 29.0828, 30.1400, 31.1452,
+32.1793, 33.2047, 34.2332, 35.2717, 36.2945, 37.3491, 38.3800, 39.3817,
+40.3962, 41.4489, 42.4854, 43.4965, 44.5346, 45.5716, 46.7301, 47.2251,
+48.4449, 48.8793])</p>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.timedelayed.TimeDelayed.clone">
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.timedelayed.TimeDelayed.clone" title="Link to this definition">#</a></dt>
+<dd><p>Clone this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The cloned object.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#mvpy.estimators.decoder.Decoder" title="mvpy.estimators.decoder.Decoder">Decoder</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.timedelayed.TimeDelayed.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.timedelayed.TimeDelayed.fit" title="Link to this definition">#</a></dt>
+<dd><p>Fit the estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – The features.</p></li>
+<li><p><strong>y</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – The targets.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.timedelayed.TimeDelayed.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.estimators.timedelayed.TimeDelayed.predict" title="Link to this definition">#</a></dt>
+<dd><p>Predict from the estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>torch.Tensor</em><em>]</em>) – The features.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The predictions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[np.ndarray, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-mvpy.estimators">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mvpy.estimators" title="Link to this heading">#</a></h2>
 </section>
@@ -1652,6 +2136,25 @@ Finally, be aware that, if you want to use numpy as your backend, you _must_ sup
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.estimators.b2b">mvpy.estimators.b2b module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.b2b.B2B"><code class="docutils literal notranslate"><span class="pre">B2B</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.b2b.B2B.alphas"><code class="docutils literal notranslate"><span class="pre">B2B.alphas</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.b2b.B2B.fit_intercept"><code class="docutils literal notranslate"><span class="pre">B2B.fit_intercept</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.b2b.B2B.normalise"><code class="docutils literal notranslate"><span class="pre">B2B.normalise</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.b2b.B2B.alpha_per_target"><code class="docutils literal notranslate"><span class="pre">B2B.alpha_per_target</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.b2b.B2B.normalise_decoder"><code class="docutils literal notranslate"><span class="pre">B2B.normalise_decoder</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.b2b.B2B.decoder_"><code class="docutils literal notranslate"><span class="pre">B2B.decoder_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.b2b.B2B.encoder_"><code class="docutils literal notranslate"><span class="pre">B2B.encoder_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.b2b.B2B.scaler_"><code class="docutils literal notranslate"><span class="pre">B2B.scaler_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.b2b.B2B.causal_"><code class="docutils literal notranslate"><span class="pre">B2B.causal_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.b2b.B2B.pattern_"><code class="docutils literal notranslate"><span class="pre">B2B.pattern_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.b2b.B2B.clone"><code class="docutils literal notranslate"><span class="pre">B2B.clone()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.b2b.B2B.fit"><code class="docutils literal notranslate"><span class="pre">B2B.fit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.b2b.B2B.predict"><code class="docutils literal notranslate"><span class="pre">B2B.predict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.estimators.classifier">mvpy.estimators.classifier module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.classifier.Classifier"><code class="docutils literal notranslate"><span class="pre">Classifier</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.classifier.Classifier.estimators_"><code class="docutils literal notranslate"><span class="pre">Classifier.estimators_</span></code></a></li>
@@ -1763,6 +2266,29 @@ Finally, be aware that, if you want to use numpy as your backend, you _must_ sup
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.top"><code class="docutils literal notranslate"><span class="pre">Sliding.top</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.transform"><code class="docutils literal notranslate"><span class="pre">Sliding.transform()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.sliding.Sliding.verbose"><code class="docutils literal notranslate"><span class="pre">Sliding.verbose</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.estimators.timedelayed">mvpy.estimators.timedelayed module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.timedelayed.TimeDelayed"><code class="docutils literal notranslate"><span class="pre">TimeDelayed</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.timedelayed.TimeDelayed.alphas"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.alphas</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.timedelayed.TimeDelayed.kwargs"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.kwargs</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.timedelayed.TimeDelayed.patterns"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.patterns</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.timedelayed.TimeDelayed.t_min"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.t_min</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.timedelayed.TimeDelayed.t_max"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.t_max</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.timedelayed.TimeDelayed.fs"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.fs</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.timedelayed.TimeDelayed.window"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.window</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.timedelayed.TimeDelayed.estimator"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.estimator</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.timedelayed.TimeDelayed.f_"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.f_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.timedelayed.TimeDelayed.c_"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.c_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.timedelayed.TimeDelayed.w_"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.w_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.timedelayed.TimeDelayed.intercept_"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.intercept_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.timedelayed.TimeDelayed.coef_"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.coef_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.timedelayed.TimeDelayed.pattern_"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.pattern_</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.timedelayed.TimeDelayed.clone"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.clone()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.timedelayed.TimeDelayed.fit"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.fit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.timedelayed.TimeDelayed.predict"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.predict()</span></code></a></li>
 </ul>
 </li>
 </ul>
