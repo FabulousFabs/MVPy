@@ -204,7 +204,7 @@ class _TimeDelayed_numpy(sklearn.base.BaseEstimator):
             
             # reshape patterns
             self.pattern_ = self.pattern_.reshape((self.f_, self.c_, self.w_))
-                
+
         return self
     
     def predict(self, X: np.ndarray, reshape: bool = True) -> np.ndarray:
@@ -505,7 +505,7 @@ class _TimeDelayed_torch(sklearn.base.BaseEstimator):
         return _TimeDelayed_torch(self.t_min, self.t_max, self.fs, alphas = self.alphas, patterns = self.patterns, **self.kwargs)
 
 class TimeDelayed(sklearn.base.BaseEstimator):
-    """Implements TimeDelayed regression.
+    r"""Implements TimeDelayed regression.
     
     Parameters
     ----------
@@ -583,6 +583,7 @@ class TimeDelayed(sklearn.base.BaseEstimator):
     Examples
     --------
     For mTRF estimation, we can do:
+    
     >>> import torch
     >>> from mvpy.estimators import TimeDelayed
     >>> ß = torch.tensor([1., 2., 3., 2., 1.])
@@ -594,6 +595,7 @@ class TimeDelayed(sklearn.base.BaseEstimator):
     tensor([[[0.9290, 1.9101, 2.8802, 1.9790, 0.9453]]])
     
     For stimulus reconstruction, we can do:
+    
     >>> import torch
     >>> from mvpy.estimators import TimeDelayed
     >>> ß = torch.tensor([1., 2., 3., 2., 1.])
@@ -603,13 +605,7 @@ class TimeDelayed(sklearn.base.BaseEstimator):
     >>> X, y = y, X
     >>> sr = TimeDelayed(-2, 2, 1, alphas = 1e-3, patterns = True).fit(X, y)
     >>> sr.predict(X).mean(0)[0,:]
-    tensor([ 1.3591,  1.2549,  1.5662,  2.3544,  3.3440,  4.3683,  5.4097,  6.4418,
-         7.4454,  8.4978,  9.5206, 10.5374, 11.5841, 12.6102, 13.6254, 14.6939,
-        15.6932, 16.7168, 17.7619, 18.8130, 19.8182, 20.8687, 21.8854, 22.9310,
-        23.9270, 24.9808, 26.0085, 27.0347, 28.0728, 29.0828, 30.1400, 31.1452,
-        32.1793, 33.2047, 34.2332, 35.2717, 36.2945, 37.3491, 38.3800, 39.3817,
-        40.3962, 41.4489, 42.4854, 43.4965, 44.5346, 45.5716, 46.7301, 47.2251,
-        48.4449, 48.8793])
+    tensor([ 1.3591,  1.2549,  1.5662,  2.3544,  3.3440,  4.3683,  5.4097,  6.4418, 7.4454,  8.4978,  9.5206, 10.5374, 11.5841, 12.6102, 13.6254, 14.6939, 15.6932, 16.7168, 17.7619, 18.8130, 19.8182, 20.8687, 21.8854, 22.9310, 23.9270, 24.9808, 26.0085, 27.0347, 28.0728, 29.0828, 30.1400, 31.1452, 32.1793, 33.2047, 34.2332, 35.2717, 36.2945, 37.3491, 38.3800, 39.3817, 40.3962, 41.4489, 42.4854, 43.4965, 44.5346, 45.5716, 46.7301, 47.2251, 48.4449, 48.8793])
     """
     
     def __new__(self, t_min: float, t_max: float, fs: int, alphas: torch.Tensor = torch.tensor([1]), patterns: bool = False, **kwargs) -> sklearn.base.BaseEstimator:

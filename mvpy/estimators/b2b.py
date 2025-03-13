@@ -280,7 +280,7 @@ class _B2B_torch(sklearn.base.BaseEstimator):
         return _B2B_torch(alphas = self.alphas, fit_intercept = self.fit_intercept, normalise = self.normalise, alpha_per_target = self.alpha_per_target, normalise_decoder = self.normalise_decoder)
 
 class B2B(sklearn.base.BaseEstimator):
-    """Implements a back-to-back regression.
+    r"""Implements a back-to-back regression.
     
     Parameters
     ----------
@@ -327,6 +327,8 @@ class B2B(sklearn.base.BaseEstimator):
     .. math::
 
         \\hat{G} = (Y_1^T Y_i + \\alpha_Y)^{-1}Y^T X
+    
+    .. math::
         \\hat{H} = (X^T X + \\alpha_X)^{-1}X^T Y\hat{G}
     
     where :math:`\\hat{G}` is the decoder and :math:`\\hat{H}` is the encoder, and :math:`\\alpha` are regularisation parameters. Note also that, in practice, we do two additional steps:
