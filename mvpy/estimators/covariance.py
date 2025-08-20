@@ -198,7 +198,7 @@ class _Empirical_numpy(_Whitener_numpy):
     """Implementation of an empirical covariance estimator.
     """
     
-    def __init__(self):
+    def __init__(self, s_min: Union[float, None] = None, s_max: Union[float, None] = None):
         """Obtain an estimator class.
         """
         
@@ -206,6 +206,9 @@ class _Empirical_numpy(_Whitener_numpy):
         
         self.covariance_ = None
         self.precision_ = None
+        
+        self.s_min = s_min
+        self.s_max = s_max
     
     def fit(self, X: np.ndarray):
         """Fit the estimator.
@@ -221,7 +224,13 @@ class _Empirical_numpy(_Whitener_numpy):
             raise ValueError(f'`X` must be at least two-dimensional for covariance estimation, but got shapee {X.shape}.')
         
         # reshape
-        if len(X.shape) > 2: X_h = X.swapaxes(-2, -1).reshape((-1, X.shape[-2]))
+        if len(X.shape) > 2: 
+            # set sample selection
+            s = 0 if self.s_min is None else self.s_min
+            e = X.shape[-1] if self.s_max is None else self.s_max
+            
+            # reshape
+            X_h = X[...,s:e].swapaxes(-2, -1).reshape((-1, X.shape[-2]))
         else: X_h = X.copy()
         
         # get dims
@@ -266,13 +275,13 @@ class _Empirical_numpy(_Whitener_numpy):
             The cloned object.
         """
         
-        return _Empirical_numpy()
+        return _Empirical_numpy(s_min = self.s_min, s_max = self.s_max)
 
 class _Empirical_torch(_Whitener_torch):
     """Implements an empirical, biassed covariance estimator.
     """
     
-    def __init__(self):
+    def __init__(self, s_min: Union[float, None] = None, s_max: Union[float, None] = None):
         """Obtain an empirical estimator.
         """
         
@@ -280,6 +289,9 @@ class _Empirical_torch(_Whitener_torch):
         
         self.covariance_ = None
         self.precision_ = None
+        
+        self.s_min = s_min
+        self.s_max = s_max
     
     def fit(self, X: torch.Tensor):
         """Fit the estimator.
@@ -295,7 +307,13 @@ class _Empirical_torch(_Whitener_torch):
             raise ValueError(f'`X` must be at least two-dimensional for covariance estimation, but got shapee {X.shape}.')
         
         # reshape
-        if len(X.shape) > 2: X_h = X.swapaxes(-2, -1).reshape((-1, X.shape[-2]))
+        if len(X.shape) > 2: 
+            # set sample selection
+            s = 0 if self.s_min is None else self.s_min
+            e = X.shape[-1] if self.s_max is None else self.s_max
+            
+            # reshape
+            X_h = X[...,s:e].swapaxes(-2, -1).reshape((-1, X.shape[-2]))
         else: X_h = X.clone()
         
         # get dims
@@ -340,7 +358,7 @@ class _Empirical_torch(_Whitener_torch):
             The cloned object.
         """
         
-        return _Empirical_torch()
+        return _Empirical_torch(s_min = self.s_min, s_max = self.s_max)
 
 # add Empirical estimator
 _ESTIMATORS.append('Empirical')
@@ -353,7 +371,7 @@ class _LedoitWolf_numpy(_Whitener_numpy):
     """Implements the Ledoit-Wolf estimator.
     """
     
-    def __init__(self):
+    def __init__(self, s_min: Union[float, None] = None, s_max: Union[float, None] = None):
         """Obtain a Ledoit-Wolf estimator.
         """
         
@@ -362,6 +380,9 @@ class _LedoitWolf_numpy(_Whitener_numpy):
         self.covariance_ = None
         self.precision_ = None
         self.shrinkage_ = None
+        
+        self.s_min = s_min
+        self.s_max = s_max
     
     def fit(self, X: np.ndarray):
         """Fit the estimator.
@@ -377,7 +398,13 @@ class _LedoitWolf_numpy(_Whitener_numpy):
             raise ValueError(f'`X` must be at least two-dimensional for covariance estimation, but got shapee {X.shape}.')
         
         # reshape
-        if len(X.shape) > 2: X_h = X.swapaxes(-2, -1).reshape((-1, X.shape[-2]))
+        if len(X.shape) > 2: 
+            # set sample selection
+            s = 0 if self.s_min is None else self.s_min
+            e = X.shape[-1] if self.s_max is None else self.s_max
+            
+            # reshape
+            X_h = X[...,s:e].swapaxes(-2, -1).reshape((-1, X.shape[-2]))
         else: X_h = X.copy()
         
         # get dims
@@ -443,13 +470,13 @@ class _LedoitWolf_numpy(_Whitener_numpy):
             The cloned object.
         """
         
-        return _LedoitWolf_numpy()
+        return _LedoitWolf_numpy(s_min = self.s_min, s_max = self.s_max)
 
 class _LedoitWolf_torch(_Whitener_torch):
     """Implementation of the Ledoit-Wolf shrinkage estimator.
     """
     
-    def __init__(self):
+    def __init__(self, s_min: Union[float, None] = None, s_max: Union[float, None] = None):
         """Obtain the Ledoit-Wolf shrinkage estimator.
         """
         
@@ -458,6 +485,9 @@ class _LedoitWolf_torch(_Whitener_torch):
         self.covariance_ = None
         self.precision_ = None
         self.shrinkage_ = None
+        
+        self.s_min = s_min
+        self.s_max = s_max
     
     def fit(self, X: torch.Tensor):
         """Fit the estimator.
@@ -473,7 +503,13 @@ class _LedoitWolf_torch(_Whitener_torch):
             raise ValueError(f"`X` must be at least two-dimensional for covariance estimation, but got shape {X.shape}.")
 
         # reshape data if more than two dimensions
-        if X.ndim > 2: X_h = X.transpose(-2, -1).reshape(-1, X.shape[-2])
+        if X.ndim > 2: 
+            # set sample selection
+            s = 0 if self.s_min is None else self.s_min
+            e = X.shape[-1] if self.s_max is None else self.s_max
+            
+            # reshape
+            X_h = X[...,s:e].transpose(-2, -1).reshape(-1, X.shape[-2])
         else: X_h = X.clone()
 
         # get dims
@@ -498,7 +534,7 @@ class _LedoitWolf_torch(_Whitener_torch):
         γ = torch.norm(S - F, p = 'fro') ** 2
 
         # compute κ
-        κ = φ / γ if γ != 0 else 0.0
+        κ = φ / γ if γ != 0 else torch.tensor([0.0], dtype = X.dtype, device = X.device)
         
         # compute shrinkage
         self.shrinkage_ = torch.clamp(κ / N, 0, 1)
@@ -539,7 +575,7 @@ class _LedoitWolf_torch(_Whitener_torch):
             The cloned object.
         """
         
-        return _LedoitWolf_torch()
+        return _LedoitWolf_torch(s_min = self.s_min, s_max = self.s_max)
 
 # add LedoitWolf estimator
 _ESTIMATORS.append('LedoitWolf')
@@ -555,6 +591,10 @@ class Covariance(sklearn.base.BaseEstimator):
     ----------
     method : str, default = 'LedoitWolf'
         Which method should be applied for estimation of covariance? (default = LedoitWolf, available = [Empirical, LedoitWolf])
+    s_min : float, default = None
+        What's the minimum sample we should consider in the time dimension?
+    s_max : float, default = None
+        What's the maximum sample we should consider in the time dimension?
     
     Attributes
     ----------
@@ -593,7 +633,7 @@ class Covariance(sklearn.base.BaseEstimator):
     torch.Size([10, 10])
     """
     
-    def __init__(self, method: str = 'LedoitWolf'):
+    def __init__(self, method: str = 'LedoitWolf', s_min: Union[float, None] = None, s_max: Union[float, None] = None):
         """Create a new Covariance instance.
         
         Parameters
@@ -606,6 +646,8 @@ class Covariance(sklearn.base.BaseEstimator):
             raise ValueError(f'Unknown covariance estimation method {method}. Available methods: {_ESTIMATORS}.')
 
         self.method = method
+        self.s_min = s_min
+        self.s_max = s_max
     
     def _get_estimator(self, X: Union[np.ndarray, torch.Tensor]) -> sklearn.base.BaseEstimator:
         """Obtain an estimator based on the data type.
@@ -648,7 +690,7 @@ class Covariance(sklearn.base.BaseEstimator):
             Fitted covariance estimator.
         """
         
-        return self._get_estimator(X)().fit(X)
+        return self._get_estimator(X)(s_min = self.s_min, s_max = self.s_max).fit(X)
     
     def transform(self, X: Union[np.ndarray, torch.Tensor], *args: Any) -> Union[np.ndarray, torch.Tensor]:
         """Whiten data using the fitted covariance estimator.
@@ -665,7 +707,7 @@ class Covariance(sklearn.base.BaseEstimator):
         W : Union[np.ndarray, torch.Tensor]
             Whitened data.
         """
-        return self._get_estimator(X)().fit_transform(X)
+        return self._get_estimator(X)(s_min = self.s_min, s_max = self.s_max).fit_transform(X)
 
     def fit_transform(self, X: Union[np.ndarray, torch.Tensor], *args: Any) -> Union[np.ndarray, torch.Tensor]:
         """Fit the covariance estimator and whiten the data.
@@ -683,7 +725,7 @@ class Covariance(sklearn.base.BaseEstimator):
             Whitened data.
         """
         
-        return self._get_estimator(X)().fit_transform(X)
+        return self._get_estimator(X)(s_min = self.s_min, s_max = self.s_max).fit_transform(X)
     
     def to_torch(self):
         """Create the torch estimator. Note that this function cannot be used for conversion.
@@ -694,7 +736,7 @@ class Covariance(sklearn.base.BaseEstimator):
             The torch estimator.
         """
         
-        return self._get_estimator(torch.tensor([1]))()
+        return self._get_estimator(torch.tensor([1]))(s_min = self.s_min, s_max = self.s_max)
     
     def to_numpy(self):
         """Create the numpy estimator. Note that this function cannot be used for conversion.
@@ -705,7 +747,7 @@ class Covariance(sklearn.base.BaseEstimator):
             The numpy estimator.
         """
 
-        return self._get_estimator(np.array([1]))()
+        return self._get_estimator(np.array([1]))(s_min = self.s_min, s_max = self.s_max)
     
     def clone(self):
         """Obtain a clone of this class.
@@ -716,4 +758,4 @@ class Covariance(sklearn.base.BaseEstimator):
             The cloned object.
         """
         
-        return Covariance(method = self.method)
+        return Covariance(method = self.method, s_min = self.s_min, s_max = self.s_max)

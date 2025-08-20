@@ -44,6 +44,9 @@ class _RSA_numpy(sklearn.base.BaseEstimator):
         """Fit the estimator (vacant).
         """
         
+        # call transform to obtain rdm
+        self.transform(X, *args)
+        
         return self
     
     def transform(self, X: np.ndarray, *args: Any) -> np.ndarray:
@@ -175,6 +178,9 @@ class _RSA_torch(sklearn.base.BaseEstimator):
         """Fit the estimator. (vacant)
         """
         
+        # call transform to obtain rdm
+        self.transform(X, *args)
+        
         return self
     
     def transform(self, X: torch.Tensor, *args: Any) -> torch.Tensor:
@@ -305,6 +311,9 @@ class _GroupedRSA_numpy(sklearn.base.BaseEstimator):
     def fit(self, *args):
         """Fit the estimator (vacant).
         """
+        
+        # call transform to obtain rdm
+        self.transform(X, *args)
         
         return self
 
@@ -439,6 +448,9 @@ class _GroupedRSA_torch(sklearn.base.BaseEstimator):
     def fit(self, X: torch.Tensor, y: torch.Tensor = None, *args):
         """Fit the estimator. (vacant)
         """
+        
+        # call transform to obtain rdm
+        self.transform(X, *args)
         
         return self
     

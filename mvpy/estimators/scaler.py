@@ -133,6 +133,9 @@ class _Scaler_numpy(sklearn.base.BaseEstimator):
             self.var_ = X.var(axis = self.dims_, keepdims = True, ddof = 1)
             self.scale_ = np.sqrt(self.var_)
         
+        # ensure no NaNs will be produced
+        self.scale_[(self.scale_ == 0.0) | (np.isnan(self.scale_))] = 1.0
+        
         return self
 
     def transform(self, X: np.ndarray, *args: Any) -> np.ndarray:
@@ -352,6 +355,9 @@ class _Scaler_torch(sklearn.base.BaseEstimator):
             self.mean_ = X.mean(dim = self.dims_, keepdim = True)
             self.var_ = X.var(dim = self.dims_, keepdim = True)
             self.scale_ = torch.sqrt(self.var_)
+        
+        # ensure no NaNs will be produced
+        self.scale_[(self.scale_ == 0.0) | (torch.isnan(self.scale_))] = 1.0
         
         return self
 

@@ -7,7 +7,7 @@ or torch.
 import numpy as np
 import torch
 
-from typing import Union
+from typing import Union, Any
 
 def _mahalanobis_numpy(x: np.ndarray, y: np.ndarray, Σ: np.ndarray) -> np.ndarray:
     r"""Computes mahalanobis distance between x and y using inverse covariance matrix Σ. Note that this function is not exported and should not be called directly. See :func:`mahalanobis` instead.
@@ -109,7 +109,7 @@ def _mahalanobis_torch(x: torch.Tensor, y: torch.Tensor, Σ: torch.Tensor) -> to
     
     return M
 
-def mahalanobis(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor], Σ: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
+def mahalanobis(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor], Σ: Union[np.ndarray, torch.Tensor], *args: Any) -> Union[np.ndarray, torch.Tensor]:
     r"""Computes mahalanobis distance between x and y using inverse covariance matrix Σ.
 
     Parameters

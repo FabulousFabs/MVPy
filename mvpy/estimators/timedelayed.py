@@ -1,5 +1,5 @@
 '''
-A collection of estimators for decoding and disentangling features using back2back regression.
+A collection of estimators for TimeDelayed modeling (mTRF + SR).
 '''
 
 import numpy as np
@@ -206,7 +206,7 @@ class _TimeDelayed_numpy(sklearn.base.BaseEstimator):
             # reshape patterns
             self.pattern_ = self.pattern_.reshape((self.f_, self.c_, self.w_))
             self.pattern_ = np.flip(self.pattern_, axis = -1)
-        
+
         return self
     
     def predict(self, X: np.ndarray, reshape: bool = True) -> np.ndarray:

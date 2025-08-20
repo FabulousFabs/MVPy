@@ -7,7 +7,7 @@ or torch.
 import numpy as np
 import torch
 
-from typing import Union
+from typing import Union, Any
 
 def _euclidean_numpy(x: np.ndarray, y: np.ndarray) -> np.ndarray:
     """Computes euclidean distances using NumPy. This function is not exported and should not be called directly. See :func:`euclidean` instead.
@@ -72,7 +72,7 @@ def _euclidean_torch(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
     
     return torch.sqrt(torch.sum((x - y) ** 2, -1))
 
-def euclidean(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
+def euclidean(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor], *args: Any) -> Union[np.ndarray, torch.Tensor]:
     """Computes euclidean distances between x and y.
 
     Parameters

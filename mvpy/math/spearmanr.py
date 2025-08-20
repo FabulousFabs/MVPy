@@ -7,12 +7,12 @@ torch.
 import numpy as np
 import torch
 
-from typing import Union
+from typing import Union, Any
 
 from .pearsonr import _pearsonr_numpy, _pearsonr_torch
 from .rank import _rank_numpy, _rank_torch
 
-def spearmanr(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
+def spearmanr(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor], *args: Any) -> Union[np.ndarray, torch.Tensor]:
     """Compute Spearman correlation between x and y. Note that correlations are always computed over the final dimension in your inputs.
     
     Parameters
@@ -53,7 +53,7 @@ def spearmanr(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Ten
     
     raise ValueError(f'`x` and `y` must be of the same type, but got `{type(x)}` and `{type(y)}` instead.')
 
-def spearmanr_d(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
+def spearmanr_d(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor], *args: Any) -> Union[np.ndarray, torch.Tensor]:
     """Compute Spearman distance between x and y. Note that distances are always computed over the final dimension in your inputs.
     
     Parameters

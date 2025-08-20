@@ -7,7 +7,7 @@ torch.
 import numpy as np
 import torch
 
-from typing import Union
+from typing import Union, Any
 
 def _cosine_numpy(x: np.ndarray, y: np.ndarray) -> np.ndarray:
     """Compute cosine similarities between x and y. Note that this function is not exported and should not be called directly.
@@ -51,7 +51,7 @@ def _cosine_torch(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
     
     return (x * y).sum(-1) / (torch.linalg.norm(x, dim = -1) * torch.linalg.norm(y, dim = -1))
 
-def cosine(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
+def cosine(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor], *args: Any) -> Union[np.ndarray, torch.Tensor]:
     """Compute cosine similarities between x and y. Note that similarities are always computed over the final dimension.
     
     Parameters
@@ -91,7 +91,7 @@ def cosine(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor
     
     raise ValueError(f'`x` and `y` must be of the same type, but got `{type(x)}` and `{type(y)}` instead.')
 
-def cosine_d(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
+def cosine_d(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor], *args: Any) -> Union[np.ndarray, torch.Tensor]:
     """Compute cosine distances between x and y. Note that distances are always computed over the final dimension.
     
     Parameters

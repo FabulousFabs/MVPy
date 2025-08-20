@@ -7,7 +7,7 @@ torch.
 import numpy as np
 import torch
 
-from typing import Union
+from typing import Union, Any
 
 def _pearsonr_numpy(x: np.ndarray, y: np.ndarray) -> np.ndarray:
     """Computes pearson correlations between final dimensions of x and y. Note that this function is not exported and should not be called directly.
@@ -55,7 +55,7 @@ def _pearsonr_torch(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
     
     return torch.sum(Δx * Δy, -1) / torch.sqrt(torch.sum(Δx ** 2, -1) * torch.sum(Δy ** 2, -1))
 
-def pearsonr(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
+def pearsonr(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor], *args: Any) -> Union[np.ndarray, torch.Tensor]:
     """Computes pearson correlations between x and y. Note that correlations are always computed over the final dimension.
     
     Parameters
@@ -95,7 +95,7 @@ def pearsonr(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tens
     
     raise ValueError(f'`x` and `y` must be of the same type, but got `{type(x)}` and `{type(y)}` instead.')
 
-def pearsonr_d(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
+def pearsonr_d(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor], *args: Any) -> Union[np.ndarray, torch.Tensor]:
     """Computes Pearson distance between x and y. Note that distances are always computed over the final dimension in your inputs.
     
     Parameters
