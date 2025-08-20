@@ -103,6 +103,7 @@ First, we will have to load the data---To do this, we use MNE's sample code. Be 
     3        3  human bodypart      1     0       1        1
     4        4  human bodypart      1     0       1        1
     ['0/human bodypart/human/not-face/animal/natural', '1/human bodypart/human/not-face/animal/natural', '2/human bodypart/human/not-face/animal/natural', '3/human bodypart/human/not-face/animal/natural', '4/human bodypart/human/not-face/animal/natural', '5/human bodypart/human/not-face/animal/natural', '6/human bodypart/human/not-face/animal/natural', '7/human bodypart/human/not-face/animal/natural', '8/human bodypart/human/not-face/animal/natural', '9/human bodypart/human/not-face/animal/natural']
+    Finding events on: STI101
     4142 events found on stim channel STI101
     Event IDs: [  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18
       19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36
@@ -219,7 +220,7 @@ Now that we have our data in a nicely structured format, let's look at building 
 
     Fitting estimators...:   0%|          | 0/601 [00:00<?, ?it/s]    Fitting estimators...:   0%|          | 0/601 [00:10<?, ?it/s]
     Fitting estimators...:   0%|          | 0/601 [00:00<?, ?it/s]    Fitting estimators...:   0%|          | 0/601 [00:10<?, ?it/s]
-    Fitting estimators...:   0%|          | 0/601 [00:00<?, ?it/s]    Fitting estimators...:   0%|          | 0/601 [00:10<?, ?it/s]
+    Fitting estimators...:   0%|          | 0/601 [00:00<?, ?it/s]    Fitting estimators...:   0%|          | 0/601 [00:09<?, ?it/s]
     Fitting estimators...:   0%|          | 0/601 [00:00<?, ?it/s]    Fitting estimators...:   0%|          | 0/601 [00:10<?, ?it/s]
     Fitting estimators...:   0%|          | 0/601 [00:00<?, ?it/s]    Fitting estimators...:   0%|          | 0/601 [00:10<?, ?it/s]
 
@@ -286,7 +287,7 @@ Finally, we would also like to visualise the patterns that the classifier used. 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (1 minutes 8.810 seconds)
+   **Total running time of the script:** (1 minutes 8.130 seconds)
 
 
 .. _sphx_glr_download_examples_decoders_1_decoders_intro.py:

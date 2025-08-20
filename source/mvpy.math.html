@@ -303,7 +303,7 @@ nice and vectorised manner using either numpy or
 torch.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="mvpy.math.cosine.cosine">
-<span class="sig-prename descclassname"><span class="pre">mvpy.math.cosine.</span></span><span class="sig-name descname"><span class="pre">cosine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.cosine.cosine" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mvpy.math.cosine.</span></span><span class="sig-name descname"><span class="pre">cosine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.cosine.cosine" title="Link to this definition">#</a></dt>
 <dd><p>Compute cosine similarities between x and y. Note that similarities are always computed over the final dimension.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -336,7 +336,7 @@ torch.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="mvpy.math.cosine.cosine_d">
-<span class="sig-prename descclassname"><span class="pre">mvpy.math.cosine.</span></span><span class="sig-name descname"><span class="pre">cosine_d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.cosine.cosine_d" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mvpy.math.cosine.</span></span><span class="sig-name descname"><span class="pre">cosine_d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.cosine.cosine_d" title="Link to this definition">#</a></dt>
 <dd><p>Compute cosine distances between x and y. Note that distances are always computed over the final dimension.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -469,7 +469,7 @@ nice and vectorised manner using either numpy
 or torch.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="mvpy.math.euclidean.euclidean">
-<span class="sig-prename descclassname"><span class="pre">mvpy.math.euclidean.</span></span><span class="sig-name descname"><span class="pre">euclidean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.euclidean.euclidean" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mvpy.math.euclidean.</span></span><span class="sig-name descname"><span class="pre">euclidean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.euclidean.euclidean" title="Link to this definition">#</a></dt>
 <dd><p>Computes euclidean distances between x and y.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -509,7 +509,7 @@ nice and vectorised manner using either numpy
 or torch.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="mvpy.math.mahalanobis.mahalanobis">
-<span class="sig-prename descclassname"><span class="pre">mvpy.math.mahalanobis.</span></span><span class="sig-name descname"><span class="pre">mahalanobis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Σ</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.mahalanobis.mahalanobis" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mvpy.math.mahalanobis.</span></span><span class="sig-name descname"><span class="pre">mahalanobis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Σ</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.mahalanobis.mahalanobis" title="Link to this definition">#</a></dt>
 <dd><p>Computes mahalanobis distance between x and y using inverse covariance matrix Σ.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -553,7 +553,7 @@ nice and vectorised manner using either numpy or
 torch.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="mvpy.math.pearsonr.pearsonr">
-<span class="sig-prename descclassname"><span class="pre">mvpy.math.pearsonr.</span></span><span class="sig-name descname"><span class="pre">pearsonr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.pearsonr.pearsonr" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mvpy.math.pearsonr.</span></span><span class="sig-name descname"><span class="pre">pearsonr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.pearsonr.pearsonr" title="Link to this definition">#</a></dt>
 <dd><p>Computes pearson correlations between x and y. Note that correlations are always computed over the final dimension.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -587,7 +587,7 @@ torch.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="mvpy.math.pearsonr.pearsonr_d">
-<span class="sig-prename descclassname"><span class="pre">mvpy.math.pearsonr.</span></span><span class="sig-name descname"><span class="pre">pearsonr_d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.pearsonr.pearsonr_d" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mvpy.math.pearsonr.</span></span><span class="sig-name descname"><span class="pre">pearsonr_d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.pearsonr.pearsonr_d" title="Link to this definition">#</a></dt>
 <dd><p>Computes Pearson distance between x and y. Note that distances are always computed over the final dimension in your inputs.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -707,7 +707,7 @@ nice and vectorised manner using either numpy or
 torch.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="mvpy.math.spearmanr.spearmanr">
-<span class="sig-prename descclassname"><span class="pre">mvpy.math.spearmanr.</span></span><span class="sig-name descname"><span class="pre">spearmanr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.spearmanr.spearmanr" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mvpy.math.spearmanr.</span></span><span class="sig-name descname"><span class="pre">spearmanr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.spearmanr.spearmanr" title="Link to this definition">#</a></dt>
 <dd><p>Compute Spearman correlation between x and y. Note that correlations are always computed over the final dimension in your inputs.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -742,7 +742,7 @@ torch.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="mvpy.math.spearmanr.spearmanr_d">
-<span class="sig-prename descclassname"><span class="pre">mvpy.math.spearmanr.</span></span><span class="sig-name descname"><span class="pre">spearmanr_d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.spearmanr.spearmanr_d" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mvpy.math.spearmanr.</span></span><span class="sig-name descname"><span class="pre">spearmanr_d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.math.spearmanr.spearmanr_d" title="Link to this definition">#</a></dt>
 <dd><p>Compute Spearman distance between x and y. Note that distances are always computed over the final dimension in your inputs.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
