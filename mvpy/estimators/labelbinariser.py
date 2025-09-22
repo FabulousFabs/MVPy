@@ -359,7 +359,7 @@ class _LabelBinariser_torch(sklearn.base.BaseEstimator):
         # create mapped classes
         y_mapped = torch.full(
             (y.shape[0], int(self.N_.item())), 
-            self.neg_label
+            self.neg_label, device = y.device
         )
         
         for i in range(self.n_features_):
