@@ -4,6 +4,7 @@ from .covariance import Covariance
 from .decoder import Decoder
 from .encoder import Encoder
 from .labelbinariser import LabelBinariser
+from .receptivefield import ReceptiveField
 from .ridgeclassifier import RidgeClassifier
 from .ridgecv import RidgeCV
 from .rsa import RSA
