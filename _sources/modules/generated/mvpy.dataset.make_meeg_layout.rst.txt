@@ -1,0 +1,10 @@
+﻿make\_meeg\_layout
+==================
+
+.. currentmodule:: mvpy.dataset
+
+.. autofunction:: make_meeg_layout
+
+.. minigallery:: mvpy.dataset.make_meeg_layout
+   :add-heading: Gallery examples
+   :heading-level: -

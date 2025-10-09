@@ -1,0 +1,13 @@
+﻿RepeatedStratifiedKFold
+=======================
+
+.. currentmodule:: mvpy.crossvalidation
+
+.. autoclass:: RepeatedStratifiedKFold
+   :members:
+   :inherited-members:
+   :special-members: __call__
+
+.. minigallery:: mvpy.crossvalidation.RepeatedStratifiedKFold mvpy.crossvalidation.RepeatedStratifiedKFold.__delattr__ mvpy.crossvalidation.RepeatedStratifiedKFold.__dir__ mvpy.crossvalidation.RepeatedStratifiedKFold.__eq__ mvpy.crossvalidation.RepeatedStratifiedKFold.__format__ mvpy.crossvalidation.RepeatedStratifiedKFold.__ge__ mvpy.crossvalidation.RepeatedStratifiedKFold.__getattribute__ mvpy.crossvalidation.RepeatedStratifiedKFold.__gt__ mvpy.crossvalidation.RepeatedStratifiedKFold.__hash__ mvpy.crossvalidation.RepeatedStratifiedKFold.__init__ mvpy.crossvalidation.RepeatedStratifiedKFold.__init_subclass__ mvpy.crossvalidation.RepeatedStratifiedKFold.__le__ mvpy.crossvalidation.RepeatedStratifiedKFold.__lt__ mvpy.crossvalidation.RepeatedStratifiedKFold.__ne__ mvpy.crossvalidation.RepeatedStratifiedKFold.__new__ mvpy.crossvalidation.RepeatedStratifiedKFold.__reduce__ mvpy.crossvalidation.RepeatedStratifiedKFold.__reduce_ex__ mvpy.crossvalidation.RepeatedStratifiedKFold.__repr__ mvpy.crossvalidation.RepeatedStratifiedKFold.__setattr__ mvpy.crossvalidation.RepeatedStratifiedKFold.__sizeof__ mvpy.crossvalidation.RepeatedStratifiedKFold.__str__ mvpy.crossvalidation.RepeatedStratifiedKFold.__subclasshook__ mvpy.crossvalidation.RepeatedStratifiedKFold.split mvpy.crossvalidation.RepeatedStratifiedKFold.to_numpy mvpy.crossvalidation.RepeatedStratifiedKFold.to_torch 
+   :add-heading: Gallery examples
+   :heading-level: -

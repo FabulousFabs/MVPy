@@ -1,0 +1,13 @@
+﻿Scaler
+======
+
+.. currentmodule:: mvpy.preprocessing
+
+.. autoclass:: Scaler
+   :members:
+   :inherited-members:
+   :special-members: __call__
+
+.. minigallery:: mvpy.preprocessing.Scaler mvpy.preprocessing.Scaler.__delattr__ mvpy.preprocessing.Scaler.__dir__ mvpy.preprocessing.Scaler.__eq__ mvpy.preprocessing.Scaler.__format__ mvpy.preprocessing.Scaler.__ge__ mvpy.preprocessing.Scaler.__getattribute__ mvpy.preprocessing.Scaler.__gt__ mvpy.preprocessing.Scaler.__hash__ mvpy.preprocessing.Scaler.__init__ mvpy.preprocessing.Scaler.__le__ mvpy.preprocessing.Scaler.__lt__ mvpy.preprocessing.Scaler.__ne__ mvpy.preprocessing.Scaler.__new__ mvpy.preprocessing.Scaler.__reduce__ mvpy.preprocessing.Scaler.__reduce_ex__ mvpy.preprocessing.Scaler.__setattr__ mvpy.preprocessing.Scaler.__sizeof__ mvpy.preprocessing.Scaler.__str__ mvpy.preprocessing.Scaler.__subclasshook__ mvpy.preprocessing.Scaler._get_estimator mvpy.preprocessing.Scaler.clone mvpy.preprocessing.Scaler.copy mvpy.preprocessing.Scaler.fit mvpy.preprocessing.Scaler.fit_transform mvpy.preprocessing.Scaler.inverse_transform mvpy.preprocessing.Scaler.to_numpy mvpy.preprocessing.Scaler.to_torch mvpy.preprocessing.Scaler.transform 
+   :add-heading: Gallery examples
+   :heading-level: -

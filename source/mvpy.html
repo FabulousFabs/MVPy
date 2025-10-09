@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>mvpy package &#8212; MVPy 0.1 documentation</title>
+    <title>mvpy package &#8212; MVPy</title>
   
   
   
@@ -35,6 +35,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/colors.css?v=cc94ab7d" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/custom.css?v=eec3fc85" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -45,12 +48,14 @@
     <script src="../_static/documentation_options.js?v=2709fde1"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'source/mvpy';</script>
+    <script src="../_static/scripts/dropdown.js?v=5b9cef8c"></script>
+    <script src="../_static/scripts/version-switcher.js?v=6ebe4089"></script>
+    <script src="../_static/scripts/sg_plotly_resize.js?v=dc4a1e18"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="mvpy.estimators package" href="mvpy.estimators.html" />
-    <link rel="prev" title="Encoders" href="../examples/encoders/encoders_intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -100,7 +105,7 @@
   </button>
   
   
-  <div class="col-lg-3 navbar-header-items__start">
+  <div class=" navbar-header-items__start">
     
       <div class="navbar-item">
 
@@ -114,14 +119,46 @@
   
   
   
+    
+    
+      
+    
+    
+    <img src="../_static/mvpy-icon.png" class="logo__image only-light" alt=""/>
+    <img src="../_static/mvpy-icon.png" class="logo__image only-dark pst-js-only" alt=""/>
   
-    <p class="title logo__title">MVPy 0.1 documentation</p>
+  
+    <p class="title logo__title">MVPy</p>
   
 </a></div>
     
   </div>
   
-  <div class="col-lg-9 navbar-header-items">
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../auto_examples/index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
     
     
     <div class="navbar-header-items__end">
@@ -136,6 +173,50 @@
 </button>
         </div>
       
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/FabulousFabs/mvpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
       
     </div>
     
@@ -175,7 +256,82 @@
   <div class="sidebar-header-items sidebar-primary__section">
     
     
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
     
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../auto_examples/index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/FabulousFabs/mvpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+      </div>
     
   </div>
   
@@ -185,8 +341,11 @@
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="mvpy.crossvalidation.html">mvpy.crossvalidation package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mvpy.dataset.html">mvpy.dataset package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mvpy.estimators.html">mvpy.estimators package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mvpy.math.html">mvpy.math package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mvpy.preprocessing.html">mvpy.preprocessing package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mvpy.signal.html">mvpy.signal package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mvpy.utilities.html">mvpy.utilities package</a></li>
 </ul>
@@ -229,9 +388,6 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    
-    <li class="breadcrumb-item"><a href="../documentation/index.html" class="nav-link">Documentation</a></li>
-    
     <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">mvpy package</span></li>
   </ul>
 </nav>
@@ -255,20 +411,85 @@
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">#</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="mvpy.crossvalidation.html">mvpy.crossvalidation package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.html#module-mvpy.crossvalidation.cross_val_score">mvpy.crossvalidation.cross_val_score module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.cross_val_score.CVResult"><code class="docutils literal notranslate"><span class="pre">CVResult</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.cross_val_score.score"><code class="docutils literal notranslate"><span class="pre">score()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.html#module-mvpy.crossvalidation.kfold">mvpy.crossvalidation.kfold module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.kfold.KFold"><code class="docutils literal notranslate"><span class="pre">KFold</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.kfold.KFold.split"><code class="docutils literal notranslate"><span class="pre">KFold.split()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.kfold.KFold.to_numpy"><code class="docutils literal notranslate"><span class="pre">KFold.to_numpy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.kfold.KFold.to_torch"><code class="docutils literal notranslate"><span class="pre">KFold.to_torch()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.html#module-mvpy.crossvalidation.repeatedkfold">mvpy.crossvalidation.repeatedkfold module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.repeatedkfold.RepeatedKFold"><code class="docutils literal notranslate"><span class="pre">RepeatedKFold</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.repeatedkfold.RepeatedKFold.split"><code class="docutils literal notranslate"><span class="pre">RepeatedKFold.split()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.repeatedkfold.RepeatedKFold.to_numpy"><code class="docutils literal notranslate"><span class="pre">RepeatedKFold.to_numpy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.repeatedkfold.RepeatedKFold.to_torch"><code class="docutils literal notranslate"><span class="pre">RepeatedKFold.to_torch()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.html#module-mvpy.crossvalidation.repeatedstratifiedkfold">mvpy.crossvalidation.repeatedstratifiedkfold module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.repeatedstratifiedkfold.RepeatedStratifiedKFold"><code class="docutils literal notranslate"><span class="pre">RepeatedStratifiedKFold</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.repeatedstratifiedkfold.RepeatedStratifiedKFold.split"><code class="docutils literal notranslate"><span class="pre">RepeatedStratifiedKFold.split()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.repeatedstratifiedkfold.RepeatedStratifiedKFold.to_numpy"><code class="docutils literal notranslate"><span class="pre">RepeatedStratifiedKFold.to_numpy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.repeatedstratifiedkfold.RepeatedStratifiedKFold.to_torch"><code class="docutils literal notranslate"><span class="pre">RepeatedStratifiedKFold.to_torch()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.html#module-mvpy.crossvalidation.stratifiedkfold">mvpy.crossvalidation.stratifiedkfold module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.stratifiedkfold.StratifiedKFold"><code class="docutils literal notranslate"><span class="pre">StratifiedKFold</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.stratifiedkfold.StratifiedKFold.split"><code class="docutils literal notranslate"><span class="pre">StratifiedKFold.split()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.stratifiedkfold.StratifiedKFold.to_numpy"><code class="docutils literal notranslate"><span class="pre">StratifiedKFold.to_numpy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.stratifiedkfold.StratifiedKFold.to_torch"><code class="docutils literal notranslate"><span class="pre">StratifiedKFold.to_torch()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.html#module-mvpy.crossvalidation.validator">mvpy.crossvalidation.validator module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.validator.Validator"><code class="docutils literal notranslate"><span class="pre">Validator</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.html#module-mvpy.crossvalidation">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mvpy.dataset.html">mvpy.dataset package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.dataset.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.dataset.html#module-mvpy.dataset.make_meeg_categorical">mvpy.dataset.make_meeg_categorical module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.dataset.html#mvpy.dataset.make_meeg_categorical.make_meeg_categorical"><code class="docutils literal notranslate"><span class="pre">make_meeg_categorical()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.dataset.html#module-mvpy.dataset.make_meeg_colours">mvpy.dataset.make_meeg_colours module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.dataset.html#mvpy.dataset.make_meeg_colours.make_meeg_colours"><code class="docutils literal notranslate"><span class="pre">make_meeg_colours()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.dataset.html#module-mvpy.dataset.make_meeg_continuous">mvpy.dataset.make_meeg_continuous module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.dataset.html#mvpy.dataset.make_meeg_continuous.make_meeg_continuous"><code class="docutils literal notranslate"><span class="pre">make_meeg_continuous()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.dataset.html#module-mvpy.dataset.make_meeg_discrete">mvpy.dataset.make_meeg_discrete module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.dataset.html#mvpy.dataset.make_meeg_discrete.make_meeg_discrete"><code class="docutils literal notranslate"><span class="pre">make_meeg_discrete()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.dataset.html#module-mvpy.dataset.make_meeg_layout">mvpy.dataset.make_meeg_layout module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.dataset.html#mvpy.dataset.make_meeg_layout.make_meeg_layout"><code class="docutils literal notranslate"><span class="pre">make_meeg_layout()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.dataset.html#module-mvpy.dataset">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="mvpy.estimators.html">mvpy.estimators package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.html#module-mvpy.estimators.b2b">mvpy.estimators.b2b module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.b2b.B2B"><code class="docutils literal notranslate"><span class="pre">B2B</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.b2b.B2B.alphas"><code class="docutils literal notranslate"><span class="pre">B2B.alphas</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.b2b.B2B.fit_intercept"><code class="docutils literal notranslate"><span class="pre">B2B.fit_intercept</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.b2b.B2B.normalise"><code class="docutils literal notranslate"><span class="pre">B2B.normalise</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.b2b.B2B.alpha_per_target"><code class="docutils literal notranslate"><span class="pre">B2B.alpha_per_target</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.b2b.B2B.normalise_decoder"><code class="docutils literal notranslate"><span class="pre">B2B.normalise_decoder</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.b2b.B2B.decoder_"><code class="docutils literal notranslate"><span class="pre">B2B.decoder_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.b2b.B2B.encoder_"><code class="docutils literal notranslate"><span class="pre">B2B.encoder_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.b2b.B2B.scaler_"><code class="docutils literal notranslate"><span class="pre">B2B.scaler_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.b2b.B2B.causal_"><code class="docutils literal notranslate"><span class="pre">B2B.causal_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.b2b.B2B.pattern_"><code class="docutils literal notranslate"><span class="pre">B2B.pattern_</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.b2b.B2B.clone"><code class="docutils literal notranslate"><span class="pre">B2B.clone()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.b2b.B2B.fit"><code class="docutils literal notranslate"><span class="pre">B2B.fit()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.b2b.B2B.predict"><code class="docutils literal notranslate"><span class="pre">B2B.predict()</span></code></a></li>
@@ -278,26 +499,20 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.html#module-mvpy.estimators.classifier">mvpy.estimators.classifier module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.classifier.Classifier"><code class="docutils literal notranslate"><span class="pre">Classifier</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.classifier.Classifier.estimators_"><code class="docutils literal notranslate"><span class="pre">Classifier.estimators_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.classifier.Classifier.estimator_"><code class="docutils literal notranslate"><span class="pre">Classifier.estimator_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.classifier.Classifier.classes_"><code class="docutils literal notranslate"><span class="pre">Classifier.classes_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.classifier.Classifier.intercept_"><code class="docutils literal notranslate"><span class="pre">Classifier.intercept_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.classifier.Classifier.coef_"><code class="docutils literal notranslate"><span class="pre">Classifier.coef_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.classifier.Classifier.pattern_"><code class="docutils literal notranslate"><span class="pre">Classifier.pattern_</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.classifier.Classifier.clone"><code class="docutils literal notranslate"><span class="pre">Classifier.clone()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.classifier.Classifier.copy"><code class="docutils literal notranslate"><span class="pre">Classifier.copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.classifier.Classifier.decision_function"><code class="docutils literal notranslate"><span class="pre">Classifier.decision_function()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.classifier.Classifier.fit"><code class="docutils literal notranslate"><span class="pre">Classifier.fit()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.classifier.Classifier.predict"><code class="docutils literal notranslate"><span class="pre">Classifier.predict()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.classifier.Classifier.predict_proba"><code class="docutils literal notranslate"><span class="pre">Classifier.predict_proba()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.classifier.Classifier.to_numpy"><code class="docutils literal notranslate"><span class="pre">Classifier.to_numpy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.classifier.Classifier.to_torch"><code class="docutils literal notranslate"><span class="pre">Classifier.to_torch()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.html#module-mvpy.estimators.covariance">mvpy.estimators.covariance module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.covariance.Covariance"><code class="docutils literal notranslate"><span class="pre">Covariance</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.covariance.Covariance.covariance_"><code class="docutils literal notranslate"><span class="pre">Covariance.covariance_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.covariance.Covariance.precision_"><code class="docutils literal notranslate"><span class="pre">Covariance.precision_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.covariance.Covariance.whitener_"><code class="docutils literal notranslate"><span class="pre">Covariance.whitener_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.covariance.Covariance.shrinkage_"><code class="docutils literal notranslate"><span class="pre">Covariance.shrinkage_</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.covariance.Covariance.clone"><code class="docutils literal notranslate"><span class="pre">Covariance.clone()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.covariance.Covariance.fit"><code class="docutils literal notranslate"><span class="pre">Covariance.fit()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.covariance.Covariance.fit_transform"><code class="docutils literal notranslate"><span class="pre">Covariance.fit_transform()</span></code></a></li>
@@ -308,13 +523,17 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.html#module-mvpy.estimators.csp">mvpy.estimators.csp module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.csp.CSP"><code class="docutils literal notranslate"><span class="pre">CSP</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.csp.CSP.clone"><code class="docutils literal notranslate"><span class="pre">CSP.clone()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.csp.CSP.fit"><code class="docutils literal notranslate"><span class="pre">CSP.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.csp.CSP.predict"><code class="docutils literal notranslate"><span class="pre">CSP.predict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.html#module-mvpy.estimators.decoder">mvpy.estimators.decoder module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.decoder.Decoder"><code class="docutils literal notranslate"><span class="pre">Decoder</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.decoder.Decoder.estimator_"><code class="docutils literal notranslate"><span class="pre">Decoder.estimator_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.decoder.Decoder.pattern_"><code class="docutils literal notranslate"><span class="pre">Decoder.pattern_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.decoder.Decoder.coef_"><code class="docutils literal notranslate"><span class="pre">Decoder.coef_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.decoder.Decoder.intercept_"><code class="docutils literal notranslate"><span class="pre">Decoder.intercept_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.decoder.Decoder.alpha_"><code class="docutils literal notranslate"><span class="pre">Decoder.alpha_</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.decoder.Decoder.clone"><code class="docutils literal notranslate"><span class="pre">Decoder.clone()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.decoder.Decoder.fit"><code class="docutils literal notranslate"><span class="pre">Decoder.fit()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.decoder.Decoder.predict"><code class="docutils literal notranslate"><span class="pre">Decoder.predict()</span></code></a></li>
@@ -324,11 +543,6 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.html#module-mvpy.estimators.encoder">mvpy.estimators.encoder module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.encoder.Encoder"><code class="docutils literal notranslate"><span class="pre">Encoder</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.encoder.Encoder.alphas"><code class="docutils literal notranslate"><span class="pre">Encoder.alphas</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.encoder.Encoder.kwargs"><code class="docutils literal notranslate"><span class="pre">Encoder.kwargs</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.encoder.Encoder.estimator"><code class="docutils literal notranslate"><span class="pre">Encoder.estimator</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.encoder.Encoder.intercept_"><code class="docutils literal notranslate"><span class="pre">Encoder.intercept_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.encoder.Encoder.coef_"><code class="docutils literal notranslate"><span class="pre">Encoder.coef_</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.encoder.Encoder.clone"><code class="docutils literal notranslate"><span class="pre">Encoder.clone()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.encoder.Encoder.fit"><code class="docutils literal notranslate"><span class="pre">Encoder.fit()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.encoder.Encoder.predict"><code class="docutils literal notranslate"><span class="pre">Encoder.predict()</span></code></a></li>
@@ -336,11 +550,51 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.html#module-mvpy.estimators.kernelridgecv">mvpy.estimators.kernelridgecv module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.kernelridgecv.KernelRidgeCV"><code class="docutils literal notranslate"><span class="pre">KernelRidgeCV</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.kernelridgecv.KernelRidgeCV.clone"><code class="docutils literal notranslate"><span class="pre">KernelRidgeCV.clone()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.kernelridgecv.KernelRidgeCV.fit"><code class="docutils literal notranslate"><span class="pre">KernelRidgeCV.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.kernelridgecv.KernelRidgeCV.predict"><code class="docutils literal notranslate"><span class="pre">KernelRidgeCV.predict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.html#module-mvpy.estimators.labelbinariser">mvpy.estimators.labelbinariser module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.labelbinariser.LabelBinariser"><code class="docutils literal notranslate"><span class="pre">LabelBinariser</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.labelbinariser.LabelBinariser.clone"><code class="docutils literal notranslate"><span class="pre">LabelBinariser.clone()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.labelbinariser.LabelBinariser.copy"><code class="docutils literal notranslate"><span class="pre">LabelBinariser.copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.labelbinariser.LabelBinariser.fit"><code class="docutils literal notranslate"><span class="pre">LabelBinariser.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.labelbinariser.LabelBinariser.fit_transform"><code class="docutils literal notranslate"><span class="pre">LabelBinariser.fit_transform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.labelbinariser.LabelBinariser.inverse_transform"><code class="docutils literal notranslate"><span class="pre">LabelBinariser.inverse_transform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.labelbinariser.LabelBinariser.to_numpy"><code class="docutils literal notranslate"><span class="pre">LabelBinariser.to_numpy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.labelbinariser.LabelBinariser.to_torch"><code class="docutils literal notranslate"><span class="pre">LabelBinariser.to_torch()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.labelbinariser.LabelBinariser.transform"><code class="docutils literal notranslate"><span class="pre">LabelBinariser.transform()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.html#module-mvpy.estimators.receptivefield">mvpy.estimators.receptivefield module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.receptivefield.ReceptiveField"><code class="docutils literal notranslate"><span class="pre">ReceptiveField</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.receptivefield.ReceptiveField.fit"><code class="docutils literal notranslate"><span class="pre">ReceptiveField.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.receptivefield.ReceptiveField.predict"><code class="docutils literal notranslate"><span class="pre">ReceptiveField.predict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.html#module-mvpy.estimators.ridgeclassifier">mvpy.estimators.ridgeclassifier module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgeclassifier.RidgeClassifier"><code class="docutils literal notranslate"><span class="pre">RidgeClassifier</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgeclassifier.RidgeClassifier.clone"><code class="docutils literal notranslate"><span class="pre">RidgeClassifier.clone()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgeclassifier.RidgeClassifier.copy"><code class="docutils literal notranslate"><span class="pre">RidgeClassifier.copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgeclassifier.RidgeClassifier.decision_function"><code class="docutils literal notranslate"><span class="pre">RidgeClassifier.decision_function()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgeclassifier.RidgeClassifier.fit"><code class="docutils literal notranslate"><span class="pre">RidgeClassifier.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgeclassifier.RidgeClassifier.predict"><code class="docutils literal notranslate"><span class="pre">RidgeClassifier.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgeclassifier.RidgeClassifier.predict_proba"><code class="docutils literal notranslate"><span class="pre">RidgeClassifier.predict_proba()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.html#module-mvpy.estimators.ridgecv">mvpy.estimators.ridgecv module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgecv.RidgeCV"><code class="docutils literal notranslate"><span class="pre">RidgeCV</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgecv.RidgeCV.alpha_"><code class="docutils literal notranslate"><span class="pre">RidgeCV.alpha_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgecv.RidgeCV.intercept_"><code class="docutils literal notranslate"><span class="pre">RidgeCV.intercept_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgecv.RidgeCV.coef_"><code class="docutils literal notranslate"><span class="pre">RidgeCV.coef_</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgecv.RidgeCV.clone"><code class="docutils literal notranslate"><span class="pre">RidgeCV.clone()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgecv.RidgeCV.fit"><code class="docutils literal notranslate"><span class="pre">RidgeCV.fit()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgecv.RidgeCV.predict"><code class="docutils literal notranslate"><span class="pre">RidgeCV.predict()</span></code></a></li>
@@ -348,15 +602,26 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.html#module-mvpy.estimators.ridgedecoder">mvpy.estimators.ridgedecoder module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgedecoder.RidgeDecoder"><code class="docutils literal notranslate"><span class="pre">RidgeDecoder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgedecoder.RidgeDecoder.clone"><code class="docutils literal notranslate"><span class="pre">RidgeDecoder.clone()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgedecoder.RidgeDecoder.fit"><code class="docutils literal notranslate"><span class="pre">RidgeDecoder.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgedecoder.RidgeDecoder.predict"><code class="docutils literal notranslate"><span class="pre">RidgeDecoder.predict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.html#module-mvpy.estimators.ridgeencoder">mvpy.estimators.ridgeencoder module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgeencoder.RidgeEncoder"><code class="docutils literal notranslate"><span class="pre">RidgeEncoder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgeencoder.RidgeEncoder.clone"><code class="docutils literal notranslate"><span class="pre">RidgeEncoder.clone()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgeencoder.RidgeEncoder.fit"><code class="docutils literal notranslate"><span class="pre">RidgeEncoder.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgeencoder.RidgeEncoder.predict"><code class="docutils literal notranslate"><span class="pre">RidgeEncoder.predict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.html#module-mvpy.estimators.rsa">mvpy.estimators.rsa module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.rsa.RSA"><code class="docutils literal notranslate"><span class="pre">RSA</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.rsa.RSA.rdm_"><code class="docutils literal notranslate"><span class="pre">RSA.rdm_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.rsa.RSA.cx_"><code class="docutils literal notranslate"><span class="pre">RSA.cx_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.rsa.RSA.cy_"><code class="docutils literal notranslate"><span class="pre">RSA.cy_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.rsa.RSA.grouped"><code class="docutils literal notranslate"><span class="pre">RSA.grouped</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.rsa.RSA.estimator"><code class="docutils literal notranslate"><span class="pre">RSA.estimator</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.rsa.RSA.n_jobs"><code class="docutils literal notranslate"><span class="pre">RSA.n_jobs</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.rsa.RSA.verbose"><code class="docutils literal notranslate"><span class="pre">RSA.verbose</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.rsa.RSA.clone"><code class="docutils literal notranslate"><span class="pre">RSA.clone()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.rsa.RSA.fit"><code class="docutils literal notranslate"><span class="pre">RSA.fit()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.rsa.RSA.fit_transform"><code class="docutils literal notranslate"><span class="pre">RSA.fit_transform()</span></code></a></li>
@@ -370,16 +635,11 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.html#module-mvpy.estimators.scaler">mvpy.estimators.scaler module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.scaler.Scaler"><code class="docutils literal notranslate"><span class="pre">Scaler</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.scaler.Scaler.shape_"><code class="docutils literal notranslate"><span class="pre">Scaler.shape_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.scaler.Scaler.mean_"><code class="docutils literal notranslate"><span class="pre">Scaler.mean_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.scaler.Scaler.var_"><code class="docutils literal notranslate"><span class="pre">Scaler.var_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.scaler.Scaler.scale_"><code class="docutils literal notranslate"><span class="pre">Scaler.scale_</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.scaler.Scaler.clone"><code class="docutils literal notranslate"><span class="pre">Scaler.clone()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.scaler.Scaler.copy"><code class="docutils literal notranslate"><span class="pre">Scaler.copy()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.scaler.Scaler.fit"><code class="docutils literal notranslate"><span class="pre">Scaler.fit()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.scaler.Scaler.fit_transform"><code class="docutils literal notranslate"><span class="pre">Scaler.fit_transform()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.scaler.Scaler.inverse_transform"><code class="docutils literal notranslate"><span class="pre">Scaler.inverse_transform()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.scaler.Scaler.set_fit_request"><code class="docutils literal notranslate"><span class="pre">Scaler.set_fit_request()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.scaler.Scaler.to_numpy"><code class="docutils literal notranslate"><span class="pre">Scaler.to_numpy()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.scaler.Scaler.to_torch"><code class="docutils literal notranslate"><span class="pre">Scaler.to_torch()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.scaler.Scaler.transform"><code class="docutils literal notranslate"><span class="pre">Scaler.transform()</span></code></a></li>
@@ -389,38 +649,33 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.html#module-mvpy.estimators.sliding">mvpy.estimators.sliding module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.sliding.Sliding"><code class="docutils literal notranslate"><span class="pre">Sliding</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.sliding.Sliding.estimators_"><code class="docutils literal notranslate"><span class="pre">Sliding.estimators_</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.sliding.Sliding.clone"><code class="docutils literal notranslate"><span class="pre">Sliding.clone()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.sliding.Sliding.collect"><code class="docutils literal notranslate"><span class="pre">Sliding.collect()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.sliding.Sliding.dims"><code class="docutils literal notranslate"><span class="pre">Sliding.dims</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.sliding.Sliding.estimator"><code class="docutils literal notranslate"><span class="pre">Sliding.estimator</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.sliding.Sliding.fit"><code class="docutils literal notranslate"><span class="pre">Sliding.fit()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.sliding.Sliding.fit_transform"><code class="docutils literal notranslate"><span class="pre">Sliding.fit_transform()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.sliding.Sliding.predict"><code class="docutils literal notranslate"><span class="pre">Sliding.predict()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.sliding.Sliding.predict_proba"><code class="docutils literal notranslate"><span class="pre">Sliding.predict_proba()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.sliding.Sliding.top"><code class="docutils literal notranslate"><span class="pre">Sliding.top</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.sliding.Sliding.transform"><code class="docutils literal notranslate"><span class="pre">Sliding.transform()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.sliding.Sliding.verbose"><code class="docutils literal notranslate"><span class="pre">Sliding.verbose</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.html#module-mvpy.estimators.svc">mvpy.estimators.svc module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.svc.SVC"><code class="docutils literal notranslate"><span class="pre">SVC</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.svc.SVC.clone"><code class="docutils literal notranslate"><span class="pre">SVC.clone()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.svc.SVC.copy"><code class="docutils literal notranslate"><span class="pre">SVC.copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.svc.SVC.decision_function"><code class="docutils literal notranslate"><span class="pre">SVC.decision_function()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.svc.SVC.fit"><code class="docutils literal notranslate"><span class="pre">SVC.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.svc.SVC.predict"><code class="docutils literal notranslate"><span class="pre">SVC.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.svc.SVC.predict_proba"><code class="docutils literal notranslate"><span class="pre">SVC.predict_proba()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.svc.SVC.to_numpy"><code class="docutils literal notranslate"><span class="pre">SVC.to_numpy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.svc.SVC.to_torch"><code class="docutils literal notranslate"><span class="pre">SVC.to_torch()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.html#module-mvpy.estimators.timedelayed">mvpy.estimators.timedelayed module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.timedelayed.TimeDelayed"><code class="docutils literal notranslate"><span class="pre">TimeDelayed</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.timedelayed.TimeDelayed.alphas"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.alphas</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.timedelayed.TimeDelayed.kwargs"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.kwargs</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.timedelayed.TimeDelayed.patterns"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.patterns</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.timedelayed.TimeDelayed.t_min"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.t_min</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.timedelayed.TimeDelayed.t_max"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.t_max</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.timedelayed.TimeDelayed.fs"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.fs</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.timedelayed.TimeDelayed.window"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.window</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.timedelayed.TimeDelayed.estimator"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.estimator</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.timedelayed.TimeDelayed.f_"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.f_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.timedelayed.TimeDelayed.c_"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.c_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.timedelayed.TimeDelayed.w_"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.w_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.timedelayed.TimeDelayed.intercept_"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.intercept_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.timedelayed.TimeDelayed.coef_"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.coef_</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.timedelayed.TimeDelayed.pattern_"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.pattern_</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.timedelayed.TimeDelayed.clone"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.clone()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.timedelayed.TimeDelayed.fit"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.fit()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.timedelayed.TimeDelayed.predict"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.predict()</span></code></a></li>
@@ -451,6 +706,22 @@
 <li class="toctree-l3"><a class="reference internal" href="mvpy.math.html#mvpy.math.euclidean.euclidean"><code class="docutils literal notranslate"><span class="pre">euclidean()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.html#module-mvpy.math.kernel_linear">mvpy.math.kernel_linear module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.math.html#mvpy.math.kernel_linear.kernel_linear"><code class="docutils literal notranslate"><span class="pre">kernel_linear()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.html#module-mvpy.math.kernel_poly">mvpy.math.kernel_poly module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.math.html#mvpy.math.kernel_poly.kernel_poly"><code class="docutils literal notranslate"><span class="pre">kernel_poly()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.html#module-mvpy.math.kernel_rbf">mvpy.math.kernel_rbf module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.math.html#mvpy.math.kernel_rbf.kernel_rbf"><code class="docutils literal notranslate"><span class="pre">kernel_rbf()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.html#module-mvpy.math.kernel_sigmoid">mvpy.math.kernel_sigmoid module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.math.html#mvpy.math.kernel_sigmoid.kernel_sigmoid"><code class="docutils literal notranslate"><span class="pre">kernel_sigmoid()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.math.html#module-mvpy.math.mahalanobis">mvpy.math.mahalanobis module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="mvpy.math.html#mvpy.math.mahalanobis.mahalanobis"><code class="docutils literal notranslate"><span class="pre">mahalanobis()</span></code></a></li>
 </ul>
@@ -476,15 +747,103 @@
 <li class="toctree-l2"><a class="reference internal" href="mvpy.math.html#module-mvpy.math">Module contents</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="mvpy.preprocessing.html">mvpy.preprocessing package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.preprocessing.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.preprocessing.html#module-mvpy.preprocessing.clamp">mvpy.preprocessing.clamp module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.clamp.Clamp"><code class="docutils literal notranslate"><span class="pre">Clamp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.clamp.Clamp.clone"><code class="docutils literal notranslate"><span class="pre">Clamp.clone()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.clamp.Clamp.copy"><code class="docutils literal notranslate"><span class="pre">Clamp.copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.clamp.Clamp.fit"><code class="docutils literal notranslate"><span class="pre">Clamp.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.clamp.Clamp.fit_transform"><code class="docutils literal notranslate"><span class="pre">Clamp.fit_transform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.clamp.Clamp.inverse_transform"><code class="docutils literal notranslate"><span class="pre">Clamp.inverse_transform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.clamp.Clamp.to_numpy"><code class="docutils literal notranslate"><span class="pre">Clamp.to_numpy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.clamp.Clamp.to_torch"><code class="docutils literal notranslate"><span class="pre">Clamp.to_torch()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.clamp.Clamp.transform"><code class="docutils literal notranslate"><span class="pre">Clamp.transform()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.preprocessing.html#module-mvpy.preprocessing.labelbinariser">mvpy.preprocessing.labelbinariser module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.labelbinariser.LabelBinariser"><code class="docutils literal notranslate"><span class="pre">LabelBinariser</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.labelbinariser.LabelBinariser.clone"><code class="docutils literal notranslate"><span class="pre">LabelBinariser.clone()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.labelbinariser.LabelBinariser.copy"><code class="docutils literal notranslate"><span class="pre">LabelBinariser.copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.labelbinariser.LabelBinariser.fit"><code class="docutils literal notranslate"><span class="pre">LabelBinariser.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.labelbinariser.LabelBinariser.fit_transform"><code class="docutils literal notranslate"><span class="pre">LabelBinariser.fit_transform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.labelbinariser.LabelBinariser.inverse_transform"><code class="docutils literal notranslate"><span class="pre">LabelBinariser.inverse_transform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.labelbinariser.LabelBinariser.to_numpy"><code class="docutils literal notranslate"><span class="pre">LabelBinariser.to_numpy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.labelbinariser.LabelBinariser.to_torch"><code class="docutils literal notranslate"><span class="pre">LabelBinariser.to_torch()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.labelbinariser.LabelBinariser.transform"><code class="docutils literal notranslate"><span class="pre">LabelBinariser.transform()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.preprocessing.html#module-mvpy.preprocessing.robustscaler">mvpy.preprocessing.robustscaler module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.robustscaler.RobustScaler"><code class="docutils literal notranslate"><span class="pre">RobustScaler</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.robustscaler.RobustScaler.clone"><code class="docutils literal notranslate"><span class="pre">RobustScaler.clone()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.robustscaler.RobustScaler.copy"><code class="docutils literal notranslate"><span class="pre">RobustScaler.copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.robustscaler.RobustScaler.fit"><code class="docutils literal notranslate"><span class="pre">RobustScaler.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.robustscaler.RobustScaler.fit_transform"><code class="docutils literal notranslate"><span class="pre">RobustScaler.fit_transform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.robustscaler.RobustScaler.inverse_transform"><code class="docutils literal notranslate"><span class="pre">RobustScaler.inverse_transform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.robustscaler.RobustScaler.to_numpy"><code class="docutils literal notranslate"><span class="pre">RobustScaler.to_numpy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.robustscaler.RobustScaler.to_torch"><code class="docutils literal notranslate"><span class="pre">RobustScaler.to_torch()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.robustscaler.RobustScaler.transform"><code class="docutils literal notranslate"><span class="pre">RobustScaler.transform()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.preprocessing.html#module-mvpy.preprocessing.scaler">mvpy.preprocessing.scaler module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.scaler.Scaler"><code class="docutils literal notranslate"><span class="pre">Scaler</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.scaler.Scaler.clone"><code class="docutils literal notranslate"><span class="pre">Scaler.clone()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.scaler.Scaler.copy"><code class="docutils literal notranslate"><span class="pre">Scaler.copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.scaler.Scaler.fit"><code class="docutils literal notranslate"><span class="pre">Scaler.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.scaler.Scaler.fit_transform"><code class="docutils literal notranslate"><span class="pre">Scaler.fit_transform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.scaler.Scaler.inverse_transform"><code class="docutils literal notranslate"><span class="pre">Scaler.inverse_transform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.scaler.Scaler.to_numpy"><code class="docutils literal notranslate"><span class="pre">Scaler.to_numpy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.scaler.Scaler.to_torch"><code class="docutils literal notranslate"><span class="pre">Scaler.to_torch()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.preprocessing.html#mvpy.preprocessing.scaler.Scaler.transform"><code class="docutils literal notranslate"><span class="pre">Scaler.transform()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.preprocessing.html#module-mvpy.preprocessing">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="mvpy.signal.html">mvpy.signal package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.signal.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.signal.html#module-mvpy.signal.hammingwindow">mvpy.signal.hammingwindow module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.signal.html#mvpy.signal.hammingwindow.hamming_window"><code class="docutils literal notranslate"><span class="pre">hamming_window()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.signal.html#module-mvpy.signal.hannwindow">mvpy.signal.hannwindow module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.signal.html#mvpy.signal.hannwindow.hann_window"><code class="docutils literal notranslate"><span class="pre">hann_window()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.signal.html#module-mvpy.signal.raisedcosinewindow">mvpy.signal.raisedcosinewindow module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.signal.html#mvpy.signal.raisedcosinewindow.raised_cosine_window"><code class="docutils literal notranslate"><span class="pre">raised_cosine_window()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.signal.html#module-mvpy.signal">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mvpy.utilities.html">mvpy.utilities package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.utilities.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.utilities.html#module-mvpy.utilities.compile">mvpy.utilities.compile module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.utilities.html#mvpy.utilities.compile.numpy"><code class="docutils literal notranslate"><span class="pre">numpy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.utilities.html#mvpy.utilities.compile.torch"><code class="docutils literal notranslate"><span class="pre">torch()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.utilities.html#module-mvpy.utilities.env">mvpy.utilities.env module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.utilities.html#mvpy.utilities.env.get_var"><code class="docutils literal notranslate"><span class="pre">get_var()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.utilities.html#mvpy.utilities.env.is_enabled"><code class="docutils literal notranslate"><span class="pre">is_enabled()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.utilities.html#module-mvpy.utilities.progressbar">mvpy.utilities.progressbar module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="mvpy.utilities.html#mvpy.utilities.progressbar.Progressbar"><code class="docutils literal notranslate"><span class="pre">Progressbar</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="mvpy.utilities.html#mvpy.utilities.progressbar.tqdm_joblib"><code class="docutils literal notranslate"><span class="pre">tqdm_joblib()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.utilities.html#module-mvpy.utilities.version">mvpy.utilities.version module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.utilities.html#mvpy.utilities.version.compare"><code class="docutils literal notranslate"><span class="pre">compare()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.utilities.html#module-mvpy.utilities">Module contents</a></li>
@@ -508,24 +867,6 @@
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="../examples/encoders/encoders_intro.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Encoders</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="mvpy.estimators.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">mvpy.estimators package</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               

@@ -1,0 +1,10 @@
+﻿make\_meeg\_colours
+===================
+
+.. currentmodule:: mvpy.dataset
+
+.. autofunction:: make_meeg_colours
+
+.. minigallery:: mvpy.dataset.make_meeg_colours
+   :add-heading: Gallery examples
+   :heading-level: -

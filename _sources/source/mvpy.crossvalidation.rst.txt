@@ -1,0 +1,61 @@
+mvpy.crossvalidation package
+============================
+
+Submodules
+----------
+
+mvpy.crossvalidation.cross\_val\_score module
+---------------------------------------------
+
+.. automodule:: mvpy.crossvalidation.cross_val_score
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.crossvalidation.kfold module
+---------------------------------
+
+.. automodule:: mvpy.crossvalidation.kfold
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.crossvalidation.repeatedkfold module
+-----------------------------------------
+
+.. automodule:: mvpy.crossvalidation.repeatedkfold
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.crossvalidation.repeatedstratifiedkfold module
+---------------------------------------------------
+
+.. automodule:: mvpy.crossvalidation.repeatedstratifiedkfold
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.crossvalidation.stratifiedkfold module
+-------------------------------------------
+
+.. automodule:: mvpy.crossvalidation.stratifiedkfold
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.crossvalidation.validator module
+-------------------------------------
+
+.. automodule:: mvpy.crossvalidation.validator
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: mvpy.crossvalidation
+   :members:
+   :undoc-members:
+   :show-inheritance:

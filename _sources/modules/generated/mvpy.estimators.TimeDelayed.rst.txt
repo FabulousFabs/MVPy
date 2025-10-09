@@ -1,0 +1,13 @@
+﻿TimeDelayed
+===========
+
+.. currentmodule:: mvpy.estimators
+
+.. autoclass:: TimeDelayed
+   :members:
+   :inherited-members:
+   :special-members: __call__
+
+.. minigallery:: mvpy.estimators.TimeDelayed mvpy.estimators.TimeDelayed.__delattr__ mvpy.estimators.TimeDelayed.__dir__ mvpy.estimators.TimeDelayed.__eq__ mvpy.estimators.TimeDelayed.__format__ mvpy.estimators.TimeDelayed.__ge__ mvpy.estimators.TimeDelayed.__getattribute__ mvpy.estimators.TimeDelayed.__gt__ mvpy.estimators.TimeDelayed.__hash__ mvpy.estimators.TimeDelayed.__init__ mvpy.estimators.TimeDelayed.__le__ mvpy.estimators.TimeDelayed.__lt__ mvpy.estimators.TimeDelayed.__ne__ mvpy.estimators.TimeDelayed.__new__ mvpy.estimators.TimeDelayed.__reduce__ mvpy.estimators.TimeDelayed.__reduce_ex__ mvpy.estimators.TimeDelayed.__setattr__ mvpy.estimators.TimeDelayed.__sizeof__ mvpy.estimators.TimeDelayed.__str__ mvpy.estimators.TimeDelayed.__subclasshook__ mvpy.estimators.TimeDelayed.clone mvpy.estimators.TimeDelayed.fit mvpy.estimators.TimeDelayed.predict 
+   :add-heading: Gallery examples
+   :heading-level: -

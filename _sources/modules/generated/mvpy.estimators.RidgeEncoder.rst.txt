@@ -1,0 +1,13 @@
+﻿RidgeEncoder
+============
+
+.. currentmodule:: mvpy.estimators
+
+.. autoclass:: RidgeEncoder
+   :members:
+   :inherited-members:
+   :special-members: __call__
+
+.. minigallery:: mvpy.estimators.RidgeEncoder mvpy.estimators.RidgeEncoder.__delattr__ mvpy.estimators.RidgeEncoder.__dir__ mvpy.estimators.RidgeEncoder.__eq__ mvpy.estimators.RidgeEncoder.__format__ mvpy.estimators.RidgeEncoder.__ge__ mvpy.estimators.RidgeEncoder.__getattribute__ mvpy.estimators.RidgeEncoder.__gt__ mvpy.estimators.RidgeEncoder.__hash__ mvpy.estimators.RidgeEncoder.__init__ mvpy.estimators.RidgeEncoder.__le__ mvpy.estimators.RidgeEncoder.__lt__ mvpy.estimators.RidgeEncoder.__ne__ mvpy.estimators.RidgeEncoder.__new__ mvpy.estimators.RidgeEncoder.__reduce__ mvpy.estimators.RidgeEncoder.__reduce_ex__ mvpy.estimators.RidgeEncoder.__setattr__ mvpy.estimators.RidgeEncoder.__sizeof__ mvpy.estimators.RidgeEncoder.__str__ mvpy.estimators.RidgeEncoder.__subclasshook__ mvpy.estimators.RidgeEncoder.clone mvpy.estimators.RidgeEncoder.fit mvpy.estimators.RidgeEncoder.predict 
+   :add-heading: Gallery examples
+   :heading-level: -

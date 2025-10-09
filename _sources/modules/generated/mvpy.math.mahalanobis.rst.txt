@@ -1,0 +1,10 @@
+﻿mahalanobis
+===========
+
+.. currentmodule:: mvpy.math
+
+.. autofunction:: mahalanobis
+
+.. minigallery:: mvpy.math.mahalanobis
+   :add-heading: Gallery examples
+   :heading-level: -

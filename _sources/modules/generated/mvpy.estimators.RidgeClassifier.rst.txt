@@ -1,0 +1,13 @@
+﻿RidgeClassifier
+===============
+
+.. currentmodule:: mvpy.estimators
+
+.. autoclass:: RidgeClassifier
+   :members:
+   :inherited-members:
+   :special-members: __call__
+
+.. minigallery:: mvpy.estimators.RidgeClassifier mvpy.estimators.RidgeClassifier.__delattr__ mvpy.estimators.RidgeClassifier.__dir__ mvpy.estimators.RidgeClassifier.__eq__ mvpy.estimators.RidgeClassifier.__format__ mvpy.estimators.RidgeClassifier.__ge__ mvpy.estimators.RidgeClassifier.__getattribute__ mvpy.estimators.RidgeClassifier.__gt__ mvpy.estimators.RidgeClassifier.__hash__ mvpy.estimators.RidgeClassifier.__init__ mvpy.estimators.RidgeClassifier.__le__ mvpy.estimators.RidgeClassifier.__lt__ mvpy.estimators.RidgeClassifier.__ne__ mvpy.estimators.RidgeClassifier.__new__ mvpy.estimators.RidgeClassifier.__reduce__ mvpy.estimators.RidgeClassifier.__reduce_ex__ mvpy.estimators.RidgeClassifier.__setattr__ mvpy.estimators.RidgeClassifier.__sizeof__ mvpy.estimators.RidgeClassifier.__str__ mvpy.estimators.RidgeClassifier.__subclasshook__ mvpy.estimators.RidgeClassifier.clone mvpy.estimators.RidgeClassifier.copy mvpy.estimators.RidgeClassifier.decision_function mvpy.estimators.RidgeClassifier.fit mvpy.estimators.RidgeClassifier.predict mvpy.estimators.RidgeClassifier.predict_proba 
+   :add-heading: Gallery examples
+   :heading-level: -

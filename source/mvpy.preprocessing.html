@@ -1,0 +1,1501 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>mvpy.preprocessing package &#8212; MVPy</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/colors.css?v=cc94ab7d" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/custom.css?v=eec3fc85" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'source/mvpy.preprocessing';</script>
+    <script src="../_static/scripts/dropdown.js?v=5b9cef8c"></script>
+    <script src="../_static/scripts/version-switcher.js?v=6ebe4089"></script>
+    <script src="../_static/scripts/sg_plotly_resize.js?v=dc4a1e18"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/mvpy-icon.png" class="logo__image only-light" alt=""/>
+    <img src="../_static/mvpy-icon.png" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">MVPy</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../auto_examples/index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/FabulousFabs/mvpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../auto_examples/index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/FabulousFabs/mvpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="mvpy.crossvalidation.html">mvpy.crossvalidation package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mvpy.dataset.html">mvpy.dataset package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mvpy.estimators.html">mvpy.estimators package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mvpy.math.html">mvpy.math package</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">mvpy.preprocessing package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mvpy.signal.html">mvpy.signal package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mvpy.utilities.html">mvpy.utilities package</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">mvpy.preprocessing package</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="mvpy-preprocessing-package">
+<h1>mvpy.preprocessing package<a class="headerlink" href="#mvpy-preprocessing-package" title="Link to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-mvpy.preprocessing.clamp">
+<span id="mvpy-preprocessing-clamp-module"></span><h2>mvpy.preprocessing.clamp module<a class="headerlink" href="#module-mvpy.preprocessing.clamp" title="Link to this heading">#</a></h2>
+<p>A collection of estimators for clamping data.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvpy.preprocessing.clamp.Clamp">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.preprocessing.clamp.</span></span><span class="sig-name descname"><span class="pre">Clamp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lower</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'iqr'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-09</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dims</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/clamp.py#L693"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.clamp.Clamp" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></p>
+<p>Implements a clamp to handle extreme values.</p>
+<p>Generally, this will clamp data <span class="math notranslate nohighlight">\(X\)</span> to lower and upper bounds
+defined by <code class="xref py py-attr docutils literal notranslate"><span class="pre">lower</span></code> and 
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">upper</span></code> whenever they are exceeded.</p>
+<p>This can be useful for dealing with outliers: For example, in M-/EGG 
+data that was minimally preprocessed, this may be used to curb EOG 
+artifacts easily without removing time points or trials.</p>
+<p>By default, both <code class="xref py py-attr docutils literal notranslate"><span class="pre">lower</span></code> and 
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">upper</span></code> will be <code class="docutils literal notranslate"><span class="pre">None</span></code>. This
+constitutes a special case where the bounds will then be fit directly
+to the data. There are three different ways of fitting bounds, controlled
+by <code class="xref py py-attr docutils literal notranslate"><span class="pre">method</span></code>:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">iqr</span></code>: This will compute the inter-quartile range <span class="math notranslate nohighlight">\([0.25, 0.75]\)</span> and clamp data where <span class="math notranslate nohighlight">\(X\notin [\textrm{median}(X) - k L, \textrm{median}(X) + k U]\)</span>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">quantile</span></code>: This will clamp data outside of the quantiles given by <span class="math notranslate nohighlight">\([k, 1 - k]\)</span>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mad</span></code>: This will clamp data at <span class="math notranslate nohighlight">\(\textrm{median}(X)\pm k \textrm{MAD}\)</span> where MAD are median absolute deviations.</p></li>
+</ol>
+<p>If only one of the two bounds is <code class="docutils literal notranslate"><span class="pre">None</span></code> instead, the unspecified 
+bound will be interpreted as meaning no clamping in this direction
+to be desired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>lower</strong><span class="classifier">Optional[float], default=None</span></dt><dd><p>Lower bound for clamping. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, no lower bound is applied.</p>
+</dd>
+<dt><strong>upper</strong><span class="classifier">Optional[float], default=None</span></dt><dd><p>Upper bound for clamping, If <code class="docutils literal notranslate"><span class="pre">None</span></code>, no upper bound is applied.</p>
+</dd>
+<dt><strong>method</strong><span class="classifier">{‘iqr’, ‘quantile’, ‘mad’}, default=’iqr’</span></dt><dd><p>If both <code class="xref py py-attr docutils literal notranslate"><span class="pre">lower</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">upper</span></code> are <code class="docutils literal notranslate"><span class="pre">None</span></code>, what method to use for fitting bounds?</p>
+</dd>
+<dt><strong>k</strong><span class="classifier">Optional[float], default=None</span></dt><dd><p>For <code class="xref py py-attr docutils literal notranslate"><span class="pre">method</span></code> <code class="docutils literal notranslate"><span class="pre">iqr</span></code>, scale the <span class="math notranslate nohighlight">\([0.25, 0.75]\)</span> quantiles by <span class="math notranslate nohighlight">\(k\)</span> (with <code class="docutils literal notranslate"><span class="pre">default=1.5</span></code>). 
+For <code class="xref py py-attr docutils literal notranslate"><span class="pre">method</span></code> <code class="docutils literal notranslate"><span class="pre">quantile</span></code>, clamp tails outside <span class="math notranslate nohighlight">\([k, 1 - k]\)</span> (with <code class="docutils literal notranslate"><span class="pre">default</span> <span class="pre">=</span> <span class="pre">0.05</span></code>).
+For <code class="xref py py-attr docutils literal notranslate"><span class="pre">method</span></code> <code class="docutils literal notranslate"><span class="pre">mad</span></code>, scale the median absolute deviation by <span class="math notranslate nohighlight">\(k\)</span> (with <code class="docutils literal notranslate"><span class="pre">default=3.0</span></code>).
+Otherwise unused.</p>
+</dd>
+<dt><strong>eps</strong><span class="classifier">float, default=1e-9</span></dt><dd><p>When checking span correctness, epsilon to apply as jitter.</p>
+</dd>
+<dt><strong>dims</strong><span class="classifier">int, list or tuple of ints, default=None</span></dt><dd><p>The dimensions over which to scale (None for first dimension).</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>lower</strong><span class="classifier">Optional[float], default=None</span></dt><dd><p>Lower bound for clamping. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, no lower bound is applied.</p>
+</dd>
+<dt><strong>upper</strong><span class="classifier">Optional[float], default=None</span></dt><dd><p>Upper bound for clamping, If <code class="docutils literal notranslate"><span class="pre">None</span></code>, no upper bound is applied.</p>
+</dd>
+<dt><strong>method</strong><span class="classifier">{‘iqr’, ‘quantile’, ‘mad’}, default=’iqr’</span></dt><dd><p>If both <code class="xref py py-attr docutils literal notranslate"><span class="pre">lower</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">upper</span></code> are <code class="docutils literal notranslate"><span class="pre">None</span></code>, what method to use for fitting bounds?</p>
+</dd>
+<dt><strong>k</strong><span class="classifier">Optional[float], default=None</span></dt><dd><p>For <code class="xref py py-attr docutils literal notranslate"><span class="pre">method</span></code> <code class="docutils literal notranslate"><span class="pre">iqr</span></code>, scale the <span class="math notranslate nohighlight">\([0.25, 0.75]\)</span> quantiles by <span class="math notranslate nohighlight">\(k\)</span> (with <code class="docutils literal notranslate"><span class="pre">default=1.5</span></code>). 
+For <code class="xref py py-attr docutils literal notranslate"><span class="pre">method</span></code> <code class="docutils literal notranslate"><span class="pre">quantile</span></code>, clamp tails outside <span class="math notranslate nohighlight">\([k, 1 - k]\)</span> (with <code class="docutils literal notranslate"><span class="pre">default</span> <span class="pre">=</span> <span class="pre">0.05</span></code>).
+For <code class="xref py py-attr docutils literal notranslate"><span class="pre">method</span></code> <code class="docutils literal notranslate"><span class="pre">mad</span></code>, scale the median absolute deviation by <span class="math notranslate nohighlight">\(k\)</span> (with <code class="docutils literal notranslate"><span class="pre">default=3.0</span></code>).
+Otherwise unused.</p>
+</dd>
+<dt><strong>eps</strong><span class="classifier">float, default=1e-9</span></dt><dd><p>When checking span correctness, epsilon to apply as jitter.</p>
+</dd>
+<dt><strong>dims</strong><span class="classifier">int, list or tuple of ints, default=None</span></dt><dd><p>The dimensions over which to scale (None for first dimension).</p>
+</dd>
+<dt><strong>lower_</strong><span class="classifier">float | np.ndarray | torch.Tensor, default=None</span></dt><dd><p>Lower bound for clamping, either prespecified or fitted.</p>
+</dd>
+<dt><strong>upper_</strong><span class="classifier">float | np.ndarray | torch.Tensor, default=None</span></dt><dd><p>Upper bound for clamping, either prespecified or fitted.</p>
+</dd>
+<dt><strong>dims_</strong><span class="classifier">tuple[int], default=None</span></dt><dd><p>Tuple specifying the dimensions to scale over.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="../modules/generated/mvpy.preprocessing.Scaler.html#mvpy.preprocessing.Scaler" title="mvpy.preprocessing.Scaler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mvpy.preprocessing.Scaler</span></code></a>, <a class="reference internal" href="../modules/generated/mvpy.preprocessing.RobustScaler.html#mvpy.preprocessing.RobustScaler" title="mvpy.preprocessing.RobustScaler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mvpy.preprocessing.RobustScaler</span></code></a></dt><dd><p>Complementary scalers.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clamp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">[</span><span class="mi">500</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+<span class="go">tensor([10.0000,  3.9375,  3.2070,  3.0591,  3.0165])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Z</span> <span class="o">=</span> <span class="n">Clamp</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Z</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+<span class="go">tensor([2.6926, 2.7263, 2.6343, 2.6616, 2.5378])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Z</span> <span class="o">=</span> <span class="n">Clamp</span><span class="p">(</span><span class="n">upper</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Z</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+<span class="go">tensor([5.0000, 3.9375, 3.2070, 3.0591, 3.0165])</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.clamp.Clamp.clone">
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mvpy.preprocessing.clamp.Clamp" title="mvpy.preprocessing.clamp.Clamp"><span class="pre">Clamp</span></a></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/clamp.py#L970"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.clamp.Clamp.clone" title="Link to this definition">#</a></dt>
+<dd><p>Obtain a clone of this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>clamp</strong><span class="classifier">Clamp</span></dt><dd><p>The cloned clamp.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.clamp.Clamp.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mvpy.preprocessing.clamp.Clamp" title="mvpy.preprocessing.clamp.Clamp"><span class="pre">Clamp</span></a></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/clamp.py#L988"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.clamp.Clamp.copy" title="Link to this definition">#</a></dt>
+<dd><p>Obtain a copy of this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>clamp</strong><span class="classifier">Clamp</span></dt><dd><p>The copied clamp.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.clamp.Clamp.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mvpy.preprocessing.clamp.Clamp" title="mvpy.preprocessing.clamp.Clamp"><span class="pre">Clamp</span></a></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/clamp.py#L830"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.clamp.Clamp.fit" title="Link to this definition">#</a></dt>
+<dd><p>Fit the clamp.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The data of arbitrary shape.</p>
+</dd>
+<dt><strong>args</strong><span class="classifier">Any</span></dt><dd><p>Additional arguments.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>clamp</strong><span class="classifier">sklearn.base.BaseEstimator</span></dt><dd><p>The fitted clamp.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.clamp.Clamp.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/clamp.py#L909"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.clamp.Clamp.fit_transform" title="Link to this definition">#</a></dt>
+<dd><p>Fit and transform the data in one step.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The data of shape <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
+</dd>
+<dt><strong>args</strong><span class="classifier">Any</span></dt><dd><p>Additional arguments.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>Z</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The transformed data of shape <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.clamp.Clamp.inverse_transform">
+<span class="sig-name descname"><span class="pre">inverse_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/clamp.py#L880"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.clamp.Clamp.inverse_transform" title="Link to this definition">#</a></dt>
+<dd><p>Invert the transform of the data.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The data of shape <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
+</dd>
+<dt><strong>args</strong><span class="classifier">Any</span></dt><dd><p>Additional arguments.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The inverse transformed data of shape <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Clamping cannot be inverse transformed. Consequently,
+this returns the clamped values in <span class="math notranslate nohighlight">\(X\)</span> as is.</p>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.clamp.Clamp.to_numpy">
+<span class="sig-name descname"><span class="pre">to_numpy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Clamp_numpy</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/clamp.py#L952"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.clamp.Clamp.to_numpy" title="Link to this definition">#</a></dt>
+<dd><p>Select the numpy backend. Note that this cannot be called for conversion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>clamp</strong><span class="classifier">_Clamp_numpy</span></dt><dd><p>The clamp using the numpy backend.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.clamp.Clamp.to_torch">
+<span class="sig-name descname"><span class="pre">to_torch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Clamp_torch</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/clamp.py#L934"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.clamp.Clamp.to_torch" title="Link to this definition">#</a></dt>
+<dd><p>Select the torch backend. Note that this cannot be called for conversion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>clamp</strong><span class="classifier">_Clamp_torch</span></dt><dd><p>The clamp using the torch backend.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.clamp.Clamp.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/clamp.py#L855"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.clamp.Clamp.transform" title="Link to this definition">#</a></dt>
+<dd><p>Transform the data using the clamp.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The data of shape <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
+</dd>
+<dt><strong>args</strong><span class="classifier">Any</span></dt><dd><p>Additional arguments.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>Z</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The transformed data of shape <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p>Operator interface.</p>
+<p>Configure global settings and get information about the working environment.</p>
+<p>The torch package contains data structures for multi-dimensional</p>
+</section>
+<section id="module-mvpy.preprocessing.labelbinariser">
+<span id="mvpy-preprocessing-labelbinariser-module"></span><h2>mvpy.preprocessing.labelbinariser module<a class="headerlink" href="#module-mvpy.preprocessing.labelbinariser" title="Link to this heading">#</a></h2>
+<p>A collection of estimators for binarising label data.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvpy.preprocessing.labelbinariser.LabelBinariser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.preprocessing.labelbinariser.</span></span><span class="sig-name descname"><span class="pre">LabelBinariser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">neg_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/labelbinariser.py#L446"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.labelbinariser.LabelBinariser" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></p>
+<p>Class to create and handle multiclass and multifeature one-hot encodings.</p>
+<p>For multiclass inputs, this produces a simple one hot encoding of shape <code class="docutils literal notranslate"><span class="pre">(n_trials,</span> <span class="pre">n_classes)</span></code>.</p>
+<p>For multifeature inputs, this produces a vectorised one hot encoding of shape <code class="docutils literal notranslate"><span class="pre">(n_trials,</span> <span class="pre">n_features</span> <span class="pre">*</span> <span class="pre">n_classes)</span></code> where there is one hot class per feature.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>neg_label</strong><span class="classifier">int, default=0</span></dt><dd><p>Label to use for negatives.</p>
+</dd>
+<dt><strong>pos_label</strong><span class="classifier">int, default=1</span></dt><dd><p>Label to use for positives.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>neg_label</strong><span class="classifier">int, default=0</span></dt><dd><p>Label to use for negatives.</p>
+</dd>
+<dt><strong>pos_label</strong><span class="classifier">int, default=1</span></dt><dd><p>Label to use for positives.</p>
+</dd>
+<dt><strong>n_features_</strong><span class="classifier">int</span></dt><dd><p>Number of unique features in y of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_features)</span></code>.</p>
+</dd>
+<dt><strong>n_classes_</strong><span class="classifier">List[int]</span></dt><dd><p>Number of unique classes per feature.</p>
+</dd>
+<dt><strong>labels_</strong><span class="classifier">List[List[Any]]</span></dt><dd><p>List including lists of original labels in y.</p>
+</dd>
+<dt><strong>classes_</strong><span class="classifier">List[List[Any]]</span></dt><dd><p>List including lists of class identities in y.</p>
+</dd>
+<dt><strong>N_</strong><span class="classifier">int | np.ndarray | torch.Tensor</span></dt><dd><p>Total number of classes (across features).</p>
+</dd>
+<dt><strong>C_</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Offsets for each unique feature in one-hot matrix of shape <code class="docutils literal notranslate"><span class="pre">(n_features,)</span></code>.</p>
+</dd>
+<dt><strong>map_L_to_C_</strong><span class="classifier">List[Dict[Any, int]]</span></dt><dd><p>Lists containing each label-&gt;class mapping per feature.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Note that this always creates <code class="docutils literal notranslate"><span class="pre">n_classes</span></code> in one-hot encodings, even when <code class="docutils literal notranslate"><span class="pre">n_classes=2</span></code>.
+This is because, in some situations, it can be easier to handle the data when all classes
+are explicitly represented in the data.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Only the numpy backend supports string labels, as torch does not offer support
+for string type tensors. To avoid issues arising from this, stick to numerical
+labels unless you are certain to run analyses using only the numpy backend.</p>
+</div>
+<p class="rubric">Examples</p>
+<p>First, let’s consider one feature that has three classes.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.estimators</span><span class="w"> </span><span class="kn">import</span> <span class="n">LabelBinariser</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">label</span> <span class="o">=</span> <span class="n">LabelBinariser</span><span class="p">()</span><span class="o">.</span><span class="n">to_torch</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">L</span> <span class="o">=</span> <span class="n">label</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H</span> <span class="o">=</span> <span class="n">label</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span>
+<span class="go">tensor([0, 1, 2, 1, 2])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span>
+<span class="go">tensor([[1, 0, 0],</span>
+<span class="go">        [0, 1, 0],</span>
+<span class="go">        [0, 0, 1],</span>
+<span class="go">        [0, 1, 0],</span>
+<span class="go">        [0, 0, 1]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span>
+<span class="go">tensor([0, 1, 2, 1, 2])</span>
+</pre></div>
+</div>
+<p>Second, let’s look at two features that have a different number of classes each.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.estimators</span><span class="w"> </span><span class="kn">import</span> <span class="n">LabelBinariser</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">label</span> <span class="o">=</span> <span class="n">LabelBinariser</span><span class="p">()</span><span class="o">.</span><span class="n">to_torch</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="p">(</span><span class="mi">50</span><span class="p">,)),</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="p">(</span><span class="mi">50</span><span class="p">,))),</span> <span class="n">dim</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">L</span> <span class="o">=</span> <span class="n">label</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H</span> <span class="o">=</span> <span class="n">label</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span>
+<span class="go">tensor([[10, 21],</span>
+<span class="go">        [10, 20],</span>
+<span class="go">        [11, 21],</span>
+<span class="go">        [12, 21],</span>
+<span class="go">        [10, 20]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span>
+<span class="go">tensor([[1, 0, 0, 0, 1],</span>
+<span class="go">        [1, 0, 0, 1, 0],</span>
+<span class="go">        [0, 1, 0, 0, 1],</span>
+<span class="go">        [0, 0, 1, 0, 1],</span>
+<span class="go">        [1, 0, 0, 1, 0]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span>
+<span class="go">tensor([[10, 21],</span>
+<span class="go">        [10, 20],</span>
+<span class="go">        [11, 21],</span>
+<span class="go">        [12, 21],</span>
+<span class="go">        [10, 20]])</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.labelbinariser.LabelBinariser.clone">
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mvpy.preprocessing.labelbinariser.LabelBinariser" title="mvpy.preprocessing.labelbinariser.LabelBinariser"><span class="pre">LabelBinariser</span></a></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/labelbinariser.py#L672"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.labelbinariser.LabelBinariser.clone" title="Link to this definition">#</a></dt>
+<dd><p>Obtain a clone of this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>binariser</strong><span class="classifier">mvpy.estimators.LabelBinariser</span></dt><dd><p>The clone.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.labelbinariser.LabelBinariser.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mvpy.preprocessing.labelbinariser.LabelBinariser" title="mvpy.preprocessing.labelbinariser.LabelBinariser"><span class="pre">LabelBinariser</span></a></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/labelbinariser.py#L683"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.labelbinariser.LabelBinariser.copy" title="Link to this definition">#</a></dt>
+<dd><p>Obtain a copy of this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>binariser</strong><span class="classifier">mvpy.estimators.LabelBinariser</span></dt><dd><p>The copy.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.labelbinariser.LabelBinariser.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">BaseEstimator</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/labelbinariser.py#L578"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.labelbinariser.LabelBinariser.fit" title="Link to this definition">#</a></dt>
+<dd><p>Fit the binariser.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>y</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The data of shape <code class="docutils literal notranslate"><span class="pre">(n_samples[,</span> <span class="pre">n_features])</span></code>.</p>
+</dd>
+<dt><strong>args</strong><span class="classifier">Any</span></dt><dd><p>Additional arguments.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>binariser</strong><span class="classifier">sklearn.base.BaseEstimator</span></dt><dd><p>The fitted binariser.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.labelbinariser.LabelBinariser.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/labelbinariser.py#L632"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.labelbinariser.LabelBinariser.fit_transform" title="Link to this definition">#</a></dt>
+<dd><p>Fit and transform the data in one step.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>y</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The data of shape <code class="docutils literal notranslate"><span class="pre">(n_samples[,</span> <span class="pre">n_features])</span></code>.</p>
+</dd>
+<dt><strong>args</strong><span class="classifier">Any</span></dt><dd><p>Additional arguments.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>L</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The binarised data of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">[n_features</span> <span class="pre">*</span> <span class="pre">]n_classes)</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.labelbinariser.LabelBinariser.inverse_transform">
+<span class="sig-name descname"><span class="pre">inverse_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/labelbinariser.py#L614"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.labelbinariser.LabelBinariser.inverse_transform" title="Link to this definition">#</a></dt>
+<dd><p>Obtain labels from transformed data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>L</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The binarised data of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">[n_features</span> <span class="pre">*</span> <span class="pre">]n_classes)</span></code>.</p>
+</dd>
+<dt><strong>args</strong><span class="classifier">Any</span></dt><dd><p>Additional arguments.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>y</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The labels of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_features)</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.labelbinariser.LabelBinariser.to_numpy">
+<span class="sig-name descname"><span class="pre">to_numpy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/labelbinariser.py#L661"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.labelbinariser.LabelBinariser.to_numpy" title="Link to this definition">#</a></dt>
+<dd><p>Select the numpy binariser. Note that this cannot be called for conversion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>binariser</strong><span class="classifier">mvpy.estimators._LabelBinariser_numpy</span></dt><dd><p>The numpy binariser.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.labelbinariser.LabelBinariser.to_torch">
+<span class="sig-name descname"><span class="pre">to_torch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/labelbinariser.py#L650"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.labelbinariser.LabelBinariser.to_torch" title="Link to this definition">#</a></dt>
+<dd><p>Select the torch binariser. Note that this cannot be called for conversion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>binariser</strong><span class="classifier">mvpy.estimators._LabelBinariser_torch</span></dt><dd><p>The torch binariser.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.labelbinariser.LabelBinariser.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/labelbinariser.py#L596"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.labelbinariser.LabelBinariser.transform" title="Link to this definition">#</a></dt>
+<dd><p>Transform the data based on fitted binariser.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>y</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The data of shape <code class="docutils literal notranslate"><span class="pre">(n_samples[,</span> <span class="pre">n_features])</span></code>.</p>
+</dd>
+<dt><strong>args</strong><span class="classifier">Any</span></dt><dd><p>Additional arguments.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>L</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The binarised data of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">[n_features</span> <span class="pre">*</span> <span class="pre">]n_classes)</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p>Configure global settings and get information about the working environment.</p>
+<p>The torch package contains data structures for multi-dimensional</p>
+</section>
+<section id="module-mvpy.preprocessing.robustscaler">
+<span id="mvpy-preprocessing-robustscaler-module"></span><h2>mvpy.preprocessing.robustscaler module<a class="headerlink" href="#module-mvpy.preprocessing.robustscaler" title="Link to this heading">#</a></h2>
+<p>A collection of estimators for robustly scaling data.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvpy.preprocessing.robustscaler.RobustScaler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.preprocessing.robustscaler.</span></span><span class="sig-name descname"><span class="pre">RobustScaler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">with_centering</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_scaling</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantile_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(25.0,</span> <span class="pre">75.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dims</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/robustscaler.py#L568"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.robustscaler.RobustScaler" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></p>
+<p>Implements a robust scaler that is invariant to outliers.</p>
+<p>By default, this scaler removes the median before scaling the data
+according to the interquartile range <span class="math notranslate nohighlight">\([0.25, 0.75]\)</span>. This is
+useful because, unlike <a class="reference internal" href="../modules/generated/mvpy.preprocessing.Scaler.html#mvpy.preprocessing.Scaler" title="mvpy.preprocessing.Scaler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Scaler</span></code></a>, it
+means that <a class="reference internal" href="../modules/generated/mvpy.preprocessing.RobustScaler.html#mvpy.preprocessing.RobustScaler" title="mvpy.preprocessing.RobustScaler"><code class="xref py py-class docutils literal notranslate"><span class="pre">RobustScaler</span></code></a> is robust 
+to outliers that might affect a <a class="reference internal" href="../modules/generated/mvpy.preprocessing.Scaler.html#mvpy.preprocessing.Scaler" title="mvpy.preprocessing.Scaler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Scaler</span></code></a> 
+poorly.</p>
+<p>Both centering and scaling are optional and can be turned on or 
+off using <code class="xref py py-attr docutils literal notranslate"><span class="pre">with_centering</span></code>
+and <code class="xref py py-attr docutils literal notranslate"><span class="pre">with_scaling</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>with_centering</strong><span class="classifier">bool, default=True</span></dt><dd><p>If True, center the data before scaling.</p>
+</dd>
+<dt><strong>with_scaling</strong><span class="classifier">bool, default=True</span></dt><dd><p>If True, scale the data according to the quantiles.</p>
+</dd>
+<dt><strong>quantile_range</strong><span class="classifier">tuple[float, float], default=(25.0, 75.0)</span></dt><dd><p>Tuple describing the quantiles.</p>
+</dd>
+<dt><strong>dims</strong><span class="classifier">int, list or tuple of ints, default=None</span></dt><dd><p>The dimensions over which to scale (<code class="docutils literal notranslate"><span class="pre">None</span></code> for first dimension).</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>with_centering</strong><span class="classifier">bool, default=True</span></dt><dd><p>If True, center the data before scaling.</p>
+</dd>
+<dt><strong>with_scaling</strong><span class="classifier">bool, default=True</span></dt><dd><p>If True, scale the data according to the quantiles.</p>
+</dd>
+<dt><strong>quantile_range</strong><span class="classifier">tuple[float, float], default=(25.0, 75.0)</span></dt><dd><p>Tuple describing the quantiles.</p>
+</dd>
+<dt><strong>dims</strong><span class="classifier">int, list or tuple of ints, default=None</span></dt><dd><p>The dimensions over which to scale (<code class="docutils literal notranslate"><span class="pre">None</span></code> for first dimension).</p>
+</dd>
+<dt><strong>dims_</strong><span class="classifier">tuple[int], default=None</span></dt><dd><p>Tuple specifying the dimensions to scale over.</p>
+</dd>
+<dt><strong>centre_</strong><span class="classifier">torch.Tensor, default=None</span></dt><dd><p>The centre of each feature of shape <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
+</dd>
+<dt><strong>scale_</strong><span class="classifier">torch.Tensor, default=None</span></dt><dd><p>The scale of each feature of shape <a href="#id1"><span class="problematic" id="id2">``</span></a>X`.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="../modules/generated/mvpy.preprocessing.Scaler.html#mvpy.preprocessing.Scaler" title="mvpy.preprocessing.Scaler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mvpy.preprocessing.Scaler</span></code></a></dt><dd><p>An alternative scaler that normalises data to zero mean and unit variance.</p>
+</dd>
+<dt><a class="reference internal" href="../modules/generated/mvpy.preprocessing.Clamp.html#mvpy.preprocessing.Clamp" title="mvpy.preprocessing.Clamp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mvpy.preprocessing.Clamp</span></code></a></dt><dd><p>A complementary class that implements clamping data at specific values.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">RobustScaler</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scaler</span> <span class="o">=</span> <span class="n">RobustScaler</span><span class="p">()</span><span class="o">.</span><span class="n">to_torch</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">[</span><span class="mi">500</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">tensor([32.9122,  9.9615, 10.1481, 10.1058,  9.7468])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Z</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Z</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">tensor([2.7348, 0.7351, 0.7464, 0.7609, 0.7154])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">tensor([32.9122,  9.9615, 10.1481, 10.1058,  9.7468])</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.robustscaler.RobustScaler.clone">
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mvpy.preprocessing.robustscaler.RobustScaler" title="mvpy.preprocessing.robustscaler.RobustScaler"><span class="pre">RobustScaler</span></a></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/robustscaler.py#L805"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.robustscaler.RobustScaler.clone" title="Link to this definition">#</a></dt>
+<dd><p>Obtain a clone of this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>scaler</strong><span class="classifier">RobustScaler</span></dt><dd><p>The cloned robust scaler.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.robustscaler.RobustScaler.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mvpy.preprocessing.robustscaler.RobustScaler" title="mvpy.preprocessing.robustscaler.RobustScaler"><span class="pre">RobustScaler</span></a></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/robustscaler.py#L821"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.robustscaler.RobustScaler.copy" title="Link to this definition">#</a></dt>
+<dd><p>Obtain a copy of this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>scaler</strong><span class="classifier">RobustScaler</span></dt><dd><p>The copied robust scaler.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.robustscaler.RobustScaler.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mvpy.preprocessing.robustscaler.RobustScaler" title="mvpy.preprocessing.robustscaler.RobustScaler"><span class="pre">RobustScaler</span></a></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/robustscaler.py#L681"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.robustscaler.RobustScaler.fit" title="Link to this definition">#</a></dt>
+<dd><p>Fit the scaler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The data of arbitrary shape.</p>
+</dd>
+<dt><strong>args</strong><span class="classifier">Any</span></dt><dd><p>Additional arguments.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>scaler</strong><span class="classifier">sklearn.base.BaseEstimator</span></dt><dd><p>The fitted scaler.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.robustscaler.RobustScaler.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/robustscaler.py#L750"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.robustscaler.RobustScaler.fit_transform" title="Link to this definition">#</a></dt>
+<dd><p>Fit and transform the data in one step.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The data of shape <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
+</dd>
+<dt><strong>args</strong><span class="classifier">Any</span></dt><dd><p>Additional arguments.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>Z</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The transformed data of shape <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.robustscaler.RobustScaler.inverse_transform">
+<span class="sig-name descname"><span class="pre">inverse_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/robustscaler.py#L727"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.robustscaler.RobustScaler.inverse_transform" title="Link to this definition">#</a></dt>
+<dd><p>Invert the transform of the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The data of shape <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
+</dd>
+<dt><strong>args</strong><span class="classifier">Any</span></dt><dd><p>Additional arguments.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The inverse transformed data of shape <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.robustscaler.RobustScaler.to_numpy">
+<span class="sig-name descname"><span class="pre">to_numpy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_RobustScaler_numpy</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/robustscaler.py#L789"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.robustscaler.RobustScaler.to_numpy" title="Link to this definition">#</a></dt>
+<dd><p>Select the numpy backend. Note that this cannot be called for conversion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>scaler</strong><span class="classifier">_RobustScaler_numpy</span></dt><dd><p>The robust scaler using the numpy backend.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.robustscaler.RobustScaler.to_torch">
+<span class="sig-name descname"><span class="pre">to_torch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_RobustScaler_torch</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/robustscaler.py#L773"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.robustscaler.RobustScaler.to_torch" title="Link to this definition">#</a></dt>
+<dd><p>Select the torch backend. Note that this cannot be called for conversion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>scaler</strong><span class="classifier">_RobustScaler_torch</span></dt><dd><p>The robust scaler using the torch backend.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.robustscaler.RobustScaler.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/robustscaler.py#L704"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.robustscaler.RobustScaler.transform" title="Link to this definition">#</a></dt>
+<dd><p>Transform the data using scaler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The data of shape <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
+</dd>
+<dt><strong>args</strong><span class="classifier">Any</span></dt><dd><p>Additional arguments.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>Z</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The transformed data of shape <code class="docutils literal notranslate"><span class="pre">X</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p>This module provides access to the mathematical functions</p>
+<p>Operator interface.</p>
+<p>Configure global settings and get information about the working environment.</p>
+<p>The torch package contains data structures for multi-dimensional</p>
+</section>
+<section id="module-mvpy.preprocessing.scaler">
+<span id="mvpy-preprocessing-scaler-module"></span><h2>mvpy.preprocessing.scaler module<a class="headerlink" href="#module-mvpy.preprocessing.scaler" title="Link to this heading">#</a></h2>
+<p>A collection of estimators for scaling data.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvpy.preprocessing.scaler.Scaler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.preprocessing.scaler.</span></span><span class="sig-name descname"><span class="pre">Scaler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">with_mean</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_std</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dims</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/scaler.py#L461"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.scaler.Scaler" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></p>
+<p>A standard scaler akin to sklearn.preprocessing.StandardScaler. See notes for some differences.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>with_mean</strong><span class="classifier">bool, default=True</span></dt><dd><p>If True, center the data before scaling.</p>
+</dd>
+<dt><strong>with_std</strong><span class="classifier">bool, default=True</span></dt><dd><p>If True, scale the data to unit variance.</p>
+</dd>
+<dt><strong>dims</strong><span class="classifier">int, list or tuple of ints, default=None</span></dt><dd><p>The dimensions over which to scale (None for first dimension).</p>
+</dd>
+<dt><strong>copy</strong><span class="classifier">bool, default=False</span></dt><dd><p>If True, the data will be copied.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>shape_</strong><span class="classifier">tuple</span></dt><dd><p>The shape of the data.</p>
+</dd>
+<dt><strong>mean_</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>The mean of the data.</p>
+</dd>
+<dt><strong>var_</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>The variance of the data.</p>
+</dd>
+<dt><strong>scale_</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>The scale of the data.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>rac{x - mu}{sigma}</p>
+<blockquote>
+<div><p>where <span class="math notranslate nohighlight">\(\mu\)</span> is the mean and <span class="math notranslate nohighlight">\(\sigma\)</span> is the standard deviation of the data.</p>
+</div></blockquote>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.estimators</span><span class="w"> </span><span class="kn">import</span> <span class="n">Scaler</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="go">tensor([ 9.7033, 10.2510, 10.2483, 10.1274, 10.2013])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scaler</span> <span class="o">=</span> <span class="n">Scaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X_s</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">X_s</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="go">tensor([1.0000, 1.0000, 1.0000, 1.0000, 1.0000])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X_i</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">X_s</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">X_i</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="go">tensor([ 9.7033, 10.2510, 10.2483, 10.1274, 10.2013])</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.scaler.Scaler.clone">
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/scaler.py#L653"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.scaler.Scaler.clone" title="Link to this definition">#</a></dt>
+<dd><p>Obtain a clone of this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>Scaler</dt><dd><p>The clone.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.scaler.Scaler.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/scaler.py#L664"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.scaler.Scaler.copy" title="Link to this definition">#</a></dt>
+<dd><p>Obtain a copy of this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>Scaler</dt><dd><p>The copy.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.scaler.Scaler.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_weight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/scaler.py#L560"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.scaler.Scaler.fit" title="Link to this definition">#</a></dt>
+<dd><p>Fit the scaler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>The data.</p>
+</dd>
+<dt><strong>args</strong><span class="classifier">Any</span></dt><dd><p>Additional arguments.</p>
+</dd>
+<dt><strong>sample_weight</strong><span class="classifier">Union[np.ndarray, torch.Tensor], default=None</span></dt><dd><p>The sample weights.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.scaler.Scaler.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_weight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/scaler.py#L611"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.scaler.Scaler.fit_transform" title="Link to this definition">#</a></dt>
+<dd><p>Fit and transform the data in one step.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>The data.</p>
+</dd>
+<dt><strong>args</strong><span class="classifier">Any</span></dt><dd><p>Additional arguments.</p>
+</dd>
+<dt><strong>sample_weight</strong><span class="classifier">Union[np.ndarray, torch.Tensor], default=None</span></dt><dd><p>The sample weights.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>Union[np.ndarray, torch.Tensor]</dt><dd><p>The transformed data.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.scaler.Scaler.inverse_transform">
+<span class="sig-name descname"><span class="pre">inverse_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/scaler.py#L593"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.scaler.Scaler.inverse_transform" title="Link to this definition">#</a></dt>
+<dd><p>Invert the transform of the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>The data.</p>
+</dd>
+<dt><strong>args</strong><span class="classifier">Any</span></dt><dd><p>Additional arguments.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>Union[np.ndarray, torch.Tensor]</dt><dd><p>The inverse transformed data.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.scaler.Scaler.to_numpy">
+<span class="sig-name descname"><span class="pre">to_numpy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/scaler.py#L642"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.scaler.Scaler.to_numpy" title="Link to this definition">#</a></dt>
+<dd><p>Selet the numpy scaler. Note that this cannot be called for conversion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>_Scaler_numpy</dt><dd><p>The numpy scaler.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.scaler.Scaler.to_torch">
+<span class="sig-name descname"><span class="pre">to_torch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/scaler.py#L631"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.scaler.Scaler.to_torch" title="Link to this definition">#</a></dt>
+<dd><p>Selet the torch scaler. Note that this cannot be called for conversion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>_Scaler_torch</dt><dd><p>The torch scaler.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.preprocessing.scaler.Scaler.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/preprocessing/scaler.py#L575"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.preprocessing.scaler.Scaler.transform" title="Link to this definition">#</a></dt>
+<dd><p>Transform the data using scaler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>The data.</p>
+</dd>
+<dt><strong>args</strong><span class="classifier">Any</span></dt><dd><p>Additional arguments.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>Union[np.ndarray, torch.Tensor]</dt><dd><p>The transformed data.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p>Configure global settings and get information about the working environment.</p>
+<p>The torch package contains data structures for multi-dimensional</p>
+</section>
+<section id="module-mvpy.preprocessing">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mvpy.preprocessing" title="Link to this heading">#</a></h2>
+<p>A collection of estimators for clamping data.</p>
+<p>A collection of estimators for binarising label data.</p>
+<p>A collection of estimators for robustly scaling data.</p>
+<p>A collection of estimators for scaling data.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.preprocessing.clamp">mvpy.preprocessing.clamp module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.clamp.Clamp"><code class="docutils literal notranslate"><span class="pre">Clamp</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.clamp.Clamp.clone"><code class="docutils literal notranslate"><span class="pre">Clamp.clone()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.clamp.Clamp.copy"><code class="docutils literal notranslate"><span class="pre">Clamp.copy()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.clamp.Clamp.fit"><code class="docutils literal notranslate"><span class="pre">Clamp.fit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.clamp.Clamp.fit_transform"><code class="docutils literal notranslate"><span class="pre">Clamp.fit_transform()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.clamp.Clamp.inverse_transform"><code class="docutils literal notranslate"><span class="pre">Clamp.inverse_transform()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.clamp.Clamp.to_numpy"><code class="docutils literal notranslate"><span class="pre">Clamp.to_numpy()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.clamp.Clamp.to_torch"><code class="docutils literal notranslate"><span class="pre">Clamp.to_torch()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.clamp.Clamp.transform"><code class="docutils literal notranslate"><span class="pre">Clamp.transform()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.preprocessing.labelbinariser">mvpy.preprocessing.labelbinariser module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.labelbinariser.LabelBinariser"><code class="docutils literal notranslate"><span class="pre">LabelBinariser</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.labelbinariser.LabelBinariser.clone"><code class="docutils literal notranslate"><span class="pre">LabelBinariser.clone()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.labelbinariser.LabelBinariser.copy"><code class="docutils literal notranslate"><span class="pre">LabelBinariser.copy()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.labelbinariser.LabelBinariser.fit"><code class="docutils literal notranslate"><span class="pre">LabelBinariser.fit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.labelbinariser.LabelBinariser.fit_transform"><code class="docutils literal notranslate"><span class="pre">LabelBinariser.fit_transform()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.labelbinariser.LabelBinariser.inverse_transform"><code class="docutils literal notranslate"><span class="pre">LabelBinariser.inverse_transform()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.labelbinariser.LabelBinariser.to_numpy"><code class="docutils literal notranslate"><span class="pre">LabelBinariser.to_numpy()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.labelbinariser.LabelBinariser.to_torch"><code class="docutils literal notranslate"><span class="pre">LabelBinariser.to_torch()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.labelbinariser.LabelBinariser.transform"><code class="docutils literal notranslate"><span class="pre">LabelBinariser.transform()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.preprocessing.robustscaler">mvpy.preprocessing.robustscaler module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.robustscaler.RobustScaler"><code class="docutils literal notranslate"><span class="pre">RobustScaler</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.robustscaler.RobustScaler.clone"><code class="docutils literal notranslate"><span class="pre">RobustScaler.clone()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.robustscaler.RobustScaler.copy"><code class="docutils literal notranslate"><span class="pre">RobustScaler.copy()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.robustscaler.RobustScaler.fit"><code class="docutils literal notranslate"><span class="pre">RobustScaler.fit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.robustscaler.RobustScaler.fit_transform"><code class="docutils literal notranslate"><span class="pre">RobustScaler.fit_transform()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.robustscaler.RobustScaler.inverse_transform"><code class="docutils literal notranslate"><span class="pre">RobustScaler.inverse_transform()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.robustscaler.RobustScaler.to_numpy"><code class="docutils literal notranslate"><span class="pre">RobustScaler.to_numpy()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.robustscaler.RobustScaler.to_torch"><code class="docutils literal notranslate"><span class="pre">RobustScaler.to_torch()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.robustscaler.RobustScaler.transform"><code class="docutils literal notranslate"><span class="pre">RobustScaler.transform()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.preprocessing.scaler">mvpy.preprocessing.scaler module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.scaler.Scaler"><code class="docutils literal notranslate"><span class="pre">Scaler</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.scaler.Scaler.clone"><code class="docutils literal notranslate"><span class="pre">Scaler.clone()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.scaler.Scaler.copy"><code class="docutils literal notranslate"><span class="pre">Scaler.copy()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.scaler.Scaler.fit"><code class="docutils literal notranslate"><span class="pre">Scaler.fit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.scaler.Scaler.fit_transform"><code class="docutils literal notranslate"><span class="pre">Scaler.fit_transform()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.scaler.Scaler.inverse_transform"><code class="docutils literal notranslate"><span class="pre">Scaler.inverse_transform()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.scaler.Scaler.to_numpy"><code class="docutils literal notranslate"><span class="pre">Scaler.to_numpy()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.scaler.Scaler.to_torch"><code class="docutils literal notranslate"><span class="pre">Scaler.to_torch()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.preprocessing.scaler.Scaler.transform"><code class="docutils literal notranslate"><span class="pre">Scaler.transform()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.preprocessing">Module contents</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/source/mvpy.preprocessing.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Fabian Schneider.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

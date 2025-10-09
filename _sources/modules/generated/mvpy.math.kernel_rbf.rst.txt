@@ -1,0 +1,10 @@
+﻿kernel\_rbf
+===========
+
+.. currentmodule:: mvpy.math
+
+.. autofunction:: kernel_rbf
+
+.. minigallery:: mvpy.math.kernel_rbf
+   :add-heading: Gallery examples
+   :heading-level: -

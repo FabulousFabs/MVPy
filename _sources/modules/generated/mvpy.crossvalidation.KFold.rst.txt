@@ -1,0 +1,13 @@
+﻿KFold
+=====
+
+.. currentmodule:: mvpy.crossvalidation
+
+.. autoclass:: KFold
+   :members:
+   :inherited-members:
+   :special-members: __call__
+
+.. minigallery:: mvpy.crossvalidation.KFold mvpy.crossvalidation.KFold.__delattr__ mvpy.crossvalidation.KFold.__dir__ mvpy.crossvalidation.KFold.__eq__ mvpy.crossvalidation.KFold.__format__ mvpy.crossvalidation.KFold.__ge__ mvpy.crossvalidation.KFold.__getattribute__ mvpy.crossvalidation.KFold.__gt__ mvpy.crossvalidation.KFold.__hash__ mvpy.crossvalidation.KFold.__init__ mvpy.crossvalidation.KFold.__init_subclass__ mvpy.crossvalidation.KFold.__le__ mvpy.crossvalidation.KFold.__lt__ mvpy.crossvalidation.KFold.__ne__ mvpy.crossvalidation.KFold.__new__ mvpy.crossvalidation.KFold.__reduce__ mvpy.crossvalidation.KFold.__reduce_ex__ mvpy.crossvalidation.KFold.__repr__ mvpy.crossvalidation.KFold.__setattr__ mvpy.crossvalidation.KFold.__sizeof__ mvpy.crossvalidation.KFold.__str__ mvpy.crossvalidation.KFold.__subclasshook__ mvpy.crossvalidation.KFold.split mvpy.crossvalidation.KFold.to_numpy mvpy.crossvalidation.KFold.to_torch 
+   :add-heading: Gallery examples
+   :heading-level: -

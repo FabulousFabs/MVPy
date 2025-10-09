@@ -1,0 +1,30 @@
+:html_theme.sidebar_secondary.remove:
+
+
+.. _processing_ref:
+
+
+mvpy.preprocessing
+==================
+
+.. automodule:: mvpy.preprocessing
+
+
+
+
+
+
+
+
+
+
+.. autosummary::
+  :nosignatures:
+  :toctree: ../modules/generated/
+  :template: base.rst
+
+
+  Clamp
+  LabelBinariser
+  RobustScaler
+  Scaler

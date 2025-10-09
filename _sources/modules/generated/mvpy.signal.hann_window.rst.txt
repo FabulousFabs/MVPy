@@ -1,0 +1,10 @@
+﻿hann\_window
+============
+
+.. currentmodule:: mvpy.signal
+
+.. autofunction:: hann_window
+
+.. minigallery:: mvpy.signal.hann_window
+   :add-heading: Gallery examples
+   :heading-level: -

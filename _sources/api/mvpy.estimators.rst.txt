@@ -1,0 +1,39 @@
+:html_theme.sidebar_secondary.remove:
+
+
+.. _imators_ref:
+
+
+mvpy.estimators
+===============
+
+.. automodule:: mvpy.estimators
+
+
+
+
+
+
+
+
+
+
+.. autosummary::
+  :nosignatures:
+  :toctree: ../modules/generated/
+  :template: base.rst
+
+
+  B2B
+  Classifier
+  Covariance
+  KernelRidgeCV
+  ReceptiveField
+  RidgeClassifier
+  RidgeCV
+  RidgeDecoder
+  RidgeEncoder
+  RSA
+  Sliding
+  SVC
+  TimeDelayed

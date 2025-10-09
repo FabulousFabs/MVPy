@@ -1,0 +1,10 @@
+﻿euclidean
+=========
+
+.. currentmodule:: mvpy.math
+
+.. autofunction:: euclidean
+
+.. minigallery:: mvpy.math.euclidean
+   :add-heading: Gallery examples
+   :heading-level: -

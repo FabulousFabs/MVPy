@@ -1,0 +1,13 @@
+﻿Sliding
+=======
+
+.. currentmodule:: mvpy.estimators
+
+.. autoclass:: Sliding
+   :members:
+   :inherited-members:
+   :special-members: __call__
+
+.. minigallery:: mvpy.estimators.Sliding mvpy.estimators.Sliding.__delattr__ mvpy.estimators.Sliding.__dir__ mvpy.estimators.Sliding.__eq__ mvpy.estimators.Sliding.__format__ mvpy.estimators.Sliding.__ge__ mvpy.estimators.Sliding.__getattribute__ mvpy.estimators.Sliding.__gt__ mvpy.estimators.Sliding.__hash__ mvpy.estimators.Sliding.__init__ mvpy.estimators.Sliding.__le__ mvpy.estimators.Sliding.__lt__ mvpy.estimators.Sliding.__ne__ mvpy.estimators.Sliding.__new__ mvpy.estimators.Sliding.__reduce__ mvpy.estimators.Sliding.__reduce_ex__ mvpy.estimators.Sliding.__setattr__ mvpy.estimators.Sliding.__sizeof__ mvpy.estimators.Sliding.__str__ mvpy.estimators.Sliding.__subclasshook__ mvpy.estimators.Sliding.clone mvpy.estimators.Sliding.collect mvpy.estimators.Sliding.fit mvpy.estimators.Sliding.fit_transform mvpy.estimators.Sliding.predict mvpy.estimators.Sliding.predict_proba mvpy.estimators.Sliding.transform 
+   :add-heading: Gallery examples
+   :heading-level: -

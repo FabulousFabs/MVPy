@@ -1,0 +1,53 @@
+mvpy.dataset package
+====================
+
+Submodules
+----------
+
+mvpy.dataset.make\_meeg\_categorical module
+-------------------------------------------
+
+.. automodule:: mvpy.dataset.make_meeg_categorical
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.dataset.make\_meeg\_colours module
+---------------------------------------
+
+.. automodule:: mvpy.dataset.make_meeg_colours
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.dataset.make\_meeg\_continuous module
+------------------------------------------
+
+.. automodule:: mvpy.dataset.make_meeg_continuous
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.dataset.make\_meeg\_discrete module
+----------------------------------------
+
+.. automodule:: mvpy.dataset.make_meeg_discrete
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.dataset.make\_meeg\_layout module
+--------------------------------------
+
+.. automodule:: mvpy.dataset.make_meeg_layout
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: mvpy.dataset
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,914 @@
+:html_theme.sidebar_secondary.remove:
+
+.. _api_ref:
+
+=============
+API Reference
+=============
+
+This is the class and function reference of MVPy. Please also refer to the
+:ref:`examples <auto_examples/index>` for further details.
+
+.. toctree::
+  :maxdepth: 2
+  :hidden:
+
+
+  mvpy
+  mvpy.crossvalidation
+  mvpy.dataset
+  mvpy.estimators
+  mvpy.math
+  mvpy.preprocessing
+  mvpy.signal
+  mvpy.utilities
+
+.. list-table::
+  :header-rows: 1
+  :class: apisearch-table
+
+  * - Object
+    - Description
+
+
+
+
+
+
+
+
+  * - :obj:`~mvpy.__version__`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy
+
+        .. autoshortsummary:: mvpy.__version__
+
+        .. div:: caption
+
+          :mod:`mvpy`
+
+
+
+
+
+
+
+
+
+  * - :obj:`~mvpy.crossvalidation.KFold`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.crossvalidation
+
+        .. autoshortsummary:: mvpy.crossvalidation.KFold
+
+        .. div:: caption
+
+          :mod:`mvpy.crossvalidation`
+
+
+
+
+
+  * - :obj:`~mvpy.crossvalidation.RepeatedKFold`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.crossvalidation
+
+        .. autoshortsummary:: mvpy.crossvalidation.RepeatedKFold
+
+        .. div:: caption
+
+          :mod:`mvpy.crossvalidation`
+
+
+
+
+
+  * - :obj:`~mvpy.crossvalidation.StratifiedKFold`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.crossvalidation
+
+        .. autoshortsummary:: mvpy.crossvalidation.StratifiedKFold
+
+        .. div:: caption
+
+          :mod:`mvpy.crossvalidation`
+
+
+
+
+
+  * - :obj:`~mvpy.crossvalidation.RepeatedStratifiedKFold`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.crossvalidation
+
+        .. autoshortsummary:: mvpy.crossvalidation.RepeatedStratifiedKFold
+
+        .. div:: caption
+
+          :mod:`mvpy.crossvalidation`
+
+
+
+
+
+
+
+
+
+  * - :obj:`~mvpy.dataset.make_meeg_categorical`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.dataset
+
+        .. autoshortsummary:: mvpy.dataset.make_meeg_categorical
+
+        .. div:: caption
+
+          :mod:`mvpy.dataset`
+
+
+
+
+
+  * - :obj:`~mvpy.dataset.make_meeg_colours`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.dataset
+
+        .. autoshortsummary:: mvpy.dataset.make_meeg_colours
+
+        .. div:: caption
+
+          :mod:`mvpy.dataset`
+
+
+
+
+
+  * - :obj:`~mvpy.dataset.make_meeg_continuous`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.dataset
+
+        .. autoshortsummary:: mvpy.dataset.make_meeg_continuous
+
+        .. div:: caption
+
+          :mod:`mvpy.dataset`
+
+
+
+
+
+  * - :obj:`~mvpy.dataset.make_meeg_discrete`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.dataset
+
+        .. autoshortsummary:: mvpy.dataset.make_meeg_discrete
+
+        .. div:: caption
+
+          :mod:`mvpy.dataset`
+
+
+
+
+
+  * - :obj:`~mvpy.dataset.make_meeg_layout`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.dataset
+
+        .. autoshortsummary:: mvpy.dataset.make_meeg_layout
+
+        .. div:: caption
+
+          :mod:`mvpy.dataset`
+
+
+
+
+
+
+
+
+
+  * - :obj:`~mvpy.estimators.B2B`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.estimators
+
+        .. autoshortsummary:: mvpy.estimators.B2B
+
+        .. div:: caption
+
+          :mod:`mvpy.estimators`
+
+
+
+
+
+  * - :obj:`~mvpy.estimators.Classifier`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.estimators
+
+        .. autoshortsummary:: mvpy.estimators.Classifier
+
+        .. div:: caption
+
+          :mod:`mvpy.estimators`
+
+
+
+
+
+  * - :obj:`~mvpy.estimators.Covariance`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.estimators
+
+        .. autoshortsummary:: mvpy.estimators.Covariance
+
+        .. div:: caption
+
+          :mod:`mvpy.estimators`
+
+
+
+
+
+  * - :obj:`~mvpy.estimators.KernelRidgeCV`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.estimators
+
+        .. autoshortsummary:: mvpy.estimators.KernelRidgeCV
+
+        .. div:: caption
+
+          :mod:`mvpy.estimators`
+
+
+
+
+
+  * - :obj:`~mvpy.estimators.ReceptiveField`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.estimators
+
+        .. autoshortsummary:: mvpy.estimators.ReceptiveField
+
+        .. div:: caption
+
+          :mod:`mvpy.estimators`
+
+
+
+
+
+  * - :obj:`~mvpy.estimators.RidgeClassifier`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.estimators
+
+        .. autoshortsummary:: mvpy.estimators.RidgeClassifier
+
+        .. div:: caption
+
+          :mod:`mvpy.estimators`
+
+
+
+
+
+  * - :obj:`~mvpy.estimators.RidgeCV`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.estimators
+
+        .. autoshortsummary:: mvpy.estimators.RidgeCV
+
+        .. div:: caption
+
+          :mod:`mvpy.estimators`
+
+
+
+
+
+  * - :obj:`~mvpy.estimators.RidgeDecoder`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.estimators
+
+        .. autoshortsummary:: mvpy.estimators.RidgeDecoder
+
+        .. div:: caption
+
+          :mod:`mvpy.estimators`
+
+
+
+
+
+  * - :obj:`~mvpy.estimators.RidgeEncoder`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.estimators
+
+        .. autoshortsummary:: mvpy.estimators.RidgeEncoder
+
+        .. div:: caption
+
+          :mod:`mvpy.estimators`
+
+
+
+
+
+  * - :obj:`~mvpy.estimators.RSA`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.estimators
+
+        .. autoshortsummary:: mvpy.estimators.RSA
+
+        .. div:: caption
+
+          :mod:`mvpy.estimators`
+
+
+
+
+
+  * - :obj:`~mvpy.estimators.Sliding`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.estimators
+
+        .. autoshortsummary:: mvpy.estimators.Sliding
+
+        .. div:: caption
+
+          :mod:`mvpy.estimators`
+
+
+
+
+
+  * - :obj:`~mvpy.estimators.SVC`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.estimators
+
+        .. autoshortsummary:: mvpy.estimators.SVC
+
+        .. div:: caption
+
+          :mod:`mvpy.estimators`
+
+
+
+
+
+  * - :obj:`~mvpy.estimators.TimeDelayed`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.estimators
+
+        .. autoshortsummary:: mvpy.estimators.TimeDelayed
+
+        .. div:: caption
+
+          :mod:`mvpy.estimators`
+
+
+
+
+
+
+
+
+
+  * - :obj:`~mvpy.math.accuracy`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.math
+
+        .. autoshortsummary:: mvpy.math.accuracy
+
+        .. div:: caption
+
+          :mod:`mvpy.math`
+
+
+
+
+
+  * - :obj:`~mvpy.math.cosine`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.math
+
+        .. autoshortsummary:: mvpy.math.cosine
+
+        .. div:: caption
+
+          :mod:`mvpy.math`
+
+
+
+
+
+  * - :obj:`~mvpy.math.cosine_d`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.math
+
+        .. autoshortsummary:: mvpy.math.cosine_d
+
+        .. div:: caption
+
+          :mod:`mvpy.math`
+
+
+
+
+
+  * - :obj:`~mvpy.math.cv_euclidean`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.math
+
+        .. autoshortsummary:: mvpy.math.cv_euclidean
+
+        .. div:: caption
+
+          :mod:`mvpy.math`
+
+
+
+
+
+  * - :obj:`~mvpy.math.cv_mahalanobis`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.math
+
+        .. autoshortsummary:: mvpy.math.cv_mahalanobis
+
+        .. div:: caption
+
+          :mod:`mvpy.math`
+
+
+
+
+
+  * - :obj:`~mvpy.math.euclidean`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.math
+
+        .. autoshortsummary:: mvpy.math.euclidean
+
+        .. div:: caption
+
+          :mod:`mvpy.math`
+
+
+
+
+
+  * - :obj:`~mvpy.math.kernel_linear`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.math
+
+        .. autoshortsummary:: mvpy.math.kernel_linear
+
+        .. div:: caption
+
+          :mod:`mvpy.math`
+
+
+
+
+
+  * - :obj:`~mvpy.math.kernel_poly`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.math
+
+        .. autoshortsummary:: mvpy.math.kernel_poly
+
+        .. div:: caption
+
+          :mod:`mvpy.math`
+
+
+
+
+
+  * - :obj:`~mvpy.math.kernel_rbf`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.math
+
+        .. autoshortsummary:: mvpy.math.kernel_rbf
+
+        .. div:: caption
+
+          :mod:`mvpy.math`
+
+
+
+
+
+  * - :obj:`~mvpy.math.kernel_sigmoid`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.math
+
+        .. autoshortsummary:: mvpy.math.kernel_sigmoid
+
+        .. div:: caption
+
+          :mod:`mvpy.math`
+
+
+
+
+
+  * - :obj:`~mvpy.math.mahalanobis`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.math
+
+        .. autoshortsummary:: mvpy.math.mahalanobis
+
+        .. div:: caption
+
+          :mod:`mvpy.math`
+
+
+
+
+
+  * - :obj:`~mvpy.math.pearsonr`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.math
+
+        .. autoshortsummary:: mvpy.math.pearsonr
+
+        .. div:: caption
+
+          :mod:`mvpy.math`
+
+
+
+
+
+  * - :obj:`~mvpy.math.pearsonr_d`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.math
+
+        .. autoshortsummary:: mvpy.math.pearsonr_d
+
+        .. div:: caption
+
+          :mod:`mvpy.math`
+
+
+
+
+
+  * - :obj:`~mvpy.math.rank`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.math
+
+        .. autoshortsummary:: mvpy.math.rank
+
+        .. div:: caption
+
+          :mod:`mvpy.math`
+
+
+
+
+
+  * - :obj:`~mvpy.math.roc_auc`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.math
+
+        .. autoshortsummary:: mvpy.math.roc_auc
+
+        .. div:: caption
+
+          :mod:`mvpy.math`
+
+
+
+
+
+  * - :obj:`~mvpy.math.spearmanr`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.math
+
+        .. autoshortsummary:: mvpy.math.spearmanr
+
+        .. div:: caption
+
+          :mod:`mvpy.math`
+
+
+
+
+
+  * - :obj:`~mvpy.math.spearmanr_d`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.math
+
+        .. autoshortsummary:: mvpy.math.spearmanr_d
+
+        .. div:: caption
+
+          :mod:`mvpy.math`
+
+
+
+
+
+
+
+
+
+  * - :obj:`~mvpy.preprocessing.Clamp`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.preprocessing
+
+        .. autoshortsummary:: mvpy.preprocessing.Clamp
+
+        .. div:: caption
+
+          :mod:`mvpy.preprocessing`
+
+
+
+
+
+  * - :obj:`~mvpy.preprocessing.LabelBinariser`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.preprocessing
+
+        .. autoshortsummary:: mvpy.preprocessing.LabelBinariser
+
+        .. div:: caption
+
+          :mod:`mvpy.preprocessing`
+
+
+
+
+
+  * - :obj:`~mvpy.preprocessing.RobustScaler`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.preprocessing
+
+        .. autoshortsummary:: mvpy.preprocessing.RobustScaler
+
+        .. div:: caption
+
+          :mod:`mvpy.preprocessing`
+
+
+
+
+
+  * - :obj:`~mvpy.preprocessing.Scaler`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.preprocessing
+
+        .. autoshortsummary:: mvpy.preprocessing.Scaler
+
+        .. div:: caption
+
+          :mod:`mvpy.preprocessing`
+
+
+
+
+
+
+
+
+
+  * - :obj:`~mvpy.signal.hamming_window`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.signal
+
+        .. autoshortsummary:: mvpy.signal.hamming_window
+
+        .. div:: caption
+
+          :mod:`mvpy.signal`
+
+
+
+
+
+  * - :obj:`~mvpy.signal.hann_window`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.signal
+
+        .. autoshortsummary:: mvpy.signal.hann_window
+
+        .. div:: caption
+
+          :mod:`mvpy.signal`
+
+
+
+
+
+  * - :obj:`~mvpy.signal.raised_cosine_window`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.signal
+
+        .. autoshortsummary:: mvpy.signal.raised_cosine_window
+
+        .. div:: caption
+
+          :mod:`mvpy.signal`
+
+
+
+
+
+
+
+
+
+  * - :obj:`~mvpy.utilities.compile.numpy`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.utilities.compile
+
+        .. autoshortsummary:: mvpy.utilities.compile.numpy
+
+        .. div:: caption
+
+          :mod:`mvpy.utilities.compile`
+
+
+
+
+
+  * - :obj:`~mvpy.utilities.compile.torch`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.utilities.compile
+
+        .. autoshortsummary:: mvpy.utilities.compile.torch
+
+        .. div:: caption
+
+          :mod:`mvpy.utilities.compile`
+
+
+
+
+
+  * - :obj:`~mvpy.utilities.env.get_var`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.utilities.env
+
+        .. autoshortsummary:: mvpy.utilities.env.get_var
+
+        .. div:: caption
+
+          :mod:`mvpy.utilities.env`
+
+
+
+
+
+  * - :obj:`~mvpy.utilities.env.is_enabled`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.utilities.env
+
+        .. autoshortsummary:: mvpy.utilities.env.is_enabled
+
+        .. div:: caption
+
+          :mod:`mvpy.utilities.env`
+
+
+
+
+
+  * - :obj:`~mvpy.utilities.Progressbar`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.utilities
+
+        .. autoshortsummary:: mvpy.utilities.Progressbar
+
+        .. div:: caption
+
+          :mod:`mvpy.utilities`
+
+
+
+
+
+  * - :obj:`~mvpy.utilities.version.compare`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.utilities.version
+
+        .. autoshortsummary:: mvpy.utilities.version.compare
+
+        .. div:: caption
+
+          :mod:`mvpy.utilities.version`
+
+
+
+

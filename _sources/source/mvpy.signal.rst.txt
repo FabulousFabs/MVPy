@@ -1,6 +1,33 @@
 mvpy.signal package
 ===================
 
+Submodules
+----------
+
+mvpy.signal.hammingwindow module
+--------------------------------
+
+.. automodule:: mvpy.signal.hammingwindow
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.signal.hannwindow module
+-----------------------------
+
+.. automodule:: mvpy.signal.hannwindow
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.signal.raisedcosinewindow module
+-------------------------------------
+
+.. automodule:: mvpy.signal.raisedcosinewindow
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

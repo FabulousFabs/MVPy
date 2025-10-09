@@ -1,0 +1,27 @@
+:html_theme.sidebar_secondary.remove:
+
+
+.. _mvpy_ref:
+
+
+mvpy
+====
+
+.. automodule:: mvpy
+
+
+
+
+
+
+
+
+
+
+.. autosummary::
+  :nosignatures:
+  :toctree: ../modules/generated/
+  :template: base.rst
+
+
+  __version__

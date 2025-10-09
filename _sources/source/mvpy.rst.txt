@@ -7,8 +7,11 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
+   mvpy.crossvalidation
+   mvpy.dataset
    mvpy.estimators
    mvpy.math
+   mvpy.preprocessing
    mvpy.signal
    mvpy.utilities
 

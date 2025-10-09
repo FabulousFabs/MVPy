@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>mvpy.utilities package &#8212; MVPy 0.1 documentation</title>
+    <title>mvpy.utilities package &#8212; MVPy</title>
   
   
   
@@ -35,6 +35,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/colors.css?v=cc94ab7d" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/custom.css?v=eec3fc85" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -45,10 +48,13 @@
     <script src="../_static/documentation_options.js?v=2709fde1"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'source/mvpy.utilities';</script>
+    <script src="../_static/scripts/dropdown.js?v=5b9cef8c"></script>
+    <script src="../_static/scripts/version-switcher.js?v=6ebe4089"></script>
+    <script src="../_static/scripts/sg_plotly_resize.js?v=dc4a1e18"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="mvpy.signal package" href="mvpy.signal.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -98,7 +104,7 @@
   </button>
   
   
-  <div class="col-lg-3 navbar-header-items__start">
+  <div class=" navbar-header-items__start">
     
       <div class="navbar-item">
 
@@ -112,14 +118,46 @@
   
   
   
+    
+    
+      
+    
+    
+    <img src="../_static/mvpy-icon.png" class="logo__image only-light" alt=""/>
+    <img src="../_static/mvpy-icon.png" class="logo__image only-dark pst-js-only" alt=""/>
   
-    <p class="title logo__title">MVPy 0.1 documentation</p>
+  
+    <p class="title logo__title">MVPy</p>
   
 </a></div>
     
   </div>
   
-  <div class="col-lg-9 navbar-header-items">
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../auto_examples/index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
     
     
     <div class="navbar-header-items__end">
@@ -134,6 +172,50 @@
 </button>
         </div>
       
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/FabulousFabs/mvpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
       
     </div>
     
@@ -173,7 +255,82 @@
   <div class="sidebar-header-items sidebar-primary__section">
     
     
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
     
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../auto_examples/index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/FabulousFabs/mvpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+      </div>
     
   </div>
   
@@ -183,8 +340,11 @@
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="mvpy.crossvalidation.html">mvpy.crossvalidation package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mvpy.dataset.html">mvpy.dataset package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mvpy.estimators.html">mvpy.estimators package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mvpy.math.html">mvpy.math package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mvpy.preprocessing.html">mvpy.preprocessing package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mvpy.signal.html">mvpy.signal package</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">mvpy.utilities package</a></li>
 </ul>
@@ -227,12 +387,6 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    
-    <li class="breadcrumb-item"><a href="../documentation/index.html" class="nav-link">Documentation</a></li>
-    
-    
-    <li class="breadcrumb-item"><a href="mvpy.html" class="nav-link">mvpy package</a></li>
-    
     <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">mvpy.utilities package</span></li>
   </ul>
 </nav>
@@ -255,32 +409,202 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 </section>
-<section id="module-mvpy.utilities.progressbar">
-<span id="mvpy-utilities-progressbar-module"></span><h2>mvpy.utilities.progressbar module<a class="headerlink" href="#module-mvpy.utilities.progressbar" title="Link to this heading">#</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="mvpy.utilities.progressbar.Progressbar">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.utilities.progressbar.</span></span><span class="sig-name descname"><span class="pre">Progressbar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enabled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.utilities.progressbar.Progressbar" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Simple class for progress bars that can be enabled or disabled.</p>
+<section id="module-mvpy.utilities.compile">
+<span id="mvpy-utilities-compile-module"></span><h2>mvpy.utilities.compile module<a class="headerlink" href="#module-mvpy.utilities.compile" title="Link to this heading">#</a></h2>
+<p>Exposes decorators for compilation.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mvpy.utilities.compile.numpy">
+<span class="sig-prename descclassname"><span class="pre">mvpy.utilities.compile.</span></span><span class="sig-name descname"><span class="pre">numpy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nopython</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nogil</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fastmath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/utilities/compile.py#L102"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.utilities.compile.numpy" title="Link to this definition">#</a></dt>
+<dd><p>Decorator that compiles a function with numba.jit, if available.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>enabled</strong> (<em>bool</em><em>, </em><em>default=True</em>) – Whether to enable the progress bar.</p></li>
-<li><p><strong>**kwargs</strong> (<em>Any</em>) – Additional arguments for tqdm.</p></li>
-</ul>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>*args</strong><span class="classifier">List[Any]</span></dt><dd><p>Arguments to pass.</p>
+</dd>
+<dt><strong>nopython</strong><span class="classifier">bool, default=True</span></dt><dd><p>Default to pass to jit.</p>
+</dd>
+<dt><strong>nogil</strong><span class="classifier">bool, default=True</span></dt><dd><p>Default to pass to jit.</p>
+</dd>
+<dt><strong>fastmath</strong><span class="classifier">bool, default=True</span></dt><dd><p>Default to pass to jit.</p>
+</dd>
+<dt><strong>cache</strong><span class="classifier">bool, default=True</span></dt><dd><p>Default to pass to jit.</p>
+</dd>
+<dt><strong>disable</strong><span class="classifier">bool, default=False</span></dt><dd><p>Flag to allow disabling compilation (for debugging).</p>
+</dd>
+<dt><strong>**kwargs</strong><span class="classifier">Dict[str, Any]</span></dt><dd><p>Keyword arguments to pass.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>compiled</strong><span class="classifier">Callable</span></dt><dd><p>Compiled function.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Let’s look at a very silly toy example:
+&gt;&gt;&gt; import numpy as np
+&gt;&gt;&gt; from mvpy.utilities import compile
+&gt;&gt;&gt; &#64;compile.numpy
+&gt;&gt;&gt; def maths_a(x: np.ndarray, y: np.ndarray) -&gt; np.ndarray:
+&gt;&gt;&gt;     return x &#64; y.t()
+&gt;&gt;&gt; &#64;compile.numpy(disable = True)
+&gt;&gt;&gt; def maths_b(x: np.ndarray, y: np.ndarray) -&gt; np.ndarray:
+&gt;&gt;&gt;     return x &#64; y.t()</p>
+</dd></dl>
+
+<p>OS routines for NT or Posix depending on what system we’re on.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mvpy.utilities.compile.torch">
+<span class="sig-prename descclassname"><span class="pre">mvpy.utilities.compile.</span></span><span class="sig-name descname"><span class="pre">torch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/utilities/compile.py#L36"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.utilities.compile.torch" title="Link to this definition">#</a></dt>
+<dd><p>Decorator that compiles a function with torch.compile, if available.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>*args</strong><span class="classifier">List[Any]</span></dt><dd><p>Arguments to pass.</p>
+</dd>
+<dt><strong>**kwargs</strong><span class="classifier">Dict[str, Any]</span></dt><dd><p>Keyword arguments to pass.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>compiled</strong><span class="classifier">Callable</span></dt><dd><p>Compiled function.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Let’s look at a very silly toy example:
+&gt;&gt;&gt; import torch
+&gt;&gt;&gt; from mvpy.utilities import compile
+&gt;&gt;&gt; &#64;compile.torch
+&gt;&gt;&gt; def maths_a(x: torch.Tensor, y: torch.Tensor) -&gt; torch.Tensor:
+&gt;&gt;&gt;     return x &#64; y.t()
+&gt;&gt;&gt; &#64;compile.torch(disable = True)
+&gt;&gt;&gt; def maths_b(x: torch.Tensor, y: torch.Tensor) -&gt; torch.Tensor:
+&gt;&gt;&gt;     return x &#64; y.t()</p>
+</dd></dl>
+
+<p>Python part of the warnings subsystem.</p>
+</section>
+<section id="module-mvpy.utilities.env">
+<span id="mvpy-utilities-env-module"></span><h2>mvpy.utilities.env module<a class="headerlink" href="#module-mvpy.utilities.env" title="Link to this heading">#</a></h2>
+<p>Exposes checks for environment variables.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mvpy.utilities.env.get_var">
+<span class="sig-prename descclassname"><span class="pre">mvpy.utilities.env.</span></span><span class="sig-name descname"><span class="pre">get_var</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/utilities/env.py#L9"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.utilities.env.get_var" title="Link to this definition">#</a></dt>
+<dd><p>Grab <cite>var</cite> from environment, respecting defaults and flag.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>var</strong><span class="classifier">str</span></dt><dd><p>The environment variable to get.</p>
+</dd>
+<dt><strong>default</strong><span class="classifier">Optional[str], default=None</span></dt><dd><p>If <cite>var</cite> is None, what default to return (if any)?</p>
+</dd>
+<dt><strong>flag</strong><span class="classifier">Optional[str], default=None</span></dt><dd><p>If supplied, this will override <cite>var</cite> for this call.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>value</strong><span class="classifier">str</span></dt><dd><p>Value of environment variable (or flag or default).</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="mvpy.utilities.env.is_enabled">
+<span class="sig-prename descclassname"><span class="pre">mvpy.utilities.env.</span></span><span class="sig-name descname"><span class="pre">is_enabled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/utilities/env.py#L40"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.utilities.env.is_enabled" title="Link to this definition">#</a></dt>
+<dd><p>Check if <cite>var</cite> is enabled in environment variables.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>var</strong><span class="classifier">str</span></dt><dd><p>The environment variable to get.</p>
+</dd>
+<dt><strong>default</strong><span class="classifier">bool, default=False</span></dt><dd><p>If variable is not set, return default.</p>
+</dd>
+<dt><strong>flag</strong><span class="classifier">Optional[Union[int, bool]], default=None</span></dt><dd><p>If supplied, this will override <cite>var</cite> for this call.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>is_enabled</strong><span class="classifier">bool</span></dt><dd><p>True if <cite>var</cite> is set to true (or was overriden, or default).</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<p>OS routines for NT or Posix depending on what system we’re on.</p>
+</section>
+<section id="module-mvpy.utilities.progressbar">
+<span id="mvpy-utilities-progressbar-module"></span><h2>mvpy.utilities.progressbar module<a class="headerlink" href="#module-mvpy.utilities.progressbar" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvpy.utilities.progressbar.Progressbar">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.utilities.progressbar.</span></span><span class="sig-name descname"><span class="pre">Progressbar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enabled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/utilities/progressbar.py#L21"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.utilities.progressbar.Progressbar" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Simple class for progress bars that can be enabled or disabled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>enabled</strong><span class="classifier">bool, default=True</span></dt><dd><p>Whether to enable the progress bar.</p>
+</dd>
+<dt><strong>**kwargs</strong><span class="classifier">Any</span></dt><dd><p>Additional arguments for tqdm.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Utilities for with-statement contexts.  See PEP 343.</p>
+<p>Joblib is a set of tools to provide <a href="#id1"><span class="problematic" id="id2">**</span></a>lightweight pipelining in</p>
+<dl class="py function">
 <dt class="sig sig-object py" id="mvpy.utilities.progressbar.tqdm_joblib">
-<span class="sig-prename descclassname"><span class="pre">mvpy.utilities.progressbar.</span></span><span class="sig-name descname"><span class="pre">tqdm_joblib</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tqdm_object</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mvpy.utilities.progressbar.tqdm_joblib" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mvpy.utilities.progressbar.</span></span><span class="sig-name descname"><span class="pre">tqdm_joblib</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tqdm_object</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/utilities/progressbar.py#L5"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.utilities.progressbar.tqdm_joblib" title="Link to this definition">#</a></dt>
 <dd><p>Context manager to patch joblib to report into tqdm progress bar given as argument</p>
 </dd></dl>
 
 </section>
+<section id="module-mvpy.utilities.version">
+<span id="mvpy-utilities-version-module"></span><h2>mvpy.utilities.version module<a class="headerlink" href="#module-mvpy.utilities.version" title="Link to this heading">#</a></h2>
+<p>Exposes version methods.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mvpy.utilities.version.compare">
+<span class="sig-prename descclassname"><span class="pre">mvpy.utilities.version.</span></span><span class="sig-name descname"><span class="pre">compare</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v_a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/utilities/version.py#L9"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.utilities.version.compare" title="Link to this definition">#</a></dt>
+<dd><p>Compare two version strings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>v_a</strong><span class="classifier">str</span></dt><dd><p>Version a.</p>
+</dd>
+<dt><strong>op</strong><span class="classifier">str</span></dt><dd><p>Comparison operator (&lt;, &lt;=, ==, !=, &gt;=, &gt;).</p>
+</dd>
+<dt><strong>v_b</strong><span class="classifier">str</span></dt><dd><p>Version b</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>result</strong><span class="classifier">bool</span></dt><dd><p>Result of the version comparison.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Operator interface.</p>
+<p>Python part of the warnings subsystem.</p>
+</section>
 <section id="module-mvpy.utilities">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mvpy.utilities" title="Link to this heading">#</a></h2>
+<p>Exposes decorators for compilation.</p>
+<p>Exposes checks for environment variables.</p>
+<p>Exposes version methods.</p>
 </section>
 </section>
 
@@ -294,15 +618,6 @@
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="mvpy.signal.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">mvpy.signal package</p>
-      </div>
-    </a>
 </div>
                 </footer>
               
@@ -323,9 +638,23 @@
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.utilities.compile">mvpy.utilities.compile module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.utilities.compile.numpy"><code class="docutils literal notranslate"><span class="pre">numpy()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.utilities.compile.torch"><code class="docutils literal notranslate"><span class="pre">torch()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.utilities.env">mvpy.utilities.env module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.utilities.env.get_var"><code class="docutils literal notranslate"><span class="pre">get_var()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.utilities.env.is_enabled"><code class="docutils literal notranslate"><span class="pre">is_enabled()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.utilities.progressbar">mvpy.utilities.progressbar module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.utilities.progressbar.Progressbar"><code class="docutils literal notranslate"><span class="pre">Progressbar</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.utilities.progressbar.tqdm_joblib"><code class="docutils literal notranslate"><span class="pre">tqdm_joblib()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.utilities.version">mvpy.utilities.version module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.utilities.version.compare"><code class="docutils literal notranslate"><span class="pre">compare()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.utilities">Module contents</a></li>

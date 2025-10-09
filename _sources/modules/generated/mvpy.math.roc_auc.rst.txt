@@ -1,0 +1,10 @@
+﻿roc\_auc
+========
+
+.. currentmodule:: mvpy.math
+
+.. autofunction:: roc_auc
+
+.. minigallery:: mvpy.math.roc_auc
+   :add-heading: Gallery examples
+   :heading-level: -

@@ -1,0 +1,10 @@
+﻿rank
+====
+
+.. currentmodule:: mvpy.math
+
+.. autofunction:: rank
+
+.. minigallery:: mvpy.math.rank
+   :add-heading: Gallery examples
+   :heading-level: -

@@ -1,0 +1,30 @@
+:html_theme.sidebar_secondary.remove:
+
+
+.. _ssvalidation_ref:
+
+
+mvpy.crossvalidation
+====================
+
+.. automodule:: mvpy.crossvalidation
+
+
+
+
+
+
+
+
+
+
+.. autosummary::
+  :nosignatures:
+  :toctree: ../modules/generated/
+  :template: base.rst
+
+
+  KFold
+  RepeatedKFold
+  StratifiedKFold
+  RepeatedStratifiedKFold

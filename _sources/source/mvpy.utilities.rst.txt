@@ -4,10 +4,34 @@ mvpy.utilities package
 Submodules
 ----------
 
+mvpy.utilities.compile module
+-----------------------------
+
+.. automodule:: mvpy.utilities.compile
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.utilities.env module
+-------------------------
+
+.. automodule:: mvpy.utilities.env
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 mvpy.utilities.progressbar module
 ---------------------------------
 
 .. automodule:: mvpy.utilities.progressbar
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.utilities.version module
+-----------------------------
+
+.. automodule:: mvpy.utilities.version
    :members:
    :undoc-members:
    :show-inheritance:

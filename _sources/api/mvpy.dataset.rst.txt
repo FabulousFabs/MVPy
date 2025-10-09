@@ -1,0 +1,31 @@
+:html_theme.sidebar_secondary.remove:
+
+
+.. _aset_ref:
+
+
+mvpy.dataset
+============
+
+.. automodule:: mvpy.dataset
+
+
+
+
+
+
+
+
+
+
+.. autosummary::
+  :nosignatures:
+  :toctree: ../modules/generated/
+  :template: base.rst
+
+
+  make_meeg_categorical
+  make_meeg_colours
+  make_meeg_continuous
+  make_meeg_discrete
+  make_meeg_layout

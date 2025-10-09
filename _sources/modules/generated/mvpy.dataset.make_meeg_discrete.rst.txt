@@ -1,0 +1,10 @@
+﻿make\_meeg\_discrete
+====================
+
+.. currentmodule:: mvpy.dataset
+
+.. autofunction:: make_meeg_discrete
+
+.. minigallery:: mvpy.dataset.make_meeg_discrete
+   :add-heading: Gallery examples
+   :heading-level: -

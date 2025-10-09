@@ -1,0 +1,827 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ReceptiveField &#8212; MVPy</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/api.css?v=b0444f25" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/colors.css?v=cc94ab7d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/custom.css?v=eec3fc85" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modules/generated/mvpy.estimators.ReceptiveField';</script>
+    <script src="../../_static/scripts/dropdown.js?v=5b9cef8c"></script>
+    <script src="../../_static/scripts/version-switcher.js?v=6ebe4089"></script>
+    <script src="../../_static/scripts/sg_plotly_resize.js?v=dc4a1e18"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="RidgeClassifier" href="mvpy.estimators.RidgeClassifier.html" />
+    <link rel="prev" title="KernelRidgeCV" href="mvpy.estimators.KernelRidgeCV.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/mvpy-icon.png" class="logo__image only-light" alt=""/>
+    <img src="../../_static/mvpy-icon.png" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">MVPy</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../auto_examples/index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/FabulousFabs/mvpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../auto_examples/index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/FabulousFabs/mvpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../api/mvpy.html">mvpy</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.crossvalidation.html">mvpy.crossvalidation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.KFold.html">KFold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.RepeatedKFold.html">RepeatedKFold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.StratifiedKFold.html">StratifiedKFold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.RepeatedStratifiedKFold.html">RepeatedStratifiedKFold</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.dataset.html">mvpy.dataset</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.dataset.make_meeg_categorical.html">make_meeg_categorical</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.dataset.make_meeg_colours.html">make_meeg_colours</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.dataset.make_meeg_continuous.html">make_meeg_continuous</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.dataset.make_meeg_discrete.html">make_meeg_discrete</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.dataset.make_meeg_layout.html">make_meeg_layout</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../api/mvpy.estimators.html">mvpy.estimators</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.B2B.html">B2B</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.Classifier.html">Classifier</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.Covariance.html">Covariance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.KernelRidgeCV.html">KernelRidgeCV</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">ReceptiveField</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.RidgeClassifier.html">RidgeClassifier</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.RidgeCV.html">RidgeCV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.RidgeDecoder.html">RidgeDecoder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.RidgeEncoder.html">RidgeEncoder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.RSA.html">RSA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.Sliding.html">Sliding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.SVC.html">SVC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.TimeDelayed.html">TimeDelayed</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.math.html">mvpy.math</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.accuracy.html">accuracy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.cosine.html">cosine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.cosine_d.html">cosine_d</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.cv_euclidean.html">cv_euclidean</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.cv_mahalanobis.html">cv_mahalanobis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.euclidean.html">euclidean</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.kernel_linear.html">kernel_linear</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.kernel_poly.html">kernel_poly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.kernel_rbf.html">kernel_rbf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.kernel_sigmoid.html">kernel_sigmoid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.mahalanobis.html">mahalanobis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.pearsonr.html">pearsonr</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.pearsonr_d.html">pearsonr_d</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.rank.html">rank</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.roc_auc.html">roc_auc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.spearmanr.html">spearmanr</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.spearmanr_d.html">spearmanr_d</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.preprocessing.html">mvpy.preprocessing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.preprocessing.Clamp.html">Clamp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.preprocessing.LabelBinariser.html">LabelBinariser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.preprocessing.RobustScaler.html">RobustScaler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.preprocessing.Scaler.html">Scaler</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.signal.html">mvpy.signal</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.signal.hamming_window.html">hamming_window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.signal.hann_window.html">hann_window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.signal.raised_cosine_window.html">raised_cosine_window</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.utilities.html">mvpy.utilities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.utilities.compile.numpy.html">numpy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.utilities.compile.torch.html">torch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.utilities.env.get_var.html">get_var</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.utilities.env.is_enabled.html">is_enabled</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.utilities.Progressbar.html">Progressbar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.utilities.version.compare.html">compare</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../api/index.html" class="nav-link">API Reference</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../../api/mvpy.estimators.html" class="nav-link">mvpy.estimators</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">ReceptiveField</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="receptivefield">
+<h1>ReceptiveField<a class="headerlink" href="#receptivefield" title="Link to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvpy.estimators.ReceptiveField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.estimators.</span></span><span class="sig-name descname"><span class="pre">ReceptiveField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ridge'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg_cv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patterns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fit_intercept</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/estimators/receptivefield.py#L1490"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.ReceptiveField" title="Link to this definition">#</a></dt>
+<dd><p>Implements receptive field estimation (for multivariate temporal response functions or stimulus reconstruction).</p>
+<p>Generally, mTRF models are described by:</p>
+<div class="math notranslate nohighlight">
+\[r(t,n) = \sum_{\tau} w(\tau, n) s(t - \tau) + \varepsilon\]</div>
+<p>where <span class="math notranslate nohighlight">\(r(t,n)\)</span> is the reconstructed signal at timepoint <span class="math notranslate nohighlight">\(t\)</span> for channel <span class="math notranslate nohighlight">\(n\)</span>, <span class="math notranslate nohighlight">\(s(t)\)</span> 
+is the stimulus at time <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(w(\tau, n)\)</span> is the weight at time delay <span class="math notranslate nohighlight">\(\tau\)</span> for channel 
+<span class="math notranslate nohighlight">\(n\)</span>, and <span class="math notranslate nohighlight">\(\varepsilon\)</span> is the error.</p>
+<p>SR models are estimated as:</p>
+<div class="math notranslate nohighlight">
+\[s(t) = \sum_{n}\sum_{\tau} r(t + \tau, n) g(\tau, n)\]</div>
+<p>where <span class="math notranslate nohighlight">\(s(t)\)</span> is the reconstructed stimulus at time <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(r(t,n)\)</span> is the neural response
+at <span class="math notranslate nohighlight">\(t\)</span> and lagged by <span class="math notranslate nohighlight">\(\tau\)</span> for channel <span class="math notranslate nohighlight">\(n\)</span>, <span class="math notranslate nohighlight">\(g(\tau, n)\)</span> is the weight at 
+time delay <span class="math notranslate nohighlight">\(\tau\)</span> for channel <span class="math notranslate nohighlight">\(n\)</span>.</p>
+<p>For more information on mTRF or SR models, see <a class="reference internal" href="#r9a8450f7386a-1" id="id1">[1]</a>.</p>
+<p>Consequently, this class fundamentally solves the same problem as <a class="reference internal" href="mvpy.estimators.TimeDelayed.html#mvpy.estimators.TimeDelayed" title="mvpy.estimators.TimeDelayed"><code class="xref py py-class docutils literal notranslate"><span class="pre">TimeDelayed</span></code></a>.
+However, unlike <a class="reference internal" href="mvpy.estimators.TimeDelayed.html#mvpy.estimators.TimeDelayed" title="mvpy.estimators.TimeDelayed"><code class="xref py py-class docutils literal notranslate"><span class="pre">TimeDelayed</span></code></a>, this approach avoids creating and solving the
+full time-delayed design and outcome matrix. Instead, this approach uses the fact that we are fundamentally
+interested in (de-)convolution, which can be solved efficiently through estimation of auto- and cross-
+correlations in the Fourier domain. For more information on this approach, see <a class="reference internal" href="#r9a8450f7386a-2" id="id2">[2]</a> <a class="reference internal" href="#r9a8450f7386a-3" id="id3">[3]</a> <a class="reference internal" href="#r9a8450f7386a-4" id="id4">[4]</a>.</p>
+<p>Solving this in the Fourier domain can be extremely beneficial when the number of predictors <code class="docutils literal notranslate"><span class="pre">n_features</span></code>
+is small, but scales poorly for a higher number of <code class="docutils literal notranslate"><span class="pre">n_features</span></code> unless 
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">edge_correction</span></code> is explicitly disabled. Generally, we would
+recommend testing both <a class="reference internal" href="#mvpy.estimators.ReceptiveField" title="mvpy.estimators.ReceptiveField"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReceptiveField</span></code></a> and <a class="reference internal" href="mvpy.estimators.TimeDelayed.html#mvpy.estimators.TimeDelayed" title="mvpy.estimators.TimeDelayed"><code class="xref py py-class docutils literal notranslate"><span class="pre">TimeDelayed</span></code></a>
+on a realistic subset of the data before deciding for one of the two approaches.</p>
+<p>Like <a class="reference internal" href="mvpy.estimators.TimeDelayed.html#mvpy.estimators.TimeDelayed" title="mvpy.estimators.TimeDelayed"><code class="xref py py-class docutils literal notranslate"><span class="pre">TimeDelayed</span></code></a>, this class will automatically perform inner cross-validation
+if multiple values of <code class="xref py py-attr docutils literal notranslate"><span class="pre">alpha</span></code> are supplied.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>t_min</strong><span class="classifier">float</span></dt><dd><p>Minimum time point to fit (unlike TimeDelayed, this is relative to y).</p>
+</dd>
+<dt><strong>t_max</strong><span class="classifier">float</span></dt><dd><p>Maximum time point to fit (unlike TimeDelayed, this is relative to y). Must be greater than t_min.</p>
+</dd>
+<dt><strong>fs</strong><span class="classifier">int</span></dt><dd><p>Sampling frequency.</p>
+</dd>
+<dt><strong>alpha</strong><span class="classifier">int | float | np.ndarray | torch.Tensor | List, default=1.0</span></dt><dd><p>Alpha penalties as float or of shape (n_penalties,). If not float, cross-validation will be employed (see <code class="xref py py-attr docutils literal notranslate"><span class="pre">reg_cv</span></code>).</p>
+</dd>
+<dt><strong>reg_type</strong><span class="classifier">{‘ridge’, ‘laplacian’, List}, default=’ridge’</span></dt><dd><p>Type of regularisation to employ (either ‘ridge’ or ‘laplacian’ or tuple describing <code class="docutils literal notranslate"><span class="pre">(time,</span> <span class="pre">features)</span></code>).</p>
+</dd>
+<dt><strong>reg_cv</strong><span class="classifier">{int, ‘LOO’, mvpy.crossvalidation.KFold}, default=5</span></dt><dd><p>If alpha is list or array, what cross-validation scheme should we use? Integers are interpeted as <code class="xref py py-attr docutils literal notranslate"><span class="pre">n_splits</span></code> for <a class="reference internal" href="mvpy.crossvalidation.KFold.html#mvpy.crossvalidation.KFold" title="mvpy.crossvalidation.KFold"><code class="xref py py-class docutils literal notranslate"><span class="pre">KFold</span></code></a>. String input <code class="docutils literal notranslate"><span class="pre">'LOO'</span></code> will use <a class="reference internal" href="mvpy.estimators.RidgeCV.html#mvpy.estimators.RidgeCV" title="mvpy.estimators.RidgeCV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RidgeCV</span></code></a> to solve LOO-CV over alphas, but is available only for <code class="xref py py-attr docutils literal notranslate"><span class="pre">reg_type</span></code> <code class="docutils literal notranslate"><span class="pre">'ridge'</span></code>. Alternatively, a cross-validator that exposes a <a class="reference internal" href="mvpy.crossvalidation.KFold.html#mvpy.crossvalidation.KFold.split" title="mvpy.crossvalidation.KFold.split"><code class="xref py py-meth docutils literal notranslate"><span class="pre">split()</span></code></a> method can be supplied.</p>
+</dd>
+<dt><strong>patterns</strong><span class="classifier">bool, default=False</span></dt><dd><p>Should we estimate the patterns from coefficients and data (useful only for stimulus reconstruction, not mTRF)?</p>
+</dd>
+<dt><strong>fit_intercept</strong><span class="classifier">bool, default=True</span></dt><dd><p>Should we fit an intercept for this model?</p>
+</dd>
+<dt><strong>edge_correction</strong><span class="classifier">bool, default=True</span></dt><dd><p>Should we apply edge corrections to auto-correlations?</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>t_min</strong><span class="classifier">float</span></dt><dd><p>Minimum time point to fit (unlike TimeDelayed, this is relative to y).</p>
+</dd>
+<dt><strong>t_max</strong><span class="classifier">float</span></dt><dd><p>Maximum time point to fit (unlike TimeDelayed, this is relative to y). Must be greater than t_min.</p>
+</dd>
+<dt><strong>fs</strong><span class="classifier">int</span></dt><dd><p>Sampling frequency.</p>
+</dd>
+<dt><strong>alpha</strong><span class="classifier">int | float | np.ndarray | torch.Tensor | List, default=1.0</span></dt><dd><p>Alpha penalties as float or of shape <code class="docutils literal notranslate"><span class="pre">(n_penalties,)</span></code>. If not float, cross-validation will be employed (see <code class="xref py py-attr docutils literal notranslate"><span class="pre">reg_cv</span></code>).</p>
+</dd>
+<dt><strong>reg_type</strong><span class="classifier">{‘ridge’, ‘laplacian’, List}, default=’ridge’</span></dt><dd><p>Type of regularisation to employ (either ‘ridge’ or ‘laplacian’ or tuple describing <code class="docutils literal notranslate"><span class="pre">(time,</span> <span class="pre">features)</span></code>).</p>
+</dd>
+<dt><strong>reg_cv</strong><span class="classifier">{int, ‘LOO’, mvpy.crossvalidation.KFold}, default=5</span></dt><dd><p>If alpha is list or array, what cross-validation scheme should we use? Integers are interpeted as <code class="xref py py-attr docutils literal notranslate"><span class="pre">n_splits</span></code> for <a class="reference internal" href="mvpy.crossvalidation.KFold.html#mvpy.crossvalidation.KFold" title="mvpy.crossvalidation.KFold"><code class="xref py py-class docutils literal notranslate"><span class="pre">KFold</span></code></a>. String input <code class="docutils literal notranslate"><span class="pre">'LOO'</span></code> will use <a class="reference internal" href="mvpy.estimators.RidgeCV.html#mvpy.estimators.RidgeCV" title="mvpy.estimators.RidgeCV"><code class="xref py py-class docutils literal notranslate"><span class="pre">RidgeCV</span></code></a> to solve LOO-CV over alphas, but is available only for <code class="xref py py-attr docutils literal notranslate"><span class="pre">reg_type</span></code> <code class="docutils literal notranslate"><span class="pre">'ridge'</span></code>. Alternatively, a cross-validator that exposes a <a class="reference internal" href="mvpy.crossvalidation.KFold.html#mvpy.crossvalidation.KFold.split" title="mvpy.crossvalidation.KFold.split"><code class="xref py py-meth docutils literal notranslate"><span class="pre">split()</span></code></a> method can be supplied.</p>
+</dd>
+<dt><strong>patterns</strong><span class="classifier">bool, default=False</span></dt><dd><p>Should we estimate the patterns from coefficients and data (useful only for stimulus reconstruction, not mTRF)?</p>
+</dd>
+<dt><strong>fit_intercept</strong><span class="classifier">bool, default=True</span></dt><dd><p>Should we fit an intercept for this model?</p>
+</dd>
+<dt><strong>edge_correction</strong><span class="classifier">bool, default=True</span></dt><dd><p>Should we apply edge corrections to auto-correlations?</p>
+</dd>
+<dt><strong>s_min</strong><span class="classifier">int</span></dt><dd><p>t_min converted to samples.</p>
+</dd>
+<dt><strong>s_max</strong><span class="classifier">int</span></dt><dd><p>t_max converted to samples.</p>
+</dd>
+<dt><strong>window</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The TRF window ranging from s_min-s_max of shape <code class="docutils literal notranslate"><span class="pre">(n_trf,)</span></code>.</p>
+</dd>
+<dt><strong>n_features_</strong><span class="classifier">int</span></dt><dd><p>Number of features in <span class="math notranslate nohighlight">\(X\)</span>.</p>
+</dd>
+<dt><strong>n_channels_</strong><span class="classifier">int</span></dt><dd><p>Number of channels in <span class="math notranslate nohighlight">\(y\)</span>.</p>
+</dd>
+<dt><strong>n_trf_</strong><span class="classifier">int</span></dt><dd><p>Number of timepoints in the estimated response functions.</p>
+</dd>
+<dt><strong>cov_</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Covariance from auto-correlations of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_features</span> <span class="pre">*</span> <span class="pre">n_trf,</span> <span class="pre">n_features</span> <span class="pre">*</span> <span class="pre">n_trf)</span></code>.</p>
+</dd>
+<dt><strong>coef_</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Estimated coefficients of shape <code class="docutils literal notranslate"><span class="pre">(n_channels,</span> <span class="pre">n_features,</span> <span class="pre">n_trf)</span></code>.</p>
+</dd>
+<dt><strong>pattern_</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>If computed, estimated pattern of shape <code class="docutils literal notranslate"><span class="pre">(n_channels,</span> <span class="pre">n_features,</span> <span class="pre">n_trf)</span></code>.</p>
+</dd>
+<dt><strong>intercept_</strong><span class="classifier">float | np.ndarray | torch.Tensor</span></dt><dd><p>Estimated intercepts of shape <code class="docutils literal notranslate"><span class="pre">(n_channels,)</span></code> or <code class="docutils literal notranslate"><span class="pre">float</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="mvpy.estimators.TimeDelayed.html#mvpy.estimators.TimeDelayed" title="mvpy.estimators.TimeDelayed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mvpy.estimators.TimeDelayed</span></code></a></dt><dd><p>An alternative mTRF/SR estimator that solves the time-expanded design matrix.</p>
+</dd>
+<dt><a class="reference internal" href="mvpy.crossvalidation.KFold.html#mvpy.crossvalidation.KFold" title="mvpy.crossvalidation.KFold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mvpy.crossvalidation.KFold</span></code></a>, <a class="reference internal" href="mvpy.crossvalidation.RepeatedKFold.html#mvpy.crossvalidation.RepeatedKFold" title="mvpy.crossvalidation.RepeatedKFold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mvpy.crossvalidation.RepeatedKFold</span></code></a>, <a class="reference internal" href="mvpy.crossvalidation.StratifiedKFold.html#mvpy.crossvalidation.StratifiedKFold" title="mvpy.crossvalidation.StratifiedKFold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mvpy.crossvalidation.StratifiedKFold</span></code></a>, <a class="reference internal" href="mvpy.crossvalidation.RepeatedStratifiedKFold.html#mvpy.crossvalidation.RepeatedStratifiedKFold" title="mvpy.crossvalidation.RepeatedStratifiedKFold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mvpy.crossvalidation.RepeatedStratifiedKFold</span></code></a></dt><dd><p>Cross-validation classes for automatically testing multiple values of <code class="xref py py-attr docutils literal notranslate"><span class="pre">alpha</span></code>.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<p>For SR models it is recommended to also set <code class="xref py py-attr docutils literal notranslate"><span class="pre">patterns</span></code> 
+to <code class="docutils literal notranslate"><span class="pre">True</span></code> to estimate not only the coefficients but also the patterns that were actually used for 
+reconstructing stimuli. For more information, see <a class="reference internal" href="#r9a8450f7386a-5" id="id5">[5]</a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Unlike <a class="reference internal" href="mvpy.estimators.TimeDelayed.html#mvpy.estimators.TimeDelayed" title="mvpy.estimators.TimeDelayed"><code class="xref py py-class docutils literal notranslate"><span class="pre">TimeDelayed</span></code></a>, this class expects <code class="xref py py-attr docutils literal notranslate"><span class="pre">t_min</span></code> 
+and <code class="xref py py-attr docutils literal notranslate"><span class="pre">t_max</span></code> to be causal in <span class="math notranslate nohighlight">\(y\)</span>. Consequently,
+positive values mean <span class="math notranslate nohighlight">\(X(t)\)</span> asserts influence over <span class="math notranslate nohighlight">\(y(t + \tau)\)</span>. This is in 
+line with MNE’s behaviour.</p>
+</div>
+<p class="rubric">References</p>
+<div role="list" class="citation-list">
+<div class="citation" id="r9a8450f7386a-1" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Crosse, M.J., Di Liberto, G.M., Bednar, A., &amp; Lalor, E.C. (2016). The multivariate temporal response function (mTRF) toolbox: A MATLAB toolbox for relating neural signals to continuous stimuli. Frontiers in Human Neuroscience, 10, 604. 10.3389/fnhum.2016.00604</p>
+</div>
+<div class="citation" id="r9a8450f7386a-2" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Willmore, B., &amp; Smyth, D. (2009). Methods for first-order kernel estimation: Simple-cell receptive fields from responses to natural scenes. Network: Computation in Neural Systems, 14, 553-577. 10.1088/0954-898X_14_3_309</p>
+</div>
+<div class="citation" id="r9a8450f7386a-3" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>Theunissen, F.E., David, S.V., Singh, N.C., Hsu, A., Vinje, W.E., &amp; Gallant, J.L. (2001). Estimating spatio-temporal receptive fields of auditory and visual neurons from their responses to natural stimuli. Network: Computation in Neural Systems, 12, 289-316. 10.1080/net.12.3.289.316</p>
+</div>
+<div class="citation" id="r9a8450f7386a-4" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">4</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://mne.tools/stable/generated/mne.decoding.ReceptiveField.html">https://mne.tools/stable/generated/mne.decoding.ReceptiveField.html</a></p>
+</div>
+<div class="citation" id="r9a8450f7386a-5" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">5</a><span class="fn-bracket">]</span></span>
+<p>Haufe, S., Meinecke, F., Görgen, K., Dähne, S., Haynes, J.D., Blankertz, B., &amp; Bießmann, F. (2014). On the interpretation of weight vectors of linear models in multivariate neuroimaging. NeuroImage, 87, 96-110. 10.1016/j.neuroimage.2013.10.067</p>
+</div>
+</div>
+<p class="rubric">Examples</p>
+<p>For mTRF estimation, we can do:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.estimators</span><span class="w"> </span><span class="kn">import</span> <span class="n">ReceptiveField</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ß</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">conv1d</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">ß</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">,:],</span> <span class="n">padding</span> <span class="o">=</span> <span class="s1">&#39;same&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trf</span> <span class="o">=</span> <span class="n">ReceptiveField</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">1e-5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">coef_</span>
+<span class="go">tensor([[[0.9912, 2.0055, 2.9974, 1.9930, 0.9842]]])</span>
+</pre></div>
+</div>
+<p>For stimulus reconstruction, we can do:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.estimators</span><span class="w"> </span><span class="kn">import</span> <span class="n">ReceptiveField</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ß</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">50</span><span class="p">)[</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">,:]</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">conv1d</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">ß</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">,:],</span> <span class="n">padding</span> <span class="o">=</span> <span class="s1">&#39;same&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> <span class="n">X</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sr</span> <span class="o">=</span> <span class="n">ReceptiveField</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="n">patterns</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">,:]</span>
+<span class="go">tensor([ 0.2148,  0.7017,  1.4021,  2.3925,  3.5046,  4.4022,  5.4741,  6.4759,</span>
+<span class="go">         7.5530,  8.4915,  9.6014,  10.5186, 11.5872, 12.6197, 13.5862, 14.6769,</span>
+<span class="go">         15.6523, 16.6765, 17.6622, 18.7172, 19.7117, 20.7994, 21.7023, 22.7885,</span>
+<span class="go">         23.8434, 24.7849, 25.8697, 26.8705, 27.8523, 28.9028, 29.9428, 30.9342,</span>
+<span class="go">         31.9401, 32.9729, 33.9704, 34.9847, 36.0325, 37.0251, 38.0297, 39.0678,</span>
+<span class="go">         40.0847, 41.0827, 42.1410, 43.0924, 44.2115, 45.1548, 41.9511, 45.9482,</span>
+<span class="go">         32.2861, 76.4690])</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.ReceptiveField.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../../source/mvpy.estimators.html#mvpy.estimators.receptivefield.ReceptiveField" title="mvpy.estimators.receptivefield.ReceptiveField"><span class="pre">ReceptiveField</span></a></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/estimators/receptivefield.py#L1700"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.ReceptiveField.fit" title="Link to this definition">#</a></dt>
+<dd><p>Fit the estimator, optionally with cross-validation over penalties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Input data of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_features,</span> <span class="pre">n_timepoints)</span></code>.</p>
+</dd>
+<dt><strong>y</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Input data of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_channels,</span> <span class="pre">n_timepoints)</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>rf</strong><span class="classifier">mvpy.estimators._ReceptiveField_numpy | mvpy.estimators._ReceptiveField_torch</span></dt><dd><p>The fitted ReceptiveField estimator.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.ReceptiveField.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/estimators/receptivefield.py#L1718"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.ReceptiveField.predict" title="Link to this definition">#</a></dt>
+<dd><p>Make predictions from model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Input data of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_features,</span> <span class="pre">n_timepoints)</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>y_h</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Predicted responses of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_channels,</span> <span class="pre">n_timepoints)</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="mvpy.estimators.KernelRidgeCV.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">KernelRidgeCV</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="mvpy.estimators.RidgeClassifier.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">RidgeClassifier</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    
+<ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.ReceptiveField"><code class="docutils literal notranslate"><span class="pre">ReceptiveField</span></code></a><ul class="nav section-nav flex-column visible">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.ReceptiveField.fit"><code class="docutils literal notranslate"><span class="pre">fit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.ReceptiveField.predict"><code class="docutils literal notranslate"><span class="pre">predict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+
+
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/modules/generated/mvpy.estimators.ReceptiveField.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Fabian Schneider.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

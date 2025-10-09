@@ -1,0 +1,43 @@
+:html_theme.sidebar_secondary.remove:
+
+
+.. _h_ref:
+
+
+mvpy.math
+=========
+
+.. automodule:: mvpy.math
+
+
+
+
+
+
+
+
+
+
+.. autosummary::
+  :nosignatures:
+  :toctree: ../modules/generated/
+  :template: base.rst
+
+
+  accuracy
+  cosine
+  cosine_d
+  cv_euclidean
+  cv_mahalanobis
+  euclidean
+  kernel_linear
+  kernel_poly
+  kernel_rbf
+  kernel_sigmoid
+  mahalanobis
+  pearsonr
+  pearsonr_d
+  rank
+  roc_auc
+  spearmanr
+  spearmanr_d

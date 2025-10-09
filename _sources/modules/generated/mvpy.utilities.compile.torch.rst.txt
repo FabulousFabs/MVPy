@@ -1,0 +1,10 @@
+﻿torch
+=====
+
+.. currentmodule:: mvpy.utilities.compile
+
+.. autofunction:: torch
+
+.. minigallery:: mvpy.utilities.compile.torch
+   :add-heading: Gallery examples
+   :heading-level: -

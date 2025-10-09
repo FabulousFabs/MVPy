@@ -1,0 +1,10 @@
+﻿accuracy
+========
+
+.. currentmodule:: mvpy.math
+
+.. autofunction:: accuracy
+
+.. minigallery:: mvpy.math.accuracy
+   :add-heading: Gallery examples
+   :heading-level: -

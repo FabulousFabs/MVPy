@@ -1,0 +1,13 @@
+﻿SVC
+===
+
+.. currentmodule:: mvpy.estimators
+
+.. autoclass:: SVC
+   :members:
+   :inherited-members:
+   :special-members: __call__
+
+.. minigallery:: mvpy.estimators.SVC mvpy.estimators.SVC.__delattr__ mvpy.estimators.SVC.__dir__ mvpy.estimators.SVC.__eq__ mvpy.estimators.SVC.__format__ mvpy.estimators.SVC.__ge__ mvpy.estimators.SVC.__getattribute__ mvpy.estimators.SVC.__gt__ mvpy.estimators.SVC.__hash__ mvpy.estimators.SVC.__init__ mvpy.estimators.SVC.__le__ mvpy.estimators.SVC.__lt__ mvpy.estimators.SVC.__ne__ mvpy.estimators.SVC.__new__ mvpy.estimators.SVC.__reduce__ mvpy.estimators.SVC.__reduce_ex__ mvpy.estimators.SVC.__setattr__ mvpy.estimators.SVC.__sizeof__ mvpy.estimators.SVC.__str__ mvpy.estimators.SVC.__subclasshook__ mvpy.estimators.SVC._get_estimator mvpy.estimators.SVC.clone mvpy.estimators.SVC.copy mvpy.estimators.SVC.decision_function mvpy.estimators.SVC.fit mvpy.estimators.SVC.predict mvpy.estimators.SVC.predict_proba mvpy.estimators.SVC.to_numpy mvpy.estimators.SVC.to_torch 
+   :add-heading: Gallery examples
+   :heading-level: -

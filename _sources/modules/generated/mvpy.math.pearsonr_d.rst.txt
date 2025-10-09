@@ -1,0 +1,10 @@
+﻿pearsonr\_d
+===========
+
+.. currentmodule:: mvpy.math
+
+.. autofunction:: pearsonr_d
+
+.. minigallery:: mvpy.math.pearsonr_d
+   :add-heading: Gallery examples
+   :heading-level: -

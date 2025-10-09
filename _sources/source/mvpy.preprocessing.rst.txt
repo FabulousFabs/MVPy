@@ -1,0 +1,45 @@
+mvpy.preprocessing package
+==========================
+
+Submodules
+----------
+
+mvpy.preprocessing.clamp module
+-------------------------------
+
+.. automodule:: mvpy.preprocessing.clamp
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.preprocessing.labelbinariser module
+----------------------------------------
+
+.. automodule:: mvpy.preprocessing.labelbinariser
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.preprocessing.robustscaler module
+--------------------------------------
+
+.. automodule:: mvpy.preprocessing.robustscaler
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.preprocessing.scaler module
+--------------------------------
+
+.. automodule:: mvpy.preprocessing.scaler
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: mvpy.preprocessing
+   :members:
+   :undoc-members:
+   :show-inheritance:

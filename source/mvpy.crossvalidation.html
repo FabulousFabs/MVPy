@@ -1,0 +1,1091 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>mvpy.crossvalidation package &#8212; MVPy</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/colors.css?v=cc94ab7d" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/custom.css?v=eec3fc85" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'source/mvpy.crossvalidation';</script>
+    <script src="../_static/scripts/dropdown.js?v=5b9cef8c"></script>
+    <script src="../_static/scripts/version-switcher.js?v=6ebe4089"></script>
+    <script src="../_static/scripts/sg_plotly_resize.js?v=dc4a1e18"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/mvpy-icon.png" class="logo__image only-light" alt=""/>
+    <img src="../_static/mvpy-icon.png" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">MVPy</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../auto_examples/index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/FabulousFabs/mvpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../auto_examples/index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/FabulousFabs/mvpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">mvpy.crossvalidation package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mvpy.dataset.html">mvpy.dataset package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mvpy.estimators.html">mvpy.estimators package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mvpy.math.html">mvpy.math package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mvpy.preprocessing.html">mvpy.preprocessing package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mvpy.signal.html">mvpy.signal package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mvpy.utilities.html">mvpy.utilities package</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">mvpy.crossvalidation package</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="mvpy-crossvalidation-package">
+<h1>mvpy.crossvalidation package<a class="headerlink" href="#mvpy-crossvalidation-package" title="Link to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-mvpy.crossvalidation.cross_val_score">
+<span id="mvpy-crossvalidation-cross-val-score-module"></span><h2>mvpy.crossvalidation.cross_val_score module<a class="headerlink" href="#module-mvpy.crossvalidation.cross_val_score" title="Link to this heading">#</a></h2>
+<p>A collection of classes and functions to automatically perform cross-validation.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvpy.crossvalidation.cross_val_score.CVResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.crossvalidation.cross_val_score.</span></span><span class="sig-name descname"><span class="pre">CVResult</span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/crossvalidation/cross_val_score.py#L13"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.crossvalidation.cross_val_score.CVResult" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mvpy.crossvalidation.cross_val_score.score">
+<span class="sig-prename descclassname"><span class="pre">mvpy.crossvalidation.cross_val_score.</span></span><span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/crossvalidation/cross_val_score.py#L17"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.crossvalidation.cross_val_score.score" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<p>The torch package contains data structures for multi-dimensional</p>
+</section>
+<section id="module-mvpy.crossvalidation.kfold">
+<span id="mvpy-crossvalidation-kfold-module"></span><h2>mvpy.crossvalidation.kfold module<a class="headerlink" href="#module-mvpy.crossvalidation.kfold" title="Link to this heading">#</a></h2>
+<p>A collection of classes for k-fold cross-validation.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvpy.crossvalidation.kfold.KFold">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.crossvalidation.kfold.</span></span><span class="sig-name descname"><span class="pre">KFold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_splits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Generator</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Generator</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/crossvalidation/kfold.py#L251"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.crossvalidation.kfold.KFold" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Implements a k-folds cross-validator.</p>
+<p>In principle, this class is redundant with sklearn.model_selection.KFold. However, for the torch backend, this class is useful because it automatically creates indices on the desired device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>n_splits</strong><span class="classifier">int, default=5</span></dt><dd><p>Number of splits to use.</p>
+</dd>
+<dt><strong>shuffle</strong><span class="classifier">bool, default=False</span></dt><dd><p>Should we shuffle indices before splitting?</p>
+</dd>
+<dt><strong>random_state</strong><span class="classifier">Optional[Union[int, np.random._generator.Generator, torch._C.Generator]], default=None</span></dt><dd><p>Random state to use for shuffling (either integer seed or numpy/torch generator), if any.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>n_splits</strong><span class="classifier">int, default=5</span></dt><dd><p>Number of splits to use.</p>
+</dd>
+<dt><strong>shuffle</strong><span class="classifier">bool, default=False</span></dt><dd><p>Should we shuffle indices before splitting?</p>
+</dd>
+<dt><strong>random_state</strong><span class="classifier">Optional[Union[int, np.random._generator.Generator, torch._C.Generator]], default=None</span></dt><dd><p>Random state to use for shuffling (either integer seed or numpy/torch generator), if any.</p>
+</dd>
+<dt><strong>rng_</strong><span class="classifier">Union[np.random._generator.Generator, torch._C.Generator]</span></dt><dd><p>Random generator derived from random_state.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>For reproducability when using shuffling, you can set the random_state to an integer.</p>
+<p>Note also that, when using shuffling, please make sure to instantiate and transform immediately to the backend you would like. Otherwise, each call to split will instantiate a new object with the same random seed. See examples for a demonstration.</p>
+<p class="rubric">Examples</p>
+<p>If we are not using shuffling, we can simply do:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.crossvalidation</span><span class="w"> </span><span class="kn">import</span> <span class="n">KFold</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kf</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">f_i</span><span class="p">,</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">)):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fold</span><span class="si">{</span><span class="n">f_i</span><span class="si">}</span><span class="s1">: train=</span><span class="si">{</span><span class="n">train</span><span class="si">}</span><span class="s1">    test=</span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">Fold0: train=tensor([2, 3, 4, 5, 6, 7, 8, 9])       test=tensor([0, 1])</span>
+<span class="go">Fold1: train=tensor([0, 1, 4, 5, 6, 7, 8, 9])       test=tensor([2, 3])</span>
+<span class="go">Fold2: train=tensor([0, 1, 2, 3, 6, 7, 8, 9])       test=tensor([4, 5])</span>
+<span class="go">Fold3: train=tensor([0, 1, 2, 3, 4, 5, 8, 9])       test=tensor([6, 7])</span>
+<span class="go">Fold4: train=tensor([0, 1, 2, 3, 4, 5, 6, 7])       test=tensor([8, 9])</span>
+</pre></div>
+</div>
+<p>However, let’s assume we want to use shuffling. We might be inclined to do:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.crossvalidation</span><span class="w"> </span><span class="kn">import</span> <span class="n">KFold</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kf</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">shuffle</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Run 1:&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">f_i</span><span class="p">,</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">)):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fold</span><span class="si">{</span><span class="n">f_i</span><span class="si">}</span><span class="s1">: train=</span><span class="si">{</span><span class="n">train</span><span class="si">}</span><span class="s1">    test=</span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Run 2:&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">f_i</span><span class="p">,</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">)):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fold</span><span class="si">{</span><span class="n">f_i</span><span class="si">}</span><span class="s1">: train=</span><span class="si">{</span><span class="n">train</span><span class="si">}</span><span class="s1">    test=</span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">Run 1:</span>
+<span class="go">Fold0: train=tensor([4, 1, 5])      test=tensor([0, 3, 2])</span>
+<span class="go">Fold1: train=tensor([0, 3, 2])      test=tensor([4, 1, 5])</span>
+<span class="go">Run 2:</span>
+<span class="go">Fold0: train=tensor([4, 1, 5])      test=tensor([0, 3, 2])</span>
+<span class="go">Fold1: train=tensor([0, 3, 2])      test=tensor([4, 1, 5])</span>
+</pre></div>
+</div>
+<p>Note that here we pass random_state to make this reproducible on your end. As you can see, the randomisation is now static across runs. This occurs because, up until the call to split the data, MVPy cannot consistently infer the desired data type. Therefore, the backend class is instantiated only upon calling split where types become explicit. However, this means that each call to split will re-instantiate the class. We can easily work around this in two ways:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.crossvalidation</span><span class="w"> </span><span class="kn">import</span> <span class="n">KFold</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kf</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">shuffle</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span><span class="o">.</span><span class="n">to_torch</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Run 1:&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">f_i</span><span class="p">,</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">)):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fold</span><span class="si">{</span><span class="n">f_i</span><span class="si">}</span><span class="s1">: train=</span><span class="si">{</span><span class="n">train</span><span class="si">}</span><span class="s1">    test=</span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Run 2:&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">f_i</span><span class="p">,</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">)):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fold</span><span class="si">{</span><span class="n">f_i</span><span class="si">}</span><span class="s1">: train=</span><span class="si">{</span><span class="n">train</span><span class="si">}</span><span class="s1">    test=</span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">Run 1:</span>
+<span class="go">Fold0: train=tensor([4, 1, 5])      test=tensor([0, 3, 2])</span>
+<span class="go">Fold1: train=tensor([0, 3, 2])      test=tensor([4, 1, 5])</span>
+<span class="go">Run 2:</span>
+<span class="go">Fold0: train=tensor([4, 0, 3])      test=tensor([5, 1, 2])</span>
+<span class="go">Fold1: train=tensor([5, 1, 2])      test=tensor([4, 0, 3])</span>
+</pre></div>
+</div>
+<p>Here, we explicitly instantiate a torch operator that is not reinstantiated across runs, which works perfectly. We could, however, also use an external generator to achieve the same result:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.crossvalidation</span><span class="w"> </span><span class="kn">import</span> <span class="n">KFold</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rng</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Generator</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rng</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kf</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">shuffle</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="n">rng</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Run 1:&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">f_i</span><span class="p">,</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">)):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fold</span><span class="si">{</span><span class="n">f_i</span><span class="si">}</span><span class="s1">: train=</span><span class="si">{</span><span class="n">train</span><span class="si">}</span><span class="s1">    test=</span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Run 2:&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">f_i</span><span class="p">,</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">)):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fold</span><span class="si">{</span><span class="n">f_i</span><span class="si">}</span><span class="s1">: train=</span><span class="si">{</span><span class="n">train</span><span class="si">}</span><span class="s1">    test=</span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">Run 1:</span>
+<span class="go">Fold0: train=tensor([4, 1, 5])      test=tensor([0, 3, 2])</span>
+<span class="go">Fold1: train=tensor([0, 3, 2])      test=tensor([4, 1, 5])</span>
+<span class="go">Run 2:</span>
+<span class="go">Fold0: train=tensor([4, 0, 3])      test=tensor([5, 1, 2])</span>
+<span class="go">Fold1: train=tensor([5, 1, 2])      test=tensor([4, 0, 3])</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.crossvalidation.kfold.KFold.split">
+<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/crossvalidation/kfold.py#L387"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.crossvalidation.kfold.KFold.split" title="Link to this definition">#</a></dt>
+<dd><p>Split the dataset into iterable (train, test).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>Input data of shape (n_samples, …)</p>
+</dd>
+<dt><strong>y</strong><span class="classifier">Optional[Union[np.ndarray, torch.Tensor]], default=None</span></dt><dd><p>Target data of shape (n_samples, …). Unused, but parameter available for consistency.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>kf</strong><span class="classifier">Union[collections.abc.Generator[tuple[np.ndarray, np.ndarray], None, None], collections.abc.Generator[tuple[torch.Tensor, torch.Tensor], None, None]]</span></dt><dd><p>Iterable generator of (train, test) pairs.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.crossvalidation.kfold.KFold.to_numpy">
+<span class="sig-name descname"><span class="pre">to_numpy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_KFold_numpy</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/crossvalidation/kfold.py#L434"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.crossvalidation.kfold.KFold.to_numpy" title="Link to this definition">#</a></dt>
+<dd><p>Convert class to torch backend.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>kf</strong><span class="classifier">_KFold_numpy</span></dt><dd><p>The k-fold cross-validator in numpy.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.crossvalidation.kfold.KFold.to_torch">
+<span class="sig-name descname"><span class="pre">to_torch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_KFold_torch</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/crossvalidation/kfold.py#L419"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.crossvalidation.kfold.KFold.to_torch" title="Link to this definition">#</a></dt>
+<dd><p>Convert class to torch backend.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>kf</strong><span class="classifier">_KFold_torch</span></dt><dd><p>The k-fold cross-validator in torch.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p>The torch package contains data structures for multi-dimensional</p>
+</section>
+<section id="module-mvpy.crossvalidation.repeatedkfold">
+<span id="mvpy-crossvalidation-repeatedkfold-module"></span><h2>mvpy.crossvalidation.repeatedkfold module<a class="headerlink" href="#module-mvpy.crossvalidation.repeatedkfold" title="Link to this heading">#</a></h2>
+<p>A collection of classes for repeated k-fold cross-validation.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvpy.crossvalidation.repeatedkfold.RepeatedKFold">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.crossvalidation.repeatedkfold.</span></span><span class="sig-name descname"><span class="pre">RepeatedKFold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_splits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_repeats</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Generator</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Generator</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/crossvalidation/repeatedkfold.py#L179"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.crossvalidation.repeatedkfold.RepeatedKFold" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Implements a repeated k-folds cross-validator.</p>
+<p>In principle, this class is redundant with sklearn.model_selection.RepeatedKFold. However, for the torch backend, this class is useful because it automatically creates indices on the desired device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>n_splits</strong><span class="classifier">int, default=5</span></dt><dd><p>Number of splits to use.</p>
+</dd>
+<dt><strong>n_repeats</strong><span class="classifier">int, default=1</span></dt><dd><p>Number of repeats to use.</p>
+</dd>
+<dt><strong>random_state</strong><span class="classifier">Optional[Union[int, np.random._generator.Generator, torch._C.Generator]], default=None</span></dt><dd><p>Random state to use for shuffling (either integer seed or numpy/torch generator), if any.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>n_splits</strong><span class="classifier">int, default=5</span></dt><dd><p>Number of splits to use.</p>
+</dd>
+<dt><strong>n_repeats</strong><span class="classifier">int, default=1</span></dt><dd><p>Number of repeats to use.</p>
+</dd>
+<dt><strong>random_state</strong><span class="classifier">Optional[Union[int, np.random._generator.Generator, torch._C.Generator]], default=None</span></dt><dd><p>Random state to use for shuffling (either integer seed or numpy/torch generator), if any.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>For reproducability when using shuffling, you can set the random_state to an integer.</p>
+<p>Note also that, when using shuffling, please make sure to instantiate and transform immediately to the backend you would like. Otherwise, each call to split will instantiate a new object with the same random seed.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.crossvalidation</span><span class="w"> </span><span class="kn">import</span> <span class="n">RepeatedKFold</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kf</span> <span class="o">=</span> <span class="n">RepeatedKFold</span><span class="p">(</span><span class="n">n_splits</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n_repeats</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">to_torch</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">f_i</span><span class="p">,</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">)):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fold</span><span class="si">{</span><span class="n">f_i</span><span class="si">}</span><span class="s1">: train=</span><span class="si">{</span><span class="n">train</span><span class="si">}</span><span class="s1">    test=</span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">Fold0: train=tensor([4, 1, 2])      test=tensor([0, 5, 3])</span>
+<span class="go">Fold1: train=tensor([0, 5, 3])      test=tensor([4, 1, 2])</span>
+<span class="go">Fold2: train=tensor([2, 1, 3])      test=tensor([5, 0, 4])</span>
+<span class="go">Fold3: train=tensor([5, 0, 4])      test=tensor([2, 1, 3])</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.crossvalidation.repeatedkfold.RepeatedKFold.split">
+<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/crossvalidation/repeatedkfold.py#L251"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.crossvalidation.repeatedkfold.RepeatedKFold.split" title="Link to this definition">#</a></dt>
+<dd><p>Repeatedly split the dataset into iterable (train, test).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>Input data of shape (n_samples, …)</p>
+</dd>
+<dt><strong>y</strong><span class="classifier">Optional[Union[np.ndarray, torch.Tensor]], default=None</span></dt><dd><p>Target data of shape (n_samples, …). Unused, but parameter available for consistency.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>kf</strong><span class="classifier">Union[collections.abc.Generator[tuple[np.ndarray, np.ndarray], None, None], collections.abc.Generator[tuple[torch.Tensor, torch.Tensor], None, None]]</span></dt><dd><p>Iterable generator of (train, test) pairs.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.crossvalidation.repeatedkfold.RepeatedKFold.to_numpy">
+<span class="sig-name descname"><span class="pre">to_numpy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_RepeatedKFold_numpy</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/crossvalidation/repeatedkfold.py#L298"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.crossvalidation.repeatedkfold.RepeatedKFold.to_numpy" title="Link to this definition">#</a></dt>
+<dd><p>Convert class to torch backend.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>kf</strong><span class="classifier">_RepeatedKFold_numpy</span></dt><dd><p>The repeated k-fold cross-validator in numpy.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.crossvalidation.repeatedkfold.RepeatedKFold.to_torch">
+<span class="sig-name descname"><span class="pre">to_torch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_RepeatedKFold_torch</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/crossvalidation/repeatedkfold.py#L283"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.crossvalidation.repeatedkfold.RepeatedKFold.to_torch" title="Link to this definition">#</a></dt>
+<dd><p>Convert class to torch backend.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>kf</strong><span class="classifier">_RepeatedKFold_torch</span></dt><dd><p>The repeated k-fold cross-validator in torch.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p>The torch package contains data structures for multi-dimensional</p>
+</section>
+<section id="module-mvpy.crossvalidation.repeatedstratifiedkfold">
+<span id="mvpy-crossvalidation-repeatedstratifiedkfold-module"></span><h2>mvpy.crossvalidation.repeatedstratifiedkfold module<a class="headerlink" href="#module-mvpy.crossvalidation.repeatedstratifiedkfold" title="Link to this heading">#</a></h2>
+<p>A collection of classes for repeated stratified k-fold cross-validation.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvpy.crossvalidation.repeatedstratifiedkfold.RepeatedStratifiedKFold">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.crossvalidation.repeatedstratifiedkfold.</span></span><span class="sig-name descname"><span class="pre">RepeatedStratifiedKFold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_splits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_repeats</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Generator</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Generator</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/crossvalidation/repeatedstratifiedkfold.py#L179"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.crossvalidation.repeatedstratifiedkfold.RepeatedStratifiedKFold" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Implements a repeated stratified k-folds cross-validator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>n_splits</strong><span class="classifier">int, default=5</span></dt><dd><p>Number of splits to use.</p>
+</dd>
+<dt><strong>n_repeats</strong><span class="classifier">int, default=1</span></dt><dd><p>Number of repeats to use.</p>
+</dd>
+<dt><strong>random_state</strong><span class="classifier">Optional[Union[int, np.random._generator.Generator, torch._C.Generator]], default=None</span></dt><dd><p>Random state to use for shuffling (either integer seed or numpy/torch generator), if any.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>n_splits</strong><span class="classifier">int, default=5</span></dt><dd><p>Number of splits to use.</p>
+</dd>
+<dt><strong>n_repeats</strong><span class="classifier">int, default=1</span></dt><dd><p>Number of repeats to use.</p>
+</dd>
+<dt><strong>random_state</strong><span class="classifier">Optional[Union[int, np.random._generator.Generator, torch._C.Generator]], default=None</span></dt><dd><p>Random state to use for shuffling (either integer seed or numpy/torch generator), if any.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>For reproducability when using shuffling, you can set the random_state to an integer.</p>
+<p>Note also that, when using shuffling, please make sure to instantiate and transform immediately to the backend you would like. Otherwise, each call to split will instantiate a new object with the same random seed.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.crossvalidation</span><span class="w"> </span><span class="kn">import</span> <span class="n">RepeatedStratifiedKFold</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">75</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">40</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">25</span> <span class="o">+</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kf</span> <span class="o">=</span> <span class="n">RepeatedStratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n_repeats</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">to_torch</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">f_i</span><span class="p">,</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">train_idx</span><span class="p">,</span> <span class="n">train_cnt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">train</span><span class="p">],</span> <span class="n">return_counts</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">_</span><span class="p">,</span> <span class="n">test_cnt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">test</span><span class="p">],</span> <span class="n">return_counts</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fold </span><span class="si">{</span><span class="n">f_i</span><span class="si">}</span><span class="s1">: classes=</span><span class="si">{</span><span class="n">train_idx</span><span class="si">}</span><span class="s1">     N(train)=</span><span class="si">{</span><span class="n">train_cnt</span><span class="si">}</span><span class="s1">    N(test)=</span><span class="si">{</span><span class="n">test_cnt</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">Fold 0: classes=tensor([0, 1, 2])   N(train)=tensor([20, 12,  5])   N(test)=tensor([20, 13,  5])</span>
+<span class="go">Fold 1: classes=tensor([0, 1, 2])   N(train)=tensor([20, 13,  5])   N(test)=tensor([20, 12,  5])</span>
+<span class="go">Fold 2: classes=tensor([0, 1, 2])   N(train)=tensor([20, 12,  5])   N(test)=tensor([20, 13,  5])</span>
+<span class="go">Fold 3: classes=tensor([0, 1, 2])   N(train)=tensor([20, 13,  5])   N(test)=tensor([20, 12,  5])</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.crossvalidation.repeatedstratifiedkfold.RepeatedStratifiedKFold.split">
+<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/crossvalidation/repeatedstratifiedkfold.py#L252"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.crossvalidation.repeatedstratifiedkfold.RepeatedStratifiedKFold.split" title="Link to this definition">#</a></dt>
+<dd><p>Repeatedly split the dataset into stratified iterable (train, test).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>Input data of shape (n_samples, …)</p>
+</dd>
+<dt><strong>y</strong><span class="classifier">Optional[Union[np.ndarray, torch.Tensor]], default=None</span></dt><dd><p>Target data of shape (n_samples, …). Unused, but parameter available for consistency.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>kf</strong><span class="classifier">Union[collections.abc.Generator[tuple[np.ndarray, np.ndarray], None, None], collections.abc.Generator[tuple[torch.Tensor, torch.Tensor], None, None]]</span></dt><dd><p>Iterable generator of (train, test) pairs.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.crossvalidation.repeatedstratifiedkfold.RepeatedStratifiedKFold.to_numpy">
+<span class="sig-name descname"><span class="pre">to_numpy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_RepeatedStratifiedKFold_numpy</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/crossvalidation/repeatedstratifiedkfold.py#L299"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.crossvalidation.repeatedstratifiedkfold.RepeatedStratifiedKFold.to_numpy" title="Link to this definition">#</a></dt>
+<dd><p>Convert class to torch backend.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>kf</strong><span class="classifier">_RepeatedKFold_numpy</span></dt><dd><p>The repeated k-fold cross-validator in numpy.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.crossvalidation.repeatedstratifiedkfold.RepeatedStratifiedKFold.to_torch">
+<span class="sig-name descname"><span class="pre">to_torch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_RepeatedStratifiedKFold_torch</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/crossvalidation/repeatedstratifiedkfold.py#L284"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.crossvalidation.repeatedstratifiedkfold.RepeatedStratifiedKFold.to_torch" title="Link to this definition">#</a></dt>
+<dd><p>Convert class to torch backend.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>kf</strong><span class="classifier">_RepeatedKFold_torch</span></dt><dd><p>The repeated k-fold cross-validator in torch.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p>The torch package contains data structures for multi-dimensional</p>
+</section>
+<section id="module-mvpy.crossvalidation.stratifiedkfold">
+<span id="mvpy-crossvalidation-stratifiedkfold-module"></span><h2>mvpy.crossvalidation.stratifiedkfold module<a class="headerlink" href="#module-mvpy.crossvalidation.stratifiedkfold" title="Link to this heading">#</a></h2>
+<p>A collection of classes for stratified k-fold cross-validation.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvpy.crossvalidation.stratifiedkfold.StratifiedKFold">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.crossvalidation.stratifiedkfold.</span></span><span class="sig-name descname"><span class="pre">StratifiedKFold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_splits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Generator</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Generator</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/crossvalidation/stratifiedkfold.py#L312"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.crossvalidation.stratifiedkfold.StratifiedKFold" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Implements a stratified k-folds cross-validator.</p>
+<p>Unlike sklearn, this will also stratify across features of (n_samples[, …], n_features[, n_timepoints]).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>n_splits</strong><span class="classifier">int, default=5</span></dt><dd><p>Number of splits to use.</p>
+</dd>
+<dt><strong>shuffle</strong><span class="classifier">bool, default=False</span></dt><dd><p>Should we shuffle indices before splitting?</p>
+</dd>
+<dt><strong>random_state</strong><span class="classifier">Optional[Union[int, np.random._generator.Generator, torch._C.Generator]], default=None</span></dt><dd><p>Random state to use for shuffling (either integer seed or numpy/torch generator), if any.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>n_splits</strong><span class="classifier">int, default=5</span></dt><dd><p>Number of splits to use.</p>
+</dd>
+<dt><strong>shuffle</strong><span class="classifier">bool, default=False</span></dt><dd><p>Should we shuffle indices before splitting?</p>
+</dd>
+<dt><strong>random_state</strong><span class="classifier">Optional[Union[int, np.random._generator.Generator, torch._C.Generator]], default=None</span></dt><dd><p>Random state to use for shuffling (either integer seed or numpy/torch generator), if any.</p>
+</dd>
+<dt><strong>rng_</strong><span class="classifier">Union[np.random._generator.Generator, torch._C.Generator]</span></dt><dd><p>Random generator derived from random_state.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>For reproducability when using shuffling, you can set the random_state to an integer.</p>
+<p>Note also that, when using shuffling, please make sure to instantiate and transform immediately to the backend you would like. Otherwise, each call to split will instantiate a new object with the same random seed. See examples for a demonstration.</p>
+<p class="rubric">Examples</p>
+<p>First, let’s assume we have just one feature:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.crossvalidation</span><span class="w"> </span><span class="kn">import</span> <span class="n">StratifiedKFold</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">75</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">40</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">25</span> <span class="o">+</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kf</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">f_i</span><span class="p">,</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">train_idx</span><span class="p">,</span> <span class="n">train_cnt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">train</span><span class="p">],</span> <span class="n">return_counts</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">_</span><span class="p">,</span> <span class="n">test_cnt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">test</span><span class="p">],</span> <span class="n">return_counts</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fold </span><span class="si">{</span><span class="n">f_i</span><span class="si">}</span><span class="s1">: classes=</span><span class="si">{</span><span class="n">train_idx</span><span class="si">}</span><span class="s1">     N(train)=</span><span class="si">{</span><span class="n">train_cnt</span><span class="si">}</span><span class="s1">    N(test)=</span><span class="si">{</span><span class="n">test_cnt</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">Fold 0: classes=tensor([0, 1, 2])   N(train)=tensor([32, 20,  8])   N(test)=tensor([8, 5, 2])</span>
+<span class="go">Fold 1: classes=tensor([0, 1, 2])   N(train)=tensor([32, 20,  8])   N(test)=tensor([8, 5, 2])</span>
+<span class="go">Fold 2: classes=tensor([0, 1, 2])   N(train)=tensor([32, 20,  8])   N(test)=tensor([8, 5, 2])</span>
+<span class="go">Fold 3: classes=tensor([0, 1, 2])   N(train)=tensor([32, 20,  8])   N(test)=tensor([8, 5, 2])</span>
+<span class="go">Fold 4: classes=tensor([0, 1, 2])   N(train)=tensor([32, 20,  8])   N(test)=tensor([8, 5, 2])</span>
+</pre></div>
+</div>
+<p>Second, let’s assume we have multiple features and we want to shuffle indices. Note that this will also work if features have overlapping class names, but for clarity here we use different offsets:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.crossvalidation</span><span class="w"> </span><span class="kn">import</span> <span class="n">StratifiedKFold</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">75</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y0</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">40</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">25</span> <span class="o">+</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)[:,</span><span class="kc">None</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="mi">15</span> <span class="o">+</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">*</span> <span class="mi">45</span> <span class="o">+</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">*</span> <span class="mi">15</span><span class="p">)[:,</span><span class="kc">None</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">y0</span><span class="p">,</span> <span class="n">y1</span><span class="p">),</span> <span class="n">dim</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kf</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">shuffle</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">to_torch</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">f_i</span><span class="p">,</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">train_idx</span><span class="p">,</span> <span class="n">train_cnt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">train</span><span class="p">],</span> <span class="n">return_counts</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">_</span><span class="p">,</span> <span class="n">test_cnt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">test</span><span class="p">],</span> <span class="n">return_counts</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fold </span><span class="si">{</span><span class="n">f_i</span><span class="si">}</span><span class="s1">: classes=</span><span class="si">{</span><span class="n">train_idx</span><span class="si">}</span><span class="s1">     N(train)=</span><span class="si">{</span><span class="n">train_cnt</span><span class="si">}</span><span class="s1">    N(test)=</span><span class="si">{</span><span class="n">test_cnt</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">Fold 0: classes=tensor([0, 1, 2, 3, 4, 5])  N(train)=tensor([32, 20,  8, 12, 36, 12])       N(test)=tensor([8, 5, 2, 3, 9, 3])</span>
+<span class="go">Fold 1: classes=tensor([0, 1, 2, 3, 4, 5])  N(train)=tensor([32, 20,  8, 12, 36, 12])       N(test)=tensor([8, 5, 2, 3, 9, 3])</span>
+<span class="go">Fold 2: classes=tensor([0, 1, 2, 3, 4, 5])  N(train)=tensor([32, 20,  8, 12, 36, 12])       N(test)=tensor([8, 5, 2, 3, 9, 3])</span>
+<span class="go">Fold 3: classes=tensor([0, 1, 2, 3, 4, 5])  N(train)=tensor([32, 20,  8, 12, 36, 12])       N(test)=tensor([8, 5, 2, 3, 9, 3])</span>
+<span class="go">Fold 4: classes=tensor([0, 1, 2, 3, 4, 5])  N(train)=tensor([32, 20,  8, 12, 36, 12])       N(test)=tensor([8, 5, 2, 3, 9, 3])</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.crossvalidation.stratifiedkfold.StratifiedKFold.split">
+<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/crossvalidation/stratifiedkfold.py#L411"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.crossvalidation.stratifiedkfold.StratifiedKFold.split" title="Link to this definition">#</a></dt>
+<dd><p>Split the dataset into stratified iterable (train, test).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>Input data of shape (n_samples, …)</p>
+</dd>
+<dt><strong>y</strong><span class="classifier">Optional[Union[np.ndarray, torch.Tensor]], default=None</span></dt><dd><p>Target data of shape (n_samples, …). Unused, but parameter available for consistency.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>kf</strong><span class="classifier">Union[collections.abc.Generator[tuple[np.ndarray, np.ndarray], None, None], collections.abc.Generator[tuple[torch.Tensor, torch.Tensor], None, None]]</span></dt><dd><p>Iterable generator of (train, test) pairs.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.crossvalidation.stratifiedkfold.StratifiedKFold.to_numpy">
+<span class="sig-name descname"><span class="pre">to_numpy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_StratifiedKFold_numpy</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/crossvalidation/stratifiedkfold.py#L458"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.crossvalidation.stratifiedkfold.StratifiedKFold.to_numpy" title="Link to this definition">#</a></dt>
+<dd><p>Convert class to torch backend.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>kf</strong><span class="classifier">_StratifiedKFold_numpy</span></dt><dd><p>The k-fold cross-validator in numpy.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.crossvalidation.stratifiedkfold.StratifiedKFold.to_torch">
+<span class="sig-name descname"><span class="pre">to_torch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_StratifiedKFold_torch</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/crossvalidation/stratifiedkfold.py#L443"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.crossvalidation.stratifiedkfold.StratifiedKFold.to_torch" title="Link to this definition">#</a></dt>
+<dd><p>Convert class to torch backend.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>kf</strong><span class="classifier">_StratifiedKFold_torch</span></dt><dd><p>The k-fold cross-validator in torch.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p>The torch package contains data structures for multi-dimensional</p>
+</section>
+<section id="module-mvpy.crossvalidation.validator">
+<span id="mvpy-crossvalidation-validator-module"></span><h2>mvpy.crossvalidation.validator module<a class="headerlink" href="#module-mvpy.crossvalidation.validator" title="Link to this heading">#</a></h2>
+<p>A collection of classes and functions to automatically perform cross-validation.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvpy.crossvalidation.validator.Validator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.crossvalidation.validator.</span></span><span class="sig-name descname"><span class="pre">Validator</span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/crossvalidation/validator.py#L17"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.crossvalidation.validator.Validator" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></p>
+</dd></dl>
+
+<p>Configure global settings and get information about the working environment.</p>
+<p>The torch package contains data structures for multi-dimensional</p>
+</section>
+<section id="module-mvpy.crossvalidation">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mvpy.crossvalidation" title="Link to this heading">#</a></h2>
+<p>A collection of classes and functions to automatically perform cross-validation.</p>
+<p>A collection of classes for k-fold cross-validation.</p>
+<p>A collection of classes for repeated k-fold cross-validation.</p>
+<p>A collection of classes for repeated stratified k-fold cross-validation.</p>
+<p>A collection of classes for stratified k-fold cross-validation.</p>
+<p>A collection of classes and functions to automatically perform cross-validation.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.crossvalidation.cross_val_score">mvpy.crossvalidation.cross_val_score module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.crossvalidation.cross_val_score.CVResult"><code class="docutils literal notranslate"><span class="pre">CVResult</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.crossvalidation.cross_val_score.score"><code class="docutils literal notranslate"><span class="pre">score()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.crossvalidation.kfold">mvpy.crossvalidation.kfold module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.crossvalidation.kfold.KFold"><code class="docutils literal notranslate"><span class="pre">KFold</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.crossvalidation.kfold.KFold.split"><code class="docutils literal notranslate"><span class="pre">KFold.split()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.crossvalidation.kfold.KFold.to_numpy"><code class="docutils literal notranslate"><span class="pre">KFold.to_numpy()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.crossvalidation.kfold.KFold.to_torch"><code class="docutils literal notranslate"><span class="pre">KFold.to_torch()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.crossvalidation.repeatedkfold">mvpy.crossvalidation.repeatedkfold module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.crossvalidation.repeatedkfold.RepeatedKFold"><code class="docutils literal notranslate"><span class="pre">RepeatedKFold</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.crossvalidation.repeatedkfold.RepeatedKFold.split"><code class="docutils literal notranslate"><span class="pre">RepeatedKFold.split()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.crossvalidation.repeatedkfold.RepeatedKFold.to_numpy"><code class="docutils literal notranslate"><span class="pre">RepeatedKFold.to_numpy()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.crossvalidation.repeatedkfold.RepeatedKFold.to_torch"><code class="docutils literal notranslate"><span class="pre">RepeatedKFold.to_torch()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.crossvalidation.repeatedstratifiedkfold">mvpy.crossvalidation.repeatedstratifiedkfold module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.crossvalidation.repeatedstratifiedkfold.RepeatedStratifiedKFold"><code class="docutils literal notranslate"><span class="pre">RepeatedStratifiedKFold</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.crossvalidation.repeatedstratifiedkfold.RepeatedStratifiedKFold.split"><code class="docutils literal notranslate"><span class="pre">RepeatedStratifiedKFold.split()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.crossvalidation.repeatedstratifiedkfold.RepeatedStratifiedKFold.to_numpy"><code class="docutils literal notranslate"><span class="pre">RepeatedStratifiedKFold.to_numpy()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.crossvalidation.repeatedstratifiedkfold.RepeatedStratifiedKFold.to_torch"><code class="docutils literal notranslate"><span class="pre">RepeatedStratifiedKFold.to_torch()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.crossvalidation.stratifiedkfold">mvpy.crossvalidation.stratifiedkfold module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.crossvalidation.stratifiedkfold.StratifiedKFold"><code class="docutils literal notranslate"><span class="pre">StratifiedKFold</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.crossvalidation.stratifiedkfold.StratifiedKFold.split"><code class="docutils literal notranslate"><span class="pre">StratifiedKFold.split()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.crossvalidation.stratifiedkfold.StratifiedKFold.to_numpy"><code class="docutils literal notranslate"><span class="pre">StratifiedKFold.to_numpy()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.crossvalidation.stratifiedkfold.StratifiedKFold.to_torch"><code class="docutils literal notranslate"><span class="pre">StratifiedKFold.to_torch()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.crossvalidation.validator">mvpy.crossvalidation.validator module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.crossvalidation.validator.Validator"><code class="docutils literal notranslate"><span class="pre">Validator</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mvpy.crossvalidation">Module contents</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/source/mvpy.crossvalidation.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Fabian Schneider.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

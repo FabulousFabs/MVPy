@@ -1,0 +1,10 @@
+﻿kernel\_sigmoid
+===============
+
+.. currentmodule:: mvpy.math
+
+.. autofunction:: kernel_sigmoid
+
+.. minigallery:: mvpy.math.kernel_sigmoid
+   :add-heading: Gallery examples
+   :heading-level: -

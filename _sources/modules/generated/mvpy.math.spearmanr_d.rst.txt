@@ -1,0 +1,10 @@
+﻿spearmanr\_d
+============
+
+.. currentmodule:: mvpy.math
+
+.. autofunction:: spearmanr_d
+
+.. minigallery:: mvpy.math.spearmanr_d
+   :add-heading: Gallery examples
+   :heading-level: -

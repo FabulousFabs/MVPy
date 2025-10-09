@@ -1,0 +1,10 @@
+﻿kernel\_linear
+==============
+
+.. currentmodule:: mvpy.math
+
+.. autofunction:: kernel_linear
+
+.. minigallery:: mvpy.math.kernel_linear
+   :add-heading: Gallery examples
+   :heading-level: -

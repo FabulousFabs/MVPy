@@ -1,0 +1,13 @@
+﻿Clamp
+=====
+
+.. currentmodule:: mvpy.preprocessing
+
+.. autoclass:: Clamp
+   :members:
+   :inherited-members:
+   :special-members: __call__
+
+.. minigallery:: mvpy.preprocessing.Clamp mvpy.preprocessing.Clamp.__delattr__ mvpy.preprocessing.Clamp.__dir__ mvpy.preprocessing.Clamp.__eq__ mvpy.preprocessing.Clamp.__format__ mvpy.preprocessing.Clamp.__ge__ mvpy.preprocessing.Clamp.__getattribute__ mvpy.preprocessing.Clamp.__gt__ mvpy.preprocessing.Clamp.__hash__ mvpy.preprocessing.Clamp.__init__ mvpy.preprocessing.Clamp.__le__ mvpy.preprocessing.Clamp.__lt__ mvpy.preprocessing.Clamp.__ne__ mvpy.preprocessing.Clamp.__new__ mvpy.preprocessing.Clamp.__reduce__ mvpy.preprocessing.Clamp.__reduce_ex__ mvpy.preprocessing.Clamp.__setattr__ mvpy.preprocessing.Clamp.__sizeof__ mvpy.preprocessing.Clamp.__str__ mvpy.preprocessing.Clamp.__subclasshook__ mvpy.preprocessing.Clamp._get_estimator mvpy.preprocessing.Clamp.clone mvpy.preprocessing.Clamp.copy mvpy.preprocessing.Clamp.fit mvpy.preprocessing.Clamp.fit_transform mvpy.preprocessing.Clamp.inverse_transform mvpy.preprocessing.Clamp.to_numpy mvpy.preprocessing.Clamp.to_torch mvpy.preprocessing.Clamp.transform 
+   :add-heading: Gallery examples
+   :heading-level: -

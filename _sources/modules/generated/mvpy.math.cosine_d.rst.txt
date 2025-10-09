@@ -1,0 +1,10 @@
+﻿cosine\_d
+=========
+
+.. currentmodule:: mvpy.math
+
+.. autofunction:: cosine_d
+
+.. minigallery:: mvpy.math.cosine_d
+   :add-heading: Gallery examples
+   :heading-level: -

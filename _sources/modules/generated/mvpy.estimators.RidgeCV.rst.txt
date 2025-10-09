@@ -1,0 +1,13 @@
+﻿RidgeCV
+=======
+
+.. currentmodule:: mvpy.estimators
+
+.. autoclass:: RidgeCV
+   :members:
+   :inherited-members:
+   :special-members: __call__
+
+.. minigallery:: mvpy.estimators.RidgeCV mvpy.estimators.RidgeCV.__delattr__ mvpy.estimators.RidgeCV.__dir__ mvpy.estimators.RidgeCV.__eq__ mvpy.estimators.RidgeCV.__format__ mvpy.estimators.RidgeCV.__ge__ mvpy.estimators.RidgeCV.__getattribute__ mvpy.estimators.RidgeCV.__gt__ mvpy.estimators.RidgeCV.__hash__ mvpy.estimators.RidgeCV.__init__ mvpy.estimators.RidgeCV.__le__ mvpy.estimators.RidgeCV.__lt__ mvpy.estimators.RidgeCV.__ne__ mvpy.estimators.RidgeCV.__new__ mvpy.estimators.RidgeCV.__reduce__ mvpy.estimators.RidgeCV.__reduce_ex__ mvpy.estimators.RidgeCV.__setattr__ mvpy.estimators.RidgeCV.__sizeof__ mvpy.estimators.RidgeCV.__str__ mvpy.estimators.RidgeCV.__subclasshook__ mvpy.estimators.RidgeCV.clone mvpy.estimators.RidgeCV.fit mvpy.estimators.RidgeCV.predict 
+   :add-heading: Gallery examples
+   :heading-level: -

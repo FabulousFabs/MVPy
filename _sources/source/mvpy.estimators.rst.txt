@@ -28,6 +28,14 @@ mvpy.estimators.covariance module
    :undoc-members:
    :show-inheritance:
 
+mvpy.estimators.csp module
+--------------------------
+
+.. automodule:: mvpy.estimators.csp
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 mvpy.estimators.decoder module
 ------------------------------
 
@@ -44,10 +52,58 @@ mvpy.estimators.encoder module
    :undoc-members:
    :show-inheritance:
 
+mvpy.estimators.kernelridgecv module
+------------------------------------
+
+.. automodule:: mvpy.estimators.kernelridgecv
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.estimators.labelbinariser module
+-------------------------------------
+
+.. automodule:: mvpy.estimators.labelbinariser
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.estimators.receptivefield module
+-------------------------------------
+
+.. automodule:: mvpy.estimators.receptivefield
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.estimators.ridgeclassifier module
+--------------------------------------
+
+.. automodule:: mvpy.estimators.ridgeclassifier
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 mvpy.estimators.ridgecv module
 ------------------------------
 
 .. automodule:: mvpy.estimators.ridgecv
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.estimators.ridgedecoder module
+-----------------------------------
+
+.. automodule:: mvpy.estimators.ridgedecoder
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.estimators.ridgeencoder module
+-----------------------------------
+
+.. automodule:: mvpy.estimators.ridgeencoder
    :members:
    :undoc-members:
    :show-inheritance:
@@ -72,6 +128,14 @@ mvpy.estimators.sliding module
 ------------------------------
 
 .. automodule:: mvpy.estimators.sliding
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.estimators.svc module
+--------------------------
+
+.. automodule:: mvpy.estimators.svc
    :members:
    :undoc-members:
    :show-inheritance:

@@ -1,0 +1,13 @@
+﻿RSA
+===
+
+.. currentmodule:: mvpy.estimators
+
+.. autoclass:: RSA
+   :members:
+   :inherited-members:
+   :special-members: __call__
+
+.. minigallery:: mvpy.estimators.RSA mvpy.estimators.RSA.__delattr__ mvpy.estimators.RSA.__dir__ mvpy.estimators.RSA.__eq__ mvpy.estimators.RSA.__format__ mvpy.estimators.RSA.__ge__ mvpy.estimators.RSA.__getattribute__ mvpy.estimators.RSA.__gt__ mvpy.estimators.RSA.__hash__ mvpy.estimators.RSA.__init__ mvpy.estimators.RSA.__le__ mvpy.estimators.RSA.__lt__ mvpy.estimators.RSA.__ne__ mvpy.estimators.RSA.__new__ mvpy.estimators.RSA.__reduce__ mvpy.estimators.RSA.__reduce_ex__ mvpy.estimators.RSA.__setattr__ mvpy.estimators.RSA.__sizeof__ mvpy.estimators.RSA.__str__ mvpy.estimators.RSA.__subclasshook__ mvpy.estimators.RSA._get_estimator mvpy.estimators.RSA.clone mvpy.estimators.RSA.fit mvpy.estimators.RSA.fit_transform mvpy.estimators.RSA.full_rdm mvpy.estimators.RSA.to_numpy mvpy.estimators.RSA.to_torch mvpy.estimators.RSA.transform 
+   :add-heading: Gallery examples
+   :heading-level: -

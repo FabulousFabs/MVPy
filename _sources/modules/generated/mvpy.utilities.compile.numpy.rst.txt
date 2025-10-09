@@ -1,0 +1,10 @@
+﻿numpy
+=====
+
+.. currentmodule:: mvpy.utilities.compile
+
+.. autofunction:: numpy
+
+.. minigallery:: mvpy.utilities.compile.numpy
+   :add-heading: Gallery examples
+   :heading-level: -

@@ -1,0 +1,10 @@
+﻿raised\_cosine\_window
+======================
+
+.. currentmodule:: mvpy.signal
+
+.. autofunction:: raised_cosine_window
+
+.. minigallery:: mvpy.signal.raised_cosine_window
+   :add-heading: Gallery examples
+   :heading-level: -

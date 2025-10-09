@@ -1,0 +1,840 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Covariance &#8212; MVPy</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/api.css?v=b0444f25" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/colors.css?v=cc94ab7d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/custom.css?v=eec3fc85" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modules/generated/mvpy.estimators.Covariance';</script>
+    <script src="../../_static/scripts/dropdown.js?v=5b9cef8c"></script>
+    <script src="../../_static/scripts/version-switcher.js?v=6ebe4089"></script>
+    <script src="../../_static/scripts/sg_plotly_resize.js?v=dc4a1e18"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="KernelRidgeCV" href="mvpy.estimators.KernelRidgeCV.html" />
+    <link rel="prev" title="Classifier" href="mvpy.estimators.Classifier.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/mvpy-icon.png" class="logo__image only-light" alt=""/>
+    <img src="../../_static/mvpy-icon.png" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">MVPy</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../auto_examples/index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/FabulousFabs/mvpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../auto_examples/index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/FabulousFabs/mvpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../api/mvpy.html">mvpy</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.crossvalidation.html">mvpy.crossvalidation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.KFold.html">KFold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.RepeatedKFold.html">RepeatedKFold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.StratifiedKFold.html">StratifiedKFold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.RepeatedStratifiedKFold.html">RepeatedStratifiedKFold</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.dataset.html">mvpy.dataset</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.dataset.make_meeg_categorical.html">make_meeg_categorical</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.dataset.make_meeg_colours.html">make_meeg_colours</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.dataset.make_meeg_continuous.html">make_meeg_continuous</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.dataset.make_meeg_discrete.html">make_meeg_discrete</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.dataset.make_meeg_layout.html">make_meeg_layout</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../api/mvpy.estimators.html">mvpy.estimators</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.B2B.html">B2B</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.Classifier.html">Classifier</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Covariance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.KernelRidgeCV.html">KernelRidgeCV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.ReceptiveField.html">ReceptiveField</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.RidgeClassifier.html">RidgeClassifier</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.RidgeCV.html">RidgeCV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.RidgeDecoder.html">RidgeDecoder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.RidgeEncoder.html">RidgeEncoder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.RSA.html">RSA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.Sliding.html">Sliding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.SVC.html">SVC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.TimeDelayed.html">TimeDelayed</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.math.html">mvpy.math</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.accuracy.html">accuracy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.cosine.html">cosine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.cosine_d.html">cosine_d</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.cv_euclidean.html">cv_euclidean</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.cv_mahalanobis.html">cv_mahalanobis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.euclidean.html">euclidean</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.kernel_linear.html">kernel_linear</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.kernel_poly.html">kernel_poly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.kernel_rbf.html">kernel_rbf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.kernel_sigmoid.html">kernel_sigmoid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.mahalanobis.html">mahalanobis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.pearsonr.html">pearsonr</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.pearsonr_d.html">pearsonr_d</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.rank.html">rank</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.roc_auc.html">roc_auc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.spearmanr.html">spearmanr</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.spearmanr_d.html">spearmanr_d</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.preprocessing.html">mvpy.preprocessing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.preprocessing.Clamp.html">Clamp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.preprocessing.LabelBinariser.html">LabelBinariser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.preprocessing.RobustScaler.html">RobustScaler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.preprocessing.Scaler.html">Scaler</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.signal.html">mvpy.signal</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.signal.hamming_window.html">hamming_window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.signal.hann_window.html">hann_window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.signal.raised_cosine_window.html">raised_cosine_window</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.utilities.html">mvpy.utilities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.utilities.compile.numpy.html">numpy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.utilities.compile.torch.html">torch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.utilities.env.get_var.html">get_var</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.utilities.env.is_enabled.html">is_enabled</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.utilities.Progressbar.html">Progressbar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.utilities.version.compare.html">compare</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../api/index.html" class="nav-link">API Reference</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../../api/mvpy.estimators.html" class="nav-link">mvpy.estimators</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Covariance</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="covariance">
+<h1>Covariance<a class="headerlink" href="#covariance" title="Link to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvpy.estimators.Covariance">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.estimators.</span></span><span class="sig-name descname"><span class="pre">Covariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ledoitwolf'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/estimators/covariance.py#L817"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.Covariance" title="Link to this definition">#</a></dt>
+<dd><p>Implements covariance and precision estimation as well as whitening of data.</p>
+<p>For covariance estimation, three methods are currently available through
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">method</span></code>:</p>
+<ol class="arabic">
+<li><dl>
+<dt><code class="docutils literal notranslate"><span class="pre">empirical</span></code></dt><dd><p>This computes the empirical (sample) covariance matrix:</p>
+<div class="math notranslate nohighlight">
+\[\Sigma = \mathbb{E}\left[(X - \mathbb{E}[X])(X^T - \mathbb{E}[X^T])\right]\]</div>
+<p>This is computationally efficient, but produces estimates of the
+covariance <span class="math notranslate nohighlight">\(\Sigma\)</span> that may often be unfavourable: Given
+small datasets or noisy measurements, <span class="math notranslate nohighlight">\(\Sigma\)</span> may be ill-
+conditioned and not positive-definite with eigenvalues that tend
+to be systematically pushed towards the tails. In practice, this
+can make inversion challenging and hurts out-of-sample generalisation.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt><code class="docutils literal notranslate"><span class="pre">ledoitwolf</span></code></dt><dd><p>This computes the LedoitWolf shrinkage estimator:</p>
+<div class="math notranslate nohighlight">
+\[\hat\Sigma = (1 - \hat{\delta})\Sigma + \hat\delta T\]</div>
+<p>where <span class="math notranslate nohighlight">\(\hat{\delta}\in[0, 1]\)</span> is the data-driven shrinkage 
+intensity that minimises the the expected Frobenius-norm risk:</p>
+<div class="math notranslate nohighlight">
+\[\hat\delta = \min\left\{1, \max\left\{0, \frac{\hat\pi}{\hat\rho}\right\}\right\},\qquad
+\hat\rho = \lvert\lvert\Sigma - T\rvert\rvert_F^2,\qquad
+\hat\pi = \frac{1}{n}\sum_{k=1}^{n}\lvert\lvert x_k x_k^T - \Sigma\rvert\rvert_F^2\]</div>
+<p>and where:</p>
+<div class="math notranslate nohighlight">
+\[T = \mu I_p,\qquad \mu = \frac{1}{p}\textrm{tr}(\Sigma)\]</div>
+<p>This produces estimates that are well-conditioned and positive-definite. 
+For more information on this procedure, please see <a class="reference internal" href="#r5acb65563665-1" id="id1">[1]</a>.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt><code class="docutils literal notranslate"><span class="pre">oas</span></code></dt><dd><p>This computes the oracle approximating shrinkage estimator:</p>
+<div class="math notranslate nohighlight">
+\[\hat\Sigma = (1 - \hat{\delta})\Sigma + \hat\delta T\]</div>
+<p>where <span class="math notranslate nohighlight">\(\hat{\delta}\in[0, 1]\)</span> is the data-driven shrinkage:</p>
+<div class="math notranslate nohighlight">
+\[\hat\delta = \frac{(1 - \frac{2}{p}) \textrm{tr}(\Sigma^2) + \textrm{tr}(\Sigma)^2}{(n + 1 - \frac{2}{p})\left(\textrm{tr}(\Sigma^2) - \frac{\textrm{tr}(\Sigma)^2}{p}\right)},\qquad
+T = \mu I_p,\qquad \mu = \frac{1}{p}\textrm{tr}(\Sigma)\]</div>
+<p>Like <code class="docutils literal notranslate"><span class="pre">ledoitwolf</span></code>, this procedure produces estimates that are
+well-conditioned and positive-definite. Contrary to <code class="docutils literal notranslate"><span class="pre">ledoitwolf</span></code>,
+shrinkage tends to be more aggressive in this procedure. For more 
+information, please see <a class="reference internal" href="#r5acb65563665-2" id="id2">[2]</a>.</p>
+</dd>
+</dl>
+</li>
+</ol>
+<p>When calling transform on this class, data will automatically be
+whitened based on the estimated covariance matrix. The whitening
+matrix is computed from the eigendecomposition as follows:</p>
+<div class="math notranslate nohighlight">
+\[\Sigma = Q\Lambda Q^T,\qquad 
+\Lambda = \textrm{diag}(\lambda_1, ..., \lambda_p) \geq 0,\qquad
+W = Q\Lambda^{-\frac{1}{2}}Q^T\]</div>
+<p>For more information on whitening, refer to <a class="reference internal" href="#r5acb65563665-3" id="id3">[3]</a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>method</strong><span class="classifier">{‘empirical’, ‘ledoitwolf’, ‘oas’}, default = ‘ledoitwolf’</span></dt><dd><p>Which method should be applied for estimation of covariance?</p>
+</dd>
+<dt><strong>s_min</strong><span class="classifier">float, default = None</span></dt><dd><p>What’s the minimum sample we should consider in the time dimension?</p>
+</dd>
+<dt><strong>s_max</strong><span class="classifier">float, default = None</span></dt><dd><p>What’s the maximum sample we should consider in the time dimension?</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>covariance_</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Covariance matrix</p>
+</dd>
+<dt><strong>precision_</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Precision matrix (inverse of covariance matrix)</p>
+</dd>
+<dt><strong>whitener_</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Whitening matrix</p>
+</dd>
+<dt><strong>shrinkage_</strong><span class="classifier">float, default=None</span></dt><dd><p>Shrinkage parameter, if used by method.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This class assumes features to be the second to last dimension of the data, unless 
+there are only two dimensions (in which case it is assumed to be the last dimension).</p>
+<p class="rubric">References</p>
+<div role="list" class="citation-list">
+<div class="citation" id="r5acb65563665-1" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Ledoit, O., &amp; Wolf, M. (2004). A well-conditioned estimator for large-dimensional covariance matrices. Journal of Multivariate Analysis, 88, 365-411. 10.1016/S0047-259X(03)00096-4</p>
+</div>
+<div class="citation" id="r5acb65563665-2" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Chen, Y., Wiesel, A., Eldar, Y.C., &amp; Hero, A.O. (2009). Shrinkage algorithms for MMSE covariance estimation. arXiv. 10.48550/arXiv.0907.4698</p>
+</div>
+<div class="citation" id="r5acb65563665-3" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>Kessy, A., Lewin, A., &amp; Strimmer, K. (2016). Optimal whitening and decorrelation. arXiv. 10.48550/arXiv.1512.00809</p>
+</div>
+</div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.estimators</span><span class="w"> </span><span class="kn">import</span> <span class="n">Covariance</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cov</span> <span class="o">=</span> <span class="n">Covariance</span><span class="p">(</span><span class="n">s_max</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cov</span><span class="o">.</span><span class="n">covariance_</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">torch.Size([10, 10])</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.Covariance.clone">
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../../source/mvpy.estimators.html#mvpy.estimators.covariance.Covariance" title="mvpy.estimators.covariance.Covariance"><span class="pre">Covariance</span></a></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/estimators/covariance.py#L1047"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.Covariance.clone" title="Link to this definition">#</a></dt>
+<dd><p>Obtain a clone of this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>cov</strong><span class="classifier">mvpy.estimators.Covariance</span></dt><dd><p>The cloned object.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.Covariance.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../../source/mvpy.estimators.html#mvpy.estimators.covariance.Covariance" title="mvpy.estimators.covariance.Covariance"><span class="pre">Covariance</span></a></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/estimators/covariance.py#L972"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.Covariance.fit" title="Link to this definition">#</a></dt>
+<dd><p>Fit the covariance estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Data to fit the estimator on of shape <code class="docutils literal notranslate"><span class="pre">(n_trials,</span> <span class="pre">n_features[,</span> <span class="pre">n_timepoints])</span></code>.</p>
+</dd>
+<dt><strong>*args</strong><span class="classifier">Any</span></dt><dd><p>Additional arguments to pass to the estimator.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>self</strong><span class="classifier">Covariance</span></dt><dd><p>Fitted covariance estimator.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.Covariance.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/estimators/covariance.py#L1007"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.Covariance.fit_transform" title="Link to this definition">#</a></dt>
+<dd><p>Fit the covariance estimator and whiten the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Data to fit the estimator on and transform of shape <code class="docutils literal notranslate"><span class="pre">(n_trials,</span> <span class="pre">n_features[,</span> <span class="pre">n_timepoints])</span></code>.</p>
+</dd>
+<dt><strong>*args</strong><span class="classifier">Any</span></dt><dd><p>Additional arguments to pass to the estimator.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>W</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Whitened data of shape <code class="docutils literal notranslate"><span class="pre">(n_trials,</span> <span class="pre">n_features[,</span> <span class="pre">n_timepoints])</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.Covariance.to_numpy">
+<span class="sig-name descname"><span class="pre">to_numpy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">BaseEstimator</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/estimators/covariance.py#L1036"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.Covariance.to_numpy" title="Link to this definition">#</a></dt>
+<dd><p>Create the numpy estimator. Note that this function cannot be used for conversion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>cov</strong><span class="classifier">mvpy.estimators.Covariance</span></dt><dd><p>The numpy estimator.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.Covariance.to_torch">
+<span class="sig-name descname"><span class="pre">to_torch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">BaseEstimator</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/estimators/covariance.py#L1025"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.Covariance.to_torch" title="Link to this definition">#</a></dt>
+<dd><p>Create the torch estimator. Note that this function cannot be used for conversion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>cov</strong><span class="classifier">mvpy.estimators.Covariance</span></dt><dd><p>The torch estimator.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.Covariance.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/a31f7c5/mvpy/estimators/covariance.py#L990"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.Covariance.transform" title="Link to this definition">#</a></dt>
+<dd><p>Whiten data using the fitted covariance estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Data to transform of shape <code class="docutils literal notranslate"><span class="pre">(n_trials,</span> <span class="pre">n_features[,</span> <span class="pre">n_timepoints])</span></code>.</p>
+</dd>
+<dt><strong>*args</strong><span class="classifier">Any</span></dt><dd><p>Additional arguments to pass to the estimator.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>W</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Whitened data of shape <code class="docutils literal notranslate"><span class="pre">(n_trials,</span> <span class="pre">n_features[,</span> <span class="pre">n_timepoints])</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="mvpy.estimators.Classifier.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Classifier</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="mvpy.estimators.KernelRidgeCV.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">KernelRidgeCV</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    
+<ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.Covariance"><code class="docutils literal notranslate"><span class="pre">Covariance</span></code></a><ul class="nav section-nav flex-column visible">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.Covariance.clone"><code class="docutils literal notranslate"><span class="pre">clone()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.Covariance.fit"><code class="docutils literal notranslate"><span class="pre">fit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.Covariance.fit_transform"><code class="docutils literal notranslate"><span class="pre">fit_transform()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.Covariance.to_numpy"><code class="docutils literal notranslate"><span class="pre">to_numpy()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.Covariance.to_torch"><code class="docutils literal notranslate"><span class="pre">to_torch()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.Covariance.transform"><code class="docutils literal notranslate"><span class="pre">transform()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+
+
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/modules/generated/mvpy.estimators.Covariance.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Fabian Schneider.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

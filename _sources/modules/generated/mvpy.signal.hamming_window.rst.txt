@@ -1,0 +1,10 @@
+﻿hamming\_window
+===============
+
+.. currentmodule:: mvpy.signal
+
+.. autofunction:: hamming_window
+
+.. minigallery:: mvpy.signal.hamming_window
+   :add-heading: Gallery examples
+   :heading-level: -

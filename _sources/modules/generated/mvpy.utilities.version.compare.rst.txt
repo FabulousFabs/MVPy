@@ -1,0 +1,10 @@
+﻿compare
+=======
+
+.. currentmodule:: mvpy.utilities.version
+
+.. autofunction:: compare
+
+.. minigallery:: mvpy.utilities.version.compare
+   :add-heading: Gallery examples
+   :heading-level: -

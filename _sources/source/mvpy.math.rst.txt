@@ -36,6 +36,38 @@ mvpy.math.euclidean module
    :undoc-members:
    :show-inheritance:
 
+mvpy.math.kernel\_linear module
+-------------------------------
+
+.. automodule:: mvpy.math.kernel_linear
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.math.kernel\_poly module
+-----------------------------
+
+.. automodule:: mvpy.math.kernel_poly
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.math.kernel\_rbf module
+----------------------------
+
+.. automodule:: mvpy.math.kernel_rbf
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.math.kernel\_sigmoid module
+--------------------------------
+
+.. automodule:: mvpy.math.kernel_sigmoid
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 mvpy.math.mahalanobis module
 ----------------------------
 

@@ -1,0 +1,10 @@
+﻿cv\_mahalanobis
+===============
+
+.. currentmodule:: mvpy.math
+
+.. autofunction:: cv_mahalanobis
+
+.. minigallery:: mvpy.math.cv_mahalanobis
+   :add-heading: Gallery examples
+   :heading-level: -

@@ -1,0 +1,10 @@
+﻿make\_meeg\_categorical
+=======================
+
+.. currentmodule:: mvpy.dataset
+
+.. autofunction:: make_meeg_categorical
+
+.. minigallery:: mvpy.dataset.make_meeg_categorical
+   :add-heading: Gallery examples
+   :heading-level: -

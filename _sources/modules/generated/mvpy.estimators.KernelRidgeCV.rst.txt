@@ -1,0 +1,13 @@
+﻿KernelRidgeCV
+=============
+
+.. currentmodule:: mvpy.estimators
+
+.. autoclass:: KernelRidgeCV
+   :members:
+   :inherited-members:
+   :special-members: __call__
+
+.. minigallery:: mvpy.estimators.KernelRidgeCV mvpy.estimators.KernelRidgeCV.__delattr__ mvpy.estimators.KernelRidgeCV.__dir__ mvpy.estimators.KernelRidgeCV.__eq__ mvpy.estimators.KernelRidgeCV.__format__ mvpy.estimators.KernelRidgeCV.__ge__ mvpy.estimators.KernelRidgeCV.__getattribute__ mvpy.estimators.KernelRidgeCV.__gt__ mvpy.estimators.KernelRidgeCV.__hash__ mvpy.estimators.KernelRidgeCV.__init__ mvpy.estimators.KernelRidgeCV.__le__ mvpy.estimators.KernelRidgeCV.__lt__ mvpy.estimators.KernelRidgeCV.__ne__ mvpy.estimators.KernelRidgeCV.__new__ mvpy.estimators.KernelRidgeCV.__reduce__ mvpy.estimators.KernelRidgeCV.__reduce_ex__ mvpy.estimators.KernelRidgeCV.__setattr__ mvpy.estimators.KernelRidgeCV.__sizeof__ mvpy.estimators.KernelRidgeCV.__str__ mvpy.estimators.KernelRidgeCV.__subclasshook__ mvpy.estimators.KernelRidgeCV.clone mvpy.estimators.KernelRidgeCV.fit mvpy.estimators.KernelRidgeCV.predict 
+   :add-heading: Gallery examples
+   :heading-level: -

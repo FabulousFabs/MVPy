@@ -1,0 +1,10 @@
+﻿kernel\_poly
+============
+
+.. currentmodule:: mvpy.math
+
+.. autofunction:: kernel_poly
+
+.. minigallery:: mvpy.math.kernel_poly
+   :add-heading: Gallery examples
+   :heading-level: -

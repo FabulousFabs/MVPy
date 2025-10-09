@@ -1,0 +1,10 @@
+﻿make\_meeg\_continuous
+======================
+
+.. currentmodule:: mvpy.dataset
+
+.. autofunction:: make_meeg_continuous
+
+.. minigallery:: mvpy.dataset.make_meeg_continuous
+   :add-heading: Gallery examples
+   :heading-level: -
