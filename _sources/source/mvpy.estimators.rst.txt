@@ -36,34 +36,10 @@ mvpy.estimators.csp module
    :undoc-members:
    :show-inheritance:
 
-mvpy.estimators.decoder module
-------------------------------
-
-.. automodule:: mvpy.estimators.decoder
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-mvpy.estimators.encoder module
-------------------------------
-
-.. automodule:: mvpy.estimators.encoder
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 mvpy.estimators.kernelridgecv module
 ------------------------------------
 
 .. automodule:: mvpy.estimators.kernelridgecv
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-mvpy.estimators.labelbinariser module
--------------------------------------
-
-.. automodule:: mvpy.estimators.labelbinariser
    :members:
    :undoc-members:
    :show-inheritance:
@@ -112,14 +88,6 @@ mvpy.estimators.rsa module
 --------------------------
 
 .. automodule:: mvpy.estimators.rsa
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-mvpy.estimators.scaler module
------------------------------
-
-.. automodule:: mvpy.estimators.scaler
    :members:
    :undoc-members:
    :show-inheritance:
