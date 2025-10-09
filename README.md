@@ -1,13 +1,16 @@
 [![Unit Tests](https://github.com/FabulousFabs/MVPy/workflows/Unit%20tests/badge.svg)](https://github.com/FabulousFabs/MVPy/actions)
 [![Unit Tests](https://github.com/FabulousFabs/MVPy/workflows/Documentation/badge.svg)](https://github.com/FabulousFabs/MVPy/actions)
 
-![](./docs/images/mvpy-large.png)
+
+[<img src="./docs/images/mvpy-large.png" width="500px">](http://mvpy.tools/)
 
 **MVPy** is a python package for **m**ulti**v**ariate **p**attern analysis in neuroscience, with direct GPU support and easy-to-use coding patterns.
 
 The project started in 2024 when we found that our planned analyses were prohibitively expensive to run in existing neuroscience frameworks and we needed to find a way to put intensive multivariate computations on GPUs.
 
-It is currently maintained by me, but new contributors are extremely welcome.
+It is currently maintained by me, but new contributors are extremely welcome. 
+
+**[Find the documentation here](http://mvpy.tools)**.
 
 ## How do I get started?
 You can install MVPy directly from GitHub:
