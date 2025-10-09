@@ -1,7 +1,7 @@
 [![Unit Tests](https://github.com/FabulousFabs/MVPy/workflows/Unit%20tests/badge.svg)](https://github.com/FabulousFabs/MVPy/actions)
 [![Unit Tests](https://github.com/FabulousFabs/MVPy/workflows/Documentation/badge.svg)](https://github.com/FabulousFabs/MVPy/actions)
 
-![](./docs/_static/mvpy-large.png)
+![](./docs/images/mvpy-large.png)
 
 **MVPy** is a python package for **m**ulti**v**ariate **p**attern analysis in neuroscience, with direct GPU support and easy-to-use coding patterns.
 

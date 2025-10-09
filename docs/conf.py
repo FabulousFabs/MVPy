@@ -94,8 +94,8 @@ html_theme_options = {
     ],
     "logo": {
         "text": "MVPy",
-        "image_light": "_static/mvpy-icon.png",
-        "image_dark": "_static/mvpy-icon.png"
+        "image_light": "images/mvpy-icon.png",
+        "image_dark": "images/mvpy-icon.png"
     },
     "navigation_depth": 3,
     "collapse_navigation": False,
