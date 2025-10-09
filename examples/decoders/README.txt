@@ -1,4 +1,0 @@
-
-Decoders
-========
-Examples for decoders.

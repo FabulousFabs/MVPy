@@ -6,7 +6,7 @@ import numpy as np
 import torch
 import sklearn
 
-from .labelbinariser import _LabelBinariser_numpy, _LabelBinariser_torch
+from ..preprocessing.labelbinariser import _LabelBinariser_numpy, _LabelBinariser_torch
 
 from typing import Union, Any, Dict, List
 
@@ -576,49 +576,63 @@ class _Classifier_torch(sklearn.base.BaseEstimator):
         )
 
 class Classifier(sklearn.base.BaseEstimator):
-    """Implements a wrapper for classifiers.
+    """Implements a wrapper for classifiers that handle one-versus-one (OvO) and one-versus-rest (OvR) classification schemes.
     
-    This class is public facing, but should not generally be used. In essence, it provides a convenient wrapper for classifiers that solves OvR/OvO problems.
+    While this class is exposed publically, there are few (if any) direct use 
+    cases for this class. In principle, it exists for other classifiers that
+    want to handle multi-class cases as OvO or OvR as a wrapper function that
+    can either be inherited or created as a super class, specifying the desired
+    estimator (recommended option).
+    
+    One-versus-rest (``OvR``) classification computes the decision functions over
+    inputs :math:`X` and then takes the maximum value across decision values
+    to predict the most likely classes :math:`\\hat{y}`.
+    
+    One-versus-one (``OvO``) classification computes all decision functions from
+    binary classifiers (e.g., :math:`c_0` vs :math:`c_1`, :math:`c_0` vs :math:`c_2`,
+    :math:`c_1` vs :math:`c_2`, ...). For each individual classification problem,
+    the maximum value is recorded as one vote for the winning class. Votes are
+    then aggregated across all classifiers and the maximum number of votes decides
+    the most likely classes :math:`\\hat{y}`.
     
     Parameters
     ----------
     estimator : sklearn.base.BaseEstimator
         The estimator type wrapped by this class.
-    method : str, default='OvR'
+    method : {'OvR', 'OvO'}, default='OvR'
         For multiclass problems, which method should we use? One-versus-one (OvO) or one-versus-rest (OvR)?
     arguments : List[Any], default=[]
         Arguments to pass to the estimator at initialisation.
-    kwarguments : Dict[Any, Any], default=dict()
+    kwarguments : Dict[str, Any], default=dict()
         Keyword arguments to pass to the estimator at initialisation.
     
     Attributes
     ----------
     estimator : sklearn.base.BaseEstimator
         The estimator type wrapped by this class.
-    method : str, default='OvR'
+    method : {'OvR', 'OvO'}, default='OvR'
         For multiclass problems, which method should we use? One-versus-one (OvO) or one-versus-rest (OvR)?
     arguments : List[Any], default=[]
         Arguments to pass to the estimator at initialisation.
-    kwarguments : Dict[Any, Any], default=dict()
+    kwarguments : Dict[str, Any], default=dict()
         Keyword arguments to pass to the estimator at initialisation.
-    estimators_ : Union[sklearn.base.BaseEstimator, List[sklearn.base.BaseEstimator]]
+    estimators_ : sklearn.base.BaseEstimator | List[sklearn.base.BaseEstimator]
         All instances of the estimator class (only of type list if OvO).
-    binariser_ : LabelBinariser
+    binariser_ : mvpy.estimators.LabelBinariser
         Label binariser used internally.
-    coef_ : Union[np.ndarray, torch.Tensor]
-        If available, coefficients from all classifiers ([n_classifiers,], n_channels, n_classes).
-    intercept_ : Union[np.ndarray, torch.Tensor]
-        If available, intercepts from all classifiers ([n_classifiers,], n_classes).
-    pattern_ : Union[np.ndarray, torch.Tensor]
-        If available, patterns from all classifiers ([n_classifiers,], n_channels, n_classes).
-    offsets_ : Union[np.ndarray, torch.Tensor]
+    coef_ : np.ndarray | torch.Tensor
+        If available, coefficients from all classifiers ``([n_classifiers,] n_channels, n_classes)``.
+    intercept_ : np.ndarray | torch.Tensor
+        If available, intercepts from all classifiers ``([n_classifiers,] n_classes)``.
+    pattern_ : np.ndarray | torch.Tensor
+        If available, patterns from all classifiers ``([n_classifiers,] n_channels, n_classes)``.
+    offsets_ : np.ndarray | torch.Tensor
         Numerical offsets for each feature in outputs, used internally.
     
-    Notes
-    -----
-    By default, this class handles OvR by finding maximum values, whereas OvO is handled by finding the maximum among classifier votes per feature.
-    
-    This class should not generally be used. This is for use in classes that need OvO/OvR handling internally.
+    See also
+    --------
+    mvpy.estimators.RidgeClassifier, mvpy.estimators.SVC : Classifiers that use this class as a wrapper.
+    mvpy.preprocessing.LabelBinariser : Label binariser used internally to generated one-hot encodings.
     """
     
     def __init__(self, estimator: sklearn.base.BaseEstimator, method: str = 'OvR', arguments: List[Any] = [], kwarguments: Dict[Any, Any] = dict()):
@@ -628,11 +642,11 @@ class Classifier(sklearn.base.BaseEstimator):
         ----------
         estimator : sklearn.base.BaseEstimator
             The estimator type wrapped by this class.
-        method : str, default='OvR'
+        method : {'OvR', 'OvO}, default='OvR'
             For multiclass problems, which method should we use? One-versus-one (OvO) or one-versus-rest (OvR)?
         arguments : List[Any], default=[]
             Arguments to pass to the estimator at initialisation.
-        kwarguments : Dict[Any, Any], default=dict()
+        kwarguments : Dict[str, Any], default=dict()
             Keyword arguments to pass to the estimator at initialisation.
         """
         
@@ -642,19 +656,19 @@ class Classifier(sklearn.base.BaseEstimator):
         self.arguments = arguments
         self.kwarguments = kwarguments
     
-    def _get_estimator(self, X: torch.Tensor, y: torch.Tensor) -> sklearn.base.BaseEstimator:
+    def _get_estimator(self, X: Union[torch.Tensor, np.ndarray], y: Union[torch.Tensor, np.ndarray]) -> sklearn.base.BaseEstimator:
         """Obtain the wrapper and estimator for this SVC.
         
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            Input data of shape (n_samples, n_channels).
-        y : Union[np.ndarray, torch.Tensor]
-            Input labels of shape (n_samples[, n_features]).
+        X : np.ndarray | torch.Tensor
+            Input data of shape ``(n_samples, n_channels)``.
+        y : np.ndarray | torch.Tensor
+            Input labels of shape ``(n_samples[, n_features])``.
         
         Returns
         -------
-        clf : Classifier
+        clf : mvpy.estimators.Classifier
             The classifier.
         """
         
@@ -680,14 +694,14 @@ class Classifier(sklearn.base.BaseEstimator):
 
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            The features of shape (n_samples, n_channels).
-        y : Union[np.ndarray, torch.Tensor]
-            The targets of shape (n_samples[, n_features]).
+        X : np.ndarray | torch.Tensor
+            The features of shape ``(n_samples, n_channels)``.
+        y : np.ndarray | torch.Tensor
+            The targets of shape ``(n_samples[, n_features])``.
         
         Returns
         -------
-        clf : Classifier
+        clf : mvpy.estimators.Classifier
             The classifier.
         """
         
@@ -698,13 +712,13 @@ class Classifier(sklearn.base.BaseEstimator):
 
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            The features (n_samples, n_channels).
+        X : np.ndarray | torch.Tensor
+            The features ``(n_samples, n_channels)``.
 
         Returns
         -------
-        df : Union[np.ndarray, torch.Tensor]
-            The predictions of shape (n_samples, n_classes).
+        df : np.ndarray | torch.Tensor
+            The predictions of shape ``(n_samples, n_classes)``.
         """
         
         raise NotImplementedError('This method is not implemented in the base class.')
@@ -714,13 +728,13 @@ class Classifier(sklearn.base.BaseEstimator):
         
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            The features (n_samples, n_channels).
+        X : np.ndarray | torch.Tensor
+            The features ``(n_samples, n_channels)``.
         
         Returns
         -------
-        y_h : Union[np.ndarray, torch.Tensor]
-            The predictions of shape (n_samples, n_features).
+        y_h : np.ndarray | torch.Tensor
+            The predictions of shape ``(n_samples, n_features)``.
         """
         
         raise NotImplementedError('This method is not implemented in the base class.')
@@ -730,13 +744,20 @@ class Classifier(sklearn.base.BaseEstimator):
 
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            The features (n_samples, n_channels).
+        X : np.ndarray | torch.Tensor
+            The features ``(n_samples, n_channels)``.
 
         Returns
         -------
-        df : Union[np.ndarray, torch.Tensor]
-            The predictions of shape (n_samples, n_classes).
+        df : np.ndarray | torch.Tensor
+            The predictions of shape ``(n_samples, n_classes)``.
+        
+        .. warning::
+            Methods that predict the probability of classes are currently
+            not implemented and will return decision function outputs
+            instead. This is because probabilities are not trivial to 
+            compute and require careful calibration, which we will implement
+            in the future.
         """
 
         raise NotImplementedError('This method is not implemented in the base class.')
@@ -746,7 +767,7 @@ class Classifier(sklearn.base.BaseEstimator):
         
         Returns
         -------
-        clf : _Classifier_torch
+        clf : mvpy.estimators.classifier._Classifier_torch
             The estimator.
         """
         
@@ -757,7 +778,7 @@ class Classifier(sklearn.base.BaseEstimator):
         
         Returns
         -------
-        clf : _Classifier_numpy
+        clf : mvpy.estimators.classifier._Classifier_numpy
             The estimator.
         """
         

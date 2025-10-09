@@ -12,7 +12,7 @@ from typing import Union, Any
 '''
 Track registered estimators 
 '''
-_ESTIMATORS = []
+_ESTIMATORS = {}
 
 '''
 Whitening estimators
@@ -360,8 +360,11 @@ class _Empirical_torch(_Whitener_torch):
         
         return _Empirical_torch(s_min = self.s_min, s_max = self.s_max)
 
-# add Empirical estimator
-_ESTIMATORS.append('Empirical')
+# add empirical estimator
+_ESTIMATORS['empirical'] = {
+    'numpy': _Empirical_numpy,
+    'torch': _Empirical_torch
+}
 
 '''
 LedoitWolf estimators
@@ -384,7 +387,7 @@ class _LedoitWolf_numpy(_Whitener_numpy):
         self.s_min = s_min
         self.s_max = s_max
     
-    def fit(self, X: np.ndarray):
+    def fit(self, X: np.ndarray) -> "_LedoitWolf_numpy":
         """Fit the estimator.
         
         Parameters
@@ -417,7 +420,7 @@ class _LedoitWolf_numpy(_Whitener_numpy):
         S = np.dot(X_h.T, X_h) / N
         
         # compute target matrix from F = μI
-        μ = np.trace(S) / N
+        μ = np.trace(S) / F
         F = μ * np.eye(F)
         
         # compute ϕ
@@ -461,16 +464,19 @@ class _LedoitWolf_numpy(_Whitener_numpy):
         
         return self.fit(X).transform(X)
     
-    def clone(self):
+    def clone(self) -> "_LedoitWolf_numpy":
         """Clone this class.
         
         Returns
         -------
-        _LedoitWolf_numpy
+        covariance : _LedoitWolf_numpy
             The cloned object.
         """
         
-        return _LedoitWolf_numpy(s_min = self.s_min, s_max = self.s_max)
+        return _LedoitWolf_numpy(
+            s_min = self.s_min, 
+            s_max = self.s_max
+        )
 
 class _LedoitWolf_torch(_Whitener_torch):
     """Implementation of the Ledoit-Wolf shrinkage estimator.
@@ -489,7 +495,7 @@ class _LedoitWolf_torch(_Whitener_torch):
         self.s_min = s_min
         self.s_max = s_max
     
-    def fit(self, X: torch.Tensor):
+    def fit(self, X: torch.Tensor) -> "_LedoitWolf_torch":
         """Fit the estimator.
         
         Parameters
@@ -521,8 +527,8 @@ class _LedoitWolf_torch(_Whitener_torch):
         # compute sample covariance
         S = torch.mm(X_h.T, X_h) / N
 
-        # Compute target matrix from F = μI
-        μ = torch.trace(S) / N
+        # compute target matrix from F = μI
+        μ = torch.trace(S) / F
         F = μ * torch.eye(F, device=X.device, dtype=X.dtype)
 
         # compute φ
@@ -550,7 +556,7 @@ class _LedoitWolf_torch(_Whitener_torch):
         
         return self
     
-    def fit_transform(self, X: torch.Tensor, *args: Any):
+    def fit_transform(self, X: torch.Tensor, *args: Any) -> torch.Tensor:
         """Fit the estimator and whiten the data.
         
         Parameters
@@ -566,31 +572,325 @@ class _LedoitWolf_torch(_Whitener_torch):
         
         return self.fit(X).transform(X)
     
-    def clone(self):
+    def clone(self) -> "_LedoitWolf_torch":
         """Clone this class.
         
         Returns
         -------
-        _LedoitWolf_torch
+        covariance : _LedoitWolf_torch
             The cloned object.
         """
         
-        return _LedoitWolf_torch(s_min = self.s_min, s_max = self.s_max)
+        return _LedoitWolf_torch(
+            s_min = self.s_min, 
+            s_max = self.s_max
+        )
 
 # add LedoitWolf estimator
-_ESTIMATORS.append('LedoitWolf')
+_ESTIMATORS['ledoitwolf'] = {
+    'numpy': _LedoitWolf_numpy,
+    'torch': _LedoitWolf_torch
+}
+
+'''
+OAS estimators
+'''
+
+class _OAS_numpy(_Whitener_numpy):
+    """Implements the oracle approximating shrinkage estimator.
+    """
+    
+    def __init__(self, s_min: Union[float, None] = None, s_max: Union[float, None] = None):
+        """Obtain an OAS estimator.
+        """
+        
+        super().__init__()
+        
+        self.covariance_ = None
+        self.precision_ = None
+        self.shrinkage_ = None
+        
+        self.s_min = s_min
+        self.s_max = s_max
+    
+    def fit(self, X: np.ndarray) -> "_OAS_numpy":
+        """Fit the estimator.
+        
+        Parameters
+        ----------
+        X : np.ndarray
+            Training data
+        """
+        
+        # check dims
+        if len(X.shape) < 2:
+            raise ValueError(f'`X` must be at least two-dimensional for covariance estimation, but got shapee {X.shape}.')
+        
+        # reshape
+        if len(X.shape) > 2: 
+            # set sample selection
+            s = 0 if self.s_min is None else self.s_min
+            e = X.shape[-1] if self.s_max is None else self.s_max
+            
+            # reshape
+            X_h = X[...,s:e].swapaxes(-2, -1).reshape((-1, X.shape[-2]))
+        else: X_h = X.copy()
+        
+        # get dims
+        N, F = X_h.shape
+        
+        # centre data
+        X_h = X_h - X_h.mean(axis = 0)
+        
+        # compute sample covariance
+        S = np.dot(X_h.T, X_h) / N
+        
+        # compute target matrix from T = μI
+        μ = np.trace(S) / F
+        T = μ * np.eye(F)
+
+        # compute traces
+        tr_S = np.trace(S)
+        tr_S2 = (S * S).sum()
+
+        # compute OAS shrinkage
+        n = (1 - 2.0 / F) * tr_S2 + tr_S**2
+        d = (N + 1 - 2.0 / F) * (tr_S2 - (tr_S**2) / F)
+        eps = np.finfo(S.dtype).eps
+        self.shrinkage_ = np.clip(n / np.clip(d, a_min = eps, a_max = None), 0, 1)
+
+        # compute covariance estimate
+        self.covariance_ = (1 - self.shrinkage_) * S + self.shrinkage_ * T
+
+        # compute precision matrix
+        self.precision_ = np.linalg.inv(self.covariance_)
+
+        # fit whitener class
+        super().fit(X)
+        
+        return self
+    
+    def fit_transform(self, X: np.ndarray, *args: Any) -> np.ndarray:
+        """Fit the estimator and whiten the data.
+        
+        Parameters
+        ----------
+        X : np.ndarray
+            Matrix/Tensor ([... [samples]] x features x samples)
+        
+        Returns
+        -------
+        np.ndarray
+            Whitened matrix/tensor ([... [samples]] x features x samples)
+        """
+        
+        return self.fit(X).transform(X)
+    
+    def clone(self) -> "_OAS_numpy":
+        """Clone this class.
+        
+        Returns
+        -------
+        covariance : _OAS_numpy
+            The cloned object.
+        """
+        
+        return _OAS_numpy(
+            s_min = self.s_min, 
+            s_max = self.s_max
+        )
+
+class _OAS_torch(_Whitener_torch):
+    """Implementation of the oracle approximating shrinkage estimator.
+    """
+    
+    def __init__(self, s_min: Union[float, None] = None, s_max: Union[float, None] = None):
+        """Obtain the Ledoit-Wolf shrinkage estimator.
+        """
+        
+        super().__init__()
+        
+        self.covariance_ = None
+        self.precision_ = None
+        self.shrinkage_ = None
+        
+        self.s_min = s_min
+        self.s_max = s_max
+    
+    def fit(self, X: torch.Tensor) -> "_OAS_torch":
+        """Fit the estimator.
+        
+        Parameters
+        ----------
+        X : torch.Tensor
+            Matrix/Tensor ([... [samples]] x features x samples)
+        """
+        
+        # check dims
+        if X.ndim < 2:
+            raise ValueError(f"`X` must be at least two-dimensional for covariance estimation, but got shape {X.shape}.")
+
+        # reshape data if more than two dimensions
+        if X.ndim > 2: 
+            # set sample selection
+            s = 0 if self.s_min is None else self.s_min
+            e = X.shape[-1] if self.s_max is None else self.s_max
+            
+            # reshape
+            X_h = X[...,s:e].transpose(-2, -1).reshape(-1, X.shape[-2])
+        else: X_h = X.clone()
+
+        # get dims
+        N, F = X_h.shape
+
+        # centre the data
+        X_h = X_h - X_h.mean(0)
+
+        # compute sample covariance
+        S = torch.mm(X_h.T, X_h) / N
+
+        # compute target matrix from T = μI
+        μ = torch.trace(S) / F
+        T = μ * torch.eye(F, device = X_h.device, dtype = X_h.dtype)
+
+        # compute traces
+        tr_S = torch.trace(S)
+        tr_S2 = (S * S).sum()
+
+        # compute OAS shrinkage
+        n = (1 - 2.0 / F) * tr_S2 + tr_S**2
+        d = (N + 1 - 2.0 / F) * (tr_S2 - (tr_S**2) / F)
+        eps = torch.finfo(S.dtype).eps
+        self.shrinkage_ = torch.clamp(n / torch.clamp(d, min = eps), 0, 1)
+
+        # compute covariance estimate
+        self.covariance_ = (1 - self.shrinkage_) * S + self.shrinkage_ * T
+
+        # compute precision matrix
+        self.precision_ = torch.linalg.inv(self.covariance_)
+
+        # fit whitener class
+        super().fit(X)
+        
+        return self
+    
+    def fit_transform(self, X: torch.Tensor, *args: Any) -> torch.Tensor:
+        """Fit the estimator and whiten the data.
+        
+        Parameters
+        ----------
+        X : torch.Tensor
+            Input data.
+
+        Returns
+        -------
+        W : torch.Tensor
+            Whitened data.
+        """
+        
+        return self.fit(X).transform(X)
+    
+    def clone(self) -> "_OAS_torch":
+        """Clone this class.
+        
+        Returns
+        -------
+        covariance : _OAS_torch
+            The cloned object.
+        """
+        
+        return _OAS_torch(
+            s_min = self.s_min, 
+            s_max = self.s_max
+        )
+
+# add OAS estimator
+_ESTIMATORS['oas'] = {
+    'numpy': _OAS_numpy,
+    'torch': _OAS_torch
+}
 
 '''
 Covariance estimator
 '''
 
 class Covariance(sklearn.base.BaseEstimator):
-    """Class for computing covariance, precision and whitening matrices. Note that calling a transform from this clas will whiten the data.
+    """Implements covariance and precision estimation as well as whitening of data.
+
+    For covariance estimation, three methods are currently available through
+    :py:attr:`~mvpy.estimators.Covariance.method`:
+    
+    1. ``empirical``
+        This computes the empirical (sample) covariance matrix:
+        
+        .. math::
+
+            \\Sigma = \\mathbb{E}\\left[(X - \\mathbb{E}[X])(X^T - \\mathbb{E}[X^T])\\right]
+        
+        This is computationally efficient, but produces estimates of the
+        covariance :math:`\\Sigma` that may often be unfavourable: Given
+        small datasets or noisy measurements, :math:`\\Sigma` may be ill-
+        conditioned and not positive-definite with eigenvalues that tend
+        to be systematically pushed towards the tails. In practice, this
+        can make inversion challenging and hurts out-of-sample generalisation.
+    
+    2. ``ledoitwolf``
+        This computes the LedoitWolf shrinkage estimator:
+        
+        .. math::
+        
+            \\hat\\Sigma = (1 - \\hat{\\delta})\\Sigma + \\hat\\delta T
+        
+        where :math:`\\hat{\\delta}\\in[0, 1]` is the data-driven shrinkage 
+        intensity that minimises the the expected Frobenius-norm risk:
+        
+        .. math::
+            \\hat\\delta = \\min\\left\\{1, \\max\\left\\{0, \\frac{\\hat\\pi}{\\hat\\rho}\\right\\}\\right\\},\\qquad
+            \\hat\\rho = \\lvert\\lvert\\Sigma - T\\rvert\\rvert_F^2,\\qquad
+            \\hat\\pi = \\frac{1}{n}\\sum_{k=1}^{n}\\lvert\\lvert x_k x_k^T - \\Sigma\\rvert\\rvert_F^2
+
+        and where:
+        
+        .. math::
+
+            T = \\mu I_p,\\qquad \\mu = \\frac{1}{p}\\textrm{tr}(\\Sigma)
+        
+        This produces estimates that are well-conditioned and positive-definite. 
+        For more information on this procedure, please see [1]_.
+    
+    3. ``oas``
+        This computes the oracle approximating shrinkage estimator:
+        
+        .. math::
+
+            \\hat\\Sigma = (1 - \\hat{\\delta})\\Sigma + \\hat\\delta T
+        
+        where :math:`\\hat{\\delta}\\in[0, 1]` is the data-driven shrinkage:
+        
+        .. math::
+            \\hat\\delta = \\frac{(1 - \\frac{2}{p}) \\textrm{tr}(\\Sigma^2) + \\textrm{tr}(\\Sigma)^2}{(n + 1 - \\frac{2}{p})\\left(\\textrm{tr}(\\Sigma^2) - \\frac{\\textrm{tr}(\\Sigma)^2}{p}\\right)},\\qquad
+            T = \\mu I_p,\\qquad \\mu = \\frac{1}{p}\\textrm{tr}(\\Sigma)
+        
+        Like ``ledoitwolf``, this procedure produces estimates that are
+        well-conditioned and positive-definite. Contrary to ``ledoitwolf``,
+        shrinkage tends to be more aggressive in this procedure. For more 
+        information, please see [2]_.
+    
+    When calling transform on this class, data will automatically be
+    whitened based on the estimated covariance matrix. The whitening
+    matrix is computed from the eigendecomposition as follows:
+    
+    .. math::
+        \\Sigma = Q\\Lambda Q^T,\\qquad 
+        \\Lambda = \\textrm{diag}(\\lambda_1, ..., \\lambda_p) \geq 0,\\qquad
+        W = Q\\Lambda^{-\\frac{1}{2}}Q^T
+    
+    For more information on whitening, refer to [3]_.
     
     Parameters
     ----------
-    method : str, default = 'LedoitWolf'
-        Which method should be applied for estimation of covariance? (default = LedoitWolf, available = [Empirical, LedoitWolf])
+    method : {'empirical', 'ledoitwolf', 'oas'}, default = 'ledoitwolf'
+        Which method should be applied for estimation of covariance?
     s_min : float, default = None
         What's the minimum sample we should consider in the time dimension?
     s_max : float, default = None
@@ -598,52 +898,47 @@ class Covariance(sklearn.base.BaseEstimator):
     
     Attributes
     ----------
-    covariance_ : Union[np.ndarray, torch.Tensor]
+    covariance_ : np.ndarray | torch.Tensor
         Covariance matrix
-    precision_ : Union[np.ndarray, torch.Tensor]
+    precision_ : np.ndarray | torch.Tensor
         Precision matrix (inverse of covariance matrix)
-    whitener_ : Union[np.ndarray, torch.Tensor]
+    whitener_ : np.ndarray | torch.Tensor
         Whitening matrix
-    shrinkage_ : float, optional
+    shrinkage_ : float, default=None
         Shrinkage parameter, if used by method.
     
     Notes
     -----
-    This class assumes features to be the second to last dimension of the data, unless there are only two dimensions (in which case it is assumed to be the last dimension).
-    
-    Currently, we support the following methods:
-    
-    - Empirical:
-        This method simply computes the biassed empirical covariance matrix.
+    This class assumes features to be the second to last dimension of the data, unless 
+    there are only two dimensions (in which case it is assumed to be the last dimension).
 
-    - LedoitWolf:
-        This method computes the Ledoit-Wolf shrinkage estimator as detailed in [1]_.
-    
     References
     ----------
     .. [1] Ledoit, O., & Wolf, M. (2004). A well-conditioned estimator for large-dimensional covariance matrices. Journal of Multivariate Analysis, 88, 365-411. 10.1016/S0047-259X(03)00096-4
+    .. [2] Chen, Y., Wiesel, A., Eldar, Y.C., & Hero, A.O. (2009). Shrinkage algorithms for MMSE covariance estimation. arXiv. 10.48550/arXiv.0907.4698
+    .. [3] Kessy, A., Lewin, A., & Strimmer, K. (2016). Optimal whitening and decorrelation. arXiv. 10.48550/arXiv.1512.00809
     
     Examples
     --------
     >>> import torch
     >>> from mvpy.estimators import Covariance
     >>> X = torch.normal(0, 1, (100, 10, 100))
-    >>> cov = Covariance().fit(X)
+    >>> cov = Covariance(s_max = 20).fit(X)
     >>> cov.covariance_.shape
     torch.Size([10, 10])
     """
     
-    def __init__(self, method: str = 'LedoitWolf', s_min: Union[float, None] = None, s_max: Union[float, None] = None):
+    def __init__(self, method: str = 'ledoitwolf', s_min: Union[float, None] = None, s_max: Union[float, None] = None):
         """Create a new Covariance instance.
         
         Parameters
         ----------
-        method : str, default = 'LedoitWolf'
-            Which method should be applied for estimation of covariance? (default = LedoitWolf, available = [Empirical, LedoitWolf])
+        method : {'empirical', 'ledoitwolf', 'oas'}, default = 'ledoitwolf'
+            Which method should be applied for estimation of covariance?
         """
         
         if method not in _ESTIMATORS:
-            raise ValueError(f'Unknown covariance estimation method {method}. Available methods: {_ESTIMATORS}.')
+            raise ValueError(f'Unknown covariance estimation method {method}. Available methods: {list(_ESTIMATORS.keys())}.')
 
         self.method = method
         self.s_min = s_min
@@ -654,33 +949,33 @@ class Covariance(sklearn.base.BaseEstimator):
         
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
+        X : np.ndarray | torch.Tensor
             Data to fit the estimator on.
         
         Returns
         -------
-        sklearn.base.BaseEstimator
-            Estimator to use.
+        cov : sklearn.base.BaseEstimator
+            Covariance estimator to use.
         """
         
-        if isinstance(X, torch.Tensor) & (self.method == 'LedoitWolf'):
-            return _LedoitWolf_torch
-        elif isinstance(X, np.ndarray) & (self.method == 'LedoitWolf'):
-            return _LedoitWolf_numpy
-        elif isinstance(X, torch.Tensor) & (self.method == 'Empirical'):
-            return _Empirical_torch
-        elif isinstance(X, np.ndarray) & (self.method == 'Empirical'):
-            return _Empirical_numpy
+        # choose method
+        method = _ESTIMATORS[self.method]
+        
+        # choose backend
+        if isinstance(X, torch.Tensor):
+            return method['torch']
+        elif isinstance(X, np.ndarray):
+            return method['numpy']
         
         raise ValueError(f'Got an unexpected combination of method=`{self.method}` and type=`{type(X)}`.') 
     
-    def fit(self, X: Union[np.ndarray, torch.Tensor], *args: Any):
+    def fit(self, X: Union[np.ndarray, torch.Tensor], *args: Any) -> "Covariance":
         """Fit the covariance estimator.
         
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            Data to fit the estimator on.
+        X : np.ndarray | torch.Tensor
+            Data to fit the estimator on of shape ``(n_trials, n_features[, n_timepoints])``.
         *args : Any
             Additional arguments to pass to the estimator.
         
@@ -697,15 +992,15 @@ class Covariance(sklearn.base.BaseEstimator):
         
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            Data to transform.
+        X : np.ndarray | torch.Tensor
+            Data to transform of shape ``(n_trials, n_features[, n_timepoints])``.
         *args : Any
             Additional arguments to pass to the estimator.
         
         Returns
         -------
-        W : Union[np.ndarray, torch.Tensor]
-            Whitened data.
+        W : np.ndarray | torch.Tensor
+            Whitened data of shape ``(n_trials, n_features[, n_timepoints])``.
         """
         return self._get_estimator(X)(s_min = self.s_min, s_max = self.s_max).fit_transform(X)
 
@@ -714,47 +1009,47 @@ class Covariance(sklearn.base.BaseEstimator):
         
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            Data to fit the estimator on and transform.
+        X : np.ndarray | torch.Tensor
+            Data to fit the estimator on and transform of shape ``(n_trials, n_features[, n_timepoints])``.
         *args : Any
             Additional arguments to pass to the estimator.
         
         Returns
         -------
-        W : Union[np.ndarray, torch.Tensor]
-            Whitened data.
+        W : np.ndarray | torch.Tensor
+            Whitened data of shape ``(n_trials, n_features[, n_timepoints])``.
         """
         
         return self._get_estimator(X)(s_min = self.s_min, s_max = self.s_max).fit_transform(X)
     
-    def to_torch(self):
+    def to_torch(self) -> sklearn.base.BaseEstimator:
         """Create the torch estimator. Note that this function cannot be used for conversion.
         
         Returns
         -------
-        Covariance
+        cov : mvpy.estimators.Covariance
             The torch estimator.
         """
         
         return self._get_estimator(torch.tensor([1]))(s_min = self.s_min, s_max = self.s_max)
     
-    def to_numpy(self):
+    def to_numpy(self) -> sklearn.base.BaseEstimator:
         """Create the numpy estimator. Note that this function cannot be used for conversion.
 
         Returns
         -------
-        Covariance
+        cov : mvpy.estimators.Covariance
             The numpy estimator.
         """
 
         return self._get_estimator(np.array([1]))(s_min = self.s_min, s_max = self.s_max)
     
-    def clone(self):
+    def clone(self) -> "Covariance":
         """Obtain a clone of this class.
         
         Returns
         -------
-        Covariance
+        cov : mvpy.estimators.Covariance
             The cloned object.
         """
         

@@ -6,9 +6,9 @@ import numpy as np
 import torch
 import sklearn
 
-from .decoder import _Decoder_numpy, _Decoder_torch
+from .ridgedecoder import _RidgeDecoder_numpy, _RidgeDecoder_torch
 from .classifier import _Classifier_numpy, _Classifier_torch
-from .labelbinariser import _LabelBinariser_numpy, _LabelBinariser_torch
+from ..preprocessing.labelbinariser import _LabelBinariser_numpy, _LabelBinariser_torch
 
 from typing import Union, Any
 
@@ -36,7 +36,7 @@ class _RidgeClassifier_numpy(sklearn.base.BaseEstimator):
         Whether to normalise the data.
     alpha_per_target : bool, default=False
         Whether to fit individual alphas per target.
-    estimator : _Decoder_numpy
+    estimator : _RidgeDecoder_numpy
         The ridge estimator.
     binariser_ : _LabelBinariser_numpy
         The label binariser used internally.
@@ -70,9 +70,11 @@ class _RidgeClassifier_numpy(sklearn.base.BaseEstimator):
         self.alpha_per_target = alpha_per_target
         
         # setup estimator
-        self.estimator = _Decoder_numpy(
+        self.estimator = _RidgeDecoder_numpy(
             self.alpha,
-            fit_intercept = self.fit_intercept, normalise = self.normalise, alpha_per_target = self.alpha_per_target
+            fit_intercept = self.fit_intercept, 
+            normalise = self.normalise, 
+            alpha_per_target = self.alpha_per_target
         )
         
         # setup binariser
@@ -230,7 +232,7 @@ class _RidgeClassifier_torch(sklearn.base.BaseEstimator):
         Whether to normalise the data.
     alpha_per_target : bool, default=False
         Whether to fit individual alphas per target.
-    estimator : _Decoder_torch
+    estimator : _RidgeDecoder_torch
         The ridge estimator.
     binariser_ : _LabelBinariser_torch
         The label binariser used internally.
@@ -264,9 +266,11 @@ class _RidgeClassifier_torch(sklearn.base.BaseEstimator):
         self.alpha_per_target = alpha_per_target
         
         # setup estimator
-        self.estimator = _Decoder_torch(
+        self.estimator = _RidgeDecoder_torch(
             self.alpha,
-            fit_intercept = self.fit_intercept, normalise = self.normalise, alpha_per_target = self.alpha_per_target
+            fit_intercept = self.fit_intercept, 
+            normalise = self.normalise, 
+            alpha_per_target = self.alpha_per_target
         )
         
         # setup binariser
@@ -401,11 +405,32 @@ class _RidgeClassifier_torch(sklearn.base.BaseEstimator):
         )
 
 class RidgeClassifier(sklearn.base.BaseEstimator):
-    r"""Implements a ridge classifier with numpy backend.
+    """Implements a linear ridge classifier.
+    
+    Ridge classifiers effectively frame a classification problem as a simple
+    linear ridge regression, mapping from neural data :math:`X` to labels
+    :math:`y` through spatial filters :math:`\\beta`:
+
+    .. math::
+
+        y = \\beta X + \\varepsilon\\quad\\textrm{where}\\quad y\\in\\{-1, 1\\}
+    
+    Consequently, we solve for spatial filters through:
+    
+    .. math::
+
+        \\arg\\min_{\\beta} \\sum_{i}(y_i - \\beta^TX_i)^2 + \\alpha_\\beta\\lvert\\lvert\\beta\\rvert\\rvert^2
+    
+    where :math:`\\alpha_\\beta` are the penalties to test in LOO-CV.
+    
+    This linear filter estimation is extremely convenient for neural decoding 
+    because, unlike other decoding approaches such as :py:class:`~mvpy.estimators.SVC`,
+    this can be solved extremely efficiently and, for many decoding tasks,
+    will perform well.
     
     Parameters
     ----------
-    alpha : Union[np.ndarray, torch.Tensor]
+    alpha : np.ndarray | torch.Tensor
         The penalties to use for estimation.
     fit_intercept : bool, default=True
         Whether to fit an intercept.
@@ -416,7 +441,7 @@ class RidgeClassifier(sklearn.base.BaseEstimator):
     
     Attributes
     ----------
-    alpha : Union[np.ndarray, torch.Tensor]
+    alpha : np.ndarray | torch.Tensor
         The penalties to use for estimation.
     fit_intercept : bool, default=True
         Whether to fit an intercept.
@@ -424,25 +449,28 @@ class RidgeClassifier(sklearn.base.BaseEstimator):
         Whether to normalise the data.
     alpha_per_target : bool, default=False
         Whether to fit individual alphas per target.
-    estimator : Union[_Decoder_numpy, _Decoder_torch]
+    estimator : mvpy.estimators.RidgeDecoder
         The ridge estimator.
-    binariser_ : Union[_LabelBinariser_numpy, _LabelBinariser_torch]
+    binariser_ : mvpy.preprocessing.LabelBinariser
         The label binariser used internally.
-    intercept_ : Union[np.ndarray, torch.Tensor]
+    intercept_ : np.ndarray | torch.Tensor
         The intercepts of the classifier.
-    coef_ : Union[np.ndarray, torch.Tensor]
+    coef_ : np.ndarray | torch.Tensor
         The coefficients of the classifier.
-    pattern_ : Union[np.ndarray, torch.Tensor]
+    pattern_ : np.ndarray | torch.Tensor
         The patterns of the classifier.
     
     Notes
     -----
-    By default, this will not allow alpha values to differ between targets. In certain situations, this may be desirable, however. Be careful about alpha_per_target (as it can also hurt performance if used poorly).
+    By default, this will not allow alpha values to differ between targets. In certain situations, 
+    this may be desirable, however. In the multi-class case, it should be carefully evaluated
+    whether or not :py:attr:`~mvpy.estimators.RidgeClassifier.alpha_per_target` should be enabled,
+    as here it may also hurt decoding performance if penalties are on different scales and 
+    :py:attr:`~mvpy.estimators.Classifier.method` is ``OvR``.
     
-    Note also that coefficients are transformed to patterns to facilitate interpretation thereof. For more information, please see [1]_.
+    Coefficients are transformed to patterns to facilitate interpretation thereof. For more 
+    information, please see [1]_.
     
-    Note also that this class will rarely be public-facing, as at runtime it is wrapped in a Classifier class which handles OvR/OvO modes. By default, OvR will make predictions based on maximum decision values, whereas OvO will make voting-based decisions between all classifiers.
-
     References
     ----------
     .. [1] Haufe, S., Meinecke, F., Görgen, K., Dähne, S., Haynes, J.D., Blankertz, B., & Bießmann, F. (2014). On the interpretation of weight vectors of linear models in multivariate neuroimaging. NeuroImage, 87, 96-110. 10.1016/j.neuroimage.2013.10.067
@@ -481,7 +509,7 @@ class RidgeClassifier(sklearn.base.BaseEstimator):
         
         Parameters
         ----------
-        alpha : Union[np.ndarray, torch.Tensor]
+        alpha : np.ndarray | torch.Tensor
             The penalties to use for estimation.
         method : str, default='OvR'
             Should we solve multiclass problems through one-versus-rest (OvR) or one-versus-one (OvO) classifiers?
@@ -531,10 +559,10 @@ class RidgeClassifier(sklearn.base.BaseEstimator):
 
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            The features of shape (n_samples, n_channels).
-        y : Union[np.ndarray, torch.Tensor]
-            The targets of shape (n_samples[, n_features]).
+        X : np.ndarray | torch.Tensor
+            The features of shape ``(n_samples, n_channels)``.
+        y : np.ndarray | torch.Tensor
+            The targets of shape ``(n_samples[, n_features])``.
         
         Returns
         -------
@@ -549,13 +577,13 @@ class RidgeClassifier(sklearn.base.BaseEstimator):
 
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            The features (n_samples, n_channels).
+        X : np.ndarray | torch.Tensor
+            The features ``(n_samples, n_channels)``.
 
         Returns
         -------
-        df : Union[np.ndarray, torch.Tensor]
-            The predictions of shape (n_samples, n_classes).
+        df : np.ndarray | torch.Tensor
+            The predictions of shape ``(n_samples, n_classes)``.
         """
 
         raise NotImplementedError(f'Method not implemented in the base class.')
@@ -565,13 +593,13 @@ class RidgeClassifier(sklearn.base.BaseEstimator):
         
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
+        X : np.ndarray | torch.Tensor
             The features (n_samples, n_channels).
         
         Returns
         -------
-        y_h : Union[np.ndarray, torch.Tensor]
-            The predictions of shape (n_samples, n_features).
+        y_h : np.ndarray | torch.Tensor
+            The predictions of shape ``(n_samples, n_features)``.
         """
         
         raise NotImplementedError('This method is not implemented in the base class.')
@@ -581,13 +609,20 @@ class RidgeClassifier(sklearn.base.BaseEstimator):
 
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            The features (n_samples, n_channels).
+        X : np.ndarray | torch.Tensor
+            The features ``(n_samples, n_channels)``.
 
         Returns
         -------
-        df : Union[np.ndarray, torch.Tensor]
-            The predictions of shape (n_samples, n_classes).
+        df : np.ndarray | torch.Tensor
+            The predictions of shape ``(n_samples, n_classes)``.
+        
+        .. warning::
+            Methods that predict the probability of classes are currently
+            not implemented and will return decision function outputs
+            instead. This is because probabilities are not trivial to 
+            compute and require careful calibration, which we will implement
+            in the future.
         """
 
         raise NotImplementedError('This method is not implemented in the base class.')

@@ -213,15 +213,45 @@ class _RidgeCV_torch(sklearn.base.BaseEstimator):
         
         return _RidgeCV_torch(alphas = self.alphas, 
                               fit_intercept = self.fit_intercept, 
-                              normalsie = self.normalise, 
+                              normalise = self.normalise, 
                               alpha_per_target = self.alpha_per_target)
 
 class RidgeCV(sklearn.base.BaseEstimator):
-    """Implements RidgeCV using torch as our backend.
+    """Implements ridge regression with cross-validation.
+    
+    Ridge regression maps input data :math:`X` to output data :math:`y` 
+    through coefficients :math:`\\beta`:
+    
+    .. math::
+
+        y = \\beta X + \\varepsilon
+    
+    and solves for the model :math:`\\beta` through:
+    
+    .. math::
+    
+        \\arg\\min_\\beta \\sum_i (y_i - \\beta^T X_i)^2 + \\alpha_\\beta\\lvert\\lvert\\beta\\rvert\\rvert^2
+    
+    where :math:`\\alpha_\\beta` are penalties to test in LOO-CV which 
+    has a convenient closed-form solution here:
+    
+    .. math::
+
+        \\arg\\min_{\\alpha_\\beta} \\frac{1}{N}\\sum_{i = 1}^{N} \\left(\\frac{y - \\beta_\\alpha X}{1 - H_{\\alpha,ii}}\\right)\\qquad
+        \\textrm{where}\\qquad
+        H_{\\alpha,ii} = \\textrm{diag}\\left(X(X^T X + \\alpha I)^{-1}X^T\\right)
+    
+    As such, this will automatically evaluate the LOO-CV of all values of 
+    :py:attr:`~mvpy.estimators.RidgeCV.alphas` and chose the penalty that
+    minimises the mean-squared loss. This is convenient because it is much
+    faster than performing inner cross-validation to fine-tune penalties.
+    
+    For more information on ridge regression, see [1]_. This implementation
+    follows [2]_.
     
     Parameters
     ----------
-    alphas : Union[torch.Tensor, list, float, int], default=torch.Tensor([1])
+    alphas : np.ndarray | torch.Tensor | List | float | int, default=1
         Penalties to use for estimation.
     fit_intercept : bool, default=True
         Whether to fit an intercept.
@@ -232,21 +262,22 @@ class RidgeCV(sklearn.base.BaseEstimator):
     
     Attributes
     ----------
-    alpha_ : torch.Tensor
+    alpha_ : np.ndarray | torch.Tensor
         The penalties used for estimation.
-    intercept_ : torch.Tensor
-        The intercepts.
-    coef_ : torch.Tensor
-        The coefficients.
+    intercept_ : np.ndarray | torch.Tensor
+        The intercepts of shape ``(n_features,)``.
+    coef_ : np.ndarray | torch.Tensor
+        The coefficients of shape ``(n_channels, n_features)``.
     
     Notes
     -----
-    This class owes greatly to J.R. King's RidgeCV implementation[3]_. If data are supplied as numpy, this class will fall back to :func:`sklearn.linear_model.RidgeCV`[4]_.
+    If data are supplied as numpy, this class will fall back to :py:class:`sklearn.linear_model.RidgeCV`. See [3]_.
     
     References
     ----------
-    .. [3] King, J.R. (2020). torch_ridge. https://github.com/kingjr/torch_ridge
-    .. [4] Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., ... & Vanderplas, J. (2011). Scikit-learn: Machine learning in Python. Journal of Machine Learning Research, 12, 2825-2830.
+    .. [1] McDonald, G.C. (2009). Ridge regression. Wiley Interdisciplinary Reviews: Computational Statistics, 1, 93-100. doi.org/10.1002/wics.14
+    .. [2] King, J.R. (2020). torch_ridge. https://github.com/kingjr/torch_ridge
+    .. [3] Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., ... & Vanderplas, J. (2011). Scikit-learn: Machine learning in Python. Journal of Machine Learning Research, 12, 2825-2830.
     
     Examples
     --------
@@ -264,7 +295,7 @@ class RidgeCV(sklearn.base.BaseEstimator):
         
         Parameters
         ----------
-        alphas : Union[torch.Tensor, list, float, int], default=torch.Tensor([1])
+        alphas : np.ndarray | torch.Tensor | List | float | int, default=1
             Penalties to use for estimation.
         fit_intercept : bool, default=True
             Whether to fit an intercept.
@@ -289,15 +320,20 @@ class RidgeCV(sklearn.base.BaseEstimator):
         
         raise ValueError(f'Alphas should be of type np.ndarray or torch.tensor, but got {type(alphas)}.')
     
-    def fit(self, X: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor]):
+    def fit(self, X: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor]) -> "RidgeCV":
         """Fit the estimator.
         
         Parameters
         ----------
-        X : torch.Tensor
-            The features.
-        y : torch.Tensor
-            The targets.
+        X : np.ndarray | torch.Tensor
+            Input data of shape ``(n_samples, n_channels)``.
+        y : np.ndarray | torch.Tensor
+            Output data of shape ``(n_samples, n_features)``.
+        
+        Returns
+        -------
+        ridge : RidgeCV
+            The fitted ridge estimator.
         """
         
         raise NotImplementedError('This method is not implemented in the base class.')
@@ -307,23 +343,23 @@ class RidgeCV(sklearn.base.BaseEstimator):
         
         Parameters
         ----------
-        X : torch.Tensor
-            The features.
+        X : np.ndarray | torch.Tensor
+            Input data of shape ``(n_samples, n_channels)``.
         
         Returns
         -------
-        y : torch.Tensor
-            The predictions.
+        y_h : np.ndarray | torch.Tensor
+            Predicted data of shape ``(n_samples, n_features)``.
         """
         
         raise NotImplementedError('This method is not implemented in the base class.')
     
-    def clone(self):
+    def clone(self) -> "RidgeCV":
         """Make a clone of this class.
         
         Returns
         -------
-        RidgeCV
+        ridge : RidgeCV
             A clone of this class.
         """
         

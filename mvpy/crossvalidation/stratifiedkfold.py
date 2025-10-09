@@ -5,7 +5,7 @@ A collection of classes for stratified k-fold cross-validation.
 import torch
 import numpy as np
 
-from ..estimators import LabelBinariser
+from ..preprocessing import LabelBinariser
 
 from typing import Optional, Union
 from collections.abc import Generator

@@ -555,13 +555,31 @@ class _GroupedRSA_torch(sklearn.base.BaseEstimator):
         return _GroupedRSA_torch(estimator_ = self.estimator_, n_jobs_ = self.n_jobs_, verbose_ = self.verbose_)
 
 class RSA(sklearn.base.BaseEstimator):
-    """Implements representational similarity analysis as an estimator. Note that this class expects features to be the second to last dimension.
+    """Implements representational similarity analysis.
+    
+    Representational similarity analysis computes the geometry of input
+    data :math:`X` in their feature space. For example, given input
+    data :math:`X` of shape ``(n_trials, n_channels, n_timepoints)``, 
+    it would compute representational (dis-)similarity matrices of shape 
+    ``(n_trials, n_trials, n_timepoints)`` through some (dis-)similarity
+    function :math:`f`.
+    
+    Generally, performing this over representations of different systems
+    allows drawing second-order comparisons about shared properties of
+    those systems. This is typically done by computing  multiple (dis-)similarity 
+    matrices from neural and simulated data before comparing the two using, 
+    for example, :py:func:`~mvpy.math.spearmanr` to obtain a measure of 
+    how similar some hypothetical simulated system is to the observed
+    neural geometry.
+    
+    For more information on representational similarity analysis,
+    please see [1]_ [2]_.
     
     Parameters
     ----------
     grouped : bool, default=False
         Whether to use a grouped RSA (this is required for cross-validated metrics to make sense, irrelevant otherwise).
-    estimator : callable, default=mv.math.euclidean
+    estimator : Callable, default=mvpy.math.euclidean
         The estimator/metric to use for RDM computation.
     n_jobs : int, default=None
         Number of jobs to run in parallel (default = None).
@@ -570,11 +588,11 @@ class RSA(sklearn.base.BaseEstimator):
     
     Attributes
     ----------
-    rdm_ : Union[np.ndarray, torch.Tensor]
-        The representational (dis)similarity matrix.
-    cx_ : Union[np.ndarray, torch.Tensor]
+    rdm_ : np.ndarray | torch.Tensor
+        The upper triangle of the representational (dis-)similarity matrix of shape ``(n_triu_indices[, ...])``.
+    cx_ : np.ndarray | torch.Tensor
         The upper triangular indices of the RDM.
-    cy_ : Union[np.ndarray, torch.Tensor]
+    cy_ : np.ndarray | torch.Tensor
         The upper triangular indices of the RDM.
     grouped : bool
         Whether the RSA is grouped.
@@ -582,14 +600,32 @@ class RSA(sklearn.base.BaseEstimator):
         The estimator/metric to use for RDM computation.
     n_jobs : int
         Number of jobs to run in parallel.
-    verbose : bool
+    verbose : bool, default=False
         Whether to print progress information.
+    
+    See also
+    --------
+    mvpy.math.cosine, mvpy.math.cosine_d, mvpy.math.cv_euclidean, mvpy.math.cv_mahalanobis, mvpy.math.euclidean, mvpy.math.mahalanobis, mvpy.math.pearsonr, mvpy.math.pearsonr_d, mvpy.math.spearmanr, mvpy.math.spearmanr_d : Available (dis-)similarity functions.
     
     Notes
     -----
-    If you would like to perform, for example, a cross-validated RSA using :func:`mvpy.math.cv_euclidean`, you should make sure that the first dimension in your data is trials, whereas the second dimension groups them meaningfully. The resulting RDM will then be computed over groups, with cross-validation over trials.
+    Computing (dis-)similarity across input data :math:`X` may be inherently
+    biassed. For example, distance metrics like :py:func:`~mvpy.math.euclidean` 
+    or :py:func:`~mvpy.math.mahalanobis` may never truly be zero given the 
+    noise inherent to neural responses. Consequently, cross-validation can
+    be applied to compute unbiassed estimators through :py:func:`mvpy.math.cv_euclidean` 
+    or :py:func:`mvpy.math.cv_mahalanobis`. To do this, make sure to collect
+    many trials per condition and structure your data :math:`X` as 
+    ``(n_trials, n_groups, n_channels, n_timepoints)`` while setting
+    :py:attr:`~mvpy.estimators.RSA.grouped` ``True``.
     
-    For more information on representational similarity, please see [2]_.
+    For more information on cross-validation, please see [3]_.
+    
+    References
+    ----------
+    .. [1] Kriegeskorte, N. (2008). Representational similarity analaysis - connecting the branches of systems neuroscience. Frontiers in Systems Neuroscience. 10.3389/neuro.06.004.2008
+    .. [2] Diedrichsen, J., & Kriegeskorte, N. (2017). Representational models: A common framework for understanding encoding, pattern-component, and representational similarity analysis. PLOS Computational Biology, 13, e1005508. 10.1371/journal.pcbi.1005508
+    .. [3] Diedrichsen, J., Provost, S., & Zareamoghaddam, H. (2016). On the distribution of cross-validated mahalanobis distances. arXiv. 10.48550/arXiv.1607.01371
     
     Examples
     --------
@@ -615,28 +651,6 @@ class RSA(sklearn.base.BaseEstimator):
     >>> rdm[rsa.cx_, rsa.cy_] = rsa.rdm_
     >>> import matplotlib.pyplot as plt
     >>> plt.imshow(rdm[...,0], cmap = 'RdBu_r')
-    
-    Note that if you would like to perform a decoding RSA, you can use a OvR classifier instead. For example, let's assume we have data from 100 trials, 60 channels and 50 time points. Data are from 5 distinct classes.
-    
-    >>> from mvpy.estimators import Classifier
-    >>> X = torch.normal(0, 1, (100, 10, 50))
-    >>> y = torch.randint(0, 5, (100, 50))
-    >>> 
-    
-    References
-    ----------
-    .. [2] Kriegeskorte, N. (2008). Representational similarity analaysis - connecting the branches of systems neuroscience. Frontiers in Systems Neuroscience. 10.3389/neuro.06.004.2008
-    
-    See also
-    --------
-    :func:`mvpy.math.euclidean`
-    :func:`mvpy.math.cv_euclidean`
-    :func:`mvpy.math.cosine`
-    :func:`mvpy.math.cosine_d`
-    :func:`mvpy.math.pearsonr`
-    :func:`mvpy.math.pearsonr_d`
-    :func:`mvpy.math.spearmanr`
-    :func:`mvpy.math.spearmanr_d`
     """
     
     def __init__(self, grouped: bool = False, estimator: Callable = euclidean, n_jobs: Union[int, None] = None, verbose: bool = False):
@@ -662,13 +676,13 @@ class RSA(sklearn.base.BaseEstimator):
         if not callable(estimator):
             raise TypeError(f'Estimator must be a callable type, but got {type(estimator)}.')
         
-    def _get_estimator(self, X: np.ndarray, *args: Any) -> sklearn.base.BaseEstimator:
+    def _get_estimator(self, X: Union[np.ndarray, torch.Tensor], *args: Any) -> sklearn.base.BaseEstimator:
         """Given grouping and data, determine which estimator to use.
         
         Parameters
         ----------
-        X : np.ndarray
-            The data to compute the RDM for.
+        X : np.ndarray | torch.Tensor
+            The data to compute the RDM for of shape ``(n_trials[, n_groups], n_channels, n_timepoints)``.
         args : Any
             Additional arguments
         
@@ -689,15 +703,20 @@ class RSA(sklearn.base.BaseEstimator):
         
         raise ValueError(f'Got an unexpected combination of grouped=`{self.grouped}` and type=`{type(X)}`.')
 
-    def fit(self, X: Union[np.ndarray, torch.Tensor], *args: Any) -> Any:
+    def fit(self, X: Union[np.ndarray, torch.Tensor], *args: Any) -> "RSA":
         """Fit the estimator.
         
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            The data to compute the RDM for.
+        X : np.ndarray | torch.Tensor
+            The data to compute the RDM for of shape ``(n_trials[, n_groups], n_channels, n_timepoints)``.
         args : Any
             Additional arguments
+        
+        Returns
+        -------
+        rsa : mvpy.estimators.RSA
+            Fitted RSA estimator.
         """
         
         return self._get_estimator(X, *args)(estimator_ = self.estimator, n_jobs_ = self.n_jobs, verbose_ = self.verbose).fit(X, *args)
@@ -707,15 +726,15 @@ class RSA(sklearn.base.BaseEstimator):
         
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            The data to compute the RDM for.
+        X : np.ndarray | torch.Tensor
+            The data to compute the RDM for of shape ``(n_trials[, n_groups], n_channels, n_timepoints)``.
         args : Any
             Additional arguments
         
         Returns
         -------
-        rdm : Union[np.ndarray, torch.Tensor]
-            The representational similarity.
+        rdm : np.ndarray | torch.Tensor
+            The representational similarity matrix of shape ``(n_trials, n_trials, n_timepoints)`` or ``(n_groups, n_groups, n_timepoints)``.
         """
         
         return self._get_estimator(X, *args)(estimator_ = self.estimator, n_jobs_ = self.n_jobs, verbose_ = self.verbose).transform(X, *args)
@@ -725,15 +744,15 @@ class RSA(sklearn.base.BaseEstimator):
         
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            The data to compute the RDM for.
+        X : np.ndarray | torch.Tensor
+            The data to compute the RDM for of shape ``(n_trials[, n_groups], n_channels, n_timepoints)``.
         args : Any
             Additional arguments
         
         Returns
         -------
-        rdm : Union[np.ndarray, torch.Tensor]
-            The representational similarity.
+        rdm : np.ndarray | torch.Tensor
+            The representational similarity matrix of shape ``(n_trials, n_trials, n_timepoints)`` or ``(n_groups, n_groups, n_timepoints)``.
         """
         
         return self._get_estimator(X, *args)(estimator_ = self.estimator, n_jobs_ = self.n_job, verbose_ = self.verbose).fit_transform(X, *args)
@@ -743,7 +762,7 @@ class RSA(sklearn.base.BaseEstimator):
         
         Returns
         -------
-        sklearn.base.BaseEstimator
+        rsa : sklearn.base.BaseEstimator
             The estimator.
         """
         
@@ -754,7 +773,7 @@ class RSA(sklearn.base.BaseEstimator):
         
         Returns
         -------
-        sklearn.base.BaseEstimator
+        rsa : sklearn.base.BaseEstimator
             The estimator.
         """
 
@@ -765,8 +784,8 @@ class RSA(sklearn.base.BaseEstimator):
         
         Returns
         -------
-        rdm : Union[np.ndarray, torch.Tensor]
-            The representational similarity matrix in full.
+        rdm : np.ndarray | torch.Tensor
+            The representational similarity matrix of shape ``(n_trials, n_trials, n_timepoints)`` or ``(n_groups, n_groups, n_timepoints)``.
         """
         
         raise NotImplementedError('This method is not implemented in the base class.')
@@ -776,7 +795,7 @@ class RSA(sklearn.base.BaseEstimator):
         
         Returns
         -------
-        RSA
+        rsa : mvpy.estimators.RSA
             A clone of this class.
         """
         

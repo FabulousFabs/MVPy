@@ -7,8 +7,8 @@ import torch
 import sklearn
 
 from .classifier import _Classifier_numpy, _Classifier_torch
-from .labelbinariser import _LabelBinariser_numpy, _LabelBinariser_torch
-from .scaler import _Scaler_numpy, _Scaler_torch
+from ..preprocessing.labelbinariser import _LabelBinariser_numpy, _LabelBinariser_torch
+from ..preprocessing.scaler import _Scaler_numpy, _Scaler_torch
 from ..math import kernel_linear, kernel_rbf, kernel_poly, kernel_sigmoid
 
 from typing import Union, Any

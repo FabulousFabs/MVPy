@@ -36,9 +36,11 @@ def _kernel_rbf_numpy(x: np.ndarray, y: np.ndarray, γ: float, *args: Any) -> np
     Note that, unlike other math functions, this is specifically for 2D inputs and outputs.
     """
     
-    return np.exp(
-        -γ * np.linalg.norm(x[:,None] - y[None,:], axis = 2) ** 2
-    )
+    # compute kernel
+    K = (x * x).sum(axis = 1, keepdims = True) + (y * y).sum(axis = 1, keepdims = True).T - (2.0 * (x @ y.T))
+    K = np.exp(-γ * np.clip(K, a_min = 0.0, a_max = None))
+    
+    return K
 
 def _kernel_rbf_torch(x: torch.Tensor, y: torch.Tensor, γ: float, *args: Any) -> torch.Tensor:
     """Compute the radial basis kernel function.
@@ -67,10 +69,13 @@ def _kernel_rbf_torch(x: torch.Tensor, y: torch.Tensor, γ: float, *args: Any) -
     
     Note that, unlike other math functions, this is specifically for 2D inputs and outputs.
     """
+
+    # compute kernel
+    K = (x * x).sum(1, keepdim = True) + (y * y).sum(1, keepdim = True).T - (2.0 * (x @ y.T))
+    K.clamp_(min = 0.0)
+    K.mul_(-γ).exp_()
     
-    return torch.exp(
-        -γ * torch.linalg.norm(x[:,None,:] - y[None,:,:], dim = 2) ** 2
-    )
+    return K
 
 def kernel_rbf(x: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor], γ: float, *args: Any) -> Union[np.ndarray, torch.Tensor]:
     """Compute the radial basis kernel function.

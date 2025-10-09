@@ -697,6 +697,8 @@ class _ReceptiveField_numpy(sklearn.base.BaseEstimator):
         else:
             if len(intercept_.shape) == 1:
                 y += intercept_[None,:,None]
+            elif len(intercept_.shape) == 2:
+                y += intercept_[...,None]
             else:
                 y += intercept_
         
@@ -740,7 +742,7 @@ class _ReceptiveField_numpy(sklearn.base.BaseEstimator):
         )
 
 @compile.torch()
-def _edge_correct_torch(XX_eij: torch.Tensor, X_e: torch.Tensor, ch_i: int, ch_j: int, s_min: int, s_max: int):
+def _edge_correct_torch(XX_eij: torch.Tensor, X_e: torch.Tensor, ch_i: torch.Tensor, ch_j: torch.Tensor, s_min: int, s_max: int):
     """Perform in-place edge correction.
     
     Parameters
@@ -749,10 +751,10 @@ def _edge_correct_torch(XX_eij: torch.Tensor, X_e: torch.Tensor, ch_i: int, ch_j
         Auto-correlation entry of shape (n_features * n_trf, n_features * n_trf).
     X_e : torch.Tensor
         Input data at n_epoch (with temporal dim flipped) of shape (n_features, n_timepoints).
-    ch_i : int
-        Current channel i.
-    ch_j : int
-        Current channel j.
+    ch_i : torch.Tensor
+        Current channels i.
+    ch_j : torch.Tensor
+        Current channels j.
     s_min : int
         Minimum sample.
     s_max : int
@@ -1441,6 +1443,8 @@ class _ReceptiveField_torch(sklearn.base.BaseEstimator):
         else:
             if len(intercept_.shape) == 1:
                 y += intercept_[None,:,None]
+            elif len(intercept_.shape) == 2:
+                y += intercept_[...,None]
             else:
                 y += intercept_
         
@@ -1484,9 +1488,42 @@ class _ReceptiveField_torch(sklearn.base.BaseEstimator):
         )
 
 class ReceptiveField(sklearn.base.BaseEstimator):
-    r"""Class for estimating receptive fields from data (i.e., mTRF estimation or stimulus reconstruction).
+    """Implements receptive field estimation (for multivariate temporal response functions or stimulus reconstruction).
     
-    Principally, this class is equivalent to :class:`mvpy.estimators.TimeDelayed`, but it operates in the Fourier domain, making it much more efficient and faster (at least when n_features is small). For details, see below. Unlike :class:`mvpy.estimators.TimeDelayed`, this class expects t_min and t_max relative to y. Unlike MNE, this class will automatically perform cross-validation if multiple penalties are supplied.
+    Generally, mTRF models are described by:
+    
+    .. math::
+        r(t,n) = \\sum_{\\tau} w(\\tau, n) s(t - \\tau) + \\varepsilon
+    
+    where :math:`r(t,n)` is the reconstructed signal at timepoint :math:`t` for channel :math:`n`, :math:`s(t)` 
+    is the stimulus at time :math:`t`, :math:`w(\\tau, n)` is the weight at time delay :math:`\\tau` for channel 
+    :math:`n`, and :math:`\\varepsilon` is the error.
+    
+    SR models are estimated as:
+    
+    .. math::
+        s(t) = \\sum_{n}\\sum_{\\tau} r(t + \\tau, n) g(\\tau, n)
+    
+    where :math:`s(t)` is the reconstructed stimulus at time :math:`t`, :math:`r(t,n)` is the neural response
+    at :math:`t` and lagged by :math:`\\tau` for channel :math:`n`, :math:`g(\\tau, n)` is the weight at 
+    time delay :math:`\\tau` for channel :math:`n`.
+    
+    For more information on mTRF or SR models, see [1]_.
+    
+    Consequently, this class fundamentally solves the same problem as :py:class:`~mvpy.estimators.TimeDelayed`.
+    However, unlike :py:class:`~mvpy.estimators.TimeDelayed`, this approach avoids creating and solving the
+    full time-delayed design and outcome matrix. Instead, this approach uses the fact that we are fundamentally
+    interested in (de-)convolution, which can be solved efficiently through estimation of auto- and cross-
+    correlations in the Fourier domain. For more information on this approach, see [2]_ [3]_ [4]_.
+    
+    Solving this in the Fourier domain can be extremely beneficial when the number of predictors ``n_features``
+    is small, but scales poorly for a higher number of ``n_features`` unless 
+    :py:attr:`~mvpy.estimators.ReceptiveField.edge_correction` is explicitly disabled. Generally, we would
+    recommend testing both :py:class:`~mvpy.estimators.ReceptiveField` and :py:class:`~mvpy.estimators.TimeDelayed`
+    on a realistic subset of the data before deciding for one of the two approaches.
+    
+    Like :py:class:`~mvpy.estimators.TimeDelayed`, this class will automatically perform inner cross-validation
+    if multiple values of :py:attr:`~mvpy.estimators.ReceptiveField.alpha` are supplied.
     
     Parameters
     ----------
@@ -1496,12 +1533,12 @@ class ReceptiveField(sklearn.base.BaseEstimator):
         Maximum time point to fit (unlike TimeDelayed, this is relative to y). Must be greater than t_min.
     fs : int
         Sampling frequency.
-    alpha : Union[int, float, np.ndarray, torch.Tensor, List], default=1.0
-        Alpha penalties as float or of shape (n_penalties,). If not float, cross-validation will be employed (see reg_cv).
-    reg_type : Union[str, List], default='ridge'
-        Type of regularisation to employ (either 'ridge' or 'laplacian' or tuple describing (`time`, `features`)).
-    reg_cv : Any, default=5
-        If alpha is list or array, what cross-validation scheme should we use? Integers are interpeted as n_splits for KFold crossvalidation. String input 'LOO' will use RidgeCV to solve LOO over alphas (only available for reg_type='ridge'). Alternatively, a cross-validator that exposes a split()-method can be supplied.
+    alpha : int | float | np.ndarray | torch.Tensor | List, default=1.0
+        Alpha penalties as float or of shape (n_penalties,). If not float, cross-validation will be employed (see :py:attr:`~mvpy.estimators.ReceptiveField.reg_cv`).
+    reg_type : {'ridge', 'laplacian', List}, default='ridge'
+        Type of regularisation to employ (either 'ridge' or 'laplacian' or tuple describing ``(time, features)``).
+    reg_cv : {int, 'LOO', mvpy.crossvalidation.KFold}, default=5
+        If alpha is list or array, what cross-validation scheme should we use? Integers are interpeted as :py:attr:`~mvpy.crossvalidation.KFold.n_splits` for :py:class:`~mvpy.crossvalidation.KFold`. String input ``'LOO'`` will use :py:class:`~mvpy.estimators.RidgeCV` to solve LOO-CV over alphas, but is available only for :py:attr:`~mvpy.estimators.ReceptiveField.reg_type` ``'ridge'``. Alternatively, a cross-validator that exposes a :py:meth:`~mvpy.crossvalidation.KFold.split` method can be supplied.
     patterns : bool, default=False
         Should we estimate the patterns from coefficients and data (useful only for stimulus reconstruction, not mTRF)?
     fit_intercept : bool, default=True
@@ -1517,12 +1554,12 @@ class ReceptiveField(sklearn.base.BaseEstimator):
         Maximum time point to fit (unlike TimeDelayed, this is relative to y). Must be greater than t_min.
     fs : int
         Sampling frequency.
-    alpha : Union[int, float, np.ndarray, torch.Tensor, List], default=1.0
-        Alpha penalties as float or of shape (n_penalties,). If not float, cross-validation will be employed (see reg_cv).
-    reg_type : Union[str, List], default='ridge'
-        Type of regularisation to employ (either 'ridge' or 'laplacian' or tuple describing (`time`, `features`)).
-    reg_cv : Any, default=5
-        If alpha is list or array, what cross-validation scheme should we use? Integers are interpeted as n_splits for KFold crossvalidation. String input 'LOO' will use RidgeCV to solve LOO over alphas (only available for reg_type='ridge'). Alternatively, a cross-validator that exposes a split()-method can be supplied.
+    alpha : int | float | np.ndarray | torch.Tensor | List, default=1.0
+        Alpha penalties as float or of shape ``(n_penalties,)``. If not float, cross-validation will be employed (see :py:attr:`~mvpy.estimators.ReceptiveField.reg_cv`).
+    reg_type : {'ridge', 'laplacian', List}, default='ridge'
+        Type of regularisation to employ (either 'ridge' or 'laplacian' or tuple describing ``(time, features)``).
+    reg_cv : {int, 'LOO', mvpy.crossvalidation.KFold}, default=5
+        If alpha is list or array, what cross-validation scheme should we use? Integers are interpeted as :py:attr:`~mvpy.crossvalidation.KFold.n_splits` for :py:class:`~mvpy.crossvalidation.KFold`. String input ``'LOO'`` will use :py:class:`~mvpy.estimators.RidgeCV` to solve LOO-CV over alphas, but is available only for :py:attr:`~mvpy.estimators.ReceptiveField.reg_type` ``'ridge'``. Alternatively, a cross-validator that exposes a :py:meth:`~mvpy.crossvalidation.KFold.split` method can be supplied.
     patterns : bool, default=False
         Should we estimate the patterns from coefficients and data (useful only for stimulus reconstruction, not mTRF)?
     fit_intercept : bool, default=True
@@ -1533,58 +1570,47 @@ class ReceptiveField(sklearn.base.BaseEstimator):
         t_min converted to samples.
     s_max : int
         t_max converted to samples.
-    window : Union[np.ndarray, torch.Tensor]
-        The TRF window ranging from s_min-s_max of shape (n_trf,).
+    window : np.ndarray | torch.Tensor
+        The TRF window ranging from s_min-s_max of shape ``(n_trf,)``.
     n_features_ : int
-        Number of features in X.
+        Number of features in :math:`X`.
     n_channels_ : int
-        Number of channels in y.
+        Number of channels in :math:`y`.
     n_trf_ : int
         Number of timepoints in the estimated response functions.
-    cov_ : Union[np.ndarray, torch.Tensor]
-        Covariance from auto-correlations of shape (n_samples, n_features * n_trf, n_features * n_trf).
-    coef_ : Union[np.ndarray, torch.Tensor]
-        Estimated coefficients of shape (n_channels, n_features, n_trf).
-    pattern_ : Union[np.ndarray, torch.Tensor]
-        If computed, estimated pattern of shape (n_channels, n_features, n_trf).
-    intercept_ : Union[float, np.ndarray, torch.Tensor]
-        Estimated intercepts of shape (n_channels,) or float.
+    cov_ : np.ndarray | torch.Tensor
+        Covariance from auto-correlations of shape ``(n_samples, n_features * n_trf, n_features * n_trf)``.
+    coef_ : np.ndarray | torch.Tensor
+        Estimated coefficients of shape ``(n_channels, n_features, n_trf)``.
+    pattern_ : np.ndarray | torch.Tensor
+        If computed, estimated pattern of shape ``(n_channels, n_features, n_trf)``.
+    intercept_ : float | np.ndarray | torch.Tensor
+        Estimated intercepts of shape ``(n_channels,)`` or ``float``.
+    
+    See also
+    --------
+    mvpy.estimators.TimeDelayed : An alternative mTRF/SR estimator that solves the time-expanded design matrix.
+    mvpy.crossvalidation.KFold, mvpy.crossvalidation.RepeatedKFold, mvpy.crossvalidation.StratifiedKFold, mvpy.crossvalidation.RepeatedStratifiedKFold : Cross-validation classes for automatically testing multiple values of :py:attr:`~mvpy.estimators.ReceptiveField.alpha`.
     
     Notes
     -----
-    Analagously to :class:`mvpy.estimators.TimeDelayed`, this class allows estimation of multivariate temporal response functions (mTRF) or stimulus reconstruction models (SR).
+    For SR models it is recommended to also set :py:attr:`~mvpy.estimators.ReceptiveField.patterns` 
+    to ``True`` to estimate not only the coefficients but also the patterns that were actually used for 
+    reconstructing stimuli. For more information, see [5]_.
     
-    Generally, mTRF models are described by:
-    
-    .. math::
-        r(t,n) = \sum_{\tau} w(\tau, n) s(t - \tau) + \epsilon
-    
-    where :math:`r(t,n)` is the reconstructed signal at timepoint :math:`t` for channel :math:`n`, :math:`s(t)` is the stimulus at time :math:`t`, :math:`w(\tau, n)` is the weight at time delay :math:`\tau` for channel :math:`n`, and :math:`\epsilon` is the error.
-    
-    SR models are estimated as:
-    
-    .. math::
-        s(t) = \sum_{n}\sum_{\tau} r(t + \tau, n) g(\tau, n)
-    
-    where :math:`s(t)` is the reconstructed stimulus at time :math:`t`, :math:`r(t,n)` is the neural response at :math:`t` and lagged by :math:`\tau` for channel :math:`n`, :math:`g(\tau, n)` is the weight at time delay :math:`\tau` for channel :math:`n`.
-    
-    For more information on mTRF or SR models, see [ReceptiveField0].
-    
-    Here, the key difference to :class:`mvpy.estimators.TimeDelayed` is the following: 
-    
-    Solving for weights in these equations requires constructing a full time delayed design matrix of shape :math:`X` (n_samples * n_timepoints, n_features * n_trf) and time delayed outcomes :math:`y` of shape (n_samples * n_timepoints, n_channels). From there, it uses a standard ridge regression to solve for :math:`\beta` in :math:`y = \beta X`, which is extremely computationally expensive and scales very poorly with dataset size.
-    
-    However, the problem can also be reframed slightly: Because we are fundamentally looking to perform (de-)convolution here, we may also turn to the Fourier domain where we can estimate the autocorrelation of :math:`X` and the cross-correlation of :math:`X` and :math:`y` through simple multiplication. Here, we can also use toeplitz indexing to avoid having to compute a full time delayed matrix. From auto- and cross-correlations, we can then compute corrected estimates of the coefficients and intercepts directly. This is neat because it is much less memory- and compute-intensive. For details of this procedure, see [ReceptiveField1]_ [ReceptiveField2]_ [ReceptiveField3]_.
-    
-    Note that for SR models it is recommended to also pass `patterns=True` to estimate not only the coefficients but also the patterns that were actually used for reconstructing stimuli. For more information, see [ReceptiveField4]_.
+    .. warning::
+        Unlike :py:class:`~mvpy.estimators.TimeDelayed`, this class expects :py:attr:`~mvpy.estimators.ReceptiveField.t_min` 
+        and :py:attr:`~mvpy.estimators.ReceptiveField.t_max` to be causal in :math:`y`. Consequently,
+        positive values mean :math:`X(t)` asserts influence over :math:`y(t + \\tau)`. This is in 
+        line with MNE's behaviour. 
     
     References
     ----------
-    .. [ReceptiveField0] Crosse, M.J., Di Liberto, G.M., Bednar, A., & Lalor, E.C. (2016). The multivariate temporal response function (mTRF) toolbox: A MATLAB toolbox for relating neural signals to continuous stimuli. Frontiers in Human Neuroscience, 10, 604. 10.3389/fnhum.2016.00604
-    .. [ReceptiveField1] Willmore, B., & Smyth, D. (2009). Methods for first-order kernel estimation: Simple-cell receptive fields from responses to natural scenes. Network: Computation in Neural Systems, 14, 553-577. 10.1088/0954-898X_14_3_309
-    .. [ReceptiveField2] Theunissen, F.E., David, S.V., Singh, N.C., Hsu, A., Vinje, W.E., & Gallant, J.L. (2001). Estimating spatio-temporal receptive fields of auditory and visual neurons from their responses to natural stimuli. Network: Computation in Neural Systems, 12, 289-316. 10.1080/net.12.3.289.316
-    .. [ReceptiveField3] https://mne.tools/stable/generated/mne.decoding.ReceptiveField.html
-    .. [ReceptiveField4] Haufe, S., Meinecke, F., Görgen, K., Dähne, S., Haynes, J.D., Blankertz, B., & Bießmann, F. (2014). On the interpretation of weight vectors of linear models in multivariate neuroimaging. NeuroImage, 87, 96-110. 10.1016/j.neuroimage.2013.10.067
+    .. [1] Crosse, M.J., Di Liberto, G.M., Bednar, A., & Lalor, E.C. (2016). The multivariate temporal response function (mTRF) toolbox: A MATLAB toolbox for relating neural signals to continuous stimuli. Frontiers in Human Neuroscience, 10, 604. 10.3389/fnhum.2016.00604
+    .. [2] Willmore, B., & Smyth, D. (2009). Methods for first-order kernel estimation: Simple-cell receptive fields from responses to natural scenes. Network: Computation in Neural Systems, 14, 553-577. 10.1088/0954-898X_14_3_309
+    .. [3] Theunissen, F.E., David, S.V., Singh, N.C., Hsu, A., Vinje, W.E., & Gallant, J.L. (2001). Estimating spatio-temporal receptive fields of auditory and visual neurons from their responses to natural stimuli. Network: Computation in Neural Systems, 12, 289-316. 10.1080/net.12.3.289.316
+    .. [4] https://mne.tools/stable/generated/mne.decoding.ReceptiveField.html
+    .. [5] Haufe, S., Meinecke, F., Görgen, K., Dähne, S., Haynes, J.D., Blankertz, B., & Bießmann, F. (2014). On the interpretation of weight vectors of linear models in multivariate neuroimaging. NeuroImage, 87, 96-110. 10.1016/j.neuroimage.2013.10.067
     
     Examples
     --------
@@ -1618,10 +1644,6 @@ class ReceptiveField(sklearn.base.BaseEstimator):
              31.9401, 32.9729, 33.9704, 34.9847, 36.0325, 37.0251, 38.0297, 39.0678,
              40.0847, 41.0827, 42.1410, 43.0924, 44.2115, 45.1548, 41.9511, 45.9482,
              32.2861, 76.4690])
-    
-    See also
-    --------
-    :class:`mvpy.estimators.TimeDelayed`
     """
     
     def __new__(self, t_min: float, t_max: float, fs: int, alpha: Union[int, float, np.ndarray, torch.Tensor, List] = 1.0, reg_type: Union[str, List] = 'ridge', reg_cv: Any = 5, patterns: bool = False, fit_intercept: bool = True, edge_correction: bool = True):
@@ -1635,12 +1657,12 @@ class ReceptiveField(sklearn.base.BaseEstimator):
             Maximum time point to fit (unlike TimeDelayed, this is relative to y). Must be greater than t_min.
         fs : int
             Sampling frequency.
-        alpha : Union[int, float, np.ndarray, torch.Tensor, List], default=1.0
-            Alpha penalties as float or of shape (n_penalties,). If not float, cross-validation will be employed (see reg_cv).
-        reg_type : Union[str, List], default='ridge'
-            Type of regularisation to employ (either 'ridge' or 'laplacian' or tuple describing (`time`, `features`)).
-        reg_cv : Any, default=5
-            If alpha is list or array, what cross-validation scheme should we use? Integers are interpeted as n_splits for KFold crossvalidation. String input 'LOO' will use RidgeCV to solve LOO over alphas (only available for reg_type='ridge'). Alternatively, a cross-validator that exposes a split()-method can be supplied.
+        alpha : int | float | np.ndarray | torch.Tensor | List, default=1.0
+            Alpha penalties as float or of shape (n_penalties,). If not float, cross-validation will be employed (see :py:attr:`~mvpy.estimators.ReceptiveField.reg_cv`).
+        reg_type : {'ridge', 'laplacian', List}, default='ridge'
+            Type of regularisation to employ (either 'ridge' or 'laplacian' or tuple describing ``(time, features)``).
+        reg_cv : {int, 'LOO', mvpy.crossvalidation.KFold}, default=5
+            If alpha is list or array, what cross-validation scheme should we use? Integers are interpeted as :py:attr:`~mvpy.crossvalidation.KFold.n_splits` for :py:class:`~mvpy.crossvalidation.KFold`. String input ``'LOO'`` will use :py:class:`~mvpy.estimators.RidgeCV` to solve LOO-CV over alphas, but is available only for :py:attr:`~mvpy.estimators.ReceptiveField.reg_type` ``'ridge'``. Alternatively, a cross-validator that exposes a :py:meth:`~mvpy.crossvalidation.KFold.split` method can be supplied.
         patterns : bool, default=False
             Should we estimate the patterns from coefficients and data (useful only for stimulus reconstruction, not mTRF)?
         fit_intercept : bool, default=True
@@ -1680,15 +1702,15 @@ class ReceptiveField(sklearn.base.BaseEstimator):
         
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            Input data of shape (n_samples, n_features, n_timepoints).
-        y : Union[np.ndarray, torch.Tensor]
-            Input data of shape (n_samples, n_channels, n_timepoints).
+        X : np.ndarray | torch.Tensor
+            Input data of shape ``(n_samples, n_features, n_timepoints)``.
+        y : np.ndarray | torch.Tensor
+            Input data of shape ``(n_samples, n_channels, n_timepoints)``.
         
         Returns
         -------
-        rf : Union[_ReceptiveField_numpy, _ReceptiveField_torch]
-            The fit estimator.
+        rf : mvpy.estimators._ReceptiveField_numpy | mvpy.estimators._ReceptiveField_torch
+            The fitted ReceptiveField estimator.
         """
         
         raise NotImplementedError(f'Method not implemented in base class.')
@@ -1698,13 +1720,13 @@ class ReceptiveField(sklearn.base.BaseEstimator):
         
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            Input data of shape (n_samples, n_features, n_timepoints).
+        X : np.ndarray | torch.Tensor
+            Input data of shape ``(n_samples, n_features, n_timepoints)``.
         
         Returns
         -------
-        y_h : Union[np.ndarray, torch.Tensor]
-            Predicted responses of shape (n_samples, n_channels, n_timepoints).
+        y_h : np.ndarray | torch.Tensor
+            Predicted responses of shape ``(n_samples, n_channels, n_timepoints)``.
         """
         
         raise NotImplementedError(f'Method not implemented in base class.')

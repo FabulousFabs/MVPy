@@ -1,0 +1,9 @@
+.. here, we simply define the toctree
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+
+   getting_started
+   API <api/index>
+   Examples <auto_examples/index>

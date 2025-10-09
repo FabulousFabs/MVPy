@@ -1,0 +1,9 @@
+Getting started
+===============
+To get started with MVPy, we first install it. Currently, the easiest way is to install using pip:
+
+.. code-block:: bash
+
+   pip install git+https://github.com/fabianschneider/mvpy.git
+
+i dont really get this
