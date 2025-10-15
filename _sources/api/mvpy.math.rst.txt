@@ -37,6 +37,7 @@ mvpy.math
   mahalanobis
   pearsonr
   pearsonr_d
+  r2
   rank
   roc_auc
   spearmanr

@@ -1,0 +1,69 @@
+mvpy.metrics package
+====================
+
+Submodules
+----------
+
+mvpy.metrics.accuracy module
+----------------------------
+
+.. automodule:: mvpy.metrics.accuracy
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.metrics.metric module
+--------------------------
+
+.. automodule:: mvpy.metrics.metric
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.metrics.pearsonr module
+----------------------------
+
+.. automodule:: mvpy.metrics.pearsonr
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.metrics.r2 module
+----------------------
+
+.. automodule:: mvpy.metrics.r2
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.metrics.roc\_auc module
+----------------------------
+
+.. automodule:: mvpy.metrics.roc_auc
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.metrics.score module
+-------------------------
+
+.. automodule:: mvpy.metrics.score
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.metrics.spearmanr module
+-----------------------------
+
+.. automodule:: mvpy.metrics.spearmanr
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: mvpy.metrics
+   :members:
+   :undoc-members:
+   :show-inheritance:

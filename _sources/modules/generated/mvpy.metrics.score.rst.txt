@@ -1,0 +1,10 @@
+﻿score
+=====
+
+.. currentmodule:: mvpy.metrics
+
+.. autofunction:: score
+
+.. minigallery:: mvpy.metrics.score
+   :add-heading: Gallery examples
+   :heading-level: -

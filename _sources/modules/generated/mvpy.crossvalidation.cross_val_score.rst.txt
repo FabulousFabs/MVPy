@@ -1,0 +1,10 @@
+﻿cross\_val\_score
+=================
+
+.. currentmodule:: mvpy.crossvalidation
+
+.. autofunction:: cross_val_score
+
+.. minigallery:: mvpy.crossvalidation.cross_val_score
+   :add-heading: Gallery examples
+   :heading-level: -

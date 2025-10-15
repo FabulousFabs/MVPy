@@ -5,8 +5,8 @@
 
 .. autoclass:: Progressbar
    :members:
-   :inherited-members:
    :special-members: __call__
+   :inherited-members:
 
 .. minigallery:: mvpy.utilities.Progressbar mvpy.utilities.Progressbar.__delattr__ mvpy.utilities.Progressbar.__dir__ mvpy.utilities.Progressbar.__enter__ mvpy.utilities.Progressbar.__eq__ mvpy.utilities.Progressbar.__exit__ mvpy.utilities.Progressbar.__format__ mvpy.utilities.Progressbar.__ge__ mvpy.utilities.Progressbar.__getattribute__ mvpy.utilities.Progressbar.__gt__ mvpy.utilities.Progressbar.__hash__ mvpy.utilities.Progressbar.__init__ mvpy.utilities.Progressbar.__init_subclass__ mvpy.utilities.Progressbar.__le__ mvpy.utilities.Progressbar.__lt__ mvpy.utilities.Progressbar.__ne__ mvpy.utilities.Progressbar.__new__ mvpy.utilities.Progressbar.__reduce__ mvpy.utilities.Progressbar.__reduce_ex__ mvpy.utilities.Progressbar.__repr__ mvpy.utilities.Progressbar.__setattr__ mvpy.utilities.Progressbar.__sizeof__ mvpy.utilities.Progressbar.__str__ mvpy.utilities.Progressbar.__subclasshook__ 
    :add-heading: Gallery examples

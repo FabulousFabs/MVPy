@@ -5,9 +5,9 @@
 
 .. autoclass:: Classifier
    :members:
-   :inherited-members:
    :special-members: __call__
+   :inherited-members:
 
-.. minigallery:: mvpy.estimators.Classifier mvpy.estimators.Classifier.__delattr__ mvpy.estimators.Classifier.__dir__ mvpy.estimators.Classifier.__eq__ mvpy.estimators.Classifier.__format__ mvpy.estimators.Classifier.__ge__ mvpy.estimators.Classifier.__getattribute__ mvpy.estimators.Classifier.__gt__ mvpy.estimators.Classifier.__hash__ mvpy.estimators.Classifier.__init__ mvpy.estimators.Classifier.__le__ mvpy.estimators.Classifier.__lt__ mvpy.estimators.Classifier.__ne__ mvpy.estimators.Classifier.__new__ mvpy.estimators.Classifier.__reduce__ mvpy.estimators.Classifier.__reduce_ex__ mvpy.estimators.Classifier.__setattr__ mvpy.estimators.Classifier.__sizeof__ mvpy.estimators.Classifier.__str__ mvpy.estimators.Classifier.__subclasshook__ mvpy.estimators.Classifier._get_estimator mvpy.estimators.Classifier.clone mvpy.estimators.Classifier.copy mvpy.estimators.Classifier.decision_function mvpy.estimators.Classifier.fit mvpy.estimators.Classifier.predict mvpy.estimators.Classifier.predict_proba mvpy.estimators.Classifier.to_numpy mvpy.estimators.Classifier.to_torch 
+.. minigallery:: mvpy.estimators.Classifier mvpy.estimators.Classifier.__delattr__ mvpy.estimators.Classifier.__dir__ mvpy.estimators.Classifier.__eq__ mvpy.estimators.Classifier.__format__ mvpy.estimators.Classifier.__ge__ mvpy.estimators.Classifier.__getattribute__ mvpy.estimators.Classifier.__gt__ mvpy.estimators.Classifier.__hash__ mvpy.estimators.Classifier.__init__ mvpy.estimators.Classifier.__le__ mvpy.estimators.Classifier.__lt__ mvpy.estimators.Classifier.__ne__ mvpy.estimators.Classifier.__new__ mvpy.estimators.Classifier.__reduce__ mvpy.estimators.Classifier.__reduce_ex__ mvpy.estimators.Classifier.__setattr__ mvpy.estimators.Classifier.__sizeof__ mvpy.estimators.Classifier.__str__ mvpy.estimators.Classifier.__subclasshook__ mvpy.estimators.Classifier._get_estimator mvpy.estimators.Classifier.clone mvpy.estimators.Classifier.copy mvpy.estimators.Classifier.decision_function mvpy.estimators.Classifier.fit mvpy.estimators.Classifier.predict mvpy.estimators.Classifier.predict_proba mvpy.estimators.Classifier.score mvpy.estimators.Classifier.to_numpy mvpy.estimators.Classifier.to_torch 
    :add-heading: Gallery examples
    :heading-level: -

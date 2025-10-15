@@ -1,0 +1,13 @@
+﻿Metric
+======
+
+.. currentmodule:: mvpy.metrics
+
+.. autoclass:: Metric
+   :members:
+   :special-members: __call__
+   :exclude-members: f
+
+.. minigallery:: mvpy.metrics.Metric mvpy.metrics.Metric.__call__ mvpy.metrics.Metric.__delattr__ mvpy.metrics.Metric.__dir__ mvpy.metrics.Metric.__eq__ mvpy.metrics.Metric.__format__ mvpy.metrics.Metric.__ge__ mvpy.metrics.Metric.__getattribute__ mvpy.metrics.Metric.__gt__ mvpy.metrics.Metric.__init__ mvpy.metrics.Metric.__init_subclass__ mvpy.metrics.Metric.__le__ mvpy.metrics.Metric.__lt__ mvpy.metrics.Metric.__ne__ mvpy.metrics.Metric.__new__ mvpy.metrics.Metric.__reduce__ mvpy.metrics.Metric.__reduce_ex__ mvpy.metrics.Metric.__repr__ mvpy.metrics.Metric.__setattr__ mvpy.metrics.Metric.__sizeof__ mvpy.metrics.Metric.__str__ mvpy.metrics.Metric.__subclasshook__ mvpy.metrics.Metric.f mvpy.metrics.Metric.mutate 
+   :add-heading: Gallery examples
+   :heading-level: -

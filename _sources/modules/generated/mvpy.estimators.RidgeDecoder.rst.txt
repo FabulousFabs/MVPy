@@ -5,9 +5,9 @@
 
 .. autoclass:: RidgeDecoder
    :members:
-   :inherited-members:
    :special-members: __call__
+   :inherited-members:
 
-.. minigallery:: mvpy.estimators.RidgeDecoder mvpy.estimators.RidgeDecoder.__delattr__ mvpy.estimators.RidgeDecoder.__dir__ mvpy.estimators.RidgeDecoder.__eq__ mvpy.estimators.RidgeDecoder.__format__ mvpy.estimators.RidgeDecoder.__ge__ mvpy.estimators.RidgeDecoder.__getattribute__ mvpy.estimators.RidgeDecoder.__gt__ mvpy.estimators.RidgeDecoder.__hash__ mvpy.estimators.RidgeDecoder.__init__ mvpy.estimators.RidgeDecoder.__le__ mvpy.estimators.RidgeDecoder.__lt__ mvpy.estimators.RidgeDecoder.__ne__ mvpy.estimators.RidgeDecoder.__new__ mvpy.estimators.RidgeDecoder.__reduce__ mvpy.estimators.RidgeDecoder.__reduce_ex__ mvpy.estimators.RidgeDecoder.__setattr__ mvpy.estimators.RidgeDecoder.__sizeof__ mvpy.estimators.RidgeDecoder.__str__ mvpy.estimators.RidgeDecoder.__subclasshook__ mvpy.estimators.RidgeDecoder.clone mvpy.estimators.RidgeDecoder.fit mvpy.estimators.RidgeDecoder.predict 
+.. minigallery:: mvpy.estimators.RidgeDecoder mvpy.estimators.RidgeDecoder.__delattr__ mvpy.estimators.RidgeDecoder.__dir__ mvpy.estimators.RidgeDecoder.__eq__ mvpy.estimators.RidgeDecoder.__format__ mvpy.estimators.RidgeDecoder.__ge__ mvpy.estimators.RidgeDecoder.__getattribute__ mvpy.estimators.RidgeDecoder.__gt__ mvpy.estimators.RidgeDecoder.__hash__ mvpy.estimators.RidgeDecoder.__init__ mvpy.estimators.RidgeDecoder.__le__ mvpy.estimators.RidgeDecoder.__lt__ mvpy.estimators.RidgeDecoder.__ne__ mvpy.estimators.RidgeDecoder.__new__ mvpy.estimators.RidgeDecoder.__reduce__ mvpy.estimators.RidgeDecoder.__reduce_ex__ mvpy.estimators.RidgeDecoder.__setattr__ mvpy.estimators.RidgeDecoder.__sizeof__ mvpy.estimators.RidgeDecoder.__str__ mvpy.estimators.RidgeDecoder.__subclasshook__ mvpy.estimators.RidgeDecoder.clone mvpy.estimators.RidgeDecoder.fit mvpy.estimators.RidgeDecoder.predict mvpy.estimators.RidgeDecoder.score 
    :add-heading: Gallery examples
    :heading-level: -

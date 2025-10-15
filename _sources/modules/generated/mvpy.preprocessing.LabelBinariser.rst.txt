@@ -5,8 +5,8 @@
 
 .. autoclass:: LabelBinariser
    :members:
-   :inherited-members:
    :special-members: __call__
+   :inherited-members:
 
 .. minigallery:: mvpy.preprocessing.LabelBinariser mvpy.preprocessing.LabelBinariser.__delattr__ mvpy.preprocessing.LabelBinariser.__dir__ mvpy.preprocessing.LabelBinariser.__eq__ mvpy.preprocessing.LabelBinariser.__format__ mvpy.preprocessing.LabelBinariser.__ge__ mvpy.preprocessing.LabelBinariser.__getattribute__ mvpy.preprocessing.LabelBinariser.__gt__ mvpy.preprocessing.LabelBinariser.__hash__ mvpy.preprocessing.LabelBinariser.__init__ mvpy.preprocessing.LabelBinariser.__le__ mvpy.preprocessing.LabelBinariser.__lt__ mvpy.preprocessing.LabelBinariser.__ne__ mvpy.preprocessing.LabelBinariser.__new__ mvpy.preprocessing.LabelBinariser.__reduce__ mvpy.preprocessing.LabelBinariser.__reduce_ex__ mvpy.preprocessing.LabelBinariser.__setattr__ mvpy.preprocessing.LabelBinariser.__sizeof__ mvpy.preprocessing.LabelBinariser.__str__ mvpy.preprocessing.LabelBinariser.__subclasshook__ mvpy.preprocessing.LabelBinariser._get_estimator mvpy.preprocessing.LabelBinariser.clone mvpy.preprocessing.LabelBinariser.copy mvpy.preprocessing.LabelBinariser.fit mvpy.preprocessing.LabelBinariser.fit_transform mvpy.preprocessing.LabelBinariser.inverse_transform mvpy.preprocessing.LabelBinariser.to_numpy mvpy.preprocessing.LabelBinariser.to_torch mvpy.preprocessing.LabelBinariser.transform 
    :add-heading: Gallery examples

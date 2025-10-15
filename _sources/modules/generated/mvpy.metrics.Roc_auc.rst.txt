@@ -1,0 +1,13 @@
+﻿Roc\_auc
+========
+
+.. currentmodule:: mvpy.metrics
+
+.. autoclass:: Roc_auc
+   :members:
+   :special-members: __call__
+   :exclude-members: f
+
+.. minigallery:: mvpy.metrics.Roc_auc mvpy.metrics.Roc_auc.__call__ mvpy.metrics.Roc_auc.__delattr__ mvpy.metrics.Roc_auc.__dir__ mvpy.metrics.Roc_auc.__eq__ mvpy.metrics.Roc_auc.__format__ mvpy.metrics.Roc_auc.__ge__ mvpy.metrics.Roc_auc.__getattribute__ mvpy.metrics.Roc_auc.__gt__ mvpy.metrics.Roc_auc.__init__ mvpy.metrics.Roc_auc.__init_subclass__ mvpy.metrics.Roc_auc.__le__ mvpy.metrics.Roc_auc.__lt__ mvpy.metrics.Roc_auc.__ne__ mvpy.metrics.Roc_auc.__new__ mvpy.metrics.Roc_auc.__reduce__ mvpy.metrics.Roc_auc.__reduce_ex__ mvpy.metrics.Roc_auc.__repr__ mvpy.metrics.Roc_auc.__setattr__ mvpy.metrics.Roc_auc.__sizeof__ mvpy.metrics.Roc_auc.__str__ mvpy.metrics.Roc_auc.__subclasshook__ mvpy.metrics.Roc_auc.f mvpy.metrics.Roc_auc.mutate 
+   :add-heading: Gallery examples
+   :heading-level: -

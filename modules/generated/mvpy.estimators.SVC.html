@@ -50,6 +50,7 @@
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'modules/generated/mvpy.estimators.SVC';</script>
     <script src="../../_static/scripts/dropdown.js?v=5b9cef8c"></script>
     <script src="../../_static/scripts/version-switcher.js?v=6ebe4089"></script>
@@ -345,10 +346,12 @@
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../api/mvpy.html">mvpy</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.crossvalidation.html">mvpy.crossvalidation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.cross_val_score.html">cross_val_score</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.KFold.html">KFold</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.RepeatedKFold.html">RepeatedKFold</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.StratifiedKFold.html">StratifiedKFold</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.RepeatedStratifiedKFold.html">RepeatedStratifiedKFold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.Validator.html">Validator</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.dataset.html">mvpy.dataset</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -389,10 +392,19 @@
 <li class="toctree-l2"><a class="reference internal" href="mvpy.math.mahalanobis.html">mahalanobis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.math.pearsonr.html">pearsonr</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.math.pearsonr_d.html">pearsonr_d</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.r2.html">r2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.math.rank.html">rank</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.math.roc_auc.html">roc_auc</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.math.spearmanr.html">spearmanr</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.math.spearmanr_d.html">spearmanr_d</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.metrics.html">mvpy.metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.Accuracy.html">Accuracy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.Metric.html">Metric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.R2.html">R2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.Roc_auc.html">Roc_auc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.score.html">score</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.preprocessing.html">mvpy.preprocessing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -484,18 +496,50 @@
 <h1>SVC<a class="headerlink" href="#svc" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="mvpy.estimators.SVC">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.estimators.</span></span><span class="sig-name descname"><span class="pre">SVC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'OvR'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'scale'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coef0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/09dc700/mvpy/estimators/svc.py#L815"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.SVC" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.estimators.</span></span><span class="sig-name descname"><span class="pre">SVC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'OvR'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'scale'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coef0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/25cd4e8/mvpy/estimators/svc.py#L928"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.SVC" title="Link to this definition">#</a></dt>
 <dd><p>Implements a support vector classifier.</p>
+<p>Support vector classifiers frame a classification problem mapping from
+neural data <span class="math notranslate nohighlight">\(X\)</span> to labels <span class="math notranslate nohighlight">\(y\in\{1, -1\}\)</span> as a max-margin 
+problem:</p>
+<div class="math notranslate nohighlight">
+\[f(X) = w^T\varphi(X) + b\]</div>
+<p>that separates the classes with the largest possible margin in feature space 
+<span class="math notranslate nohighlight">\(\varphi(\cdot)\)</span>. As in <code class="xref py py-class docutils literal notranslate"><span class="pre">KernelRidgeClassifier</span></code>,
+<span class="math notranslate nohighlight">\(\varphi(X)\)</span> is a gram matrix defined by some kernel function. Contrary 
+to <code class="xref py py-class docutils literal notranslate"><span class="pre">KernelRidgeClassifier</span></code>, however, <a class="reference internal" href="#mvpy.estimators.SVC" title="mvpy.estimators.SVC"><code class="xref py py-class docutils literal notranslate"><span class="pre">SVC</span></code></a> 
+minimises a hinge-loss surrogate:</p>
+<div class="math notranslate nohighlight">
+\[\arg\min_{w, b} \frac{1}{2}\lvert\lvert w\rvert\rvert^2 + C\sum_i\max\left(0, 1 - y_i f(X_i)\right)\]</div>
+<p>Via the kernel trick, the decision function can be written in dual form as:</p>
+<div class="math notranslate nohighlight">
+\[f(X) = \sum_{i\in\mathcal{S}} \alpha_i y_i \kappa(X_i, X) + b\]</div>
+<p>where <span class="math notranslate nohighlight">\(\alpha_i\ge 0\)</span>, and <span class="math notranslate nohighlight">\(\kappa\)</span> is a positive-definite kernel. Hyperparameters 
+like the penalisation <span class="math notranslate nohighlight">\(C\)</span> are typically selected by cross-validation. Unlike 
+<code class="xref py py-class docutils literal notranslate"><span class="pre">KernelRidgeClassifier</span></code>, penalty selection cannot be conveniently automated 
+through LOO-CV here.</p>
+<p>Compared to <a class="reference internal" href="mvpy.estimators.RidgeClassifier.html#mvpy.estimators.RidgeClassifier" title="mvpy.estimators.RidgeClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">RidgeClassifier</span></code></a> or <code class="xref py py-class docutils literal notranslate"><span class="pre">KernelRidgeClassifier</span></code>,
+<a class="reference internal" href="#mvpy.estimators.SVC" title="mvpy.estimators.SVC"><code class="xref py py-class docutils literal notranslate"><span class="pre">SVC</span></code></a> optimises a margin-based objective and often yields tighter
+decision boundaries, particularly when classes are not well separated linearly or when using
+non-linear kernel–at the cost of higher training time.</p>
+<p>For more information on support vector classifiers, see <a class="reference internal" href="#rb84334add56f-1" id="id1">[1]</a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><a class="reference internal" href="#mvpy.estimators.SVC" title="mvpy.estimators.SVC"><code class="xref py py-class docutils literal notranslate"><span class="pre">SVC</span></code></a> is currently considered experimental. As is, it uses gradient
+ascent over vectorised features and stops early when <span class="math notranslate nohighlight">\(\Delta\lvert\lvert grad\rvert\rvert\)</span>
+is smaller than some tolerance. This diverges from sklearn’s behaviour and may produce slightly
+degraded decision boundaries. In the future, we will be switching to an SMO routine that should 
+resolve these issues.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>method</strong><span class="classifier">str, default=’OvR’</span></dt><dd><p>For multiclass problems, which method should we use? One-versus-one (OvO) or one-versus-rest (OvR)?</p>
+<dt><strong>method</strong><span class="classifier">{‘OvR’, ‘OvO’}, default=’OvR’</span></dt><dd><p>For multiclass problems, which method should we use? One-versus-one (OvO) or one-versus-rest (OvR)?</p>
 </dd>
 <dt><strong>C</strong><span class="classifier">float, default=1.0</span></dt><dd><p>Regularisation strength is inversely related to C.</p>
 </dd>
-<dt><strong>kernel</strong><span class="classifier">str, default=’linear’</span></dt><dd><p>Which kernel function should we use (linear, poly, rbf, sigmoid)?</p>
+<dt><strong>kernel</strong><span class="classifier">{‘linear’, ‘poly’, ‘rbf’, ‘sigmoid’}, default=’linear’</span></dt><dd><p>Which kernel function should we use (linear, poly, rbf, sigmoid)?</p>
 </dd>
-<dt><strong>gamma</strong><span class="classifier">Union[str, float], default=’scale’</span></dt><dd><p>What gamma to use for poly, rbf and sigmoid. Available methods are scale or auto, or positive float.</p>
+<dt><strong>gamma</strong><span class="classifier">{‘scale’, ‘auto’, float}, default=’scale’</span></dt><dd><p>What gamma to use for poly, rbf and sigmoid. Available methods are scale or auto, or positive float.</p>
 </dd>
 <dt><strong>coef0</strong><span class="classifier">float, default=0.0</span></dt><dd><p>What offset to use for poly and sigmoid.</p>
 </dd>
@@ -511,13 +555,13 @@
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>method</strong><span class="classifier">str, default=’OvR’</span></dt><dd><p>For multiclass problems, which method should we use? One-versus-one (OvO) or one-versus-rest (OvR)?</p>
+<dt><strong>method</strong><span class="classifier">{‘OvR’, ‘OvO’}, default=’OvR’</span></dt><dd><p>For multiclass problems, which method should we use? One-versus-one (OvO) or one-versus-rest (OvR)?</p>
 </dd>
 <dt><strong>C</strong><span class="classifier">float, default=1.0</span></dt><dd><p>Regularisation strength is inversely related to C.</p>
 </dd>
-<dt><strong>kernel</strong><span class="classifier">str, default=’linear’</span></dt><dd><p>Which kernel function should we use (linear, poly, rbf, sigmoid)?</p>
+<dt><strong>kernel</strong><span class="classifier">{‘linear’, ‘poly’, ‘rbf’, ‘sigmoid’}, default=’linear’</span></dt><dd><p>Which kernel function should we use (linear, poly, rbf, sigmoid)?</p>
 </dd>
-<dt><strong>gamma</strong><span class="classifier">Union[str, float], default=’scale’</span></dt><dd><p>What gamma to use for poly, rbf and sigmoid. Available methods are scale or auto, or positive float.</p>
+<dt><strong>gamma</strong><span class="classifier">{‘scale’, ‘auto’, float}, default=’scale’</span></dt><dd><p>What gamma to use for poly, rbf and sigmoid. Available methods are scale or auto, or positive float.</p>
 </dd>
 <dt><strong>coef0</strong><span class="classifier">float, default=0.0</span></dt><dd><p>What offset to use for poly and sigmoid.</p>
 </dd>
@@ -529,43 +573,54 @@
 </dd>
 <dt><strong>max_iter</strong><span class="classifier">int, default=1000</span></dt><dd><p>The maximum number of iterations to perform while fitting, or -1 to disable.</p>
 </dd>
-<dt><strong>X_train_</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>A clone of the training data used internally for kernel estimation.</p>
+<dt><strong>X_train_</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>A clone of the training data used internally for kernel estimation.</p>
 </dd>
-<dt><strong>A_</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>A clone of the alpha data used internally for kernel estimation.</p>
+<dt><strong>A_</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>A clone of the alpha data used internally for kernel estimation.</p>
 </dd>
 <dt><strong>gamma_</strong><span class="classifier">float</span></dt><dd><p>Estimated gamma parameter.</p>
 </dd>
 <dt><strong>eps_</strong><span class="classifier">float, default=1e-12</span></dt><dd><p>Error margin for support vectors used internally.</p>
 </dd>
-<dt><strong>w_</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>If linear kernel, estimated weights.</p>
+<dt><strong>w_</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>If linear kernel, estimated weights.</p>
 </dd>
-<dt><strong>p_</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>If linear kernel, estimated patterns.</p>
+<dt><strong>p_</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>If linear kernel, estimated patterns.</p>
 </dd>
-<dt><strong>intercept_</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>The intercept vector.</p>
+<dt><strong>intercept_</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The intercept vector.</p>
 </dd>
-<dt><strong>coef_</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>If linear kernel, the coefficients of the model.</p>
+<dt><strong>coef_</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">kernel</span></code> is <code class="docutils literal notranslate"><span class="pre">linear</span></code>, the coefficients of the model.</p>
 </dd>
-<dt><strong>pattern_</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>If linear kernel, the patterns used by the model.</p>
+<dt><strong>pattern_</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">kernel</span></code> is <code class="docutils literal notranslate"><span class="pre">linear</span></code>, the patterns used by the model.</p>
 </dd>
-<dt><strong>binariser_</strong><span class="classifier">LabelBinariser</span></dt><dd><p>The binariser used internally.</p>
+<dt><strong>binariser_</strong><span class="classifier">mvpy.preprocessing.LabelBinariser</span></dt><dd><p>The binariser used internally.</p>
 </dd>
-<dt><strong>scaler_</strong><span class="classifier">Scaler</span></dt><dd><p>The scaler used internally.</p>
+<dt><strong>scaler_</strong><span class="classifier">mvpy.preprocessing.Scaler</span></dt><dd><p>The scaler used internally.</p>
+</dd>
+<dt><strong>metric_</strong><span class="classifier">mvpy.metrics.accuracy</span></dt><dd><p>The default metric to use.</p>
 </dd>
 </dl>
 </dd>
 </dl>
-<p>vert - maxlvert grad_{i-1}
-vert &lt; 
-artheta</p>
-<blockquote>
-<div><p>where :math:<a href="#id1"><span class="problematic" id="id2">`</span></a></p>
-</div></blockquote>
-<p>artheta` is the tolerance. Note that this also diverges from sklearn’s implementation which is violation-based.</p>
-<blockquote>
-<div><p>This is likely to change in the future. Ideally, we will want to use an SMO approach, which should be much faster than the current full gradient ascent. It is a bit of a pickle, because SVC is difficult to optimise for GPUs. There are also new interesting directions like fitting parameters (e.g., gamma) directly, which might be interesting here. For more information, see <span id="id3">[Rb84334add56f-1]</span>. We will revisit this implementation.</p>
-<p>Note also that coefficients are only interpretable in the linear case, and therefore this class automatically prevents access in other cases. Given a linear kernel, however, this class will also automatically compute the patterns used for classification, available as <a href="#id5"><span class="problematic" id="id6">pattern_</span></a>. For more information, see <span id="id4">[Rb84334add56f-2]</span>.</p>
-<p>Note also that this class will rarely be public-facing, as at runtime it is wrapped in a Classifier class which handles OvR/OvO modes. By default, OvR will make predictions based on maximum decision values, whereas OvO will make voting-based decisions between all classifiers.</p>
-</div></blockquote>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="../../source/mvpy.math.html#module-mvpy.math.kernel_linear" title="mvpy.math.kernel_linear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mvpy.math.kernel_linear</span></code></a>, <a class="reference internal" href="../../source/mvpy.math.html#module-mvpy.math.kernel_poly" title="mvpy.math.kernel_poly"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mvpy.math.kernel_poly</span></code></a>, <a class="reference internal" href="../../source/mvpy.math.html#module-mvpy.math.kernel_rbf" title="mvpy.math.kernel_rbf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mvpy.math.kernel_rbf</span></code></a>, <a class="reference internal" href="../../source/mvpy.math.html#module-mvpy.math.kernel_sigmoid" title="mvpy.math.kernel_sigmoid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mvpy.math.kernel_sigmoid</span></code></a></dt><dd><p>Available kernel functions.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<p>Coefficients are interpretable only when <code class="xref py py-attr docutils literal notranslate"><span class="pre">kernel</span></code> is <code class="docutils literal notranslate"><span class="pre">linear</span></code>. 
+In this case, patterns are computed as per <a class="reference internal" href="#rb84334add56f-2" id="id2">[2]</a>.</p>
+<p class="rubric">References</p>
+<div role="list" class="citation-list">
+<div class="citation" id="rb84334add56f-1" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Awad, M., &amp; Khanna, R. (2015). Support vector machines for classification. Efficient Learning Machines, 39-66. 10.1007/F978-1-4302-5990-9_3</p>
+</div>
+<div class="citation" id="rb84334add56f-2" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Haufe, S., Meinecke, F., Görgen, K., Dähne, S., Haynes, J.D., Blankertz, B., &amp; Bießmann, F. (2014). On the interpretation of weight vectors of linear models in multivariate neuroimaging. NeuroImage, 87, 96-110. 10.1016/j.neuroimage.2013.10.067</p>
+</div>
+</div>
 <p class="rubric">Examples</p>
 <p>First, let’s look at a case where we have one feature that has two classes.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
@@ -607,12 +662,12 @@ artheta</p>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="mvpy.estimators.SVC.clone">
-<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../../source/mvpy.estimators.html#mvpy.estimators.svc.SVC" title="mvpy.estimators.svc.SVC"><span class="pre">SVC</span></a></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/09dc700/mvpy/estimators/svc.py#L1114"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.SVC.clone" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../../source/mvpy.estimators.html#mvpy.estimators.svc.SVC" title="mvpy.estimators.svc.SVC"><span class="pre">SVC</span></a></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/25cd4e8/mvpy/estimators/svc.py#L1296"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.SVC.clone" title="Link to this definition">#</a></dt>
 <dd><p>Clone this class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>clf</strong><span class="classifier">SVC</span></dt><dd><p>The cloned object.</p>
+<dt><strong>svc</strong><span class="classifier">mvpy.estimators.SVC</span></dt><dd><p>The cloned object.</p>
 </dd>
 </dl>
 </dd>
@@ -621,12 +676,12 @@ artheta</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mvpy.estimators.SVC.copy">
-<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../../source/mvpy.estimators.html#mvpy.estimators.svc.SVC" title="mvpy.estimators.svc.SVC"><span class="pre">SVC</span></a></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/09dc700/mvpy/estimators/svc.py#L1135"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.SVC.copy" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../../source/mvpy.estimators.html#mvpy.estimators.svc.SVC" title="mvpy.estimators.svc.SVC"><span class="pre">SVC</span></a></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/25cd4e8/mvpy/estimators/svc.py#L1317"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.SVC.copy" title="Link to this definition">#</a></dt>
 <dd><p>Clone this class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>clf</strong><span class="classifier">SVC</span></dt><dd><p>The cloned object.</p>
+<dt><strong>svc</strong><span class="classifier">mvpy.estimators.SVC</span></dt><dd><p>The cloned object.</p>
 </dd>
 </dl>
 </dd>
@@ -635,18 +690,18 @@ artheta</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mvpy.estimators.SVC.decision_function">
-<span class="sig-name descname"><span class="pre">decision_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/09dc700/mvpy/estimators/svc.py#L1044"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.SVC.decision_function" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">decision_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/25cd4e8/mvpy/estimators/svc.py#L1193"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.SVC.decision_function" title="Link to this definition">#</a></dt>
 <dd><p>Predict from the estimator.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>X</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>The features (n_samples, n_channels).</p>
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The features of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_channels)</span></code>.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>df</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>The predictions of shape (n_samples, n_classes).</p>
+<dt><strong>df</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The predictions of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_classes)</span></code>.</p>
 </dd>
 </dl>
 </dd>
@@ -655,20 +710,20 @@ artheta</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mvpy.estimators.SVC.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">BaseEstimator</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/09dc700/mvpy/estimators/svc.py#L1026"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.SVC.fit" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">BaseEstimator</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/25cd4e8/mvpy/estimators/svc.py#L1175"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.SVC.fit" title="Link to this definition">#</a></dt>
 <dd><p>Fit the estimator.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>X</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>The features of shape (n_samples, n_channels).</p>
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The features of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_channels)</span></code>.</p>
 </dd>
-<dt><strong>y</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>The targets of shape (n_samples[, n_features]).</p>
+<dt><strong>y</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The targets of shape <code class="docutils literal notranslate"><span class="pre">(n_samples[,</span> <span class="pre">n_features])</span></code>.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>clf</strong><span class="classifier">Classifier</span></dt><dd><p>The classifier.</p>
+<dt><strong>clf</strong><span class="classifier">mvpy.estimators.SVC</span></dt><dd><p>The classifier.</p>
 </dd>
 </dl>
 </dd>
@@ -677,18 +732,18 @@ artheta</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mvpy.estimators.SVC.predict">
-<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/09dc700/mvpy/estimators/svc.py#L1060"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.SVC.predict" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/25cd4e8/mvpy/estimators/svc.py#L1209"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.SVC.predict" title="Link to this definition">#</a></dt>
 <dd><p>Predict from the estimator.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>X</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>The features (n_samples, n_channels).</p>
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The features of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_channels)</span></code>.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>y_h</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>The predictions of shape (n_samples, n_features).</p>
+<dt><strong>y_h</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The predictions of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_features)</span></code>.</p>
 </dd>
 </dl>
 </dd>
@@ -697,32 +752,71 @@ artheta</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mvpy.estimators.SVC.predict_proba">
-<span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/09dc700/mvpy/estimators/svc.py#L1076"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.SVC.predict_proba" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/25cd4e8/mvpy/estimators/svc.py#L1225"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.SVC.predict_proba" title="Link to this definition">#</a></dt>
 <dd><p>Predict from the estimator.</p>
-<dl class="field-list simple">
+<dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>X</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>The features (n_samples, n_channels).</p>
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The features <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_channels)</span></code>.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>df</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>The predictions of shape (n_samples, n_classes).</p>
+<dt><strong>p</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The predictions of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_classes)</span></code>.</p>
 </dd>
 </dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Probabilities are computed from <code class="docutils literal notranslate"><span class="pre">expit()</span></code> over outputs of
+<a class="reference internal" href="mvpy.estimators.RidgeClassifier.html#mvpy.estimators.RidgeClassifier.decision_function" title="mvpy.estimators.RidgeClassifier.decision_function"><code class="xref py py-meth docutils literal notranslate"><span class="pre">decision_function()</span></code></a>.
+Consequently, probability estimates returned by this class 
+are not calibrated. See <a class="reference internal" href="mvpy.estimators.Classifier.html#mvpy.estimators.Classifier" title="mvpy.estimators.Classifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">Classifier</span></code></a> 
+for more information.</p>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.SVC.score">
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../source/mvpy.metrics.html#mvpy.metrics.metric.Metric" title="mvpy.metrics.metric.Metric"><span class="pre">Metric</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../../source/mvpy.metrics.html#mvpy.metrics.metric.Metric" title="mvpy.metrics.metric.Metric"><span class="pre">Metric</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/25cd4e8/mvpy/estimators/svc.py#L1248"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.SVC.score" title="Link to this definition">#</a></dt>
+<dd><p>Make predictions from <span class="math notranslate nohighlight">\(X\)</span> and score against <span class="math notranslate nohighlight">\(y\)</span>.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Input data of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_channels)</span></code>.</p>
+</dd>
+<dt><strong>y</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Output data of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_features)</span></code>.</p>
+</dd>
+<dt><strong>metric</strong><span class="classifier">Optional[Metric | Tuple[Metric]], default=None</span></dt><dd><p>Metric or tuple of metrics to compute. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, defaults to <code class="xref py py-attr docutils literal notranslate"><span class="pre">metric_</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>score</strong><span class="classifier">np.ndarray | torch.Tensor | Dict[str, np.ndarray], Dict[str, torch.Tensor]</span></dt><dd><p>Scores of shape <code class="docutils literal notranslate"><span class="pre">(n_features,)</span></code> or, for multiple metrics, a dictionary of metric names and scores of shape <code class="docutils literal notranslate"><span class="pre">(n_features,)</span></code>.</p>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If multiple values are supplied for <code class="docutils literal notranslate"><span class="pre">metric</span></code>, this function will
+output a dictionary of <code class="docutils literal notranslate"><span class="pre">{Metric.name:</span> <span class="pre">score,</span> <span class="pre">...}</span></code> rather than
+a stacked array. This is to provide consistency across cases where
+metrics may or may not differ in their output shapes.</p>
+</div>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mvpy.estimators.SVC.to_numpy">
-<span class="sig-name descname"><span class="pre">to_numpy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">BaseEstimator</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/09dc700/mvpy/estimators/svc.py#L1103"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.SVC.to_numpy" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">to_numpy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">BaseEstimator</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/25cd4e8/mvpy/estimators/svc.py#L1285"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.SVC.to_numpy" title="Link to this definition">#</a></dt>
 <dd><p>Obtain the estimator with numpy as backend.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>clf</strong><span class="classifier">_Classifier_numpy</span></dt><dd><p>The estimator.</p>
+<dt><strong>svc</strong><span class="classifier">mvpy.estimators._SVC_numpy</span></dt><dd><p>The estimator.</p>
 </dd>
 </dl>
 </dd>
@@ -731,12 +825,12 @@ artheta</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mvpy.estimators.SVC.to_torch">
-<span class="sig-name descname"><span class="pre">to_torch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">BaseEstimator</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/09dc700/mvpy/estimators/svc.py#L1092"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.SVC.to_torch" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">to_torch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">BaseEstimator</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/25cd4e8/mvpy/estimators/svc.py#L1274"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.SVC.to_torch" title="Link to this definition">#</a></dt>
 <dd><p>Obtain the estimator with torch as backend.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>clf</strong><span class="classifier">_Classifier_torch</span></dt><dd><p>The estimator.</p>
+<dt><strong>svc</strong><span class="classifier">mvpy.estimators._SVC_torch</span></dt><dd><p>The estimator.</p>
 </dd>
 </dl>
 </dd>
@@ -802,6 +896,7 @@ artheta</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.SVC.fit"><code class="docutils literal notranslate"><span class="pre">fit()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.SVC.predict"><code class="docutils literal notranslate"><span class="pre">predict()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.SVC.predict_proba"><code class="docutils literal notranslate"><span class="pre">predict_proba()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.SVC.score"><code class="docutils literal notranslate"><span class="pre">score()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.SVC.to_numpy"><code class="docutils literal notranslate"><span class="pre">to_numpy()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.SVC.to_torch"><code class="docutils literal notranslate"><span class="pre">to_torch()</span></code></a></li>
 </ul>

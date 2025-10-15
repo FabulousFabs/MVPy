@@ -1,0 +1,10 @@
+﻿r2
+==
+
+.. currentmodule:: mvpy.math
+
+.. autofunction:: r2
+
+.. minigallery:: mvpy.math.r2
+   :add-heading: Gallery examples
+   :heading-level: -

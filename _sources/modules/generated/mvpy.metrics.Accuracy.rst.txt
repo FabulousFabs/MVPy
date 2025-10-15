@@ -1,0 +1,13 @@
+﻿Accuracy
+========
+
+.. currentmodule:: mvpy.metrics
+
+.. autoclass:: Accuracy
+   :members:
+   :special-members: __call__
+   :exclude-members: f
+
+.. minigallery:: mvpy.metrics.Accuracy mvpy.metrics.Accuracy.__call__ mvpy.metrics.Accuracy.__delattr__ mvpy.metrics.Accuracy.__dir__ mvpy.metrics.Accuracy.__eq__ mvpy.metrics.Accuracy.__format__ mvpy.metrics.Accuracy.__ge__ mvpy.metrics.Accuracy.__getattribute__ mvpy.metrics.Accuracy.__gt__ mvpy.metrics.Accuracy.__init__ mvpy.metrics.Accuracy.__init_subclass__ mvpy.metrics.Accuracy.__le__ mvpy.metrics.Accuracy.__lt__ mvpy.metrics.Accuracy.__ne__ mvpy.metrics.Accuracy.__new__ mvpy.metrics.Accuracy.__reduce__ mvpy.metrics.Accuracy.__reduce_ex__ mvpy.metrics.Accuracy.__repr__ mvpy.metrics.Accuracy.__setattr__ mvpy.metrics.Accuracy.__sizeof__ mvpy.metrics.Accuracy.__str__ mvpy.metrics.Accuracy.__subclasshook__ mvpy.metrics.Accuracy.f mvpy.metrics.Accuracy.mutate 
+   :add-heading: Gallery examples
+   :heading-level: -

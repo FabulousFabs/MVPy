@@ -5,9 +5,9 @@
 
 .. autoclass:: ReceptiveField
    :members:
-   :inherited-members:
    :special-members: __call__
+   :inherited-members:
 
-.. minigallery:: mvpy.estimators.ReceptiveField mvpy.estimators.ReceptiveField.__delattr__ mvpy.estimators.ReceptiveField.__dir__ mvpy.estimators.ReceptiveField.__eq__ mvpy.estimators.ReceptiveField.__format__ mvpy.estimators.ReceptiveField.__ge__ mvpy.estimators.ReceptiveField.__getattribute__ mvpy.estimators.ReceptiveField.__gt__ mvpy.estimators.ReceptiveField.__hash__ mvpy.estimators.ReceptiveField.__init__ mvpy.estimators.ReceptiveField.__le__ mvpy.estimators.ReceptiveField.__lt__ mvpy.estimators.ReceptiveField.__ne__ mvpy.estimators.ReceptiveField.__new__ mvpy.estimators.ReceptiveField.__reduce__ mvpy.estimators.ReceptiveField.__reduce_ex__ mvpy.estimators.ReceptiveField.__setattr__ mvpy.estimators.ReceptiveField.__sizeof__ mvpy.estimators.ReceptiveField.__str__ mvpy.estimators.ReceptiveField.__subclasshook__ mvpy.estimators.ReceptiveField.fit mvpy.estimators.ReceptiveField.predict 
+.. minigallery:: mvpy.estimators.ReceptiveField mvpy.estimators.ReceptiveField.__delattr__ mvpy.estimators.ReceptiveField.__dir__ mvpy.estimators.ReceptiveField.__eq__ mvpy.estimators.ReceptiveField.__format__ mvpy.estimators.ReceptiveField.__ge__ mvpy.estimators.ReceptiveField.__getattribute__ mvpy.estimators.ReceptiveField.__gt__ mvpy.estimators.ReceptiveField.__hash__ mvpy.estimators.ReceptiveField.__init__ mvpy.estimators.ReceptiveField.__le__ mvpy.estimators.ReceptiveField.__lt__ mvpy.estimators.ReceptiveField.__ne__ mvpy.estimators.ReceptiveField.__new__ mvpy.estimators.ReceptiveField.__reduce__ mvpy.estimators.ReceptiveField.__reduce_ex__ mvpy.estimators.ReceptiveField.__setattr__ mvpy.estimators.ReceptiveField.__sizeof__ mvpy.estimators.ReceptiveField.__str__ mvpy.estimators.ReceptiveField.__subclasshook__ mvpy.estimators.ReceptiveField.clone mvpy.estimators.ReceptiveField.fit mvpy.estimators.ReceptiveField.predict mvpy.estimators.ReceptiveField.score 
    :add-heading: Gallery examples
    :heading-level: -

@@ -50,6 +50,7 @@
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'modules/generated/mvpy.estimators.Sliding';</script>
     <script src="../../_static/scripts/dropdown.js?v=5b9cef8c"></script>
     <script src="../../_static/scripts/version-switcher.js?v=6ebe4089"></script>
@@ -345,10 +346,12 @@
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../api/mvpy.html">mvpy</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.crossvalidation.html">mvpy.crossvalidation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.cross_val_score.html">cross_val_score</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.KFold.html">KFold</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.RepeatedKFold.html">RepeatedKFold</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.StratifiedKFold.html">StratifiedKFold</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.RepeatedStratifiedKFold.html">RepeatedStratifiedKFold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.Validator.html">Validator</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.dataset.html">mvpy.dataset</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -389,10 +392,19 @@
 <li class="toctree-l2"><a class="reference internal" href="mvpy.math.mahalanobis.html">mahalanobis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.math.pearsonr.html">pearsonr</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.math.pearsonr_d.html">pearsonr_d</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.r2.html">r2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.math.rank.html">rank</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.math.roc_auc.html">roc_auc</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.math.spearmanr.html">spearmanr</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.math.spearmanr_d.html">spearmanr_d</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.metrics.html">mvpy.metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.Accuracy.html">Accuracy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.Metric.html">Metric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.R2.html">R2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.Roc_auc.html">Roc_auc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.score.html">score</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.preprocessing.html">mvpy.preprocessing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -484,55 +496,79 @@
 <h1>Sliding<a class="headerlink" href="#sliding" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="mvpy.estimators.Sliding">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.estimators.</span></span><span class="sig-name descname"><span class="pre">Sliding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">estimator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">BaseEstimator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dims</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/09dc700/mvpy/estimators/sliding.py#L772"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.Sliding" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.estimators.</span></span><span class="sig-name descname"><span class="pre">Sliding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">estimator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">BaseEstimator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dims</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/25cd4e8/mvpy/estimators/sliding.py#L959"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.Sliding" title="Link to this definition">#</a></dt>
 <dd><p>Implements a sliding estimator that allows you to fit estimators iteratively over a set of dimensions.</p>
+<p>This is particularly useful when we have, for example, a temporal dimension in our data
+such that, for example, we have neural data <span class="math notranslate nohighlight">\(X\)</span> <code class="docutils literal notranslate"><span class="pre">(n_trials,</span> <span class="pre">n_channels,</span> <span class="pre">n_timepoints)</span></code>
+and class labels <span class="math notranslate nohighlight">\(y\)</span> <code class="docutils literal notranslate"><span class="pre">(n_trials,</span> <span class="pre">n_features,</span> <span class="pre">n_timepoints)</span></code> and want to fit a separate
+classifier at each time step. In this case, we can wrap our classifier object in 
+<a class="reference internal" href="#mvpy.estimators.Sliding" title="mvpy.estimators.Sliding"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sliding</span></code></a> with <code class="docutils literal notranslate"><span class="pre">dims=(-1,)</span></code> to automatically fit our classifiers
+across all timepoints.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>estimator</strong><span class="classifier">Callable, sklearn.base.BaseEstimator</span></dt><dd><p>Estimator to use.</p>
+<dt><strong>estimator</strong><span class="classifier">Callable | sklearn.base.BaseEstimator</span></dt><dd><p>Estimator to use. Note that this must expose a <code class="docutils literal notranslate"><span class="pre">clone()</span></code> method.</p>
 </dd>
-<dt><strong>dims</strong><span class="classifier">Union[int, tuple, list, np.ndarray, torch.Tensor], default=-1</span></dt><dd><p>Dimensions to slide over.</p>
+<dt><strong>dims</strong><span class="classifier">int | Tuple[int] | List[int] | np.ndarray | torch.Tensor, default=-1</span></dt><dd><p>Dimensions to slide over. Note that types are inferred here, defaulting to torch. If you are fitting a numpy estimator, please specify <code class="docutils literal notranslate"><span class="pre">dims</span></code> as <code class="docutils literal notranslate"><span class="pre">np.ndarray</span></code>.</p>
 </dd>
-<dt><strong>n_jobs</strong><span class="classifier">Union[int, None], default=None</span></dt><dd><p>Number of jobs to run in parallel.</p>
+<dt><strong>n_jobs</strong><span class="classifier">Optional[int], default=None</span></dt><dd><p>Number of jobs to run in parallel.</p>
 </dd>
-<dt><strong>top</strong><span class="classifier">bool, default=True</span></dt><dd><p>Is this a top-level estimator?</p>
+<dt><strong>top</strong><span class="classifier">bool, default=True</span></dt><dd><p>Is this a top-level estimator? If multiple <code class="docutils literal notranslate"><span class="pre">dims</span></code> are specified, this will be <code class="docutils literal notranslate"><span class="pre">False</span></code> in recursive <a class="reference internal" href="#mvpy.estimators.Sliding" title="mvpy.estimators.Sliding"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sliding</span></code></a> objects.</p>
 </dd>
-<dt><strong>verbose</strong><span class="classifier">bool, default=False</span></dt><dd><p>Whether to print progress.</p>
+<dt><strong>verbose</strong><span class="classifier">bool, default=False</span></dt><dd><p>Should progress be reported verbosely?</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>estimators_</strong><span class="classifier">list</span></dt><dd><p>List of fitted estimators.</p>
+<dt><strong>estimator</strong><span class="classifier">Callable | sklearn.base.BaseEstimator</span></dt><dd><p>Estimator to use. Note that this must expose a <code class="docutils literal notranslate"><span class="pre">clone()</span></code> method.</p>
+</dd>
+<dt><strong>dims</strong><span class="classifier">int | Tuple[int] | List[int] | np.ndarray | torch.Tensor, default=-1</span></dt><dd><p>Dimensions to slide over. Note that types are inferred here, defaulting to torch. If you are fitting a numpy estimator, please specify <code class="docutils literal notranslate"><span class="pre">dims</span></code> as <code class="docutils literal notranslate"><span class="pre">np.ndarray</span></code>.</p>
+</dd>
+<dt><strong>n_jobs</strong><span class="classifier">Optional[int], default=None</span></dt><dd><p>Number of jobs to run in parallel.</p>
+</dd>
+<dt><strong>top</strong><span class="classifier">bool, default=True</span></dt><dd><p>Is this a top-level estimator? If multiple <code class="docutils literal notranslate"><span class="pre">dims</span></code> are specified, this will be <code class="docutils literal notranslate"><span class="pre">False</span></code> in recursive <a class="reference internal" href="#mvpy.estimators.Sliding" title="mvpy.estimators.Sliding"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sliding</span></code></a> objects.</p>
+</dd>
+<dt><strong>verbose</strong><span class="classifier">bool, default=False</span></dt><dd><p>Should progress be reported verbosely?</p>
+</dd>
+<dt><strong>estimators_</strong><span class="classifier">List[Callable, sklearn.base.BaseEstimator]</span></dt><dd><p>List of fitted estimators.</p>
 </dd>
 </dl>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
-<p>This class generally expects that your input data is of shape (n_trials, […], n_channels, […]). Make sure that your data and dimension selection is appropriate for the estimator you wish to fit.
-Note also that, when fitting estimators, you _must_ have an equal number of dimensions in X and y. If you do not, please simply pad to the same dimension length.
-Finally, be aware that, if you want to use numpy as your backend, you _must_ supply <cite>dims</cite> as a numpy array.</p>
+<p>When fitting estimators using <a class="reference internal" href="#mvpy.estimators.Sliding.fit" title="mvpy.estimators.Sliding.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a>, <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> must have 
+the same number of dimensions. If this is not the case, please pad or expand your data appropriately.</p>
 <p class="rubric">Examples</p>
+<p>If, for example, we have <span class="math notranslate nohighlight">\(X\)</span> <code class="docutils literal notranslate"><span class="pre">(n_trials,</span> <span class="pre">n_frequencies,</span> <span class="pre">n_channels,</span> <span class="pre">n_timepoints)</span></code> 
+and <span class="math notranslate nohighlight">\(y\)</span> <code class="docutils literal notranslate"><span class="pre">(n_trials,</span> <span class="pre">n_frequencies,</span> <span class="pre">n_features,</span> <span class="pre">n_timepoints)</span></code> and we want to slide
+a <a class="reference internal" href="mvpy.estimators.RidgeDecoder.html#mvpy.estimators.RidgeDecoder" title="mvpy.estimators.RidgeDecoder"><code class="xref py py-class docutils literal notranslate"><span class="pre">RidgeDecoder</span></code></a> over <code class="docutils literal notranslate"><span class="pre">(n_frequencies,</span> <span class="pre">n_timepoints)</span></code>, we can
+do:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.estimators</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sliding</span><span class="p">,</span> <span class="n">Decoder</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">240</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span> <span class="c1"># trials x searchlights x channels x time</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">240</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span> <span class="c1"># trials x searchlights x outcomes x time</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">decoder</span> <span class="o">=</span> <span class="n">Decoder</span><span class="p">(</span><span class="n">alphas</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">sliding</span> <span class="o">=</span> <span class="n">Sliding</span><span class="p">(</span><span class="n">estimator</span> <span class="o">=</span> <span class="n">decoder</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">n_jobs</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span> <span class="c1"># slide over searchlights and time</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">sliding</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.estimators</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sliding</span><span class="p">,</span> <span class="n">RidgeDecoder</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">240</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">240</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">decoder</span> <span class="o">=</span> <span class="n">RidgeDecoder</span><span class="p">(</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">alphas</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sliding</span> <span class="o">=</span> <span class="n">Sliding</span><span class="p">(</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">estimator</span> <span class="o">=</span> <span class="n">decoder</span><span class="p">,</span> 
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">dims</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> 
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">n_jobs</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">patterns</span> <span class="o">=</span> <span class="n">sliding</span><span class="o">.</span><span class="n">collect</span><span class="p">(</span><span class="s1">&#39;pattern_&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">patterns</span><span class="o">.</span><span class="n">shape</span>
-<span class="go">torch.Size([50, 100, 4, 5])</span>
+<span class="go">torch.Size([5, 100, 64, 5])</span>
 </pre></div>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="mvpy.estimators.Sliding.clone">
-<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/09dc700/mvpy/estimators/sliding.py#L969"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.Sliding.clone" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/25cd4e8/mvpy/estimators/sliding.py#L1213"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.Sliding.clone" title="Link to this definition">#</a></dt>
 <dd><p>Clone this class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt>Sliding</dt><dd><p>Cloned class.</p>
+<dt><strong>sliding</strong><span class="classifier">mvpy.estimators.Sliding</span></dt><dd><p>Cloned class.</p>
 </dd>
 </dl>
 </dd>
@@ -541,18 +577,18 @@ Finally, be aware that, if you want to use numpy as your backend, you _must_ sup
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mvpy.estimators.Sliding.collect">
-<span class="sig-name descname"><span class="pre">collect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/09dc700/mvpy/estimators/sliding.py#L953"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.Sliding.collect" title="Link to this definition">#</a></dt>
-<dd><p>Collect the attribute of the estimators.</p>
+<span class="sig-name descname"><span class="pre">collect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/25cd4e8/mvpy/estimators/sliding.py#L1197"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.Sliding.collect" title="Link to this definition">#</a></dt>
+<dd><p>Collect an attribute from all estimators.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>attr</strong><span class="classifier">str</span></dt><dd><p>Attribute to collect.</p>
+<dt><strong>attr</strong><span class="classifier">str</span></dt><dd><p>Attribute to collect from all fitted estimators.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt>Union[np.ndarray, torch.Tensor]</dt><dd><p>Collected attribute.</p>
+<dt><strong>attr</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Collected attribute of shape <code class="docutils literal notranslate"><span class="pre">(*dims[,</span> <span class="pre">...])</span></code>.</p>
 </dd>
 </dl>
 </dd>
@@ -561,16 +597,22 @@ Finally, be aware that, if you want to use numpy as your backend, you _must_ sup
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mvpy.estimators.Sliding.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/09dc700/mvpy/estimators/sliding.py#L858"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.Sliding.fit" title="Link to this definition">#</a></dt>
-<dd><p>Fit the estimator.</p>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../../source/mvpy.estimators.html#mvpy.estimators.sliding.Sliding" title="mvpy.estimators.sliding.Sliding"><span class="pre">Sliding</span></a></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/25cd4e8/mvpy/estimators/sliding.py#L1071"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.Sliding.fit" title="Link to this definition">#</a></dt>
+<dd><p>Fit the sliding estimators.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>X</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>Input data.</p>
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Input data of arbitrary shape.</p>
 </dd>
-<dt><strong>y</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>Target data.</p>
+<dt><strong>y</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Target data of arbitrary shape.</p>
 </dd>
-<dt><strong>*args</strong></dt><dd><p>Additional arguments.</p>
+<dt><strong>*args</strong></dt><dd><p>Additional arguments to pass to estimators.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>sliding</strong><span class="classifier">mvpy.estimators.Sliding</span></dt><dd><p>The fitted sliding estimator.</p>
 </dd>
 </dl>
 </dd>
@@ -579,14 +621,14 @@ Finally, be aware that, if you want to use numpy as your backend, you _must_ sup
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mvpy.estimators.Sliding.fit_transform">
-<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/09dc700/mvpy/estimators/sliding.py#L893"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.Sliding.fit_transform" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/25cd4e8/mvpy/estimators/sliding.py#L1111"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.Sliding.fit_transform" title="Link to this definition">#</a></dt>
 <dd><p>Fit and transform the data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>X</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>Input data.</p>
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Input data of arbitrary shape.</p>
 </dd>
-<dt><strong>y</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>Target data.</p>
+<dt><strong>y</strong><span class="classifier">Optional[np.ndarray | torch.Tensor], default=None</span></dt><dd><p>Target data of arbitrary shape.</p>
 </dd>
 <dt><strong>*args</strong><span class="classifier">Any</span></dt><dd><p>Additional arguments.</p>
 </dd>
@@ -594,7 +636,7 @@ Finally, be aware that, if you want to use numpy as your backend, you _must_ sup
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt>Union[np.ndarray, torch.Tensor]</dt><dd><p>Transformed data.</p>
+<dt><strong>Z</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Transformed data of arbitrary shape.</p>
 </dd>
 </dl>
 </dd>
@@ -603,22 +645,22 @@ Finally, be aware that, if you want to use numpy as your backend, you _must_ sup
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mvpy.estimators.Sliding.predict">
-<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/09dc700/mvpy/estimators/sliding.py#L913"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.Sliding.predict" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/25cd4e8/mvpy/estimators/sliding.py#L1131"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.Sliding.predict" title="Link to this definition">#</a></dt>
 <dd><p>Predict the targets.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>X</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>Input data.</p>
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Input data of arbitrary shape.</p>
 </dd>
-<dt><strong>y</strong><span class="classifier">Union[np.ndarray, torch.Tensor, None], default=None</span></dt><dd><p>Target data.</p>
+<dt><strong>y</strong><span class="classifier">Optional[np.ndarray | torch.Tensor], default=None</span></dt><dd><p>Target data of arbitrary shape.</p>
 </dd>
-<dt><strong>*args</strong></dt><dd><p>Additional arguments.</p>
+<dt><strong>*args</strong><span class="classifier">Any</span></dt><dd><p>Additional arguments.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt>Union[np.ndarray, torch.Tensor]</dt><dd><p>Predicted targets.</p>
+<dt><strong>y_h</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Predicted data of arbitrary shape.</p>
 </dd>
 </dl>
 </dd>
@@ -627,38 +669,14 @@ Finally, be aware that, if you want to use numpy as your backend, you _must_ sup
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mvpy.estimators.Sliding.predict_proba">
-<span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/09dc700/mvpy/estimators/sliding.py#L933"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.Sliding.predict_proba" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/25cd4e8/mvpy/estimators/sliding.py#L1151"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.Sliding.predict_proba" title="Link to this definition">#</a></dt>
 <dd><p>Predict the probabilities.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>X</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>Input data.</p>
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Input data of arbitrary shape.</p>
 </dd>
-<dt><strong>y</strong><span class="classifier">Union[np.ndarray, torch.Tensor, None], default=None</span></dt><dd><p>Target data.</p>
-</dd>
-<dt><strong>*args</strong></dt><dd><p>Additional arguments.</p>
-</dd>
-</dl>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><dl class="simple">
-<dt>Union[np.ndarray, torch.Tensor]</dt><dd><p>Predicted probabilities.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mvpy.estimators.Sliding.transform">
-<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/09dc700/mvpy/estimators/sliding.py#L873"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.Sliding.transform" title="Link to this definition">#</a></dt>
-<dd><p>Transform the data.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>X</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>Input data.</p>
-</dd>
-<dt><strong>y</strong><span class="classifier">Union[np.ndarray, torch.Tensor, None], default=None</span></dt><dd><p>Target data.</p>
+<dt><strong>y</strong><span class="classifier">Optional[np.ndarray | torch.Tensor], default=None</span></dt><dd><p>Target data of arbitrary shape.</p>
 </dd>
 <dt><strong>*args</strong><span class="classifier">Any</span></dt><dd><p>Additional arguments.</p>
 </dd>
@@ -666,7 +684,62 @@ Finally, be aware that, if you want to use numpy as your backend, you _must_ sup
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt>Union[np.ndarray, torch.Tensor]</dt><dd><p>Transformed data.</p>
+<dt><strong>p</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Probabilities of arbitrary shape.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.Sliding.score">
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../source/mvpy.metrics.html#mvpy.metrics.metric.Metric" title="mvpy.metrics.metric.Metric"><span class="pre">Metric</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../../source/mvpy.metrics.html#mvpy.metrics.metric.Metric" title="mvpy.metrics.metric.Metric"><span class="pre">Metric</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/25cd4e8/mvpy/estimators/sliding.py#L1171"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.Sliding.score" title="Link to this definition">#</a></dt>
+<dd><p>Make predictions from <span class="math notranslate nohighlight">\(X\)</span> and score against <span class="math notranslate nohighlight">\(y\)</span>.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Input data of arbitrary shape.</p>
+</dd>
+<dt><strong>y</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Output data of arbitrary shape.</p>
+</dd>
+<dt><strong>metric</strong><span class="classifier">Optional[Metric | Tuple[Metric]], default=None</span></dt><dd><p>Metric or tuple of metrics to compute. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, defaults to the metric specified for the underlying estimator.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>score</strong><span class="classifier">np.ndarray | torch.Tensor | Dict[str, np.ndarray] | Dict[str, torch.Tensor]</span></dt><dd><p>Scores of shape arbitrary shape.</p>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If multiple values are supplied for <code class="docutils literal notranslate"><span class="pre">metric</span></code>, this function will
+output a dictionary of <code class="docutils literal notranslate"><span class="pre">{Metric.name:</span> <span class="pre">score,</span> <span class="pre">...}</span></code> rather than
+a stacked array. This is to provide consistency across cases where
+metrics may or may not differ in their output shapes.</p>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.Sliding.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/25cd4e8/mvpy/estimators/sliding.py#L1091"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.Sliding.transform" title="Link to this definition">#</a></dt>
+<dd><p>Transform the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Input data of arbitrary shape.</p>
+</dd>
+<dt><strong>y</strong><span class="classifier">Optional[np.ndarray | torch.Tensor], default=None</span></dt><dd><p>Target data of arbitrary shape.</p>
+</dd>
+<dt><strong>*args</strong><span class="classifier">Any</span></dt><dd><p>Additional arguments.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>Z</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Transformed data of arbitrary shape.</p>
 </dd>
 </dl>
 </dd>
@@ -732,6 +805,7 @@ Finally, be aware that, if you want to use numpy as your backend, you _must_ sup
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.Sliding.fit_transform"><code class="docutils literal notranslate"><span class="pre">fit_transform()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.Sliding.predict"><code class="docutils literal notranslate"><span class="pre">predict()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.Sliding.predict_proba"><code class="docutils literal notranslate"><span class="pre">predict_proba()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.Sliding.score"><code class="docutils literal notranslate"><span class="pre">score()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.Sliding.transform"><code class="docutils literal notranslate"><span class="pre">transform()</span></code></a></li>
 </ul>
 </li>

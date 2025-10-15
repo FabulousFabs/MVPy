@@ -5,8 +5,8 @@
 
 .. autoclass:: B2B
    :members:
-   :inherited-members:
    :special-members: __call__
+   :inherited-members:
 
 .. minigallery:: mvpy.estimators.B2B mvpy.estimators.B2B.__delattr__ mvpy.estimators.B2B.__dir__ mvpy.estimators.B2B.__eq__ mvpy.estimators.B2B.__format__ mvpy.estimators.B2B.__ge__ mvpy.estimators.B2B.__getattribute__ mvpy.estimators.B2B.__gt__ mvpy.estimators.B2B.__hash__ mvpy.estimators.B2B.__init__ mvpy.estimators.B2B.__le__ mvpy.estimators.B2B.__lt__ mvpy.estimators.B2B.__ne__ mvpy.estimators.B2B.__new__ mvpy.estimators.B2B.__reduce__ mvpy.estimators.B2B.__reduce_ex__ mvpy.estimators.B2B.__setattr__ mvpy.estimators.B2B.__sizeof__ mvpy.estimators.B2B.__str__ mvpy.estimators.B2B.__subclasshook__ mvpy.estimators.B2B.clone mvpy.estimators.B2B.fit mvpy.estimators.B2B.predict 
    :add-heading: Gallery examples

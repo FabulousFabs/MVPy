@@ -346,10 +346,12 @@
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../api/mvpy.html">mvpy</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.crossvalidation.html">mvpy.crossvalidation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.cross_val_score.html">cross_val_score</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.KFold.html">KFold</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.RepeatedKFold.html">RepeatedKFold</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.StratifiedKFold.html">StratifiedKFold</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.RepeatedStratifiedKFold.html">RepeatedStratifiedKFold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.Validator.html">Validator</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.dataset.html">mvpy.dataset</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -390,10 +392,19 @@
 <li class="toctree-l2"><a class="reference internal" href="mvpy.math.mahalanobis.html">mahalanobis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.math.pearsonr.html">pearsonr</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.math.pearsonr_d.html">pearsonr_d</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.r2.html">r2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.math.rank.html">rank</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.math.roc_auc.html">roc_auc</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.math.spearmanr.html">spearmanr</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.math.spearmanr_d.html">spearmanr_d</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.metrics.html">mvpy.metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.Accuracy.html">Accuracy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.Metric.html">Metric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.R2.html">R2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.Roc_auc.html">Roc_auc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.score.html">score</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.preprocessing.html">mvpy.preprocessing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -485,8 +496,31 @@
 <h1>TimeDelayed<a class="headerlink" href="#timedelayed" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="mvpy.estimators.TimeDelayed">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.estimators.</span></span><span class="sig-name descname"><span class="pre">TimeDelayed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alphas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">tensor([1])</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patterns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/09dc700/mvpy/estimators/timedelayed.py#L511"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.TimeDelayed" title="Link to this definition">#</a></dt>
-<dd><p>Implements TimeDelayed regression.</p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.estimators.</span></span><span class="sig-name descname"><span class="pre">TimeDelayed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alphas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">tensor([1])</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patterns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/25cd4e8/mvpy/estimators/timedelayed.py#L578"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.TimeDelayed" title="Link to this definition">#</a></dt>
+<dd><p>Implements time delayed ridge regression (for multivariate temporal response functions or stimulus reconstruction).</p>
+<p>Generally, mTRF models are described by:</p>
+<div class="math notranslate nohighlight">
+\[r(t,n) = \sum_{\tau} w(\tau, n) s(t - \tau) + \varepsilon\]</div>
+<p>where <span class="math notranslate nohighlight">\(r(t,n)\)</span> is the reconstructed signal at timepoint <span class="math notranslate nohighlight">\(t\)</span> for channel <span class="math notranslate nohighlight">\(n\)</span>, <span class="math notranslate nohighlight">\(s(t)\)</span> 
+is the stimulus at time <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(w(\tau, n)\)</span> is the weight at time delay <span class="math notranslate nohighlight">\(\tau\)</span> for channel 
+<span class="math notranslate nohighlight">\(n\)</span>, and <span class="math notranslate nohighlight">\(\varepsilon\)</span> is the error.</p>
+<p>SR models are estimated as:</p>
+<div class="math notranslate nohighlight">
+\[s(t) = \sum_{n}\sum_{\tau} r(t + \tau, n) g(\tau, n)\]</div>
+<p>where <span class="math notranslate nohighlight">\(s(t)\)</span> is the reconstructed stimulus at time <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(r(t,n)\)</span> is the neural response
+at <span class="math notranslate nohighlight">\(t\)</span> and lagged by <span class="math notranslate nohighlight">\(\tau\)</span> for channel <span class="math notranslate nohighlight">\(n\)</span>, <span class="math notranslate nohighlight">\(g(\tau, n)\)</span> is the weight at 
+time delay <span class="math notranslate nohighlight">\(\tau\)</span> for channel <span class="math notranslate nohighlight">\(n\)</span>.</p>
+<p>For more information on mTRF or SR models, see <a class="reference internal" href="#r5d029b4fec5d-1" id="id1">[1]</a>.</p>
+<p>In both cases, models are constructed by temporally expanding the design matrix and
+outcome matrix and then solving for the regression problem:</p>
+<div class="math notranslate nohighlight">
+\[y = \beta X + \varepsilon\]</div>
+<p>Consequently, we solve for coefficients through:</p>
+<div class="math notranslate nohighlight">
+\[\arg\min_{\beta} \sum_{i} (y_i - \beta^T X_i)^2 + \alpha_\beta \lvert\lvert\beta\rvert\rvert^2\]</div>
+<p>where <span class="math notranslate nohighlight">\(\alpha_\beta\)</span> are the penalties to test in LOO-CV. Therefore, this class is functionally equivalent
+to <a class="reference internal" href="mvpy.estimators.ReceptiveField.html#mvpy.estimators.ReceptiveField" title="mvpy.estimators.ReceptiveField"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReceptiveField</span></code></a>, but solves the problem through ridge regression rather than auto- 
+and cross-correlations in the Fourier domain. For more information on this, see <a class="reference internal" href="mvpy.estimators.ReceptiveField.html#mvpy.estimators.ReceptiveField" title="mvpy.estimators.ReceptiveField"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReceptiveField</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
@@ -496,7 +530,7 @@
 </dd>
 <dt><strong>fs</strong><span class="classifier">int</span></dt><dd><p>The sampling frequency.</p>
 </dd>
-<dt><strong>alphas</strong><span class="classifier">Union[np.ndarray, torch.Tensor], default=torch.tensor([1])</span></dt><dd><p>The penalties to use for estimation.</p>
+<dt><strong>alphas</strong><span class="classifier">np.ndarray | torch.Tensor, default=torch.tensor([1])</span></dt><dd><p>The penalties to use for estimation.</p>
 </dd>
 <dt><strong>patterns</strong><span class="classifier">bool, default=False</span></dt><dd><p>Should patterns be estimated?</p>
 </dd>
@@ -506,7 +540,7 @@
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>alphas</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>The penalties to use for estimation.</p>
+<dt><strong>alphas</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The penalties to use for estimation.</p>
 </dd>
 <dt><strong>kwargs</strong><span class="classifier">Any</span></dt><dd><p>Additional arguments.</p>
 </dd>
@@ -518,7 +552,7 @@
 </dd>
 <dt><strong>fs</strong><span class="classifier">int</span></dt><dd><p>The sampling frequency.</p>
 </dd>
-<dt><strong>window</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>The window to use for estimation.</p>
+<dt><strong>window</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The window to use for estimation.</p>
 </dd>
 <dt><strong>estimator</strong><span class="classifier">mvpy.estimators.RidgeCV</span></dt><dd><p>The estimator to use.</p>
 </dd>
@@ -528,27 +562,28 @@
 </dd>
 <dt><strong>w_</strong><span class="classifier">int</span></dt><dd><p>The number of time delays.</p>
 </dd>
-<dt><strong>intercept_</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>The intercepts of the estimator.</p>
+<dt><strong>intercept_</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The intercepts of the estimator.</p>
 </dd>
-<dt><strong>coef_</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>The coefficients of the estimator.</p>
+<dt><strong>coef_</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The coefficients of the estimator.</p>
 </dd>
-<dt><strong>pattern_</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>The patterns of the estimator.</p>
+<dt><strong>pattern_</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The patterns of the estimator.</p>
+</dd>
+<dt><strong>metric_</strong><span class="classifier">mvpy.metrics.r2</span></dt><dd><p>The default metric to use.</p>
 </dd>
 </dl>
 </dd>
 </dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="mvpy.estimators.ReceptiveField.html#mvpy.estimators.ReceptiveField" title="mvpy.estimators.ReceptiveField"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mvpy.estimators.ReceptiveField</span></code></a></dt><dd><p>An alternative mTRF/SR estimator that solves through auto- and cross-correlations in the Fourier domain.</p>
+</dd>
+</dl>
+</div>
 <p class="rubric">Notes</p>
-<p>This class allows estimation of either multivariate temporal response functions (mTRF) or stimulus reconstruction (SR) models.</p>
-<p>mTRFs are estimated as:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}r(t,n) = \\sum_\\tau w(\\tau, n) s(t - \\tau) + \\epsilon\end{split}\]</div>
-<p>where <span class="math notranslate nohighlight">\(r(t,n)\)</span> is the reconstructed signal at timepoint <span class="math notranslate nohighlight">\(t\)</span> for channel <span class="math notranslate nohighlight">\(n\)</span>, <span class="math notranslate nohighlight">\(s(t)\)</span> is the stimulus at time <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(w(\tau, n)\)</span> is the weight at time delay <span class="math notranslate nohighlight">\(\tau\)</span> for channel <span class="math notranslate nohighlight">\(n\)</span>, and <span class="math notranslate nohighlight">\(\epsilon\)</span> is the error.</p>
-<p>SR models are estimated as:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}s(t) = \\sum_n\\sum_\\tau r(t + \\tau, n) g(\\tau, n)\end{split}\]</div>
-<p>where <span class="math notranslate nohighlight">\(s(t)\)</span> is the reconstructed stimulus at time <span class="math notranslate nohighlight">\(t\)</span>, <span class="math notranslate nohighlight">\(r(t,n)\)</span> is the neural response at <span class="math notranslate nohighlight">\(t\)</span> and lagged by <span class="math notranslate nohighlight">\(\\tau\)</span> for channel <span class="math notranslate nohighlight">\(n\)</span>, <span class="math notranslate nohighlight">\(g(\tau, n)\)</span> is the weight at time delay <span class="math notranslate nohighlight">\(\tau\)</span> for channel <span class="math notranslate nohighlight">\(n\)</span>.</p>
-<p>For more information on mTRF or SR models, see <a class="reference internal" href="#r5d029b4fec5d-1" id="id1">[1]</a>.</p>
-<p>Note that for SR models it is recommended to also pass <cite>patterns=True</cite> to estimate not only the coefficients but also the patterns that were actually used for reconstructing stimuli. For more information, see <a class="reference internal" href="#r5d029b4fec5d-2" id="id2">[2]</a>.</p>
+<p>For SR models it is recommended to also pass <code class="xref py py-attr docutils literal notranslate"><span class="pre">patterns</span></code> <code class="docutils literal notranslate"><span class="pre">True</span></code> 
+to estimate not only the coefficients but also the patterns that were actually used for reconstructing 
+stimuli. For more information, see <a class="reference internal" href="#r5d029b4fec5d-2" id="id2">[2]</a>.</p>
 <p class="rubric">References</p>
 <div role="list" class="citation-list">
 <div class="citation" id="r5d029b4fec5d-1" role="doc-biblioentry">
@@ -583,17 +618,23 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> <span class="n">X</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sr</span> <span class="o">=</span> <span class="n">TimeDelayed</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">alphas</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="n">patterns</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">,:]</span>
-<span class="go">tensor([ 1.3591,  1.2549,  1.5662,  2.3544,  3.3440,  4.3683,  5.4097,  6.4418, 7.4454,  8.4978,  9.5206, 10.5374, 11.5841, 12.6102, 13.6254, 14.6939, 15.6932, 16.7168, 17.7619, 18.8130, 19.8182, 20.8687, 21.8854, 22.9310, 23.9270, 24.9808, 26.0085, 27.0347, 28.0728, 29.0828, 30.1400, 31.1452, 32.1793, 33.2047, 34.2332, 35.2717, 36.2945, 37.3491, 38.3800, 39.3817, 40.3962, 41.4489, 42.4854, 43.4965, 44.5346, 45.5716, 46.7301, 47.2251, 48.4449, 48.8793])</span>
+<span class="go">tensor([ 1.3591,  1.2549,  1.5662,  2.3544,  3.3440,  4.3683,  5.4097,  6.4418, </span>
+<span class="go">         7.4454,  8.4978,  9.5206, 10.5374, 11.5841, 12.6102, 13.6254, 14.6939, </span>
+<span class="go">         15.6932, 16.7168, 17.7619, 18.8130, 19.8182, 20.8687, 21.8854, 22.9310, </span>
+<span class="go">         23.9270, 24.9808, 26.0085, 27.0347, 28.0728, 29.0828, 30.1400, 31.1452, </span>
+<span class="go">         32.1793, 33.2047, 34.2332, 35.2717, 36.2945, 37.3491, 38.3800, 39.3817, </span>
+<span class="go">         40.3962, 41.4489, 42.4854, 43.4965, 44.5346, 45.5716, 46.7301, 47.2251, </span>
+<span class="go">         48.4449, 48.8793])</span>
 </pre></div>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="mvpy.estimators.TimeDelayed.clone">
-<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/09dc700/mvpy/estimators/timedelayed.py#L683"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.TimeDelayed.clone" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../../source/mvpy.estimators.html#mvpy.estimators.timedelayed.TimeDelayed" title="mvpy.estimators.timedelayed.TimeDelayed"><span class="pre">TimeDelayed</span></a></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/25cd4e8/mvpy/estimators/timedelayed.py#L809"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.TimeDelayed.clone" title="Link to this definition">#</a></dt>
 <dd><p>Clone this class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt>Decoder</dt><dd><p>The cloned object.</p>
+<dt><strong>td</strong><span class="classifier">TimeDelayed</span></dt><dd><p>The cloned object.</p>
 </dd>
 </dl>
 </dd>
@@ -602,14 +643,20 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mvpy.estimators.TimeDelayed.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/09dc700/mvpy/estimators/timedelayed.py#L654"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.TimeDelayed.fit" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/25cd4e8/mvpy/estimators/timedelayed.py#L749"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.TimeDelayed.fit" title="Link to this definition">#</a></dt>
 <dd><p>Fit the estimator.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>X</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>The features.</p>
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Input data of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_features,</span> <span class="pre">n_timepoints)</span></code>.</p>
 </dd>
-<dt><strong>y</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>The targets.</p>
+<dt><strong>y</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Input data of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_channels,</span> <span class="pre">n_timepoints)</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>td</strong><span class="classifier">mvpy.estimators._TimeDelayed_numpy | mvpy.estimators._TimeDelayed_torch</span></dt><dd><p>The fitted TimeDelayed estimator.</p>
 </dd>
 </dl>
 </dd>
@@ -618,20 +665,51 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mvpy.estimators.TimeDelayed.predict">
-<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/09dc700/mvpy/estimators/timedelayed.py#L667"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.TimeDelayed.predict" title="Link to this definition">#</a></dt>
-<dd><p>Predict from the estimator.</p>
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/25cd4e8/mvpy/estimators/timedelayed.py#L767"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.TimeDelayed.predict" title="Link to this definition">#</a></dt>
+<dd><p>Make predictions from model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>X</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>The features.</p>
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Input data of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_features,</span> <span class="pre">n_timepoints)</span></code>.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt>Union[np.ndarray, torch.Tensor]</dt><dd><p>The predictions.</p>
+<dt><strong>y_h</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Predicted responses of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_channels,</span> <span class="pre">n_timepoints)</span></code>.</p>
 </dd>
 </dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mvpy.estimators.TimeDelayed.score">
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../source/mvpy.metrics.html#mvpy.metrics.metric.Metric" title="mvpy.metrics.metric.Metric"><span class="pre">Metric</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../../source/mvpy.metrics.html#mvpy.metrics.metric.Metric" title="mvpy.metrics.metric.Metric"><span class="pre">Metric</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/25cd4e8/mvpy/estimators/timedelayed.py#L783"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.TimeDelayed.score" title="Link to this definition">#</a></dt>
+<dd><p>Make predictions from <span class="math notranslate nohighlight">\(X\)</span> and score against <span class="math notranslate nohighlight">\(y\)</span>.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Input data of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_features,</span> <span class="pre">n_timepoints)</span></code>.</p>
+</dd>
+<dt><strong>y</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>Output data of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_channels,</span> <span class="pre">n_timepoints)</span></code>.</p>
+</dd>
+<dt><strong>metric</strong><span class="classifier">Optional[Metric | Tuple[Metric]], default=None</span></dt><dd><p>Metric or tuple of metrics to compute.  If <code class="docutils literal notranslate"><span class="pre">None</span></code>, defaults to <code class="xref py py-attr docutils literal notranslate"><span class="pre">metric_</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>score</strong><span class="classifier">np.ndarray | torch.Tensor | Dict[str, np.ndarray] | Dict[str, torch.Tensor]</span></dt><dd><p>Scores of shape <code class="docutils literal notranslate"><span class="pre">(n_channels,</span> <span class="pre">n_timepoints)</span></code> or, for multiple metrics, a dictionary of metric names and scores of shape <code class="docutils literal notranslate"><span class="pre">(n_channels,</span> <span class="pre">n_timepoints)</span></code>.</p>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If multiple values are supplied for <code class="docutils literal notranslate"><span class="pre">metric</span></code>, this function will
+output a dictionary of <code class="docutils literal notranslate"><span class="pre">{Metric.name:</span> <span class="pre">score,</span> <span class="pre">...}</span></code> rather than
+a stacked array. This is to provide consistency across cases where
+metrics may or may not differ in their output shapes.</p>
+</div>
 </dd>
 </dl>
 </dd></dl>
@@ -692,6 +770,7 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.TimeDelayed.clone"><code class="docutils literal notranslate"><span class="pre">clone()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.TimeDelayed.fit"><code class="docutils literal notranslate"><span class="pre">fit()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.TimeDelayed.predict"><code class="docutils literal notranslate"><span class="pre">predict()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.TimeDelayed.score"><code class="docutils literal notranslate"><span class="pre">score()</span></code></a></li>
 </ul>
 </li>
 </ul>

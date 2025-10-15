@@ -5,8 +5,8 @@
 
 .. autoclass:: RobustScaler
    :members:
-   :inherited-members:
    :special-members: __call__
+   :inherited-members:
 
 .. minigallery:: mvpy.preprocessing.RobustScaler mvpy.preprocessing.RobustScaler.__delattr__ mvpy.preprocessing.RobustScaler.__dir__ mvpy.preprocessing.RobustScaler.__eq__ mvpy.preprocessing.RobustScaler.__format__ mvpy.preprocessing.RobustScaler.__ge__ mvpy.preprocessing.RobustScaler.__getattribute__ mvpy.preprocessing.RobustScaler.__gt__ mvpy.preprocessing.RobustScaler.__hash__ mvpy.preprocessing.RobustScaler.__init__ mvpy.preprocessing.RobustScaler.__le__ mvpy.preprocessing.RobustScaler.__lt__ mvpy.preprocessing.RobustScaler.__ne__ mvpy.preprocessing.RobustScaler.__new__ mvpy.preprocessing.RobustScaler.__reduce__ mvpy.preprocessing.RobustScaler.__reduce_ex__ mvpy.preprocessing.RobustScaler.__setattr__ mvpy.preprocessing.RobustScaler.__sizeof__ mvpy.preprocessing.RobustScaler.__str__ mvpy.preprocessing.RobustScaler.__subclasshook__ mvpy.preprocessing.RobustScaler._get_estimator mvpy.preprocessing.RobustScaler.clone mvpy.preprocessing.RobustScaler.copy mvpy.preprocessing.RobustScaler.fit mvpy.preprocessing.RobustScaler.fit_transform mvpy.preprocessing.RobustScaler.inverse_transform mvpy.preprocessing.RobustScaler.to_numpy mvpy.preprocessing.RobustScaler.to_torch mvpy.preprocessing.RobustScaler.transform 
    :add-heading: Gallery examples

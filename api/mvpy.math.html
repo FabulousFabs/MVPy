@@ -341,10 +341,12 @@
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="mvpy.html">mvpy</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="mvpy.crossvalidation.html">mvpy.crossvalidation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.crossvalidation.cross_val_score.html">cross_val_score</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.crossvalidation.KFold.html">KFold</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.crossvalidation.RepeatedKFold.html">RepeatedKFold</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.crossvalidation.StratifiedKFold.html">StratifiedKFold</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.crossvalidation.RepeatedStratifiedKFold.html">RepeatedStratifiedKFold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.crossvalidation.Validator.html">Validator</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="mvpy.dataset.html">mvpy.dataset</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -385,10 +387,19 @@
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.math.mahalanobis.html">mahalanobis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.math.pearsonr.html">pearsonr</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.math.pearsonr_d.html">pearsonr_d</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.math.r2.html">r2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.math.rank.html">rank</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.math.roc_auc.html">roc_auc</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.math.spearmanr.html">spearmanr</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.math.spearmanr_d.html">spearmanr_d</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="mvpy.metrics.html">mvpy.metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.metrics.Accuracy.html">Accuracy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.metrics.Metric.html">Metric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.metrics.R2.html">R2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.metrics.Roc_auc.html">Roc_auc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.metrics.score.html">score</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="mvpy.preprocessing.html">mvpy.preprocessing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -516,16 +527,19 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="../modules/generated/mvpy.math.pearsonr_d.html#mvpy.math.pearsonr_d" title="mvpy.math.pearsonr_d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pearsonr_d</span></code></a></p></td>
 <td><p>Computes Pearson distance between x and y.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../source/mvpy.math.html#module-mvpy.math.rank" title="mvpy.math.rank"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rank</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../source/mvpy.math.html#module-mvpy.math.r2" title="mvpy.math.r2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">r2</span></code></a></p></td>
 <td><p>Rank data in x along its final feature dimension.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../source/mvpy.math.html#module-mvpy.math.roc_auc" title="mvpy.math.roc_auc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">roc_auc</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../source/mvpy.math.html#module-mvpy.math.rank" title="mvpy.math.rank"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rank</span></code></a></p></td>
+<td><p>Rank data in x along its final feature dimension.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../source/mvpy.math.html#module-mvpy.math.roc_auc" title="mvpy.math.roc_auc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">roc_auc</span></code></a></p></td>
 <td><p>Compute ROC AUC score between y_true and y_score.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../source/mvpy.math.html#module-mvpy.math.spearmanr" title="mvpy.math.spearmanr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spearmanr</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../source/mvpy.math.html#module-mvpy.math.spearmanr" title="mvpy.math.spearmanr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spearmanr</span></code></a></p></td>
 <td><p>Compute Spearman correlation between x and y.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../modules/generated/mvpy.math.spearmanr_d.html#mvpy.math.spearmanr_d" title="mvpy.math.spearmanr_d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spearmanr_d</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../modules/generated/mvpy.math.spearmanr_d.html#mvpy.math.spearmanr_d" title="mvpy.math.spearmanr_d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spearmanr_d</span></code></a></p></td>
 <td><p>Compute Spearman distance between x and y.</p></td>
 </tr>
 </tbody>

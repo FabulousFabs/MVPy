@@ -55,7 +55,7 @@
     <script src="../_static/scripts/sg_plotly_resize.js?v=dc4a1e18"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="KFold" href="../modules/generated/mvpy.crossvalidation.KFold.html" />
+    <link rel="next" title="cross_val_score" href="../modules/generated/mvpy.crossvalidation.cross_val_score.html" />
     <link rel="prev" title="mvpy" href="mvpy.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -340,10 +340,12 @@
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="mvpy.html">mvpy</a></li>
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">mvpy.crossvalidation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.crossvalidation.cross_val_score.html">cross_val_score</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.crossvalidation.KFold.html">KFold</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.crossvalidation.RepeatedKFold.html">RepeatedKFold</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.crossvalidation.StratifiedKFold.html">StratifiedKFold</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.crossvalidation.RepeatedStratifiedKFold.html">RepeatedStratifiedKFold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.crossvalidation.Validator.html">Validator</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="mvpy.dataset.html">mvpy.dataset</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -384,10 +386,19 @@
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.math.mahalanobis.html">mahalanobis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.math.pearsonr.html">pearsonr</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.math.pearsonr_d.html">pearsonr_d</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.math.r2.html">r2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.math.rank.html">rank</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.math.roc_auc.html">roc_auc</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.math.spearmanr.html">spearmanr</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.math.spearmanr_d.html">spearmanr_d</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="mvpy.metrics.html">mvpy.metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.metrics.Accuracy.html">Accuracy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.metrics.Metric.html">Metric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.metrics.R2.html">R2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.metrics.Roc_auc.html">Roc_auc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.metrics.score.html">score</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="mvpy.preprocessing.html">mvpy.preprocessing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -476,17 +487,23 @@
 <span id="mvpy-crossvalidation"></span><span id="ssvalidation-ref"></span><h1>mvpy.crossvalidation<a class="headerlink" href="#module-mvpy.crossvalidation" title="Link to this heading">#</a></h1>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="../modules/generated/mvpy.crossvalidation.KFold.html#mvpy.crossvalidation.KFold" title="mvpy.crossvalidation.KFold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KFold</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../source/mvpy.crossvalidation.html#module-mvpy.crossvalidation.cross_val_score" title="mvpy.crossvalidation.cross_val_score"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cross_val_score</span></code></a></p></td>
+<td><p>Implements a shorthand for automated cross-validation scoring over estimators or pipelines.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../modules/generated/mvpy.crossvalidation.KFold.html#mvpy.crossvalidation.KFold" title="mvpy.crossvalidation.KFold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KFold</span></code></a></p></td>
 <td><p>Implements a k-folds cross-validator.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../modules/generated/mvpy.crossvalidation.RepeatedKFold.html#mvpy.crossvalidation.RepeatedKFold" title="mvpy.crossvalidation.RepeatedKFold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RepeatedKFold</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../modules/generated/mvpy.crossvalidation.RepeatedKFold.html#mvpy.crossvalidation.RepeatedKFold" title="mvpy.crossvalidation.RepeatedKFold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RepeatedKFold</span></code></a></p></td>
 <td><p>Implements a repeated k-folds cross-validator.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../modules/generated/mvpy.crossvalidation.StratifiedKFold.html#mvpy.crossvalidation.StratifiedKFold" title="mvpy.crossvalidation.StratifiedKFold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StratifiedKFold</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../modules/generated/mvpy.crossvalidation.StratifiedKFold.html#mvpy.crossvalidation.StratifiedKFold" title="mvpy.crossvalidation.StratifiedKFold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StratifiedKFold</span></code></a></p></td>
 <td><p>Implements a stratified k-folds cross-validator.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../modules/generated/mvpy.crossvalidation.RepeatedStratifiedKFold.html#mvpy.crossvalidation.RepeatedStratifiedKFold" title="mvpy.crossvalidation.RepeatedStratifiedKFold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RepeatedStratifiedKFold</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../modules/generated/mvpy.crossvalidation.RepeatedStratifiedKFold.html#mvpy.crossvalidation.RepeatedStratifiedKFold" title="mvpy.crossvalidation.RepeatedStratifiedKFold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RepeatedStratifiedKFold</span></code></a></p></td>
 <td><p>Implements a repeated stratified k-folds cross-validator.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../modules/generated/mvpy.crossvalidation.Validator.html#mvpy.crossvalidation.Validator" title="mvpy.crossvalidation.Validator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Validator</span></code></a></p></td>
+<td><p>Implements automated cross-validation and scoring over estimators or pipelines.</p></td>
 </tr>
 </tbody>
 </table>
@@ -513,11 +530,11 @@
       </div>
     </a>
     <a class="right-next"
-       href="../modules/generated/mvpy.crossvalidation.KFold.html"
+       href="../modules/generated/mvpy.crossvalidation.cross_val_score.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">KFold</p>
+        <p class="prev-next-title">cross_val_score</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

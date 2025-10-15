@@ -5,8 +5,8 @@
 
 .. autoclass:: Covariance
    :members:
-   :inherited-members:
    :special-members: __call__
+   :inherited-members:
 
 .. minigallery:: mvpy.estimators.Covariance mvpy.estimators.Covariance.__delattr__ mvpy.estimators.Covariance.__dir__ mvpy.estimators.Covariance.__eq__ mvpy.estimators.Covariance.__format__ mvpy.estimators.Covariance.__ge__ mvpy.estimators.Covariance.__getattribute__ mvpy.estimators.Covariance.__gt__ mvpy.estimators.Covariance.__hash__ mvpy.estimators.Covariance.__init__ mvpy.estimators.Covariance.__le__ mvpy.estimators.Covariance.__lt__ mvpy.estimators.Covariance.__ne__ mvpy.estimators.Covariance.__new__ mvpy.estimators.Covariance.__reduce__ mvpy.estimators.Covariance.__reduce_ex__ mvpy.estimators.Covariance.__setattr__ mvpy.estimators.Covariance.__sizeof__ mvpy.estimators.Covariance.__str__ mvpy.estimators.Covariance.__subclasshook__ mvpy.estimators.Covariance._get_estimator mvpy.estimators.Covariance.clone mvpy.estimators.Covariance.fit mvpy.estimators.Covariance.fit_transform mvpy.estimators.Covariance.to_numpy mvpy.estimators.Covariance.to_torch mvpy.estimators.Covariance.transform 
    :add-heading: Gallery examples

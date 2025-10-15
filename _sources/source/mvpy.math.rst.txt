@@ -84,6 +84,14 @@ mvpy.math.pearsonr module
    :undoc-members:
    :show-inheritance:
 
+mvpy.math.r2 module
+-------------------
+
+.. automodule:: mvpy.math.r2
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 mvpy.math.rank module
 ---------------------
 

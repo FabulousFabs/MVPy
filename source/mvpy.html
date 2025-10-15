@@ -345,6 +345,7 @@
 <li class="toctree-l1"><a class="reference internal" href="mvpy.dataset.html">mvpy.dataset package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mvpy.estimators.html">mvpy.estimators package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mvpy.math.html">mvpy.math package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mvpy.metrics.html">mvpy.metrics package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mvpy.preprocessing.html">mvpy.preprocessing package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mvpy.signal.html">mvpy.signal package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mvpy.utilities.html">mvpy.utilities package</a></li>
@@ -414,8 +415,7 @@
 <li class="toctree-l1"><a class="reference internal" href="mvpy.crossvalidation.html">mvpy.crossvalidation package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.html#module-mvpy.crossvalidation.cross_val_score">mvpy.crossvalidation.cross_val_score module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.cross_val_score.CVResult"><code class="docutils literal notranslate"><span class="pre">CVResult</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.cross_val_score.score"><code class="docutils literal notranslate"><span class="pre">score()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.cross_val_score.cross_val_score"><code class="docutils literal notranslate"><span class="pre">cross_val_score()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.html#module-mvpy.crossvalidation.kfold">mvpy.crossvalidation.kfold module</a><ul>
@@ -455,7 +455,18 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.html#module-mvpy.crossvalidation.validator">mvpy.crossvalidation.validator module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.validator.Validator"><code class="docutils literal notranslate"><span class="pre">Validator</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.validator.Validator"><code class="docutils literal notranslate"><span class="pre">Validator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.validator.Validator.call"><code class="docutils literal notranslate"><span class="pre">Validator.call()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.validator.Validator.collect"><code class="docutils literal notranslate"><span class="pre">Validator.collect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.validator.Validator.decision_function"><code class="docutils literal notranslate"><span class="pre">Validator.decision_function()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.validator.Validator.fit"><code class="docutils literal notranslate"><span class="pre">Validator.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.validator.Validator.predict"><code class="docutils literal notranslate"><span class="pre">Validator.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.validator.Validator.predict_proba"><code class="docutils literal notranslate"><span class="pre">Validator.predict_proba()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.validator.Validator.score"><code class="docutils literal notranslate"><span class="pre">Validator.score()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.validator.Validator.transform"><code class="docutils literal notranslate"><span class="pre">Validator.transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.crossvalidation.html#mvpy.crossvalidation.validator.fit_model_"><code class="docutils literal notranslate"><span class="pre">fit_model_()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.html#module-mvpy.crossvalidation">Module contents</a></li>
@@ -505,6 +516,7 @@
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.classifier.Classifier.fit"><code class="docutils literal notranslate"><span class="pre">Classifier.fit()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.classifier.Classifier.predict"><code class="docutils literal notranslate"><span class="pre">Classifier.predict()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.classifier.Classifier.predict_proba"><code class="docutils literal notranslate"><span class="pre">Classifier.predict_proba()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.classifier.Classifier.score"><code class="docutils literal notranslate"><span class="pre">Classifier.score()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.classifier.Classifier.to_numpy"><code class="docutils literal notranslate"><span class="pre">Classifier.to_numpy()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.classifier.Classifier.to_torch"><code class="docutils literal notranslate"><span class="pre">Classifier.to_torch()</span></code></a></li>
 </ul>
@@ -530,21 +542,28 @@
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.csp.CSP.predict"><code class="docutils literal notranslate"><span class="pre">CSP.predict()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.csp.loss"><code class="docutils literal notranslate"><span class="pre">loss()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.csp.mean_rotation"><code class="docutils literal notranslate"><span class="pre">mean_rotation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.csp.rotmat"><code class="docutils literal notranslate"><span class="pre">rotmat()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.html#mvpy-estimators-csp-copy-module">mvpy.estimators.csp copy module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.html#module-mvpy.estimators.kernelridgecv">mvpy.estimators.kernelridgecv module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.kernelridgecv.KernelRidgeCV"><code class="docutils literal notranslate"><span class="pre">KernelRidgeCV</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.kernelridgecv.KernelRidgeCV.clone"><code class="docutils literal notranslate"><span class="pre">KernelRidgeCV.clone()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.kernelridgecv.KernelRidgeCV.fit"><code class="docutils literal notranslate"><span class="pre">KernelRidgeCV.fit()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.kernelridgecv.KernelRidgeCV.predict"><code class="docutils literal notranslate"><span class="pre">KernelRidgeCV.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.kernelridgecv.KernelRidgeCV.score"><code class="docutils literal notranslate"><span class="pre">KernelRidgeCV.score()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.html#module-mvpy.estimators.receptivefield">mvpy.estimators.receptivefield module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.receptivefield.ReceptiveField"><code class="docutils literal notranslate"><span class="pre">ReceptiveField</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.receptivefield.ReceptiveField.clone"><code class="docutils literal notranslate"><span class="pre">ReceptiveField.clone()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.receptivefield.ReceptiveField.fit"><code class="docutils literal notranslate"><span class="pre">ReceptiveField.fit()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.receptivefield.ReceptiveField.predict"><code class="docutils literal notranslate"><span class="pre">ReceptiveField.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.receptivefield.ReceptiveField.score"><code class="docutils literal notranslate"><span class="pre">ReceptiveField.score()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -557,6 +576,7 @@
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgeclassifier.RidgeClassifier.fit"><code class="docutils literal notranslate"><span class="pre">RidgeClassifier.fit()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgeclassifier.RidgeClassifier.predict"><code class="docutils literal notranslate"><span class="pre">RidgeClassifier.predict()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgeclassifier.RidgeClassifier.predict_proba"><code class="docutils literal notranslate"><span class="pre">RidgeClassifier.predict_proba()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgeclassifier.RidgeClassifier.score"><code class="docutils literal notranslate"><span class="pre">RidgeClassifier.score()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -566,6 +586,7 @@
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgecv.RidgeCV.clone"><code class="docutils literal notranslate"><span class="pre">RidgeCV.clone()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgecv.RidgeCV.fit"><code class="docutils literal notranslate"><span class="pre">RidgeCV.fit()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgecv.RidgeCV.predict"><code class="docutils literal notranslate"><span class="pre">RidgeCV.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgecv.RidgeCV.score"><code class="docutils literal notranslate"><span class="pre">RidgeCV.score()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -575,6 +596,7 @@
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgedecoder.RidgeDecoder.clone"><code class="docutils literal notranslate"><span class="pre">RidgeDecoder.clone()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgedecoder.RidgeDecoder.fit"><code class="docutils literal notranslate"><span class="pre">RidgeDecoder.fit()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgedecoder.RidgeDecoder.predict"><code class="docutils literal notranslate"><span class="pre">RidgeDecoder.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgedecoder.RidgeDecoder.score"><code class="docutils literal notranslate"><span class="pre">RidgeDecoder.score()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -584,6 +606,7 @@
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgeencoder.RidgeEncoder.clone"><code class="docutils literal notranslate"><span class="pre">RidgeEncoder.clone()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgeencoder.RidgeEncoder.fit"><code class="docutils literal notranslate"><span class="pre">RidgeEncoder.fit()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgeencoder.RidgeEncoder.predict"><code class="docutils literal notranslate"><span class="pre">RidgeEncoder.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.ridgeencoder.RidgeEncoder.score"><code class="docutils literal notranslate"><span class="pre">RidgeEncoder.score()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -609,6 +632,7 @@
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.sliding.Sliding.fit_transform"><code class="docutils literal notranslate"><span class="pre">Sliding.fit_transform()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.sliding.Sliding.predict"><code class="docutils literal notranslate"><span class="pre">Sliding.predict()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.sliding.Sliding.predict_proba"><code class="docutils literal notranslate"><span class="pre">Sliding.predict_proba()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.sliding.Sliding.score"><code class="docutils literal notranslate"><span class="pre">Sliding.score()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.sliding.Sliding.transform"><code class="docutils literal notranslate"><span class="pre">Sliding.transform()</span></code></a></li>
 </ul>
 </li>
@@ -622,6 +646,7 @@
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.svc.SVC.fit"><code class="docutils literal notranslate"><span class="pre">SVC.fit()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.svc.SVC.predict"><code class="docutils literal notranslate"><span class="pre">SVC.predict()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.svc.SVC.predict_proba"><code class="docutils literal notranslate"><span class="pre">SVC.predict_proba()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.svc.SVC.score"><code class="docutils literal notranslate"><span class="pre">SVC.score()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.svc.SVC.to_numpy"><code class="docutils literal notranslate"><span class="pre">SVC.to_numpy()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.svc.SVC.to_torch"><code class="docutils literal notranslate"><span class="pre">SVC.to_torch()</span></code></a></li>
 </ul>
@@ -633,6 +658,7 @@
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.timedelayed.TimeDelayed.clone"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.clone()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.timedelayed.TimeDelayed.fit"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.fit()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.timedelayed.TimeDelayed.predict"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.predict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.estimators.html#mvpy.estimators.timedelayed.TimeDelayed.score"><code class="docutils literal notranslate"><span class="pre">TimeDelayed.score()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -685,6 +711,10 @@
 <li class="toctree-l3"><a class="reference internal" href="mvpy.math.html#mvpy.math.pearsonr.pearsonr_d"><code class="docutils literal notranslate"><span class="pre">pearsonr_d()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.math.html#module-mvpy.math.r2">mvpy.math.r2 module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.math.html#mvpy.math.r2.r2"><code class="docutils literal notranslate"><span class="pre">r2()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.math.html#module-mvpy.math.rank">mvpy.math.rank module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="mvpy.math.html#mvpy.math.rank.rank"><code class="docutils literal notranslate"><span class="pre">rank()</span></code></a></li>
 </ul>
@@ -699,6 +729,77 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.math.html#module-mvpy.math">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mvpy.metrics.html">mvpy.metrics package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.html#module-mvpy.metrics.accuracy">mvpy.metrics.accuracy module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.accuracy.Accuracy"><code class="docutils literal notranslate"><span class="pre">Accuracy</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.accuracy.Accuracy.f"><code class="docutils literal notranslate"><span class="pre">Accuracy.f()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.accuracy.Accuracy.name"><code class="docutils literal notranslate"><span class="pre">Accuracy.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.accuracy.Accuracy.reduce"><code class="docutils literal notranslate"><span class="pre">Accuracy.reduce</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.accuracy.Accuracy.request"><code class="docutils literal notranslate"><span class="pre">Accuracy.request</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.html#module-mvpy.metrics.metric">mvpy.metrics.metric module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.metric.Metric"><code class="docutils literal notranslate"><span class="pre">Metric</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.metric.Metric.f"><code class="docutils literal notranslate"><span class="pre">Metric.f()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.metric.Metric.mutate"><code class="docutils literal notranslate"><span class="pre">Metric.mutate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.metric.Metric.name"><code class="docutils literal notranslate"><span class="pre">Metric.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.metric.Metric.reduce"><code class="docutils literal notranslate"><span class="pre">Metric.reduce</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.metric.Metric.request"><code class="docutils literal notranslate"><span class="pre">Metric.request</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.html#module-mvpy.metrics.pearsonr">mvpy.metrics.pearsonr module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.pearsonr.Pearsonr"><code class="docutils literal notranslate"><span class="pre">Pearsonr</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.pearsonr.Pearsonr.f"><code class="docutils literal notranslate"><span class="pre">Pearsonr.f()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.pearsonr.Pearsonr.name"><code class="docutils literal notranslate"><span class="pre">Pearsonr.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.pearsonr.Pearsonr.reduce"><code class="docutils literal notranslate"><span class="pre">Pearsonr.reduce</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.pearsonr.Pearsonr.request"><code class="docutils literal notranslate"><span class="pre">Pearsonr.request</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.html#module-mvpy.metrics.r2">mvpy.metrics.r2 module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.r2.R2"><code class="docutils literal notranslate"><span class="pre">R2</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.r2.R2.f"><code class="docutils literal notranslate"><span class="pre">R2.f()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.r2.R2.name"><code class="docutils literal notranslate"><span class="pre">R2.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.r2.R2.reduce"><code class="docutils literal notranslate"><span class="pre">R2.reduce</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.r2.R2.request"><code class="docutils literal notranslate"><span class="pre">R2.request</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.html#module-mvpy.metrics.roc_auc">mvpy.metrics.roc_auc module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.roc_auc.Roc_auc"><code class="docutils literal notranslate"><span class="pre">Roc_auc</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.roc_auc.Roc_auc.f"><code class="docutils literal notranslate"><span class="pre">Roc_auc.f()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.roc_auc.Roc_auc.name"><code class="docutils literal notranslate"><span class="pre">Roc_auc.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.roc_auc.Roc_auc.reduce"><code class="docutils literal notranslate"><span class="pre">Roc_auc.reduce</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.roc_auc.Roc_auc.request"><code class="docutils literal notranslate"><span class="pre">Roc_auc.request</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.html#module-mvpy.metrics.score">mvpy.metrics.score module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.score.reduce_"><code class="docutils literal notranslate"><span class="pre">reduce_()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.score.score"><code class="docutils literal notranslate"><span class="pre">score()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.html#module-mvpy.metrics.spearmanr">mvpy.metrics.spearmanr module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.spearmanr.Spearmanr"><code class="docutils literal notranslate"><span class="pre">Spearmanr</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.spearmanr.Spearmanr.f"><code class="docutils literal notranslate"><span class="pre">Spearmanr.f()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.spearmanr.Spearmanr.name"><code class="docutils literal notranslate"><span class="pre">Spearmanr.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.spearmanr.Spearmanr.reduce"><code class="docutils literal notranslate"><span class="pre">Spearmanr.reduce</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mvpy.metrics.html#mvpy.metrics.spearmanr.Spearmanr.request"><code class="docutils literal notranslate"><span class="pre">Spearmanr.request</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.html#module-mvpy.metrics">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mvpy.preprocessing.html">mvpy.preprocessing package</a><ul>

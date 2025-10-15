@@ -24,7 +24,9 @@ mvpy.crossvalidation
   :template: base.rst
 
 
+  cross_val_score
   KFold
   RepeatedKFold
   StratifiedKFold
   RepeatedStratifiedKFold
+  Validator

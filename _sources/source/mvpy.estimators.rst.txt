@@ -36,6 +36,14 @@ mvpy.estimators.csp module
    :undoc-members:
    :show-inheritance:
 
+mvpy.estimators.csp copy module
+-------------------------------
+
+.. automodule:: mvpy.estimators.csp copy
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 mvpy.estimators.kernelridgecv module
 ------------------------------------
 

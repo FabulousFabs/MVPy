@@ -19,6 +19,7 @@ This is the class and function reference of MVPy. Please also refer to the
   mvpy.dataset
   mvpy.estimators
   mvpy.math
+  mvpy.metrics
   mvpy.preprocessing
   mvpy.signal
   mvpy.utilities
@@ -52,6 +53,22 @@ This is the class and function reference of MVPy. Please also refer to the
 
 
 
+
+
+
+
+
+  * - :obj:`~mvpy.crossvalidation.cross_val_score`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.crossvalidation
+
+        .. autoshortsummary:: mvpy.crossvalidation.cross_val_score
+
+        .. div:: caption
+
+          :mod:`mvpy.crossvalidation`
 
 
 
@@ -112,6 +129,22 @@ This is the class and function reference of MVPy. Please also refer to the
         .. currentmodule:: mvpy.crossvalidation
 
         .. autoshortsummary:: mvpy.crossvalidation.RepeatedStratifiedKFold
+
+        .. div:: caption
+
+          :mod:`mvpy.crossvalidation`
+
+
+
+
+
+  * - :obj:`~mvpy.crossvalidation.Validator`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.crossvalidation
+
+        .. autoshortsummary:: mvpy.crossvalidation.Validator
 
         .. div:: caption
 
@@ -629,6 +662,22 @@ This is the class and function reference of MVPy. Please also refer to the
 
 
 
+  * - :obj:`~mvpy.math.r2`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.math
+
+        .. autoshortsummary:: mvpy.math.r2
+
+        .. div:: caption
+
+          :mod:`mvpy.math`
+
+
+
+
+
   * - :obj:`~mvpy.math.rank`
 
     - .. div:: sk-apisearch-desc
@@ -688,6 +737,90 @@ This is the class and function reference of MVPy. Please also refer to the
         .. div:: caption
 
           :mod:`mvpy.math`
+
+
+
+
+
+
+
+
+
+  * - :obj:`~mvpy.metrics.Accuracy`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.metrics
+
+        .. autoshortsummary:: mvpy.metrics.Accuracy
+
+        .. div:: caption
+
+          :mod:`mvpy.metrics`
+
+
+
+
+
+  * - :obj:`~mvpy.metrics.Metric`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.metrics
+
+        .. autoshortsummary:: mvpy.metrics.Metric
+
+        .. div:: caption
+
+          :mod:`mvpy.metrics`
+
+
+
+
+
+  * - :obj:`~mvpy.metrics.R2`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.metrics
+
+        .. autoshortsummary:: mvpy.metrics.R2
+
+        .. div:: caption
+
+          :mod:`mvpy.metrics`
+
+
+
+
+
+  * - :obj:`~mvpy.metrics.Roc_auc`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.metrics
+
+        .. autoshortsummary:: mvpy.metrics.Roc_auc
+
+        .. div:: caption
+
+          :mod:`mvpy.metrics`
+
+
+
+
+
+  * - :obj:`~mvpy.metrics.score`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.metrics
+
+        .. autoshortsummary:: mvpy.metrics.score
+
+        .. div:: caption
+
+          :mod:`mvpy.metrics`
 
 
 

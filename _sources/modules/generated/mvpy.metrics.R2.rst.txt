@@ -1,0 +1,13 @@
+﻿R2
+==
+
+.. currentmodule:: mvpy.metrics
+
+.. autoclass:: R2
+   :members:
+   :special-members: __call__
+   :exclude-members: f
+
+.. minigallery:: mvpy.metrics.R2 mvpy.metrics.R2.__call__ mvpy.metrics.R2.__delattr__ mvpy.metrics.R2.__dir__ mvpy.metrics.R2.__eq__ mvpy.metrics.R2.__format__ mvpy.metrics.R2.__ge__ mvpy.metrics.R2.__getattribute__ mvpy.metrics.R2.__gt__ mvpy.metrics.R2.__init__ mvpy.metrics.R2.__init_subclass__ mvpy.metrics.R2.__le__ mvpy.metrics.R2.__lt__ mvpy.metrics.R2.__ne__ mvpy.metrics.R2.__new__ mvpy.metrics.R2.__reduce__ mvpy.metrics.R2.__reduce_ex__ mvpy.metrics.R2.__repr__ mvpy.metrics.R2.__setattr__ mvpy.metrics.R2.__sizeof__ mvpy.metrics.R2.__str__ mvpy.metrics.R2.__subclasshook__ mvpy.metrics.R2.f mvpy.metrics.R2.mutate 
+   :add-heading: Gallery examples
+   :heading-level: -

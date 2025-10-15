@@ -1,0 +1,31 @@
+:html_theme.sidebar_secondary.remove:
+
+
+.. _rics_ref:
+
+
+mvpy.metrics
+============
+
+.. automodule:: mvpy.metrics
+
+
+
+
+
+
+
+
+
+
+.. autosummary::
+  :nosignatures:
+  :toctree: ../modules/generated/
+  :template: base.rst
+
+
+  Accuracy
+  Metric
+  R2
+  Roc_auc
+  score
