@@ -16,7 +16,7 @@ class Metric:
     name: str
     request: Tuple[str]
     reduce: Union[int, Tuple[int]]
-    f: Callable
+    f: Callable = lambda x: x
     
     def __call__(self, *args: Any, **kwargs: Any) -> Union[np.ndarray, torch.Tensor]:
         """
