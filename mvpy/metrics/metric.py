@@ -13,9 +13,9 @@ class Metric:
     """
     """
 
-    name: str
-    request: Tuple[str]
-    reduce: Union[int, Tuple[int]]
+    name: str = 'metric'
+    request: Tuple[str] = ('y', 'predict')
+    reduce: Union[int, Tuple[int]] = (0,)
     f: Callable = lambda x: x
     
     def __call__(self, *args: Any, **kwargs: Any) -> Union[np.ndarray, torch.Tensor]:
