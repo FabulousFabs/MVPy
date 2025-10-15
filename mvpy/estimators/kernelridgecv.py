@@ -9,8 +9,9 @@ import scipy
 import warnings
 
 from ..math import kernel_linear, kernel_rbf, kernel_poly, kernel_sigmoid
+from .. import metrics
 
-from typing import Union, Optional, Any
+from typing import Union, Dict, Tuple, Optional
 
 KERNELS = dict(
     linear = kernel_linear,
@@ -59,6 +60,8 @@ class _KernelRidgeCV_numpy(sklearn.base.BaseEstimator):
         Chosen alpha penalties.
     coef_ : Optional[np.ndarray]
         If :py:attr:`~mvpy.estimators.KernelRidgeCV.kernel` is ``linear``, coefficients of shape ``(n_channels, n_features)``.
+    metric_ : mvpy.metrics.r2
+        The default metric to use.
     """
     
     def __init__(self, alphas: Union[np.ndarray, list, float, int] = 1.0, kernel: str = 'linear', gamma: Union[float, str] = 'auto', coef0: float = 1.0, degree: float = 3.0, alpha_per_target: bool = False):
@@ -106,6 +109,7 @@ class _KernelRidgeCV_numpy(sklearn.base.BaseEstimator):
         self.alpha_ = None
         self.coef_ = None
         self.intercept_ = None
+        self.metric_ = metrics.r2
 
     def compute_gamma_(self, X: np.ndarray) -> float:
         """Compute gamma.
@@ -269,6 +273,36 @@ class _KernelRidgeCV_numpy(sklearn.base.BaseEstimator):
             return y_h.squeeze(-1)
 
         return y_h
+    
+    def score(self, X: np.ndarray, y: np.ndarray, metric: Optional[Union[metrics.Metric, Tuple[metrics.Metric]]] = None) -> Union[np.ndarray, Dict[str, np.ndarray]]:
+        """Make predictions from :math:`X` and score against :math:`y`.
+        
+        Parameters
+        ----------
+        X : torch.Tensor
+            Input data of shape ``(n_samples, n_channels)``.
+        y : torch.Tensor
+            Output data of shape ``(n_samples, n_features)``.
+        metric : Optional[Metric], default=None
+            Metric or tuple of metrics to compute.  If ``None``, defaults to :py:attr:`~mvpy.estimators.KernelRidgeCV.metric_`.
+        
+        Returns
+        -------
+        score : torch.Tensor | Dict[str, torch.Tensor]
+            Scores of shape ``(n_features,)`` or, for multiple metrics, a dictionary of metric names and scores of shape ``(n_features,)``.
+        
+        .. warning::
+            If multiple values are supplied for ``metric``, this function will
+            output a dictionary of ``{Metric.name: score, ...}`` rather than
+            a stacked array. This is to provide consistency across cases where
+            metrics may or may not differ in their output shapes.
+        """
+        
+        # check metric
+        if metric is None:
+            metric = self.metric_
+        
+        return metrics.score(self, metric, X, y)
 
     def clone(self) -> sklearn.base.BaseEstimator:
         """Obtain a clone of this estimator.
@@ -328,6 +362,8 @@ class _KernelRidgeCV_torch(sklearn.base.BaseEstimator):
         Chosen alpha penalties.
     coef_ : Optional[torch.Tensor]
         If :py:attr:`~mvpy.estimators.KernelRidgeCV.kernel` is ``linear``, coefficients of shape ``(n_channels, n_features)``.
+    metric_ : mvpy.metrics.r2
+        The default metric to use.
     """
     
     def __init__(self, alphas: Union[torch.Tensor, list, float, int] = 1.0, kernel: str = 'linear', gamma: Union[float, str] = 'auto', coef0: float = 1.0, degree: float = 3.0, alpha_per_target: bool = False):
@@ -375,6 +411,7 @@ class _KernelRidgeCV_torch(sklearn.base.BaseEstimator):
         self.alpha_ = None
         self.coef_ = None
         self.intercept_ = None
+        self.metric_ = metrics.r2
 
     def compute_gamma_(self, X: torch.Tensor) -> float:
         """Compute gamma.
@@ -549,6 +586,36 @@ class _KernelRidgeCV_torch(sklearn.base.BaseEstimator):
 
         return y_h
 
+    def score(self, X: torch.Tensor, y: torch.Tensor, metric: Optional[Union[metrics.Metric, Tuple[metrics.Metric]]] = None) -> Union[torch.Tensor, Dict[str, torch.Tensor]]:
+        """Make predictions from :math:`X` and score against :math:`y`.
+        
+        Parameters
+        ----------
+        X : torch.Tensor
+            Input data of shape ``(n_samples, n_channels)``.
+        y : torch.Tensor
+            Output data of shape ``(n_samples, n_features)``.
+        metric : Optional[Metric], default=None
+            Metric or tuple of metrics to compute.  If ``None``, defaults to :py:attr:`~mvpy.estimators.KernelRidgeCV.metric_`.
+        
+        Returns
+        -------
+        score : torch.Tensor | Dict[str, torch.Tensor]
+            Scores of shape ``(n_features,)`` or, for multiple metrics, a dictionary of metric names and scores of shape ``(n_features,)``.
+        
+        .. warning::
+            If multiple values are supplied for ``metric``, this function will
+            output a dictionary of ``{Metric.name: score, ...}`` rather than
+            a stacked array. This is to provide consistency across cases where
+            metrics may or may not differ in their output shapes.
+        """
+        
+        # check metric
+        if metric is None:
+            metric = self.metric_
+        
+        return metrics.score(self, metric, X, y)
+
     def clone(self) -> sklearn.base.BaseEstimator:
         """Obtain a clone of this estimator.
         
@@ -649,6 +716,8 @@ class KernelRidgeCV(sklearn.base.BaseEstimator):
         Chosen alpha penalties.
     coef_ : Optional[np.ndarray | torch.Tensor]
         If :py:attr:`~mvpy.estimators.KernelRidgeCV.kernel` is ``linear``, coefficients of shape ``(n_channels, n_features)``.
+    metric_ : mvpy.metrics.r2
+        The default metric to use.
     
     See also
     --------
@@ -770,6 +839,32 @@ class KernelRidgeCV(sklearn.base.BaseEstimator):
         -------
         y_h : np.ndarray | torch.Tensor
             Predicted output features of shape ``(n_samples, n_features)``.
+        """
+        
+        raise NotImplementedError('This method is not implemented in the base class.')
+
+    def score(self, X: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor], metric: Optional[Union[metrics.Metric, Tuple[metrics.Metric]]] = None) -> Union[np.ndarray, torch.Tensor, Dict[str, np.ndarray], Dict[str, torch.Tensor]]:
+        """Make predictions from :math:`X` and score against :math:`y`.
+        
+        Parameters
+        ----------
+        X : torch.Tensor
+            Input data of shape ``(n_samples, n_channels)``.
+        y : torch.Tensor
+            Output data of shape ``(n_samples, n_features)``.
+        metric : Optional[Metric | Tuple[Metric]], default=None
+            Metric or tuple of metrics to compute.  If ``None``, defaults to :py:attr:`~mvpy.estimators.KernelRidgeCV.metric_`.
+        
+        Returns
+        -------
+        score : np.ndarray | torch.Tensor | Dict[str, np.ndarray] | Dict[str, torch.Tensor]
+            Scores of shape ``(n_features,)`` or, for multiple metrics, a dictionary of metric names and scores of shape ``(n_features,)``.
+        
+        .. warning::
+            If multiple values are supplied for ``metric``, this function will
+            output a dictionary of ``{Metric.name: score, ...}`` rather than
+            a stacked array. This is to provide consistency across cases where
+            metrics may or may not differ in their output shapes.
         """
         
         raise NotImplementedError('This method is not implemented in the base class.')

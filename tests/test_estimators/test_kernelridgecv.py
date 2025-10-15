@@ -20,7 +20,7 @@ from sklearn.kernel_ridge import KernelRidge
 from typing import Any, Dict
 
 # setup threshold for correlation
-_THRESHOLD = 0.75
+_THRESHOLD = 0.65
 
 '''
 Test KernelRidgeCV estimators

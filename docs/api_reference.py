@@ -105,10 +105,12 @@ API_REFERENCE = {
             {
                 "title": None,
                 "autosummary": [
+                    "cross_val_score",
                     "KFold",
                     "RepeatedKFold",
                     "StratifiedKFold",
-                    "RepeatedStratifiedKFold"
+                    "RepeatedStratifiedKFold",
+                    "Validator"
                 ],
             }
         ],
@@ -173,10 +175,27 @@ API_REFERENCE = {
                     "mahalanobis",
                     "pearsonr",
                     "pearsonr_d",
+                    "r2",
                     "rank",
                     "roc_auc",
                     "spearmanr",
                     "spearmanr_d"
+                ]
+            }
+        ]
+    },
+    "mvpy.metrics": {
+        "short_summary": "Various metrics for evaluating estimators.",
+        "description": None,
+        "sections": [
+            {
+                "title": None,
+                "autosummary": [
+                    "Accuracy",
+                    "Metric",
+                    "R2",
+                    "Roc_auc",
+                    "score"
                 ]
             }
         ]

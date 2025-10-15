@@ -10,8 +10,9 @@ from .classifier import _Classifier_numpy, _Classifier_torch
 from ..preprocessing.labelbinariser import _LabelBinariser_numpy, _LabelBinariser_torch
 from ..preprocessing.scaler import _Scaler_numpy, _Scaler_torch
 from ..math import kernel_linear, kernel_rbf, kernel_poly, kernel_sigmoid
+from .. import metrics
 
-from typing import Union, Any
+from typing import Union, Dict, Tuple, Optional
 
 KERNELS = dict(
     linear = kernel_linear,
@@ -82,6 +83,8 @@ class _SVC_numpy(sklearn.base.BaseEstimator):
         The binariser used internally.
     scaler_ : Scaler
         The scaler used internally.
+    metric_ : mvpy.metrics.accuracy
+        The default metric to use.
     """
     
     def __init__(self, C: float = 1.0, kernel: str = 'linear', gamma: Union[str, float] = 'scale', coef0: float = 0.0, degree: float = 3.0, tol: float = 1e-3, lr: float = 1e-3, max_iter: int = 1000):
@@ -140,6 +143,9 @@ class _SVC_numpy(sklearn.base.BaseEstimator):
         
         # setup scaler
         self.scaler_ = _Scaler_numpy()
+        
+        # setup metric
+        self.metric_ = metrics.accuracy
     
     @property
     def coef_(self) -> np.ndarray:
@@ -381,20 +387,71 @@ class _SVC_numpy(sklearn.base.BaseEstimator):
         return self.binariser_.inverse_transform(y)
     
     def predict_proba(self, X: np.ndarray) -> np.ndarray:
-        """Predict from the estimator.
-
+        """Compute the probabilities assigned to each class.
+        
         Parameters
         ----------
         X : np.ndarray
-            The features (n_samples, n_channels).
+            Input data of shape ``(n_samples, n_channels)``.
 
         Returns
         -------
-        df : np.ndarray
-            The predictions of shape (n_samples, n_classes).
+        p : np.ndarray
+            Predicted class probabilities shape ``(n_samples, n_classes)``.
+        
+        .. warning::
+            Probabilities are computed from ``expit()`` over outputs of
+            :py:meth:`~mvpy.estimators.RidgeClassifier.decision_function`.
+            Consequently, probability estimates returned by this class 
+            are not calibrated.
         """
         
-        return self.decision_function(X)
+        # compute decision values
+        df = self.decision_function(X)
+
+        # compute logistic sigmoid
+        p = 1 / (1 + np.exp(-df))
+        
+        # loop over our features
+        for i in range(self.binariser_.n_features_):
+            # find start and end of feature
+            s = self.binariser_.C_[i]
+            e = s + len(self.binariser_.classes_[i])
+            
+            # normalise within feature
+            p[...,s:e] /= p[...,s:e].sum(-1, keepdims = True)
+        
+        return p
+
+    def score(self, X: np.ndarray, y: np.ndarray, metric: Optional[Union[metrics.Metric, Tuple[metrics.Metric]]] = None) -> Union[np.ndarray, Dict[str, np.ndarray]]:
+        """Make predictions from :math:`X` and score against :math:`y`.
+        
+        Parameters
+        ----------
+        X : np.ndarray
+            Input data of shape ``(n_samples, n_channels)``.
+        y : np.ndarray
+            Output data of shape ``(n_samples, n_classes)``.
+        metric : Optional[Metric], default=None
+            Metric or tuple of metrics to compute. If ``None``, defaults to :py:attr:`~mvpy.estimators.SVC.metric_`.
+        
+        Returns
+        -------
+        score : np.ndarray | Dict[str, np.ndarray]
+            Scores of shape ``(n_classes,)`` or, for multiple metrics, a dictionary of metric names and scores of shape ``(n_classes,)``.
+        
+        .. warning::
+            If multiple values are supplied for ``metric``, this function will
+            output a dictionary of ``{Metric.name: score, ...}`` rather than
+            a stacked array. This is to provide consistency across cases where
+            metrics may or may not differ in their output shapes.
+        """
+        
+        # check metric
+        if metric is None:
+            metric = self.metric_
+        
+        return metrics.score(self, metric, X, y)
     
     def clone(self) -> "_SVC_numpy":
         """Clone this class.
@@ -478,6 +535,8 @@ class _SVC_torch(sklearn.base.BaseEstimator):
         The binariser used internally.
     scaler_ : Scaler
         The scaler used internally.
+    metric_ : mvpy.metrics.accuracy
+        The default metric to use.
     """
     
     def __init__(self, C: float = 1.0, kernel: str = 'linear', gamma: Union[str, float] = 'scale', coef0: float = 0.0, degree: float = 3.0, tol: float = 1e-3, lr: float = 1e-3, max_iter: int = 1000):
@@ -536,6 +595,9 @@ class _SVC_torch(sklearn.base.BaseEstimator):
         
         # setup scaler
         self.scaler_ = _Scaler_torch()
+        
+        # setup metric
+        self.metric_ = metrics.accuracy
     
     @property
     def coef_(self) -> torch.Tensor:
@@ -777,20 +839,71 @@ class _SVC_torch(sklearn.base.BaseEstimator):
         return self.binariser_.inverse_transform(y)
     
     def predict_proba(self, X: torch.Tensor) -> torch.Tensor:
-        """Predict from the estimator.
-
+        """Compute the probabilities assigned to each class.
+        
         Parameters
         ----------
         X : torch.Tensor
-            The features (n_samples, n_channels).
+            Input data of shape ``(n_samples, n_channels)``.
 
         Returns
         -------
-        df : torch.Tensor
-            The predictions of shape (n_samples, n_classes).
+        p : torch.Tensor
+            Predicted class probabilities shape ``(n_samples, n_classes)``.
+        
+        .. warning::
+            Probabilities are computed from ``expit()`` over outputs of
+            :py:meth:`~mvpy.estimators.RidgeClassifier.decision_function`.
+            Consequently, probability estimates returned by this class 
+            are not calibrated.
         """
         
-        return self.decision_function(X)
+        # compute decision values
+        df = self.decision_function(X)
+
+        # compute logistic sigmoid
+        p = 1 / (1 + torch.exp(-df))
+        
+        # loop over our features
+        for i in range(self.binariser_.n_features_):
+            # find start and end of feature
+            s = self.binariser_.C_[i].long().item()
+            e = s + len(self.binariser_.classes_[i])
+                        
+            # normalise within feature
+            p[...,s:e] = p[...,s:e] / p[...,s:e].sum(-1, keepdim = True)
+        
+        return p
+    
+    def score(self, X: torch.Tensor, y: torch.Tensor, metric: Optional[Union[metrics.Metric, Tuple[metrics.Metric]]] = None) -> Union[torch.Tensor, Dict[str, torch.Tensor]]:
+        """Make predictions from :math:`X` and score against :math:`y`.
+        
+        Parameters
+        ----------
+        X : torch.Tensor
+            Input data of shape ``(n_samples, n_channels)``.
+        y : torch.Tensor
+            Output data of shape ``(n_samples, n_classes)``.
+        metric : Optional[Metric], default=None
+            Metric or tuple of metrics to compute.  If ``None``, defaults to :py:attr:`~mvpy.estimators.SVC.metric_`.
+        
+        Returns
+        -------
+        score : torch.Tensor | Dict[str, torch.Tensor]
+            Scores of shape ``(n_classes,)`` or, for multiple metrics, a dictionary of metric names and scores of shape ``(n_classes,)``.
+        
+        .. warning::
+            If multiple values are supplied for ``metric``, this function will
+            output a dictionary of ``{Metric.name: score, ...}`` rather than
+            a stacked array. This is to provide consistency across cases where
+            metrics may or may not differ in their output shapes.
+        """
+        
+        # check metric
+        if metric is None:
+            metric = self.metric_
+        
+        return metrics.score(self, metric, X, y)
     
     def clone(self) -> "_SVC_torch":
         """Clone this class.
@@ -815,15 +928,55 @@ class _SVC_torch(sklearn.base.BaseEstimator):
 class SVC(sklearn.base.BaseEstimator):
     """Implements a support vector classifier.
     
+    Support vector classifiers frame a classification problem mapping from
+    neural data :math:`X` to labels :math:`y\\in\\{1, -1\\}` as a max-margin 
+    problem:
+    
+    .. math::
+        f(X) = w^T\\varphi(X) + b
+    
+    that separates the classes with the largest possible margin in feature space 
+    :math:`\\varphi(\\cdot)`. As in :py:class:`~mvpy.estimators.KernelRidgeClassifier`,
+    :math:`\\varphi(X)` is a gram matrix defined by some kernel function. Contrary 
+    to :py:class:`~mvpy.estimators.KernelRidgeClassifier`, however, :py:class:`~mvpy.estimators.SVC` 
+    minimises a hinge-loss surrogate:
+    
+    .. math::
+        \\arg\\min_{w, b} \\frac{1}{2}\\lvert\\lvert w\\rvert\\rvert^2 + C\\sum_i\\max\\left(0, 1 - y_i f(X_i)\\right)
+    
+    Via the kernel trick, the decision function can be written in dual form as:
+    
+    .. math::
+        f(X) = \\sum_{i\\in\\mathcal{S}} \\alpha_i y_i \\kappa(X_i, X) + b
+    
+    where :math:`\\alpha_i\\ge 0`, and :math:`\\kappa` is a positive-definite kernel. Hyperparameters 
+    like the penalisation :math:`C` are typically selected by cross-validation. Unlike 
+    :py:class:`~mvpy.estimators.KernelRidgeClassifier`, penalty selection cannot be conveniently automated 
+    through LOO-CV here.
+    
+    Compared to :py:class:`~mvpy.estimators.RidgeClassifier` or :py:class:`~mvpy.estimators.KernelRidgeClassifier`,
+    :py:class:`~mvpy.estimators.SVC` optimises a margin-based objective and often yields tighter
+    decision boundaries, particularly when classes are not well separated linearly or when using
+    non-linear kernel--at the cost of higher training time.
+    
+    For more information on support vector classifiers, see [1]_.
+    
+    .. warning::
+        :py:class:`~mvpy.estimators.SVC` is currently considered experimental. As is, it uses gradient
+        ascent over vectorised features and stops early when :math:`\\Delta\\lvert\\lvert grad\\rvert\\rvert`
+        is smaller than some tolerance. This diverges from sklearn's behaviour and may produce slightly
+        degraded decision boundaries. In the future, we will be switching to an SMO routine that should 
+        resolve these issues.
+    
     Parameters
     ----------
-    method : str, default='OvR'
+    method : {'OvR', 'OvO'}, default='OvR'
         For multiclass problems, which method should we use? One-versus-one (OvO) or one-versus-rest (OvR)?
     C : float, default=1.0
         Regularisation strength is inversely related to C.
-    kernel : str, default='linear'
+    kernel : {'linear', 'poly', 'rbf', 'sigmoid'}, default='linear'
         Which kernel function should we use (linear, poly, rbf, sigmoid)?
-    gamma : Union[str, float], default='scale'
+    gamma : {'scale', 'auto', float}, default='scale'
         What gamma to use for poly, rbf and sigmoid. Available methods are scale or auto, or positive float.
     coef0 : float, default=0.0
         What offset to use for poly and sigmoid.
@@ -838,13 +991,13 @@ class SVC(sklearn.base.BaseEstimator):
     
     Attributes
     ----------
-    method : str, default='OvR'
+    method : {'OvR', 'OvO'}, default='OvR'
         For multiclass problems, which method should we use? One-versus-one (OvO) or one-versus-rest (OvR)?
     C : float, default=1.0
         Regularisation strength is inversely related to C.
-    kernel : str, default='linear'
+    kernel : {'linear', 'poly', 'rbf', 'sigmoid'}, default='linear'
         Which kernel function should we use (linear, poly, rbf, sigmoid)?
-    gamma : Union[str, float], default='scale'
+    gamma : {'scale', 'auto', float}, default='scale'
         What gamma to use for poly, rbf and sigmoid. Available methods are scale or auto, or positive float.
     coef0 : float, default=0.0
         What offset to use for poly and sigmoid.
@@ -856,48 +1009,43 @@ class SVC(sklearn.base.BaseEstimator):
         The learning rate.
     max_iter : int, default=1000
         The maximum number of iterations to perform while fitting, or -1 to disable.
-    X_train_ : Union[np.ndarray, torch.Tensor]
+    X_train_ : np.ndarray | torch.Tensor
         A clone of the training data used internally for kernel estimation.
-    A_ : Union[np.ndarray, torch.Tensor]
+    A_ : np.ndarray | torch.Tensor
         A clone of the alpha data used internally for kernel estimation.
     gamma_ : float
         Estimated gamma parameter.
     eps_ : float, default=1e-12
         Error margin for support vectors used internally.
-    w_ : Union[np.ndarray, torch.Tensor]
+    w_ : np.ndarray | torch.Tensor
         If linear kernel, estimated weights.
-    p_ : Union[np.ndarray, torch.Tensor]
+    p_ : np.ndarray | torch.Tensor
         If linear kernel, estimated patterns.
-    intercept_ : Union[np.ndarray, torch.Tensor]
+    intercept_ : np.ndarray | torch.Tensor
         The intercept vector.
-    coef_ : Union[np.ndarray, torch.Tensor]
-        If linear kernel, the coefficients of the model.
-    pattern_ : Union[np.ndarray, torch.Tensor]
-        If linear kernel, the patterns used by the model.
-    binariser_ : LabelBinariser
+    coef_ : np.ndarray | torch.Tensor
+        If :py:attr:`~mvpy.estimators.SVC.kernel` is ``linear``, the coefficients of the model.
+    pattern_ : np.ndarray | torch.Tensor
+        If :py:attr:`~mvpy.estimators.SVC.kernel` is ``linear``, the patterns used by the model.
+    binariser_ : mvpy.preprocessing.LabelBinariser
         The binariser used internally.
-    scaler_ : Scaler
+    scaler_ : mvpy.preprocessing.Scaler
         The scaler used internally.
+    metric_ : mvpy.metrics.accuracy
+        The default metric to use.
+    
+    See also
+    --------
+    mvpy.math.kernel_linear, mvpy.math.kernel_poly, mvpy.math.kernel_rbf, mvpy.math.kernel_sigmoid : Available kernel functions.
     
     Notes
     -----
-    This implementation, unlike ones in sklearn, for example, uses gradient ascent over vectorised features. Therefore, please do not expect identitical solutions. Early stopping is triggered by:
-    
-    .. math::
-
-        \max\lvert grad_i\rvert - \max\lvert grad_{i-1}\rvert < \vartheta
-    
-    where :math:`\vartheta` is the tolerance. Note that this also diverges from sklearn's implementation which is violation-based.
-    
-    This is likely to change in the future. Ideally, we will want to use an SMO approach, which should be much faster than the current full gradient ascent. It is a bit of a pickle, because SVC is difficult to optimise for GPUs. There are also new interesting directions like fitting parameters (e.g., gamma) directly, which might be interesting here. For more information, see [1]_. We will revisit this implementation.
-    
-    Note also that coefficients are only interpretable in the linear case, and therefore this class automatically prevents access in other cases. Given a linear kernel, however, this class will also automatically compute the patterns used for classification, available as pattern_. For more information, see [2]_.
-    
-    Note also that this class will rarely be public-facing, as at runtime it is wrapped in a Classifier class which handles OvR/OvO modes. By default, OvR will make predictions based on maximum decision values, whereas OvO will make voting-based decisions between all classifiers.
+    Coefficients are interpretable only when :py:attr:`~mvpy.estimators.SVC.kernel` is ``linear``. 
+    In this case, patterns are computed as per [2]_.
     
     References
     ----------
-    .. [1] Luo, L., Yang, Q., Peng, H., Wang, Y., & Chen, Z. (2025). MaxMin-L2-SVC-NCH: A novel approach for support vector classifier training and parameter selection. arXiv. 10.48550/arXiv.2307.07343
+    .. [1] Awad, M., & Khanna, R. (2015). Support vector machines for classification. Efficient Learning Machines, 39-66. 10.1007/F978-1-4302-5990-9_3
     .. [2] Haufe, S., Meinecke, F., Görgen, K., Dähne, S., Haynes, J.D., Blankertz, B., & Bießmann, F. (2014). On the interpretation of weight vectors of linear models in multivariate neuroimaging. NeuroImage, 87, 96-110. 10.1016/j.neuroimage.2013.10.067
     
     Examples
@@ -946,13 +1094,13 @@ class SVC(sklearn.base.BaseEstimator):
         
         Parameters
         ----------
-        method : str, default='OvR'
+        method : {'OvR', 'OvO'}, default='OvR'
             For multiclass problems, which method should we use? One-versus-one (OvO) or one-versus-rest (OvR)?
         C : float, default=1.0
             Regularisation strength is inversely related to C.
-        kernel : str, default='linear'
+        kernel : {'linear', 'poly', 'rbf', 'sigmoid'}, default='linear'
             Which kernel function should we use (linear, poly, rbf, sigmoid)?
-        gamma : Union[str, float], default='scale'
+        gamma : {'scale', 'auto', float}, default='scale'
             What gamma to use for poly, rbf and sigmoid. Available methods are scale or auto, or positive float.
         coef0 : float, default=0.0
             What offset to use for poly and sigmoid.
@@ -975,20 +1123,21 @@ class SVC(sklearn.base.BaseEstimator):
         self.tol = tol
         self.lr = lr
         self.max_iter = max_iter
+        self.metric_ = metrics.accuracy
     
     def _get_estimator(self, X: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor]) -> sklearn.base.BaseEstimator:
         """Obtain the wrapper and estimator for this SVC.
         
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            Input data of shape (n_samples, n_channels).
-        y : Union[np.ndarray, torch.Tensor]
-            Input labels of shape (n_samples[, n_features]).
+        X : np.ndarray | torch.Tensor
+            Input data of shape ``(n_samples, n_channels)``.
+        y : np.ndarray | torch.Tensor
+            Input labels of shape ``(n_samples[, n_features])``.
         
         Returns
         -------
-        clf : Classifier
+        clf : mvpy.estimators.SVC
             The classifier.
         """
         
@@ -1028,14 +1177,14 @@ class SVC(sklearn.base.BaseEstimator):
 
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            The features of shape (n_samples, n_channels).
-        y : Union[np.ndarray, torch.Tensor]
-            The targets of shape (n_samples[, n_features]).
+        X : np.ndarray | torch.Tensor
+            The features of shape ``(n_samples, n_channels)``.
+        y : np.ndarray | torch.Tensor
+            The targets of shape ``(n_samples[, n_features])``.
         
         Returns
         -------
-        clf : Classifier
+        clf : mvpy.estimators.SVC
             The classifier.
         """
 
@@ -1046,13 +1195,13 @@ class SVC(sklearn.base.BaseEstimator):
 
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            The features (n_samples, n_channels).
+        X : np.ndarray | torch.Tensor
+            The features of shape ``(n_samples, n_channels)``.
 
         Returns
         -------
-        df : Union[np.ndarray, torch.Tensor]
-            The predictions of shape (n_samples, n_classes).
+        df : np.ndarray | torch.Tensor
+            The predictions of shape ``(n_samples, n_classes)``.
         """
 
         raise NotImplementedError('This method is not implemented in the base class.')
@@ -1062,13 +1211,13 @@ class SVC(sklearn.base.BaseEstimator):
         
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            The features (n_samples, n_channels).
+        X : np.ndarray | torch.Tensor
+            The features of shape ``(n_samples, n_channels)``.
         
         Returns
         -------
-        y_h : Union[np.ndarray, torch.Tensor]
-            The predictions of shape (n_samples, n_features).
+        y_h : np.ndarray | torch.Tensor
+            The predictions of shape ``(n_samples, n_features)``.
         """
         
         raise NotImplementedError('This method is not implemented in the base class.')
@@ -1078,23 +1227,56 @@ class SVC(sklearn.base.BaseEstimator):
 
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            The features (n_samples, n_channels).
+        X : np.ndarray | torch.Tensor
+            The features ``(n_samples, n_channels)``.
 
         Returns
         -------
-        df : Union[np.ndarray, torch.Tensor]
-            The predictions of shape (n_samples, n_classes).
+        p : np.ndarray | torch.Tensor
+            The predictions of shape ``(n_samples, n_classes)``.
+        
+        .. warning::
+            Probabilities are computed from ``expit()`` over outputs of
+            :py:meth:`~mvpy.estimators.RidgeClassifier.decision_function`.
+            Consequently, probability estimates returned by this class 
+            are not calibrated. See :py:class:`~mvpy.estimators.Classifier` 
+            for more information.
         """
 
         raise NotImplementedError('This method is not implemented in the base class.')
+    
+    def score(self, X: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor], metric: Optional[Union[metrics.Metric, Tuple[metrics.Metric]]] = None) -> Union[np.ndarray, torch.Tensor, Dict[str, np.ndarray], Dict[str, torch.Tensor]]:
+        """Make predictions from :math:`X` and score against :math:`y`.
+        
+        Parameters
+        ----------
+        X : np.ndarray | torch.Tensor
+            Input data of shape ``(n_samples, n_channels)``.
+        y : np.ndarray | torch.Tensor
+            Output data of shape ``(n_samples, n_features)``.
+        metric : Optional[Metric | Tuple[Metric]], default=None
+            Metric or tuple of metrics to compute. If ``None``, defaults to :py:attr:`~mvpy.estimators.SVC.metric_`.
+        
+        Returns
+        -------
+        score : np.ndarray | torch.Tensor | Dict[str, np.ndarray], Dict[str, torch.Tensor]
+            Scores of shape ``(n_features,)`` or, for multiple metrics, a dictionary of metric names and scores of shape ``(n_features,)``.
+        
+        .. warning::
+            If multiple values are supplied for ``metric``, this function will
+            output a dictionary of ``{Metric.name: score, ...}`` rather than
+            a stacked array. This is to provide consistency across cases where
+            metrics may or may not differ in their output shapes.
+        """
+        
+        raise NotImplementedError(f'Method not implemented in the base class.')
     
     def to_torch(self) -> sklearn.base.BaseEstimator:
         """Obtain the estimator with torch as backend.
         
         Returns
         -------
-        clf : _Classifier_torch
+        svc : mvpy.estimators._SVC_torch
             The estimator.
         """
         
@@ -1105,7 +1287,7 @@ class SVC(sklearn.base.BaseEstimator):
         
         Returns
         -------
-        clf : _Classifier_numpy
+        svc : mvpy.estimators._SVC_numpy
             The estimator.
         """
         
@@ -1116,7 +1298,7 @@ class SVC(sklearn.base.BaseEstimator):
         
         Returns
         -------
-        clf : SVC
+        svc : mvpy.estimators.SVC
             The cloned object.
         """
         
@@ -1137,7 +1319,7 @@ class SVC(sklearn.base.BaseEstimator):
         
         Returns
         -------
-        clf : SVC
+        svc : mvpy.estimators.SVC
             The cloned object.
         """
         

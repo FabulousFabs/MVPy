@@ -12,8 +12,9 @@ from .ridgecv import _RidgeCV_numpy, _RidgeCV_torch
 from ..crossvalidation import KFold
 from ..math import pearsonr
 from ..utilities import compile
+from .. import metrics
 
-from typing import Union, Any, Optional, List
+from typing import Union, Any, Optional, List, Dict, Tuple
 
 @compile.numpy()
 def _edge_correct_numpy(XX_eij: np.ndarray, X_e: np.ndarray, ch_i: int, ch_j: int, s_min: int, s_max: int):
@@ -133,6 +134,8 @@ class _ReceptiveField_numpy(sklearn.base.BaseEstimator):
         If computed, estimated pattern of shape (n_channels, n_features, n_trf).
     intercept_ : Union[float, np.ndarray]
         Estimated intercepts of shape (n_channels,) or float.
+    metric_ : mvpy.metrics.r2
+        The default metric to use.
     """
     
     def __init__(self, t_min: float, t_max: float, fs: int, alpha: Union[float, np.ndarray, List] = 1.0, reg_type: Union[str, List] = 'ridge', reg_cv: Any = 5, patterns: bool = False, fit_intercept: bool = True, edge_correction: bool = True):
@@ -209,6 +212,7 @@ class _ReceptiveField_numpy(sklearn.base.BaseEstimator):
         self.coef_ = None
         self.intercept_ = None
         self.pattern_ = None
+        self.metric_ = metrics.r2
     
     def _compute_corrs(self, X: np.ndarray, y: np.ndarray) -> tuple[np.ndarray, np.ndarray, Union[float, np.ndarray], Union[float, np.ndarray]]:
         """Compute the auto- and cross-correlation matrices.
@@ -719,6 +723,36 @@ class _ReceptiveField_numpy(sklearn.base.BaseEstimator):
         """
         
         return self._predict(X, self.coef_, self.intercept_)
+
+    def score(self, X: np.ndarray, y: np.ndarray, metric: Optional[Union[metrics.Metric, Tuple[metrics.Metric]]] = None) -> Union[np.ndarray, torch.Tensor, Dict[str, np.ndarray], Dict[str, torch.Tensor]]:
+        """Make predictions from :math:`X` and score against :math:`y`.
+        
+        Parameters
+        ----------
+        X : np.ndarray
+            Input data of shape ``(n_samples, n_features, n_timepoints)``.
+        y : np.ndarray
+            Output data of shape ``(n_samples, n_channels, n_timepoints)``.
+        metric : Optional[Metric], default=None
+            Metric or tuple of metrics to compute.  If ``None``, defaults to :py:attr:`~mvpy.estimators.ReceptiveField.metric_`.
+        
+        Returns
+        -------
+        score : np.ndarray | Dict[str, np.ndarray]
+            Scores of shape ``(n_channels, n_timepoints)`` or, for multiple metrics, a dictionary of metric names and scores of shape ``(n_channels, n_timepoints)``.
+        
+        .. warning::
+            If multiple values are supplied for ``metric``, this function will
+            output a dictionary of ``{Metric.name: score, ...}`` rather than
+            a stacked array. This is to provide consistency across cases where
+            metrics may or may not differ in their output shapes.
+        """
+        
+        # check metric
+        if metric is None:
+            metric = self.metric_
+        
+        return metrics.score(self, metric, X, y)
     
     def clone(self) -> "_ReceptiveField_numpy":
         """Clone this class.
@@ -859,6 +893,8 @@ class _ReceptiveField_torch(sklearn.base.BaseEstimator):
         If computed, estimated pattern of shape (n_channels, n_features, n_trf).
     intercept_ : Union[float, torch.Tensor]
         Estimated intercepts of shape (n_channels,) or float.
+    metric_ : mvpy.metrics.r2
+        The default metric to use.
     """
     
     def __init__(self, t_min: float, t_max: float, fs: int, alpha: Union[float, torch.Tensor, List] = 1.0, reg_type: Union[str, List] = 'ridge', reg_cv: Any = 5, patterns: bool = False, fit_intercept: bool = True, edge_correction: bool = True):
@@ -935,6 +971,7 @@ class _ReceptiveField_torch(sklearn.base.BaseEstimator):
         self.coef_ = None
         self.intercept_ = None
         self.pattern_ = None
+        self.metric_ = metrics.r2
     
     def _compute_corrs(self, X: torch.Tensor, y: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor, Union[float, torch.Tensor], Union[float, torch.Tensor]]:
         """Compute the auto- and cross-correlation matrices.
@@ -1465,6 +1502,36 @@ class _ReceptiveField_torch(sklearn.base.BaseEstimator):
         """
         
         return self._predict(X, self.coef_, self.intercept_)
+
+    def score(self, X: torch.Tensor, y: torch.Tensor, metric: Optional[Union[metrics.Metric, Tuple[metrics.Metric]]] = None) -> Union[torch.Tensor, Dict[str, torch.Tensor]]:
+        """Make predictions from :math:`X` and score against :math:`y`.
+        
+        Parameters
+        ----------
+        X : torch.Tensor
+            Input data of shape ``(n_samples, n_features, n_timepoints)``.
+        y : torch.Tensor
+            Output data of shape ``(n_samples, n_channels, n_timepoints)``.
+        metric : Optional[Metric], default=None
+            Metric or tuple of metrics to compute.  If ``None``, defaults to :py:attr:`~mvpy.estimators.ReceptiveField.metric_`.
+        
+        Returns
+        -------
+        score : torch.Tensor | Dict[str, torch.Tensor]
+            Scores of shape ``(n_channels, n_timepoints)`` or, for multiple metrics, a dictionary of metric names and scores of shape ``(n_channels, n_timepoints)``.
+        
+        .. warning::
+            If multiple values are supplied for ``metric``, this function will
+            output a dictionary of ``{Metric.name: score, ...}`` rather than
+            a stacked array. This is to provide consistency across cases where
+            metrics may or may not differ in their output shapes.
+        """
+        
+        # check metric
+        if metric is None:
+            metric = self.metric_
+        
+        return metrics.score(self, metric, X, y)
     
     def clone(self) -> "_ReceptiveField_torch":
         """Clone this class.
@@ -1586,6 +1653,8 @@ class ReceptiveField(sklearn.base.BaseEstimator):
         If computed, estimated pattern of shape ``(n_channels, n_features, n_trf)``.
     intercept_ : float | np.ndarray | torch.Tensor
         Estimated intercepts of shape ``(n_channels,)`` or ``float``.
+    metric_ : mvpy.metrics.r2
+        The default metric to use.
     
     See also
     --------
@@ -1730,3 +1799,40 @@ class ReceptiveField(sklearn.base.BaseEstimator):
         """
         
         raise NotImplementedError(f'Method not implemented in base class.')
+    
+    def score(self, X: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor], metric: Optional[Union[metrics.Metric, Tuple[metrics.Metric]]] = None) -> Union[np.ndarray, torch.Tensor, Dict[str, np.ndarray], Dict[str, torch.Tensor]]:
+        """Make predictions from :math:`X` and score against :math:`y`.
+        
+        Parameters
+        ----------
+        X : np.ndarray | torch.Tensor
+            Input data of shape ``(n_samples, n_features, n_timepoints)``.
+        y : np.ndarray | torch.Tensor
+            Output data of shape ``(n_samples, n_channels, n_timepoints)``.
+        metric : Optional[Metric | Tuple[Metric]], default=None
+            Metric or tuple of metrics to compute.  If ``None``, defaults to :py:attr:`~mvpy.estimators.ReceptiveField.metric_`.
+        
+        Returns
+        -------
+        score : np.ndarray | torch.Tensor | Dict[str, np.ndarray] | Dict[str, torch.Tensor]
+            Scores of shape ``(n_channels, n_timepoints)`` or, for multiple metrics, a dictionary of metric names and scores of shape ``(n_channels, n_timepoints)``.
+        
+        .. warning::
+            If multiple values are supplied for ``metric``, this function will
+            output a dictionary of ``{Metric.name: score, ...}`` rather than
+            a stacked array. This is to provide consistency across cases where
+            metrics may or may not differ in their output shapes.
+        """
+        
+        raise NotImplementedError(f'Method not implemented in base class.')
+    
+    def clone(self) -> "ReceptiveField":
+        """Clone this class.
+        
+        Returns
+        -------
+        rf : ReceptiveField
+            The cloned object.
+        """
+        
+        raise NotImplementedError('This method is not implemented in the base class.')

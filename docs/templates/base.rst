@@ -20,8 +20,12 @@
 
 .. autoclass:: {{ objname }}
    :members:
-   :inherited-members:
    :special-members: __call__
+   {%- if "metrics" in module %}
+   :exclude-members: f
+   {%- else %}
+   :inherited-members:
+   {%- endif %}
 
 .. minigallery:: {{ module }}.{{ objname }} {% for meth in methods %}{{ module }}.{{ objname }}.{{ meth }} {% endfor %}
    :add-heading: Gallery examples

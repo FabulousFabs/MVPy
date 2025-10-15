@@ -9,8 +9,9 @@ import sklearn
 from joblib import Parallel, delayed
 
 from ..utilities import Progressbar
+from .. import metrics
 
-from typing import Union, Any, Callable
+from typing import Union, Any, Callable, Optional, Dict, Tuple
 
 class _Sliding_numpy(sklearn.base.BaseEstimator):
     """Implements a sliding estimator using numpy as our backend.
@@ -263,6 +264,69 @@ class _Sliding_numpy(sklearn.base.BaseEstimator):
             else:
                 return Z
     
+    def decision_function(self, X: np.ndarray, y: Union[np.ndarray, None] = None, *args) -> np.ndarray:
+        """Make predictions from all estimators.
+        
+        Parameters
+        ----------
+        X : np.ndarray
+            Input data.
+        y : np.ndarray, default=None
+            Target data.
+        *args : Any
+            Additional arguments.
+        
+        Returns
+        -------
+        np.ndarray
+            Predictions.
+        """
+        
+        # check types
+        if (isinstance(X, np.ndarray) == False):
+            raise ValueError(f'X must be of type np.ndarray but got {type(X)}.')
+        
+        # check estimator
+        if (self.estimators_ is None) & (callable(self.estimator) == False):
+            raise ValueError('Estimators not fitted yet.')
+
+        # check estimator type
+        if isinstance(self.estimator, sklearn.base.BaseEstimator):
+            # move sliding axis to final dimension
+            X = np.moveaxis(X, self.dims[0], -1)
+
+            # make predictions
+            return np.stack(Parallel(n_jobs = self.n_jobs)
+                                    (delayed(self.estimators_[i].decision_function)
+                                        (X[...,i], 
+                                         *args)
+                                     for i in range(X.shape[-1])), self.dims[0])
+        else:
+            # move sliding axis to final dimension
+            X = np.moveaxis(X, self.dims[0], -1)
+            y = np.moveaxis(y, self.dims[0], -1)
+
+            # setup our estimator depending on dims
+            effective_dims = tuple((np.arange(len(X.shape))[list(self.dims)] - 1).tolist())
+            estimator_ = _Sliding_numpy(estimator = self.estimator, dims = effective_dims[1:], n_jobs = None, top = False).decision_function if len(self.dims) > 1 else self.estimator
+            
+            # fit estimators
+            X_i = np.arange(X.shape[-1]).astype(int) if X.shape[-1] > 1 else np.zeros((y.shape[-1],)).astype(int)
+            y_i = np.arange(y.shape[-1]).astype(int) if y.shape[-1] > 1 else np.zeros((X.shape[-1],)).astype(int)
+
+            Z = np.stack(Parallel(n_jobs = self.n_jobs)
+                                (delayed(estimator_)
+                                    (X[...,i], 
+                                     y[...,j], 
+                                     *args)
+                                 for i, j in zip(X_i, y_i)), self.dims[0] - 1)
+            
+            # if we're the top level, make sure trials remain first dimension
+            if self.top:
+                return Z.swapaxes(0, 1)
+            else:
+                return Z
+    
     def predict(self, X: np.ndarray, y: Union[np.ndarray, None] = None, *args) -> np.ndarray:
         """Make predictions from all estimators.
         
@@ -388,6 +452,36 @@ class _Sliding_numpy(sklearn.base.BaseEstimator):
                 return Z.swapaxes(0, 1)
             else:
                 return Z
+    
+    def score(self, X: np.ndarray, y: np.ndarray, metric: Optional[Union[metrics.Metric, Tuple[metrics.Metric]]] = None) -> np.ndarray:
+        """Score the estimator.
+        
+        Parameters
+        ----------
+        X : np.ndarray
+            The input data.
+        y : np.ndarray
+            The output data.
+        metric: Optional[Metric | Tuple[Metric]], default=None
+            The metric to use. If ``None``, default to the underlying estimator's default metric.
+        
+        Returns
+        -------
+        score : np.ndarray
+            Scores of shape ``(n_features,)``.
+        
+        .. warning::
+            If multiple values are supplied for ``metric``, this function will
+            output a dictionary of ``{Metric.name: score, ...}`` rather than
+            a stacked array. This is to provide consistency across cases where
+            metrics may or may not differ in their output shapes.
+        """
+        
+        # check metric
+        if metric is None:
+            metric = self.estimators_[0].metric_
+        
+        return metrics.score(self, metric, X, y)
     
     def collect(self, attr: str) -> np.ndarray:
         """Collect an attribute from all fitted estimators.
@@ -610,6 +704,69 @@ class _Sliding_torch(sklearn.base.BaseEstimator):
         
         return self.fit(X, y = y, *args).transform(X, y = y, *args)
     
+    def decision_function(self, X: torch.Tensor, y: Union[torch.Tensor, None] = None, *args) -> torch.Tensor:
+        """Make predictions from all estimators.
+        
+        Parameters
+        ----------
+        X : torch.Tensor
+            Input data.
+        y : torch.Tensor, default=None
+            Target data.
+        *args : Any
+            Additional arguments.
+        
+        Returns
+        -------
+        torch.Tensor
+            Predictions.
+        """
+        
+        # check types
+        if (isinstance(X, torch.Tensor) == False):
+            raise ValueError(f'X must be of type torch.Tensor but got {type(X)}.')
+        
+        # check estimator
+        if (self.estimators_ is None) & (callable(self.estimator) == False):
+            raise ValueError('Estimators not fitted yet.')
+
+        # check estimator type
+        if isinstance(self.estimator, sklearn.base.BaseEstimator):
+            # move sliding axis to final dimension
+            X = torch.moveaxis(X, self.dims[0], -1)
+
+            # make predictions
+            return torch.stack(Parallel(n_jobs = self.n_jobs)
+                                    (delayed(self.estimators_[i].decision_function)
+                                        (X[...,i], 
+                                         *args)
+                                     for i in range(X.shape[-1])), self.dims[0])
+        else:
+            # move sliding axis to final dimension
+            X = torch.moveaxis(X, self.dims[0], -1)
+            y = torch.moveaxis(y, self.dims[0], -1)
+
+            # setup our estimator depending on dims
+            effective_dims = tuple((torch.arange(len(X.shape))[list(self.dims)] - 1).tolist())
+            estimator_ = _Sliding_torch(estimator = self.estimator, dims = effective_dims[1:], n_jobs = None, top = False).decision_function if len(self.dims) > 1 else self.estimator
+            
+            # fit estimators
+            X_i = torch.arange(X.shape[-1]).to(torch.int32) if X.shape[-1] > 1 else torch.zeros((y.shape[-1],)).to(torch.int32)
+            y_i = torch.arange(y.shape[-1]).to(torch.int32) if y.shape[-1] > 1 else torch.zeros((X.shape[-1],)).to(torch.int32)
+
+            Z = torch.stack(Parallel(n_jobs = self.n_jobs)
+                                (delayed(estimator_)
+                                    (X[...,i], 
+                                     y[...,j], 
+                                     *args)
+                                 for i, j in zip(X_i, y_i)), self.dims[0] - 1)
+            
+            # if we're the top level, make sure trials remain first dimension
+            if self.top:
+                return Z.swapaxes(0, 1)
+            else:
+                return Z
+    
     def predict(self, X: torch.Tensor, y: Union[torch.Tensor, None] = None, *args) -> torch.Tensor:
         """Make predictions from all estimators.
         
@@ -736,6 +893,36 @@ class _Sliding_torch(sklearn.base.BaseEstimator):
             else:
                 return Z
     
+    def score(self, X: torch.Tensor, y: torch.Tensor, metric: Optional[Union[metrics.Metric, Tuple[metrics.Metric]]] = None) -> torch.Tensor:
+        """Score the estimator.
+        
+        Parameters
+        ----------
+        X : torch.Tensor
+            The input data.
+        y : torch.Tensor
+            The output data.
+        metric: Optional[Metric | Tuple[Metric]], default=None
+            The metric to use. If ``None``, default to the underlying estimator's default metric.
+        
+        Returns
+        -------
+        score : torch.Tensor
+            Scores of shape ``(n_features,)``.
+        
+        .. warning::
+            If multiple values are supplied for ``metric``, this function will
+            output a dictionary of ``{Metric.name: score, ...}`` rather than
+            a stacked array. This is to provide consistency across cases where
+            metrics may or may not differ in their output shapes.
+        """
+        
+        # check metric
+        if metric is None:
+            metric = self.estimators_[0].metric_
+        
+        return metrics.score(self, metric, X, y)
+    
     def collect(self, attr: str) -> torch.Tensor:
         """Collect an attribute from all fitted estimators.
         
@@ -772,42 +959,68 @@ class _Sliding_torch(sklearn.base.BaseEstimator):
 class Sliding(sklearn.base.BaseEstimator):
     """Implements a sliding estimator that allows you to fit estimators iteratively over a set of dimensions.
     
+    This is particularly useful when we have, for example, a temporal dimension in our data
+    such that, for example, we have neural data :math:`X` ``(n_trials, n_channels, n_timepoints)``
+    and class labels :math:`y` ``(n_trials, n_features, n_timepoints)`` and want to fit a separate
+    classifier at each time step. In this case, we can wrap our classifier object in 
+    :py:class:`~mvpy.estimators.Sliding` with ``dims=(-1,)`` to automatically fit our classifiers
+    across all timepoints.
+    
     Parameters
     ----------
-    estimator : Callable, sklearn.base.BaseEstimator
-        Estimator to use.
-    dims : Union[int, tuple, list, np.ndarray, torch.Tensor], default=-1
-        Dimensions to slide over.
-    n_jobs : Union[int, None], default=None
+    estimator : Callable | sklearn.base.BaseEstimator
+        Estimator to use. Note that this must expose a ``clone()`` method.
+    dims : int | Tuple[int] | List[int] | np.ndarray | torch.Tensor, default=-1
+        Dimensions to slide over. Note that types are inferred here, defaulting to torch. If you are fitting a numpy estimator, please specify ``dims`` as ``np.ndarray``.
+    n_jobs : Optional[int], default=None
         Number of jobs to run in parallel.
     top : bool, default=True
-        Is this a top-level estimator?
+        Is this a top-level estimator? If multiple ``dims`` are specified, this will be ``False`` in recursive :py:class:`~mvpy.estimators.Sliding` objects.
     verbose : bool, default=False
-        Whether to print progress.
+        Should progress be reported verbosely?
     
     Attributes
     ----------
-    estimators_ : list
+    estimator : Callable | sklearn.base.BaseEstimator
+        Estimator to use. Note that this must expose a ``clone()`` method.
+    dims : int | Tuple[int] | List[int] | np.ndarray | torch.Tensor, default=-1
+        Dimensions to slide over. Note that types are inferred here, defaulting to torch. If you are fitting a numpy estimator, please specify ``dims`` as ``np.ndarray``.
+    n_jobs : Optional[int], default=None
+        Number of jobs to run in parallel.
+    top : bool, default=True
+        Is this a top-level estimator? If multiple ``dims`` are specified, this will be ``False`` in recursive :py:class:`~mvpy.estimators.Sliding` objects.
+    verbose : bool, default=False
+        Should progress be reported verbosely?
+    estimators_ : List[Callable, sklearn.base.BaseEstimator]
         List of fitted estimators.
     
     Notes
     -----
-    This class generally expects that your input data is of shape (n_trials, [...], n_channels, [...]). Make sure that your data and dimension selection is appropriate for the estimator you wish to fit.
-    Note also that, when fitting estimators, you _must_ have an equal number of dimensions in X and y. If you do not, please simply pad to the same dimension length.
-    Finally, be aware that, if you want to use numpy as your backend, you _must_ supply `dims` as a numpy array.
+    When fitting estimators using :py:meth:`~mvpy.estimators.Sliding.fit`, ``X`` and ``y`` must have 
+    the same number of dimensions. If this is not the case, please pad or expand your data appropriately.
     
     Examples
     --------
+    If, for example, we have :math:`X` ``(n_trials, n_frequencies, n_channels, n_timepoints)`` 
+    and :math:`y` ``(n_trials, n_frequencies, n_features, n_timepoints)`` and we want to slide
+    a :py:class:`~mvpy.estimators.RidgeDecoder` over ``(n_frequencies, n_timepoints)``, we can
+    do:
+    
     >>> import torch
-    >>> from mvpy.estimators import Sliding, Decoder
-    >>> X = torch.normal(0, 1, (240, 50, 4, 100)) # trials x searchlights x channels x time
-    >>> y = torch.normal(0, 1, (240, 1, 5, 100)) # trials x searchlights x outcomes x time
-    >>> decoder = Decoder(alphas = torch.logspace(-5, 10, 20))
-    >>> sliding = Sliding(estimator = decoder, dims = (1, 3), n_jobs = 4) # slide over searchlights and time
-    >>> sliding.fit(X, y)
+    >>> from mvpy.estimators import Sliding, RidgeDecoder
+    >>> X = torch.normal(0, 1, (240, 5, 64, 100))
+    >>> y = torch.normal(0, 1, (240, 1, 5, 100))
+    >>> decoder = RidgeDecoder(
+    >>>     alphas = torch.logspace(-5, 10, 20)
+    >>> )
+    >>> sliding = Sliding(
+    >>>     estimator = decoder, 
+    >>>     dims = (1, 3), 
+    >>>     n_jobs = 4
+    >>> ).fit(X, y)
     >>> patterns = sliding.collect('pattern_')
     >>> patterns.shape
-    torch.Size([50, 100, 4, 5])
+    torch.Size([5, 100, 64, 5])
     """
     
     def __new__(self, estimator: Union[Callable, sklearn.base.BaseEstimator], dims: Union[int, tuple, list, np.ndarray, torch.Tensor] = -1, n_jobs: Union[int, None] = None, top: bool = True, verbose: bool = False):
@@ -815,16 +1028,16 @@ class Sliding(sklearn.base.BaseEstimator):
         
         Parameters
         ----------
-        estimator : Callable, sklearn.base.BaseEstimator
-            Estimator to use.
-        dims : Union[int, tuple, list, np.ndarray, torch.Tensor], default=-1
-            Dimensions to slide over.
-        n_jobs : Union[int, None], default=None
+        estimator : Callable | sklearn.base.BaseEstimator
+            Estimator to use. Note that this must expose a ``clone()`` method.
+        dims : int | Tuple[int] | List[int] | np.ndarray | torch.Tensor, default=-1
+            Dimensions to slide over. Note that types are inferred here, defaulting to torch. If you are fitting a numpy estimator, please specify ``dims`` as ``np.ndarray``.
+        n_jobs : Optional[int], default=None
             Number of jobs to run in parallel.
         top : bool, default=True
-            Is this a top-level estimator?
+            Is this a top-level estimator? If multiple ``dims`` are specified, this will be ``False`` in recursive :py:class:`~mvpy.estimators.Sliding` objects.
         verbose : bool, default=False
-            Whether to print progress.
+            Should progress be reported verbosely?
         """
         
         return_type = _Sliding_torch
@@ -855,17 +1068,22 @@ class Sliding(sklearn.base.BaseEstimator):
         
         return return_type(estimator, dims = dims, n_jobs = n_jobs, top = top, verbose = verbose)
     
-    def fit(self, X: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor], *args):
-        """Fit the estimator.
+    def fit(self, X: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor], *args) -> "Sliding":
+        """Fit the sliding estimators.
 
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            Input data.
-        y : Union[np.ndarray, torch.Tensor]
-            Target data.
+        X : np.ndarray | torch.Tensor
+            Input data of arbitrary shape.
+        y : np.ndarray | torch.Tensor
+            Target data of arbitrary shape.
         *args
-            Additional arguments.
+            Additional arguments to pass to estimators.
+        
+        Returns
+        -------
+        sliding : mvpy.estimators.Sliding
+            The fitted sliding estimator.
         """
 
         raise NotImplementedError('This method is not implemented for the base class.')
@@ -875,17 +1093,17 @@ class Sliding(sklearn.base.BaseEstimator):
         
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            Input data.
-        y : Union[np.ndarray, torch.Tensor, None], default=None
-            Target data.
+        X : np.ndarray | torch.Tensor
+            Input data of arbitrary shape.
+        y : Optional[np.ndarray | torch.Tensor], default=None
+            Target data of arbitrary shape.
         *args : Any
             Additional arguments.
         
         Returns
         -------
-        Union[np.ndarray, torch.Tensor]
-            Transformed data.
+        Z : np.ndarray | torch.Tensor
+            Transformed data of arbitrary shape.
         """
         
         raise NotImplementedError('This method is not implemented for the base class.')
@@ -895,17 +1113,17 @@ class Sliding(sklearn.base.BaseEstimator):
 
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            Input data.
-        y : Union[np.ndarray, torch.Tensor]
-            Target data.
+        X : np.ndarray | torch.Tensor
+            Input data of arbitrary shape.
+        y : Optional[np.ndarray | torch.Tensor], default=None
+            Target data of arbitrary shape.
         *args : Any
             Additional arguments.
-
+        
         Returns
         -------
-        Union[np.ndarray, torch.Tensor]
-            Transformed data.
+        Z : np.ndarray | torch.Tensor
+            Transformed data of arbitrary shape.
         """
 
         raise NotImplementedError('This method is not implemented for the base class.')
@@ -915,17 +1133,17 @@ class Sliding(sklearn.base.BaseEstimator):
         
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            Input data.
-        y : Union[np.ndarray, torch.Tensor, None], default=None
-            Target data.
-        *args :
+        X : np.ndarray | torch.Tensor
+            Input data of arbitrary shape.
+        y : Optional[np.ndarray | torch.Tensor], default=None
+            Target data of arbitrary shape.
+        *args : Any
             Additional arguments.
         
         Returns
         -------
-        Union[np.ndarray, torch.Tensor]
-            Predicted targets.
+        y_h : np.ndarray | torch.Tensor
+            Predicted data of arbitrary shape.
         """
 
         raise NotImplementedError('This method is not implemented for the base class.')
@@ -935,33 +1153,59 @@ class Sliding(sklearn.base.BaseEstimator):
 
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            Input data.
-        y : Union[np.ndarray, torch.Tensor, None], default=None
-            Target data.
-        *args :
+        X : np.ndarray | torch.Tensor
+            Input data of arbitrary shape.
+        y : Optional[np.ndarray | torch.Tensor], default=None
+            Target data of arbitrary shape.
+        *args : Any
             Additional arguments.
         
         Returns
         -------
-        Union[np.ndarray, torch.Tensor]
-            Predicted probabilities.
+        p : np.ndarray | torch.Tensor
+            Probabilities of arbitrary shape.
         """
         
         raise NotImplementedError('This method is not implemented for the base class.')
+    
+    def score(self, X: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor], metric: Optional[Union[metrics.Metric, Tuple[metrics.Metric]]] = None) -> Union[np.ndarray, torch.Tensor, Dict[str, np.ndarray], Dict[str, torch.Tensor]]:
+        """Make predictions from :math:`X` and score against :math:`y`.
+        
+        Parameters
+        ----------
+        X : np.ndarray | torch.Tensor
+            Input data of arbitrary shape.
+        y : np.ndarray | torch.Tensor
+            Output data of arbitrary shape.
+        metric : Optional[Metric | Tuple[Metric]], default=None
+            Metric or tuple of metrics to compute. If ``None``, defaults to the metric specified for the underlying estimator.
+        
+        Returns
+        -------
+        score : np.ndarray | torch.Tensor | Dict[str, np.ndarray] | Dict[str, torch.Tensor]
+            Scores of shape arbitrary shape.
+        
+        .. warning::
+            If multiple values are supplied for ``metric``, this function will
+            output a dictionary of ``{Metric.name: score, ...}`` rather than
+            a stacked array. This is to provide consistency across cases where
+            metrics may or may not differ in their output shapes.
+        """
+        
+        raise NotImplementedError('This method is not implemented in the base class.')
         
     def collect(self, attr: str) -> Union[np.ndarray, torch.Tensor]:
-        """Collect the attribute of the estimators.
+        """Collect an attribute from all estimators.
         
         Parameters
         ----------
         attr : str
-            Attribute to collect.
+            Attribute to collect from all fitted estimators.
         
         Returns
         -------
-        Union[np.ndarray, torch.Tensor]
-            Collected attribute.
+        attr : np.ndarray | torch.Tensor
+            Collected attribute of shape ``(*dims[, ...])``.
         """
         
         raise NotImplementedError('This method is not implemented for the base class.')
@@ -971,8 +1215,14 @@ class Sliding(sklearn.base.BaseEstimator):
 
         Returns
         -------
-        Sliding
+        sliding : mvpy.estimators.Sliding
             Cloned class.
         """
 
-        return Sliding(estimator = self.estimator, dims = self.dims, n_jobs = self.n_jobs, top = self.top, verbose = self.verbose)
+        return Sliding(
+            estimator = self.estimator, 
+            dims = self.dims, 
+            n_jobs = self.n_jobs, 
+            top = self.top, 
+            verbose = self.verbose
+        )

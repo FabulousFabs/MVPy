@@ -7,8 +7,9 @@ import torch
 import sklearn
 
 from .ridgecv import _RidgeCV_numpy, _RidgeCV_torch
+from .. import metrics
 
-from typing import Union, Any
+from typing import Union, Dict, Tuple, Optional
 
 class _TimeDelayed_numpy(sklearn.base.BaseEstimator):
     """Initialise a new TimeDelayed estimator using numpy backend.
@@ -58,6 +59,8 @@ class _TimeDelayed_numpy(sklearn.base.BaseEstimator):
         The coefficients of the estimator.
     pattern_ : np.ndarray
         The patterns of the estimator.
+    metric_ : mvpy.metrics.r2
+        The default metric to use.
     """
     
     def __init__(self, t_min: float, t_max: float, fs: int, alphas: np.ndarray = np.array([1]), patterns: bool = False, **kwargs):
@@ -103,6 +106,7 @@ class _TimeDelayed_numpy(sklearn.base.BaseEstimator):
         self.intercept_ = None
         self.coef_ = None
         self.pattern_ = None
+        self.metric_ = metrics.r2
     
     def _delay_matrices(self, X: np.ndarray, y: Union[np.ndarray, None] = None) -> Union[np.ndarray, tuple[np.ndarray]]:
         """Create a temporally expanded design matrix.
@@ -248,6 +252,36 @@ class _TimeDelayed_numpy(sklearn.base.BaseEstimator):
         
         return y
     
+    def score(self, X: np.ndarray, y: np.ndarray, metric: Optional[Union[metrics.Metric, Tuple[metrics.Metric]]] = None) -> Union[np.ndarray, torch.Tensor, Dict[str, np.ndarray], Dict[str, torch.Tensor]]:
+        """Make predictions from :math:`X` and score against :math:`y`.
+        
+        Parameters
+        ----------
+        X : np.ndarray
+            Input data of shape ``(n_samples, n_features, n_timepoints)``.
+        y : np.ndarray
+            Output data of shape ``(n_samples, n_channels, n_timepoints)``.
+        metric : Optional[Metric], default=None
+            Metric or tuple of metrics to compute.  If ``None``, defaults to :py:attr:`~mvpy.estimators.TimeDelayed.metric_`.
+        
+        Returns
+        -------
+        score : np.ndarray | Dict[str, np.ndarray]
+            Scores of shape ``(n_channels, n_timepoints)`` or, for multiple metrics, a dictionary of metric names and scores of shape ``(n_channels, n_timepoints)``.
+        
+        .. warning::
+            If multiple values are supplied for ``metric``, this function will
+            output a dictionary of ``{Metric.name: score, ...}`` rather than
+            a stacked array. This is to provide consistency across cases where
+            metrics may or may not differ in their output shapes.
+        """
+        
+        # check metric
+        if metric is None:
+            metric = self.metric_
+        
+        return metrics.score(self, metric, X, y)
+    
     def clone(self):
         """Obtain a clone of the estimator.
         
@@ -307,6 +341,8 @@ class _TimeDelayed_torch(sklearn.base.BaseEstimator):
         The coefficients of the estimator.
     pattern_ : torch.Tensor
         The patterns of the estimator.
+    metric_ : mvpy.metrics.r2
+        The default metric to use.
     """
     
     def __init__(self, t_min: float, t_max: float, fs: int, alphas: torch.Tensor = torch.tensor([1]), patterns: bool = False, **kwargs):
@@ -353,6 +389,7 @@ class _TimeDelayed_torch(sklearn.base.BaseEstimator):
         self.intercept_ = None
         self.coef_ = None
         self.pattern_ = None
+        self.metric_ = metrics.r2
     
     def _delay_matrices(self, X: torch.Tensor, y: Union[torch.Tensor, None] = None) -> Union[torch.Tensor, tuple[torch.Tensor]]:
         """Create a temporally expanded design matrix.
@@ -497,6 +534,36 @@ class _TimeDelayed_torch(sklearn.base.BaseEstimator):
         
         return y
     
+    def score(self, X: torch.Tensor, y: torch.Tensor, metric: Optional[Union[metrics.Metric, Tuple[metrics.Metric]]] = None) -> Union[torch.Tensor, Dict[str, torch.Tensor]]:
+        """Make predictions from :math:`X` and score against :math:`y`.
+        
+        Parameters
+        ----------
+        X : torch.Tensor
+            Input data of shape ``(n_samples, n_features, n_timepoints)``.
+        y : torch.Tensor
+            Output data of shape ``(n_samples, n_channels, n_timepoints)``.
+        metric : Optional[Metric], default=None
+            Metric or tuple of metrics to compute.  If ``None``, defaults to :py:attr:`~mvpy.estimators.TimeDelayed.metric_`.
+        
+        Returns
+        -------
+        score : torch.Tensor | Dict[str, torch.Tensor]
+            Scores of shape ``(n_channels, n_timepoints)`` or, for multiple metrics, a dictionary of metric names and scores of shape ``(n_channels, n_timepoints)``.
+        
+        .. warning::
+            If multiple values are supplied for ``metric``, this function will
+            output a dictionary of ``{Metric.name: score, ...}`` rather than
+            a stacked array. This is to provide consistency across cases where
+            metrics may or may not differ in their output shapes.
+        """
+        
+        # check metric
+        if metric is None:
+            metric = self.metric_
+        
+        return metrics.score(self, metric, X, y)
+    
     def clone(self):
         """Obtain a clone of the estimator.
         
@@ -509,7 +576,44 @@ class _TimeDelayed_torch(sklearn.base.BaseEstimator):
         return _TimeDelayed_torch(self.t_min, self.t_max, self.fs, alphas = self.alphas, patterns = self.patterns, **self.kwargs)
 
 class TimeDelayed(sklearn.base.BaseEstimator):
-    r"""Implements TimeDelayed regression.
+    """Implements time delayed ridge regression (for multivariate temporal response functions or stimulus reconstruction).
+    
+    Generally, mTRF models are described by:
+    
+    .. math::
+        r(t,n) = \\sum_{\\tau} w(\\tau, n) s(t - \\tau) + \\varepsilon
+    
+    where :math:`r(t,n)` is the reconstructed signal at timepoint :math:`t` for channel :math:`n`, :math:`s(t)` 
+    is the stimulus at time :math:`t`, :math:`w(\\tau, n)` is the weight at time delay :math:`\\tau` for channel 
+    :math:`n`, and :math:`\\varepsilon` is the error.
+    
+    SR models are estimated as:
+    
+    .. math::
+        s(t) = \\sum_{n}\\sum_{\\tau} r(t + \\tau, n) g(\\tau, n)
+    
+    where :math:`s(t)` is the reconstructed stimulus at time :math:`t`, :math:`r(t,n)` is the neural response
+    at :math:`t` and lagged by :math:`\\tau` for channel :math:`n`, :math:`g(\\tau, n)` is the weight at 
+    time delay :math:`\\tau` for channel :math:`n`.
+    
+    For more information on mTRF or SR models, see [1]_.
+    
+    In both cases, models are constructed by temporally expanding the design matrix and
+    outcome matrix and then solving for the regression problem: 
+    
+    .. math::
+
+        y = \\beta X + \\varepsilon
+    
+    Consequently, we solve for coefficients through:
+    
+    .. math::
+
+        \\arg\\min_{\\beta} \\sum_{i} (y_i - \\beta^T X_i)^2 + \\alpha_\\beta \\lvert\\lvert\\beta\\rvert\\rvert^2
+    
+    where :math:`\\alpha_\\beta` are the penalties to test in LOO-CV. Therefore, this class is functionally equivalent
+    to :py:class:`~mvpy.estimators.ReceptiveField`, but solves the problem through ridge regression rather than auto- 
+    and cross-correlations in the Fourier domain. For more information on this, see :py:class:`~mvpy.estimators.ReceptiveField`.
     
     Parameters
     ----------
@@ -519,7 +623,7 @@ class TimeDelayed(sklearn.base.BaseEstimator):
         The maximum time delay. Note that positive values indicate X is delayed relative to y. This is unlike MNE's behaviour.
     fs : int
         The sampling frequency.
-    alphas : Union[np.ndarray, torch.Tensor], default=torch.tensor([1])
+    alphas : np.ndarray | torch.Tensor, default=torch.tensor([1])
         The penalties to use for estimation.
     patterns : bool, default=False
         Should patterns be estimated?
@@ -528,7 +632,7 @@ class TimeDelayed(sklearn.base.BaseEstimator):
     
     Attributes
     ----------
-    alphas : Union[np.ndarray, torch.Tensor]
+    alphas : np.ndarray | torch.Tensor
         The penalties to use for estimation.
     kwargs : Any
         Additional arguments.
@@ -540,7 +644,7 @@ class TimeDelayed(sklearn.base.BaseEstimator):
         The maximum time delay. Note that positive values indicate X is delayed relative to y. This is unlike MNE's behaviour.
     fs : int
         The sampling frequency.
-    window : Union[np.ndarray, torch.Tensor]
+    window : np.ndarray | torch.Tensor
         The window to use for estimation.
     estimator : mvpy.estimators.RidgeCV
         The estimator to use.
@@ -550,34 +654,24 @@ class TimeDelayed(sklearn.base.BaseEstimator):
         The number of input features.
     w_ : int
         The number of time delays.
-    intercept_ : Union[np.ndarray, torch.Tensor]
+    intercept_ : np.ndarray | torch.Tensor
         The intercepts of the estimator.
-    coef_ : Union[np.ndarray, torch.Tensor]
+    coef_ : np.ndarray | torch.Tensor
         The coefficients of the estimator.
-    pattern_ : Union[np.ndarray, torch.Tensor]
+    pattern_ : np.ndarray | torch.Tensor
         The patterns of the estimator.
+    metric_ : mvpy.metrics.r2
+        The default metric to use.
+    
+    See also
+    --------
+    mvpy.estimators.ReceptiveField : An alternative mTRF/SR estimator that solves through auto- and cross-correlations in the Fourier domain.
     
     Notes
     -----
-    This class allows estimation of either multivariate temporal response functions (mTRF) or stimulus reconstruction (SR) models.
-    
-    mTRFs are estimated as:
-
-    .. math::
-        r(t,n) = \\sum_\\tau w(\\tau, n) s(t - \\tau) + \\epsilon
-    
-    where :math:`r(t,n)` is the reconstructed signal at timepoint :math:`t` for channel :math:`n`, :math:`s(t)` is the stimulus at time :math:`t`, :math:`w(\tau, n)` is the weight at time delay :math:`\tau` for channel :math:`n`, and :math:`\epsilon` is the error.
-    
-    SR models are estimated as:
-    
-    .. math::
-        s(t) = \\sum_n\\sum_\\tau r(t + \\tau, n) g(\\tau, n)
-    
-    where :math:`s(t)` is the reconstructed stimulus at time :math:`t`, :math:`r(t,n)` is the neural response at :math:`t` and lagged by :math:`\\tau` for channel :math:`n`, :math:`g(\tau, n)` is the weight at time delay :math:`\tau` for channel :math:`n`.
-    
-    For more information on mTRF or SR models, see [1]_.
-    
-    Note that for SR models it is recommended to also pass `patterns=True` to estimate not only the coefficients but also the patterns that were actually used for reconstructing stimuli. For more information, see [2]_.
+    For SR models it is recommended to also pass :py:attr:`~mvpy.estimators.TimeDelayed.patterns` ``True`` 
+    to estimate not only the coefficients but also the patterns that were actually used for reconstructing 
+    stimuli. For more information, see [2]_.
     
     References
     ----------
@@ -609,10 +703,16 @@ class TimeDelayed(sklearn.base.BaseEstimator):
     >>> X, y = y, X
     >>> sr = TimeDelayed(-2, 2, 1, alphas = 1e-3, patterns = True).fit(X, y)
     >>> sr.predict(X).mean(0)[0,:]
-    tensor([ 1.3591,  1.2549,  1.5662,  2.3544,  3.3440,  4.3683,  5.4097,  6.4418, 7.4454,  8.4978,  9.5206, 10.5374, 11.5841, 12.6102, 13.6254, 14.6939, 15.6932, 16.7168, 17.7619, 18.8130, 19.8182, 20.8687, 21.8854, 22.9310, 23.9270, 24.9808, 26.0085, 27.0347, 28.0728, 29.0828, 30.1400, 31.1452, 32.1793, 33.2047, 34.2332, 35.2717, 36.2945, 37.3491, 38.3800, 39.3817, 40.3962, 41.4489, 42.4854, 43.4965, 44.5346, 45.5716, 46.7301, 47.2251, 48.4449, 48.8793])
+    tensor([ 1.3591,  1.2549,  1.5662,  2.3544,  3.3440,  4.3683,  5.4097,  6.4418, 
+             7.4454,  8.4978,  9.5206, 10.5374, 11.5841, 12.6102, 13.6254, 14.6939, 
+             15.6932, 16.7168, 17.7619, 18.8130, 19.8182, 20.8687, 21.8854, 22.9310, 
+             23.9270, 24.9808, 26.0085, 27.0347, 28.0728, 29.0828, 30.1400, 31.1452, 
+             32.1793, 33.2047, 34.2332, 35.2717, 36.2945, 37.3491, 38.3800, 39.3817, 
+             40.3962, 41.4489, 42.4854, 43.4965, 44.5346, 45.5716, 46.7301, 47.2251, 
+             48.4449, 48.8793])
     """
     
-    def __new__(self, t_min: float, t_max: float, fs: int, alphas: torch.Tensor = torch.tensor([1]), patterns: bool = False, **kwargs) -> sklearn.base.BaseEstimator:
+    def __new__(self, t_min: float, t_max: float, fs: int, alphas: Union[np.ndarray, torch.Tensor] = torch.tensor([1]), patterns: bool = False, **kwargs) -> sklearn.base.BaseEstimator:
         """Obtain a new TimeDelayed estimator.
         
         Parameters
@@ -623,17 +723,12 @@ class TimeDelayed(sklearn.base.BaseEstimator):
             The maximum time delay.
         fs : int
             The sampling frequency.
-        alphas : Union[torch.Tensor, np.ndarray, float, int], default=1
+        alphas : np.ndarray | torch.Tensor, default=torch.tensor([1.])
             The penalties to use for estimation.
         patterns : bool, default=False
             Should patterns be estimated?
         kwargs : Any
             Additional arguments for estimator.
-        
-        Returns
-        -------
-        sklearn.base.BaseEstimator
-            The TimeDelayed estimator.
         """
         
         # check alphas
@@ -656,36 +751,67 @@ class TimeDelayed(sklearn.base.BaseEstimator):
 
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            The features.
-        y : Union[np.ndarray, torch.Tensor]
-            The targets.
+        X : np.ndarray | torch.Tensor
+            Input data of shape ``(n_samples, n_features, n_timepoints)``.
+        y : np.ndarray | torch.Tensor
+            Input data of shape ``(n_samples, n_channels, n_timepoints)``.
+        
+        Returns
+        -------
+        td : mvpy.estimators._TimeDelayed_numpy | mvpy.estimators._TimeDelayed_torch
+            The fitted TimeDelayed estimator.
         """
 
         raise NotImplementedError('This method is not implemented in the base class.')
 
     def predict(self, X: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
-        """Predict from the estimator.
+        """Make predictions from model.
         
         Parameters
         ----------
-        X : Union[np.ndarray, torch.Tensor]
-            The features.
+        X : np.ndarray | torch.Tensor
+            Input data of shape ``(n_samples, n_features, n_timepoints)``.
         
         Returns
         -------
-        Union[np.ndarray, torch.Tensor]
-            The predictions.
+        y_h : np.ndarray | torch.Tensor
+            Predicted responses of shape ``(n_samples, n_channels, n_timepoints)``.
         """
         
         raise NotImplementedError('This method is not implemented in the base class.')
     
-    def clone(self):
+    def score(self, X: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor], metric: Optional[Union[metrics.Metric, Tuple[metrics.Metric]]] = None) -> Union[np.ndarray, torch.Tensor, Dict[str, np.ndarray], Dict[str, torch.Tensor]]:
+        """Make predictions from :math:`X` and score against :math:`y`.
+        
+        Parameters
+        ----------
+        X : np.ndarray | torch.Tensor
+            Input data of shape ``(n_samples, n_features, n_timepoints)``.
+        y : np.ndarray | torch.Tensor
+            Output data of shape ``(n_samples, n_channels, n_timepoints)``.
+        metric : Optional[Metric | Tuple[Metric]], default=None
+            Metric or tuple of metrics to compute.  If ``None``, defaults to :py:attr:`~mvpy.estimators.TimeDelayed.metric_`.
+        
+        Returns
+        -------
+        score : np.ndarray | torch.Tensor | Dict[str, np.ndarray] | Dict[str, torch.Tensor]
+            Scores of shape ``(n_channels, n_timepoints)`` or, for multiple metrics, a dictionary of metric names and scores of shape ``(n_channels, n_timepoints)``.
+        
+        .. warning::
+            If multiple values are supplied for ``metric``, this function will
+            output a dictionary of ``{Metric.name: score, ...}`` rather than
+            a stacked array. This is to provide consistency across cases where
+            metrics may or may not differ in their output shapes.
+        """
+        
+        raise NotImplementedError(f'Method not implemented in base class.')
+    
+    def clone(self) -> "TimeDelayed":
         """Clone this class.
         
         Returns
         -------
-        Decoder
+        td : TimeDelayed
             The cloned object.
         """
         

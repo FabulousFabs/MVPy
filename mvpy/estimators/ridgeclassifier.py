@@ -9,8 +9,9 @@ import sklearn
 from .ridgedecoder import _RidgeDecoder_numpy, _RidgeDecoder_torch
 from .classifier import _Classifier_numpy, _Classifier_torch
 from ..preprocessing.labelbinariser import _LabelBinariser_numpy, _LabelBinariser_torch
+from .. import metrics
 
-from typing import Union, Any
+from typing import Union, Dict, Tuple, Optional
 
 class _RidgeClassifier_numpy(sklearn.base.BaseEstimator):
     r"""Implements a ridge classifier with numpy backend.
@@ -46,6 +47,8 @@ class _RidgeClassifier_numpy(sklearn.base.BaseEstimator):
         The coefficients of the classifier.
     pattern_ : np.ndarray
         The patterns of the classifier.
+    metric_ : Metric
+        The default metric to use.
     """
     
     def __init__(self, alpha: np.ndarray, fit_intercept: bool = True, normalise: bool = True, alpha_per_target: bool = False):
@@ -87,6 +90,7 @@ class _RidgeClassifier_numpy(sklearn.base.BaseEstimator):
         self.intercept_ = None
         self.coef_ = None
         self.pattern_ = None
+        self.metric_ = metrics.accuracy
     
     def fit(self, X: np.ndarray, y: np.ndarray) -> "_RidgeClassifier_numpy":
         """Fit the classifier.
@@ -177,20 +181,71 @@ class _RidgeClassifier_numpy(sklearn.base.BaseEstimator):
         return self.binariser_.inverse_transform(y)
     
     def predict_proba(self, X: np.ndarray) -> np.ndarray:
-        """Compute the decision values for inputs.
+        """Compute the probabilities assigned to each class.
         
         Parameters
         ----------
         X : np.ndarray
-            Input data of shape (n_samples, n_channels).
+            Input data of shape ``(n_samples, n_channels)``.
 
         Returns
         -------
-        df : np.ndarray
-            Decision values of shape (n_samples, n_features).
+        p : np.ndarray
+            Predicted class probabilities shape ``(n_samples, n_classes)``.
+        
+        .. warning::
+            Probabilities are computed from ``expit()`` over outputs of
+            :py:meth:`~mvpy.estimators.RidgeClassifier.decision_function`.
+            Consequently, probability estimates returned by this class 
+            are not calibrated.
         """
         
-        return self.decision_function(X)
+        # compute decision values
+        df = self.decision_function(X)
+
+        # compute logistic sigmoid
+        p = 1 / (1 + np.exp(-df))
+        
+        # loop over our features
+        for i in range(self.binariser_.n_features_):
+            # find start and end of feature
+            s = self.binariser_.C_[i]
+            e = s + len(self.binariser_.classes_[i])
+            
+            # normalise within feature
+            p[...,s:e] /= p[...,s:e].sum(-1, keepdims = True)
+        
+        return p
+    
+    def score(self, X: np.ndarray, y: np.ndarray, metric: Optional[Union[metrics.Metric, Tuple[metrics.Metric]]] = None) -> Union[np.ndarray, Dict[str, np.ndarray]]:
+        """Make predictions from :math:`X` and score against :math:`y`.
+        
+        Parameters
+        ----------
+        X : np.ndarray
+            Input data of shape ``(n_samples, n_channels)``.
+        y : np.ndarray
+            Output data of shape ``(n_samples, n_features)``.
+        metric : Optional[Metric], default=None
+            Metric or tuple of metrics to compute. If ``None``, defaults to :py:attr:`~mvpy.estimators.RidgeClassifier.metric_`.
+        
+        Returns
+        -------
+        score : np.ndarray | Dict[str, np.ndarray]
+            Scores of shape ``(n_features,)`` or, for multiple metrics, a dictionary of metric names and scores of shape ``(n_features,)``.
+        
+        .. warning::
+            If multiple values are supplied for ``metric``, this function will
+            output a dictionary of ``{Metric.name: score, ...}`` rather than
+            a stacked array. This is to provide consistency across cases where
+            metrics may or may not differ in their output shapes.
+        """
+        
+        # check metric
+        if metric is None:
+            metric = self.metric_
+        
+        return metrics.score(self, metric, X, y)
 
     def clone(self) -> "_RidgeClassifier_numpy":
         """Obtain a clone of this class.
@@ -242,6 +297,8 @@ class _RidgeClassifier_torch(sklearn.base.BaseEstimator):
         The coefficients of the classifier.
     pattern_ : torch.Tensor
         The patterns of the classifier.
+    metric_ : Metric
+        The default metric to use.
     """
     
     def __init__(self, alpha: torch.Tensor, fit_intercept: bool = True, normalise: bool = True, alpha_per_target: bool = False):
@@ -283,6 +340,7 @@ class _RidgeClassifier_torch(sklearn.base.BaseEstimator):
         self.intercept_ = None
         self.coef_ = None
         self.pattern_ = None
+        self.metric_ = metrics.accuracy
     
     def fit(self, X: torch.Tensor, y: torch.Tensor) -> "_RidgeClassifier_torch":
         """Fit the classifier.
@@ -373,20 +431,71 @@ class _RidgeClassifier_torch(sklearn.base.BaseEstimator):
         return self.binariser_.inverse_transform(y)
     
     def predict_proba(self, X: torch.Tensor) -> torch.Tensor:
-        """Compute the decision values for inputs.
+        """Compute the probabilities assigned to each class.
         
         Parameters
         ----------
         X : torch.Tensor
-            Input data of shape (n_samples, n_channels).
+            Input data of shape ``(n_samples, n_channels)``.
 
         Returns
         -------
-        df : torch.Tensor
-            Decision values of shape (n_samples, n_features).
+        p : torch.Tensor
+            Predicted class probabilities shape ``(n_samples, n_classes)``.
+        
+        .. warning::
+            Probabilities are computed from ``expit()`` over outputs of
+            :py:meth:`~mvpy.estimators.RidgeClassifier.decision_function`.
+            Consequently, probability estimates returned by this class 
+            are not calibrated.
         """
         
-        return self.decision_function(X)
+        # compute decision values
+        df = self.decision_function(X)
+
+        # compute logistic sigmoid
+        p = 1 / (1 + torch.exp(-df))
+        
+        # loop over our features
+        for i in range(self.binariser_.n_features_):
+            # find start and end of feature
+            s = self.binariser_.C_[i].long().item()
+            e = s + len(self.binariser_.classes_[i])
+                        
+            # normalise within feature
+            p[...,s:e] = p[...,s:e] / p[...,s:e].sum(-1, keepdim = True)
+        
+        return p
+    
+    def score(self, X: torch.Tensor, y: torch.Tensor, metric: Optional[Union[metrics.Metric, Tuple[metrics.Metric]]] = None) -> Union[torch.Tensor, Dict[str, torch.Tensor]]:
+        """Make predictions from :math:`X` and score against :math:`y`.
+        
+        Parameters
+        ----------
+        X : torch.Tensor
+            Input data of shape ``(n_samples, n_channels)``.
+        y : torch.Tensor
+            Output data of shape ``(n_samples, n_features)``.
+        metric : Optional[Metric], default=None
+            Metric or tuple of metrics to compute.  If ``None``, defaults to :py:attr:`~mvpy.estimators.RidgeClassifier.metric_`.
+        
+        Returns
+        -------
+        score : torch.Tensor | Dict[str, torch.Tensor]
+            Scores of shape ``(n_features,)`` or, for multiple metrics, a dictionary of metric names and scores of shape ``(n_features,)``.
+        
+        .. warning::
+            If multiple values are supplied for ``metric``, this function will
+            output a dictionary of ``{Metric.name: score, ...}`` rather than
+            a stacked array. This is to provide consistency across cases where
+            metrics may or may not differ in their output shapes.
+        """
+        
+        # check metric
+        if metric is None:
+            metric = self.metric_
+        
+        return metrics.score(self, metric, X, y)
 
     def clone(self) -> "_RidgeClassifier_torch":
         """Obtain a clone of this class.
@@ -459,6 +568,8 @@ class RidgeClassifier(sklearn.base.BaseEstimator):
         The coefficients of the classifier.
     pattern_ : np.ndarray | torch.Tensor
         The patterns of the classifier.
+    metric_ : mvpy.metrics.Accuracy
+        The default metric to use.
     
     Notes
     -----
@@ -614,18 +725,44 @@ class RidgeClassifier(sklearn.base.BaseEstimator):
 
         Returns
         -------
-        df : np.ndarray | torch.Tensor
+        p : np.ndarray | torch.Tensor
             The predictions of shape ``(n_samples, n_classes)``.
         
         .. warning::
-            Methods that predict the probability of classes are currently
-            not implemented and will return decision function outputs
-            instead. This is because probabilities are not trivial to 
-            compute and require careful calibration, which we will implement
-            in the future.
+            Probabilities are computed from ``expit()`` over outputs of
+            :py:meth:`~mvpy.estimators.RidgeClassifier.decision_function`.
+            Consequently, probability estimates returned by this class 
+            are not calibrated. See :py:class:`~mvpy.estimators.Classifier` 
+            for more information.
         """
 
         raise NotImplementedError('This method is not implemented in the base class.')
+    
+    def score(self, X: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor], metric: Optional[Union[metrics.Metric, Tuple[metrics.Metric]]] = None) -> Union[np.ndarray, torch.Tensor, Dict[str, np.ndarray], Dict[str, torch.Tensor]]:
+        """Make predictions from :math:`X` and score against :math:`y`.
+        
+        Parameters
+        ----------
+        X : np.ndarray | torch.Tensor
+            Input data of shape ``(n_samples, n_channels)``.
+        y : np.ndarray | torch.Tensor
+            Output data of shape ``(n_samples, n_features)``.
+        metric : Optional[Metric | Tuple[Metric]], default=None
+            Metric or tuple of metrics to compute. If ``None``, defaults to :py:attr:`~mvpy.estimators.RidgeClassifier.metric_`.
+        
+        Returns
+        -------
+        score : np.ndarray | torch.Tensor | Dict[str, np.ndarray], Dict[str, torch.Tensor]
+            Scores of shape ``(n_features,)`` or, for multiple metrics, a dictionary of metric names and scores of shape ``(n_features,)``.
+        
+        .. warning::
+            If multiple values are supplied for ``metric``, this function will
+            output a dictionary of ``{Metric.name: score, ...}`` rather than
+            a stacked array. This is to provide consistency across cases where
+            metrics may or may not differ in their output shapes.
+        """
+        
+        raise NotImplementedError(f'Method not implemented in the base class.')
     
     def clone(self) -> "RidgeClassifier":
         """Clone this class.

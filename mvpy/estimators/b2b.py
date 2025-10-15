@@ -405,7 +405,7 @@ class B2B(sklearn.base.BaseEstimator):
     
     See also
     --------
-    mvpy.estimators.Scaler : If applied, scalers used in this class.
+    mvpy.preprocessing.Scaler : If applied, scalers used in this class.
     mvpy.estimators.RidgeDecoder : Ridge decoders used for the two-step procedure here.
     
     Notes

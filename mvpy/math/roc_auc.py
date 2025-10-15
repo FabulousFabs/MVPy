@@ -34,7 +34,7 @@ def _roc_auc_numpy(y_true: np.ndarray, y_score: np.ndarray) -> np.ndarray:
     if L.shape[0] < 2:
         raise ValueError('`y_true` must have at least two unique values.')
     
-    # if multi-label, we need to create a new axis for an OvR style approach
+    # if multi-class, we need to create a new axis for an OvR style approach
     if L.shape[0] > 2:
         # add our new dimension
         y = np.full((*y_true.shape, L.shape[0]), -1)
@@ -49,6 +49,11 @@ def _roc_auc_numpy(y_true: np.ndarray, y_score: np.ndarray) -> np.ndarray:
         # check dimensions in y_score
         if y_score.shape[-2] != y_true.shape[-2]:
             raise ValueError(f'For multiclass to work, `y_score` must have the same number of dimensions as there are labels in `y_true`, but got {y_score.shape[-2]} and {y_true.shape[-2]}.')
+    else:
+        # if not multi-class, we want to make sure that we have only one score
+        if len(y_score.shape) > 2 and y_score.shape[-2] == 2:
+            # cut to only the relevant score
+            y_score = y_score[...,1,:]
     
     # make sure dimensions agree
     if y_score.shape != y_true.shape:
@@ -104,7 +109,7 @@ def _roc_auc_torch(y_true: torch.Tensor, y_score: torch.Tensor) -> torch.Tensor:
     if L.shape[0] < 2:
         raise ValueError('`y_true` must have at least two unique values.')
     
-    # if multi-label, we need to create a new axis for an OvR style approach
+    # if multi-class, we need to create a new axis for an OvR style approach
     if L.shape[0] > 2:
         # add our new dimension
         y = torch.full((*y_true.shape, L.shape[0]), -1, dtype = y_true.dtype, device = y_true.device)
@@ -115,10 +120,15 @@ def _roc_auc_torch(y_true: torch.Tensor, y_score: torch.Tensor) -> torch.Tensor:
         
         # update labels
         y_true = y.swapaxes(-1, -2)
-                
+
         # check dimensions in y_score
         if y_score.shape[-2] != y_true.shape[-2]:
             raise ValueError(f'For multiclass to work, `y_score` must have the same number of dimensions as there are labels in `y_true`, but got {y_score.shape[-2]} and {y_true.shape[-2]}.')
+    else:
+        # if not multi-class, we want to make sure that we have only one score
+        if len(y_score.shape) > 2 and y_score.shape[-2] == 2:
+            # cut to only the relevant score
+            y_score = y_score[...,1,:]
     
     # make sure dimensions agree
     if y_score.shape != y_true.shape:

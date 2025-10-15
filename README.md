@@ -24,41 +24,30 @@ and get started immediately with familiar sklearn workflows:
 ```python
 import torch
 from mvpy.dataset import make_meeg_continuous
-from mvpy.estimators import Scaler, TimeDelayed
-from mvpy.crossvalidation import RepeatedKFold, cross_val_score
+from mvpy.preprocessing import Scaler
+from mvpy.estimators import TimeDelayed
+from mvpy.crossvalidation import cross_val_score
 from sklearn.pipeline import make_pipeline
 
 # create dataset
 device = 'cuda'
-X, y = make_meeg_continuous(device = device)
-
-# setup validation scheme
-kfold = RepeatedKFold(
-    n_splits = 5,
-    n_repeats = 5
-).to_torch()
+fs = 200
+X, y = make_meeg_continuous(fs = fs, device = device)
 
 # setup pipeline for estimation of multivariate temporal response functions
 trf = make_pipeline(
     Scaler().to_torch(),
     TimeDelayed(
-        -10.0, 10.0, 1.0, 
+        -1.0, 0.0, fs, 
         alphas = torch.logspace(-5, 5, 20, device = device)
     )
 )
 
 # out-of-sample predictive accuracy
-oos_r = cross_val_score(trf, kfold)
+validator, scores = cross_val_score(trf, X, y, verbose = True)
 ```
 
 Find examples and more information here in the **[documentation](http://mvpy.tools)**.
 
 ## Is it really worth it?
-Consider a toy example where we have MEG data `y` of shape `(n_trials, n_channels, n_timepoints)` and a set of regressors `X` of shape `(n_trials, n_features, n_timepoints)` that describe properties of acoustic stimuli (envelopes, edges, etc.). We want to estimate repeated cross-validation accuracy to allow for isolation of variance explained by each predictor through model comparisons:
-
-```python
-from mvpy.dataset import make_meeg_continuous
-
-X, y = make_meeg_continuous(device = 'cuda')
-print(X.shape, y.shape)
-```
+...

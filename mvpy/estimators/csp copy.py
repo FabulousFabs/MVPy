@@ -7,7 +7,7 @@ import torch
 import sklearn
 
 import warnings
-from .covariance import _Whitener_numpy, _Whitener_torch, _Empirical_numpy, _Empirical_torch
+from .covariance import _LedoitWolf_numpy, _LedoitWolf_torch, _Empirical_numpy, _Empirical_torch
 
 from typing import Union, Any
 
@@ -21,112 +21,100 @@ https://github.com/gabrieldernbach/approximate_joint_diagonalization/blob/master
 https://github.com/gabrieldernbach/approximate_joint_diagonalization/blob/master/phams/pham_numpy_real.py
 '''
 
-import numpy as np
-
-
-def loss(C):
-    """
-    loss to be minimized by phams method
-    """
-    l = 0
-    for i in range(C.shape[0]):
-        l += torch.sum(torch.log(torch.diag(C[i, :, :]))) - torch.log(torch.linalg.det(C[i, :, :]))
-    return l
-
-
-def mean_rotation(C):
-    C_mean = torch.mean(C, dim = 0)
-    vals, vecs = torch.linalg.eigh(C_mean)
-    nonzero = vals > 0
-    vals[~nonzero] = 1.0
-    vals[nonzero] = torch.sqrt(vals[nonzero])
-    B = vecs.T / vals[:,None]
-    C = B[None, :, :] @ C @ B.T[None, :, :]
-    return B, C
-
-
-def rotmat(C, i, j):
-    """
-    compute update matrix according to phams method see:
-    D. T. Pham, “Joint Approximate Diagonalization of Positive Definite Hermitian Matrices,”
-    SIAM Journal on Matrix Analysis and Applications, vol. 22, no. 4, pp. 1136–1152, Jan. 2001.
-    """
-
-    C_ii = C[:, i, i]
-    C_jj = C[:, j, j]
-    C_ij = C[:, i, j]
-    print('1', C_ij, C_ii, C_jj)
-
-    # compute  g_ij (2.04)
-    g_ij = torch.mean(C_ij / C_ii)
-    g_ji = torch.mean(C_ij / C_jj)
-    print('2', g_ij, g_ji)
-
-    # compute w_ij (2.07) 
-    w_ij = torch.mean(C_jj / C_ii)
-    w_ji = torch.mean(C_ii / C_jj)
-    print('3', w_ij, w_ji)
+def _ajd_pham_torch(X: torch.Tensor, init: Union[torch.Tensor, None] = None, eps: float = 1e-6, n_iter_max: int = 20, sample_weight: Union[torch.Tensor, None] = None) -> tuple[torch.Tensor, torch.Tensor]:
+    """Compute the approximate joint diagonalisation based on Pham's algorithm. This function ports the pyRiemann code to torch.
     
-    # solve 2.10, that is find h such that W @ h = g
-    w_tilde_ji = torch.sqrt(w_ji / w_ij)
-    w_prod = torch.sqrt(w_ij * w_ji)
-    print('4', w_tilde_ji, w_prod)
-    tmp1 = (w_tilde_ji * g_ij + g_ji) / (w_prod + 1)
-    tmp2 = (w_tilde_ji * g_ij - g_ji) / torch.clamp(w_prod - 1, min = 1e-9)
-    print('5', tmp1, tmp2)
-    h12 = tmp1 + tmp2  # (2.10)
-    h21 = ((tmp1 - tmp2) / w_tilde_ji)
-    print('6', h12, h21)
-
-    # decrease in current step 
-    decrease = C.shape[0] * (g_ij * h12 + g_ji * h21) / 2.0
-    print('7', decrease)
-
-    # construct T by 2.08
-    tmp = 1 + torch.sqrt(1 - h12 * h21)
-    print('8', tmp)
-    T = torch.tensor([[1, -h12 / tmp], [-h21 / tmp, 1]], dtype = C.dtype, device = C.device)
-    return T, decrease
-
-
-def _ajd_pham_torch(X: torch.Tensor, threshold: float = 1e-12, max_iter: int = 1000, mean_initialise: bool = True):
-    """
-    find approximate joint diagonalization of set of square matrices Gamma,
-    returns joint basis B and corresponding set of approximate diagonals C
+    Parameters
+    ----------
+    X : torch.Tensor
+        Set of HPD matrices to diagnolise.
+    init : torch.Tensor, default=None
+        Initialisaiton for the diagonaliser.
+    eps : float, default=1e-6
+        Tolerance for convergence.
+    n_iter_max : int, default=20
+        Maximum number of iterations.
+    sample_weight : torch.Tensor, default=None
+        Sample weights.
+    
+    Returns
+    -------
+    V : torch.Tensor
+        Diagonaliser.
+    D : torch.Tensor
+        Diagonalised matrices.
     """
     
-    C = X.clone()
-    k, m, _ = C.shape
-    B = torch.eye(m, dtype = X.dtype, device = X.device)
-
-    # precompute B
-    if mean_initialise:
-        B, C = mean_rotation(C)
+    X = X.cfloat()
+    n_matrices, _, _ = X.shape
+    normalised_weight = torch.ones((n_matrices, 1), dtype = X.dtype, device = X.device) / n_matrices if sample_weight is None else sample_weight / torch.sum(sample_weight)
+    normalised_weight = normalised_weight.cfloat()
     
-    active, n_iter = 1, 0
-    while active == 1 and n_iter < max_iter:
-        cum_decrease = 0
-        for i in range(0, m):
-            for j in range(0, i):
-                # compute update matrix T_ij (2.1), that partially diagonalizes C
-                T, decrease = rotmat(C, i, j)
-                print(decrease)
+    # reshape input matrix
+    A = X.reshape((-1, X.shape[-1])).T.cfloat()
+    n, n_matrices_x_n = A.shape
+    
+    # init variables
+    #V = torch.eye(n, dtype = X.dtype, device = X.device) if init is None else init
+    V = torch.eye(n, dtype = torch.cfloat, device = X.device)
+    epsilon = n * (n - 1) * eps
+    
+    for _ in range(n_iter_max):
+        crit = 0
+        
+        for ii in range(1, n):
+            for jj in range(ii):
+                Ii = torch.arange(ii, n_matrices_x_n, n)
+                Ij = torch.arange(jj, n_matrices_x_n, n)
                 
-                cum_decrease += decrease
-
-                # apply update T_ij to C and B matrices
-                # B collects the successive updates chosen to diagonalize C
-                pair = torch.tensor([i, j], device = X.device).long()
-                B[pair, :] = T @ B[pair, :]
-                C[:, :, pair] = C[:, :, pair] @ T.T[None, :, :]
-                C[:, pair, :] = T[None, :, :] @ C[:, pair, :]
-
-        # evaluate stopping criteria
-        print(decrease)
-        active = decrease.abs() > threshold
-        n_iter += 1
-
-    return B, C, n_iter
+                c1 = A[ii,Ii]
+                c2 = A[jj,Ij]
+                
+                g12 = (A[ii,Ij] / c1) @ normalised_weight
+                g21 = (A[ii,Ij] / c2) @ normalised_weight
+                
+                omega21 = (c1 / c2) @ normalised_weight
+                omega12 = (c2 / c1) @ normalised_weight
+                omega = torch.sqrt(omega12 * omega21)
+                
+                tmp = torch.sqrt(omega21 / omega12)
+                tmp1 = (tmp * g12 + g21) / (omega + 1)
+                if torch.isreal(X).all():
+                    omega = torch.max(omega.real - 1, torch.tensor(1e-9, device = X.device)).cfloat()
+                tmp2 = (tmp * g12 - g21) / omega
+                
+                h12 = tmp1 + tmp2
+                h21 = torch.conj((tmp1 - tmp2) / tmp)
+                
+                crit += n_matrices * (g12 * torch.conj(h12) + g21 * h21) / 2.0
+                
+                tmp = 1 + 0.5j * torch.imag(h12 * h21)
+                tmp = tmp + torch.sqrt(tmp ** 2 - h12 * h21)
+                if torch.isreal(X).all():
+                    tmp = torch.real(tmp)
+                tau = torch.tensor([[1, torch.conj(-h12 / tmp)],
+                                    [torch.conj(-h21 / tmp), 1]])
+                
+                A[[ii,jj],:] = tau.conj() @ A[[ii,jj],:]
+                tmp = torch.cat((A[:,Ii].unsqueeze(1), A[:,Ij].unsqueeze(1)), 1)
+                tmp = tmp.reshape((n * n_matrices, 2))
+                tmp = tmp.t().contiguous().t()
+                tmp = tmp @ tau.T
+                
+                tmp = tmp.reshape((n, n_matrices * 2))
+                tmp = tmp.t().contiguous().t()
+                A[:,Ii] = tmp[:,:n_matrices]
+                A[:,Ij] = tmp[:,n_matrices:]
+                V[[ii,jj],:] = tau @ V[[ii,jj],:]
+        
+        if crit.abs() < epsilon:
+            break
+    else:
+        warnings.warn('Convergence not reached.')
+    
+    D = A.reshape((n, -1, n)).permute(1, 0, 2).conj()
+    
+    return V.to(X.dtype).to(X.device), D.to(X.dtype).to(X.device)
 
 def _normalise_eigenvectors_torch(vec: torch.Tensor, covs: torch.Tensor, weights: torch.Tensor) -> torch.Tensor:
     """"""
@@ -162,12 +150,6 @@ class _CSP_torch():
             ], 0
         )
         
-        # prewhiten covariances
-        W = _Whitener_torch()
-        W.covariance_ = covs.mean(0)
-        W = W.fit(X).whitener_
-        covs = torch.bmm(covs, W.expand(*covs.shape))
-        
         print(covs.shape, weights.shape)
         
         # prewhiten
@@ -180,7 +162,7 @@ class _CSP_torch():
             val, vec = torch.linalg.eigh(covs[0])
         else:
             # in the multiclass case, we need to compute the approximate joint diagonalisation
-            _, vec, _ = _ajd_pham_torch(covs)
+            vec, d = _ajd_pham_torch(covs)
             print(vec.shape)
             print(vec)
             vec = vec.real

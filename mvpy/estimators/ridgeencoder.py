@@ -7,8 +7,9 @@ import torch
 import sklearn
 
 from .ridgecv import RidgeCV
+from .. import metrics
 
-from typing import Union, Any
+from typing import Union, Dict, Tuple, Optional
 
 class _RidgeEncoder_numpy(sklearn.base.BaseEstimator):
     """Implements a simple ridge encoder.
@@ -32,6 +33,8 @@ class _RidgeEncoder_numpy(sklearn.base.BaseEstimator):
         The intercepts of the encoder.
     coef_ : np.ndarray
         The coefficients of the encoder.
+    metric_ : mvpy.metrics.r2
+        The default metric to use.
     """
     
     def __init__(self, alphas: np.ndarray = np.array([1.]), **kwargs):
@@ -58,6 +61,7 @@ class _RidgeEncoder_numpy(sklearn.base.BaseEstimator):
         self.f_ = None
         self.t_ = None
         self.d_ = None
+        self.metric_ = metrics.r2
     
     def _expand_matrices(self, X: np.ndarray, y: Union[np.ndarray, None] = None) -> Union[np.ndarray, tuple[np.ndarray]]:
         """Expand the design matrix and outcomes.
@@ -170,6 +174,36 @@ class _RidgeEncoder_numpy(sklearn.base.BaseEstimator):
         
         return y
     
+    def score(self, X: np.ndarray, y: np.ndarray, metric: Optional[Union[metrics.Metric, Tuple[metrics.Metric]]] = None) -> Union[np.ndarray, Dict[str, np.ndarray]]:
+        """Make predictions from :math:`X` and score against :math:`y`.
+        
+        Parameters
+        ----------
+        X : torch.Tensor
+            Input data of shape ``(n_samples, n_channels)``.
+        y : torch.Tensor
+            Output data of shape ``(n_samples, n_features)``.
+        metric : Optional[Metric], default=None
+            Metric or tuple of metrics to compute.  If ``None``, defaults to :py:attr:`~mvpy.estimators.KernelRidgeCV.metric_`.
+        
+        Returns
+        -------
+        score : torch.Tensor | Dict[str, torch.Tensor]
+            Scores of shape ``(n_features,)`` or, for multiple metrics, a dictionary of metric names and scores of shape ``(n_features,)``.
+        
+        .. warning::
+            If multiple values are supplied for ``metric``, this function will
+            output a dictionary of ``{Metric.name: score, ...}`` rather than
+            a stacked array. This is to provide consistency across cases where
+            metrics may or may not differ in their output shapes.
+        """
+        
+        # check metric
+        if metric is None:
+            metric = self.metric_
+        
+        return metrics.score(self, metric, X, y)
+    
     def clone(self):
         """Obtain a clone of the estimator.
         
@@ -206,6 +240,8 @@ class _RidgeEncoder_torch(sklearn.base.BaseEstimator):
         The intercepts of the encoder.
     coef_ : torch.Tensor
         The coefficients of the encoder.
+    metric_ : mvpy.metrics.r2
+        The default metric to use.
     """
     
     def __init__(self, alphas: torch.Tensor = torch.tensor([1.]), **kwargs):
@@ -232,6 +268,7 @@ class _RidgeEncoder_torch(sklearn.base.BaseEstimator):
         self.f_ = None
         self.t_ = None
         self.d_ = None
+        self.metric_ = metrics.r2
         
     def _expand_matrices(self, X: torch.Tensor, y: Union[torch.Tensor, None] = None) -> Union[torch.Tensor, tuple[torch.Tensor]]:
         """Expand the design matrix and outcomes.
@@ -343,6 +380,36 @@ class _RidgeEncoder_torch(sklearn.base.BaseEstimator):
             y = y.reshape((dims[0], dims[-1], self.d_)).swapaxes(1, 2)
         
         return y
+
+    def score(self, X: torch.Tensor, y: torch.Tensor, metric: Optional[Union[metrics.Metric, Tuple[metrics.Metric]]] = None) -> Union[torch.Tensor, Dict[str, torch.Tensor]]:
+        """Make predictions from :math:`X` and score against :math:`y`.
+        
+        Parameters
+        ----------
+        X : torch.Tensor
+            Input data of shape ``(n_samples, n_channels)``.
+        y : torch.Tensor
+            Output data of shape ``(n_samples, n_features)``.
+        metric : Optional[Metric], default=None
+            Metric or tuple of metrics to compute.  If ``None``, defaults to :py:attr:`~mvpy.estimators.KernelRidgeCV.metric_`.
+        
+        Returns
+        -------
+        score : torch.Tensor | Dict[str, torch.Tensor]
+            Scores of shape ``(n_features,)`` or, for multiple metrics, a dictionary of metric names and scores of shape ``(n_features,)``.
+        
+        .. warning::
+            If multiple values are supplied for ``metric``, this function will
+            output a dictionary of ``{Metric.name: score, ...}`` rather than
+            a stacked array. This is to provide consistency across cases where
+            metrics may or may not differ in their output shapes.
+        """
+        
+        # check metric
+        if metric is None:
+            metric = self.metric_
+        
+        return metrics.score(self, metric, X, y)
     
     def clone(self) -> "_RidgeEncoder_torch":
         """Obtain a clone of the estimator.
@@ -400,6 +467,8 @@ class RidgeEncoder(sklearn.base.BaseEstimator):
         The intercepts of the encoder of shape ``(1, n_channels)``.
     coef_ : np.ndarray | torch.Tensor
         The coefficients of the encoder of shape ``(n_features, n_channels[, n_timepoints])``.
+    metric_ : mvpy.metrics.r2
+        The default metric to use.
     
     Notes
     -----
@@ -503,6 +572,32 @@ class RidgeEncoder(sklearn.base.BaseEstimator):
         -------
         y_h : np.ndarray | torch.Tensor
             The predictions of shape ``(n_trials, n_channels[, n_timepoints])``.
+        """
+        
+        raise NotImplementedError('This method is not implemented in the base class.')
+    
+    def score(self, X: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor], metric: Optional[Union[metrics.Metric, Tuple[metrics.Metric]]] = None) -> Union[np.ndarray, torch.Tensor, Dict[str, np.ndarray], Dict[str, torch.Tensor]]:
+        """Make predictions from :math:`X` and score against :math:`y`.
+        
+        Parameters
+        ----------
+        X : torch.Tensor
+            Input data of shape ``(n_trials, n_features[, n_timepoints])``.
+        y : torch.Tensor
+            Output data of shape ``(n_trials, n_channels[, n_timepoints])``.
+        metric : Optional[Metric], default=None
+            Metric or tuple of metrics to compute.  If ``None``, defaults to :py:attr:`~mvpy.estimators.RidgeEncoder.metric_`.
+        
+        Returns
+        -------
+        score : np.ndarray | torch.Tensor | Dict[str, np.ndarray] | Dict[str, torch.Tensor]
+            Scores of shape ``(n_features[, n_timepoints])`` or, for multiple metrics, a dictionary of metric names and scores of shape ``(n_features[, n_timepoints])``.
+        
+        .. warning::
+            If multiple values are supplied for ``metric``, this function will
+            output a dictionary of ``{Metric.name: score, ...}`` rather than
+            a stacked array. This is to provide consistency across cases where
+            metrics may or may not differ in their output shapes.
         """
         
         raise NotImplementedError('This method is not implemented in the base class.')
