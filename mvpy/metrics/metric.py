@@ -13,6 +13,7 @@ class Metric:
     """
     """
 
+    # defaults are set for sphinx linkcode to work
     name: str = 'metric'
     request: Tuple[str] = ('y', 'predict')
     reduce: Union[int, Tuple[int]] = (0,)

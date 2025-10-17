@@ -200,6 +200,21 @@ API_REFERENCE = {
             }
         ]
     },
+    "mvpy.model_selection": {
+        "short_summary": "Various methods for model selection.",
+        "description": None,
+        "sections": [
+            {
+                "title": None,
+                "autosummary": [
+                    "Hierarchical",
+                    "hierarchical_score",
+                    "Shapley",
+                    "shapley_score"
+                ]
+            }
+        ]
+    },
     "mvpy.preprocessing": {
         "short_summary": "Classes and functions for preprocessing.",
         "description": None,

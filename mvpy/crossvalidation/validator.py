@@ -305,7 +305,7 @@ class Validator(sklearn.base.BaseEstimator):
         split_args = (X, y) if y is not None else (X,)
         
         # setup progressbar
-        context = Progressbar(enabled = self.verbose, desc = "Cross-validating...", total = self.cv_n_)
+        context = Progressbar(enabled = self.verbose, desc = "Validator", total = self.cv_n_)
         with context as progress_bar:
             # perform cross-validation
             results = [
@@ -619,3 +619,20 @@ class Validator(sklearn.base.BaseEstimator):
                 out[metric.name] = np.array(out[metric.name])
         
         return out
+    
+    def clone(self) -> "Validator":
+        """Obtain a clone of this validator.
+        
+        Returns
+        -------
+        validator : mvpy.crossvalidation.Validator
+            The cloned object.
+        """
+        
+        return Validator(
+            self.model,
+            cv = self.cv,
+            metric = self.metric,
+            n_jobs = self.n_jobs,
+            verbose = self.verbose
+        )
