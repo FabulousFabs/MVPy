@@ -1,0 +1,10 @@
+﻿shapley\_score
+==============
+
+.. currentmodule:: mvpy.model_selection
+
+.. autofunction:: shapley_score
+
+.. minigallery:: mvpy.model_selection.shapley_score
+   :add-heading: Gallery examples
+   :heading-level: -

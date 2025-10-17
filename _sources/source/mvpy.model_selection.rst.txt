@@ -1,0 +1,45 @@
+mvpy.model\_selection package
+=============================
+
+Submodules
+----------
+
+mvpy.model\_selection.hierarchical module
+-----------------------------------------
+
+.. automodule:: mvpy.model_selection.hierarchical
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.model\_selection.hierarchical\_score module
+------------------------------------------------
+
+.. automodule:: mvpy.model_selection.hierarchical_score
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.model\_selection.shapley module
+------------------------------------
+
+.. automodule:: mvpy.model_selection.shapley
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mvpy.model\_selection.shapley\_score module
+-------------------------------------------
+
+.. automodule:: mvpy.model_selection.shapley_score
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: mvpy.model_selection
+   :members:
+   :undoc-members:
+   :show-inheritance:

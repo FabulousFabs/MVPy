@@ -1,0 +1,13 @@
+﻿Hierarchical
+============
+
+.. currentmodule:: mvpy.model_selection
+
+.. autoclass:: Hierarchical
+   :members:
+   :special-members: __call__
+   :inherited-members:
+
+.. minigallery:: mvpy.model_selection.Hierarchical mvpy.model_selection.Hierarchical.__delattr__ mvpy.model_selection.Hierarchical.__dir__ mvpy.model_selection.Hierarchical.__eq__ mvpy.model_selection.Hierarchical.__format__ mvpy.model_selection.Hierarchical.__ge__ mvpy.model_selection.Hierarchical.__getattribute__ mvpy.model_selection.Hierarchical.__gt__ mvpy.model_selection.Hierarchical.__hash__ mvpy.model_selection.Hierarchical.__init__ mvpy.model_selection.Hierarchical.__init_subclass__ mvpy.model_selection.Hierarchical.__le__ mvpy.model_selection.Hierarchical.__lt__ mvpy.model_selection.Hierarchical.__ne__ mvpy.model_selection.Hierarchical.__new__ mvpy.model_selection.Hierarchical.__reduce__ mvpy.model_selection.Hierarchical.__reduce_ex__ mvpy.model_selection.Hierarchical.__repr__ mvpy.model_selection.Hierarchical.__setattr__ mvpy.model_selection.Hierarchical.__sizeof__ mvpy.model_selection.Hierarchical.__str__ mvpy.model_selection.Hierarchical.__subclasshook__ mvpy.model_selection.Hierarchical.fit 
+   :add-heading: Gallery examples
+   :heading-level: -

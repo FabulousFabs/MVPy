@@ -12,6 +12,7 @@ Subpackages
    mvpy.estimators
    mvpy.math
    mvpy.metrics
+   mvpy.model_selection
    mvpy.preprocessing
    mvpy.signal
    mvpy.utilities

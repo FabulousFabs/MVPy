@@ -1,0 +1,30 @@
+:html_theme.sidebar_secondary.remove:
+
+
+.. _el_selection_ref:
+
+
+mvpy.model_selection
+====================
+
+.. automodule:: mvpy.model_selection
+
+
+
+
+
+
+
+
+
+
+.. autosummary::
+  :nosignatures:
+  :toctree: ../modules/generated/
+  :template: base.rst
+
+
+  Hierarchical
+  hierarchical_score
+  Shapley
+  shapley_score

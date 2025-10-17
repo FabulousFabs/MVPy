@@ -1,0 +1,13 @@
+﻿Shapley
+=======
+
+.. currentmodule:: mvpy.model_selection
+
+.. autoclass:: Shapley
+   :members:
+   :special-members: __call__
+   :inherited-members:
+
+.. minigallery:: mvpy.model_selection.Shapley mvpy.model_selection.Shapley.__delattr__ mvpy.model_selection.Shapley.__dir__ mvpy.model_selection.Shapley.__eq__ mvpy.model_selection.Shapley.__format__ mvpy.model_selection.Shapley.__ge__ mvpy.model_selection.Shapley.__getattribute__ mvpy.model_selection.Shapley.__gt__ mvpy.model_selection.Shapley.__hash__ mvpy.model_selection.Shapley.__init__ mvpy.model_selection.Shapley.__init_subclass__ mvpy.model_selection.Shapley.__le__ mvpy.model_selection.Shapley.__lt__ mvpy.model_selection.Shapley.__ne__ mvpy.model_selection.Shapley.__new__ mvpy.model_selection.Shapley.__reduce__ mvpy.model_selection.Shapley.__reduce_ex__ mvpy.model_selection.Shapley.__repr__ mvpy.model_selection.Shapley.__setattr__ mvpy.model_selection.Shapley.__sizeof__ mvpy.model_selection.Shapley.__str__ mvpy.model_selection.Shapley.__subclasshook__ mvpy.model_selection.Shapley.fit 
+   :add-heading: Gallery examples
+   :heading-level: -

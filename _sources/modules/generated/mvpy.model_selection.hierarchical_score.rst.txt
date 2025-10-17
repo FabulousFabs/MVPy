@@ -1,0 +1,10 @@
+﻿hierarchical\_score
+===================
+
+.. currentmodule:: mvpy.model_selection
+
+.. autofunction:: hierarchical_score
+
+.. minigallery:: mvpy.model_selection.hierarchical_score
+   :add-heading: Gallery examples
+   :heading-level: -

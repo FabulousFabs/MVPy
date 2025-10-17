@@ -20,6 +20,7 @@ This is the class and function reference of MVPy. Please also refer to the
   mvpy.estimators
   mvpy.math
   mvpy.metrics
+  mvpy.model_selection
   mvpy.preprocessing
   mvpy.signal
   mvpy.utilities
@@ -821,6 +822,74 @@ This is the class and function reference of MVPy. Please also refer to the
         .. div:: caption
 
           :mod:`mvpy.metrics`
+
+
+
+
+
+
+
+
+
+  * - :obj:`~mvpy.model_selection.Hierarchical`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.model_selection
+
+        .. autoshortsummary:: mvpy.model_selection.Hierarchical
+
+        .. div:: caption
+
+          :mod:`mvpy.model_selection`
+
+
+
+
+
+  * - :obj:`~mvpy.model_selection.hierarchical_score`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.model_selection
+
+        .. autoshortsummary:: mvpy.model_selection.hierarchical_score
+
+        .. div:: caption
+
+          :mod:`mvpy.model_selection`
+
+
+
+
+
+  * - :obj:`~mvpy.model_selection.Shapley`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.model_selection
+
+        .. autoshortsummary:: mvpy.model_selection.Shapley
+
+        .. div:: caption
+
+          :mod:`mvpy.model_selection`
+
+
+
+
+
+  * - :obj:`~mvpy.model_selection.shapley_score`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.model_selection
+
+        .. autoshortsummary:: mvpy.model_selection.shapley_score
+
+        .. div:: caption
+
+          :mod:`mvpy.model_selection`
 
 
 

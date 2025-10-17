@@ -56,7 +56,7 @@
     <script src="../../_static/scripts/sg_plotly_resize.js?v=dc4a1e18"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="mvpy.preprocessing" href="../../api/mvpy.preprocessing.html" />
+    <link rel="next" title="mvpy.model_selection" href="../../api/mvpy.model_selection.html" />
     <link rel="prev" title="Roc_auc" href="mvpy.metrics.Roc_auc.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -406,6 +406,13 @@
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">score</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.model_selection.html">mvpy.model_selection</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.model_selection.Hierarchical.html">Hierarchical</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.model_selection.hierarchical_score.html">hierarchical_score</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.model_selection.Shapley.html">Shapley</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.model_selection.shapley_score.html">shapley_score</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.preprocessing.html">mvpy.preprocessing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.preprocessing.Clamp.html">Clamp</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.preprocessing.LabelBinariser.html">LabelBinariser</a></li>
@@ -495,7 +502,7 @@
 <h1>score<a class="headerlink" href="#score" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="mvpy.metrics.score">
-<span class="sig-prename descclassname"><span class="pre">mvpy.metrics.</span></span><span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Pipeline</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">BaseEstimator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../source/mvpy.metrics.html#mvpy.metrics.metric.Metric" title="mvpy.metrics.metric.Metric"><span class="pre">Metric</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../../source/mvpy.metrics.html#mvpy.metrics.metric.Metric" title="mvpy.metrics.metric.Metric"><span class="pre">Metric</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/25cd4e8/mvpy/metrics/score.py#L48"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.metrics.score" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mvpy.metrics.</span></span><span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Pipeline</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">BaseEstimator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../source/mvpy.metrics.html#mvpy.metrics.metric.Metric" title="mvpy.metrics.metric.Metric"><span class="pre">Metric</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../../source/mvpy.metrics.html#mvpy.metrics.metric.Metric" title="mvpy.metrics.metric.Metric"><span class="pre">Metric</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/79a5a24/mvpy/metrics/score.py#L48"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.metrics.score" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </section>
@@ -520,11 +527,11 @@
       </div>
     </a>
     <a class="right-next"
-       href="../../api/mvpy.preprocessing.html"
+       href="../../api/mvpy.model_selection.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">mvpy.preprocessing</p>
+        <p class="prev-next-title">mvpy.model_selection</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
