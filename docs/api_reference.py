@@ -193,9 +193,11 @@ API_REFERENCE = {
                 "autosummary": [
                     "Accuracy",
                     "Metric",
+                    "Pearsonr",
                     "R2",
                     "Roc_auc",
-                    "score"
+                    "score",
+                    "Spearmanr"
                 ]
             }
         ]

@@ -4,8 +4,8 @@ import numpy as np
 from dataclasses import dataclass, replace
 from typing import Union, Tuple, Callable
 
-from .metric import Metric
-from ..math import roc_auc
+from mvpy.metrics import Metric
+from mvpy.math import roc_auc
 
 @dataclass
 class Roc_auc(Metric):
@@ -92,7 +92,11 @@ class Roc_auc(Metric):
         
         # score feature-wise
         score = [
+            # either, we have multiple classes here, dictated by df
             self.f(y[...,i,:], df[...,offsets[i]:offsets[i]+features[i],:])
+            if df[...,offsets[i]:offsets[i]+features[i],:].shape[-2] > 2 else
+            # or we have two classes, which we need to cut down to one virtual class for ROC-AUC
+            self.f(y[...,i,:], df[...,offsets[i]:offsets[i]+features[i],:][...,-1,:])
             for i in range(len(features))
         ]
         
