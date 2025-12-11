@@ -1,0 +1,13 @@
+﻿Pearsonr
+========
+
+.. currentmodule:: mvpy.metrics
+
+.. autoclass:: Pearsonr
+   :members:
+   :special-members: __call__
+   :exclude-members: f
+
+.. minigallery:: mvpy.metrics.Pearsonr mvpy.metrics.Pearsonr.__call__ mvpy.metrics.Pearsonr.__delattr__ mvpy.metrics.Pearsonr.__dir__ mvpy.metrics.Pearsonr.__eq__ mvpy.metrics.Pearsonr.__format__ mvpy.metrics.Pearsonr.__ge__ mvpy.metrics.Pearsonr.__getattribute__ mvpy.metrics.Pearsonr.__gt__ mvpy.metrics.Pearsonr.__init__ mvpy.metrics.Pearsonr.__init_subclass__ mvpy.metrics.Pearsonr.__le__ mvpy.metrics.Pearsonr.__lt__ mvpy.metrics.Pearsonr.__ne__ mvpy.metrics.Pearsonr.__new__ mvpy.metrics.Pearsonr.__reduce__ mvpy.metrics.Pearsonr.__reduce_ex__ mvpy.metrics.Pearsonr.__repr__ mvpy.metrics.Pearsonr.__setattr__ mvpy.metrics.Pearsonr.__sizeof__ mvpy.metrics.Pearsonr.__str__ mvpy.metrics.Pearsonr.__subclasshook__ mvpy.metrics.Pearsonr.f mvpy.metrics.Pearsonr.mutate 
+   :add-heading: Gallery examples
+   :heading-level: -

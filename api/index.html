@@ -402,9 +402,11 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="mvpy.metrics.html">mvpy.metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.metrics.Accuracy.html">Accuracy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.metrics.Metric.html">Metric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.metrics.Pearsonr.html">Pearsonr</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.metrics.R2.html">R2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.metrics.Roc_auc.html">Roc_auc</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.metrics.score.html">score</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/generated/mvpy.metrics.Spearmanr.html">Spearmanr</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="mvpy.model_selection.html">mvpy.model_selection</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -903,13 +905,23 @@
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="../modules/generated/mvpy.metrics.Metric.html#mvpy.metrics.Metric" title="mvpy.metrics.Metric"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Metric</span></code></a></p></td>
 <td><div class="sk-apisearch-desc docutils">
+<p>Implements an interface class for mutable metrics of model evaluation.</p>
 <div class="caption docutils">
 <p><a class="reference internal" href="../source/mvpy.metrics.html#module-mvpy.metrics" title="mvpy.metrics"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mvpy.metrics</span></code></a></p>
 </div>
 </div>
 </td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../modules/generated/mvpy.metrics.R2.html#mvpy.metrics.R2" title="mvpy.metrics.R2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">R2</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../modules/generated/mvpy.metrics.Pearsonr.html#mvpy.metrics.Pearsonr" title="mvpy.metrics.Pearsonr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Pearsonr</span></code></a></p></td>
+<td><div class="sk-apisearch-desc docutils">
+<p>Implements <a class="reference internal" href="../source/mvpy.math.html#module-mvpy.math.pearsonr" title="mvpy.math.pearsonr"><code class="xref py py-func docutils literal notranslate"><span class="pre">mvpy.math.pearsonr()</span></code></a> as a <a class="reference internal" href="../modules/generated/mvpy.metrics.Metric.html#mvpy.metrics.Metric" title="mvpy.metrics.Metric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metric</span></code></a>.</p>
+<div class="caption docutils">
+<p><a class="reference internal" href="../source/mvpy.metrics.html#module-mvpy.metrics" title="mvpy.metrics"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mvpy.metrics</span></code></a></p>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../modules/generated/mvpy.metrics.R2.html#mvpy.metrics.R2" title="mvpy.metrics.R2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">R2</span></code></a></p></td>
 <td><div class="sk-apisearch-desc docutils">
 <p>Implements <a class="reference internal" href="../source/mvpy.math.html#module-mvpy.math.r2" title="mvpy.math.r2"><code class="xref py py-func docutils literal notranslate"><span class="pre">mvpy.math.r2()</span></code></a> as a <a class="reference internal" href="../modules/generated/mvpy.metrics.Metric.html#mvpy.metrics.Metric" title="mvpy.metrics.Metric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metric</span></code></a>.</p>
 <div class="caption docutils">
@@ -918,7 +930,7 @@
 </div>
 </td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../modules/generated/mvpy.metrics.Roc_auc.html#mvpy.metrics.Roc_auc" title="mvpy.metrics.Roc_auc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Roc_auc</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../modules/generated/mvpy.metrics.Roc_auc.html#mvpy.metrics.Roc_auc" title="mvpy.metrics.Roc_auc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Roc_auc</span></code></a></p></td>
 <td><div class="sk-apisearch-desc docutils">
 <p>Implements <a class="reference internal" href="../source/mvpy.math.html#module-mvpy.math.roc_auc" title="mvpy.math.roc_auc"><code class="xref py py-func docutils literal notranslate"><span class="pre">mvpy.math.roc_auc()</span></code></a> as a <a class="reference internal" href="../modules/generated/mvpy.metrics.Metric.html#mvpy.metrics.Metric" title="mvpy.metrics.Metric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metric</span></code></a>.</p>
 <div class="caption docutils">
@@ -927,8 +939,17 @@
 </div>
 </td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../source/mvpy.metrics.html#module-mvpy.metrics.score" title="mvpy.metrics.score"><code class="xref py py-obj docutils literal notranslate"><span class="pre">score</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../source/mvpy.metrics.html#module-mvpy.metrics.score" title="mvpy.metrics.score"><code class="xref py py-obj docutils literal notranslate"><span class="pre">score</span></code></a></p></td>
 <td><div class="sk-apisearch-desc docutils">
+<div class="caption docutils">
+<p><a class="reference internal" href="../source/mvpy.metrics.html#module-mvpy.metrics" title="mvpy.metrics"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mvpy.metrics</span></code></a></p>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../modules/generated/mvpy.metrics.Spearmanr.html#mvpy.metrics.Spearmanr" title="mvpy.metrics.Spearmanr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Spearmanr</span></code></a></p></td>
+<td><div class="sk-apisearch-desc docutils">
+<p>Implements <a class="reference internal" href="../source/mvpy.math.html#module-mvpy.math.spearmanr" title="mvpy.math.spearmanr"><code class="xref py py-func docutils literal notranslate"><span class="pre">mvpy.math.spearmanr()</span></code></a> as a <a class="reference internal" href="../modules/generated/mvpy.metrics.Metric.html#mvpy.metrics.Metric" title="mvpy.metrics.Metric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metric</span></code></a>.</p>
 <div class="caption docutils">
 <p><a class="reference internal" href="../source/mvpy.metrics.html#module-mvpy.metrics" title="mvpy.metrics"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mvpy.metrics</span></code></a></p>
 </div>

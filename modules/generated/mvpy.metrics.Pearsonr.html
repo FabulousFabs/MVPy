@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>hamming_window &#8212; MVPy</title>
+    <title>Pearsonr &#8212; MVPy</title>
   
   
   
@@ -50,14 +50,14 @@
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'modules/generated/mvpy.signal.hamming_window';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modules/generated/mvpy.metrics.Pearsonr';</script>
     <script src="../../_static/scripts/dropdown.js?v=5b9cef8c"></script>
     <script src="../../_static/scripts/version-switcher.js?v=6ebe4089"></script>
     <script src="../../_static/scripts/sg_plotly_resize.js?v=dc4a1e18"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="hann_window" href="mvpy.signal.hann_window.html" />
-    <link rel="prev" title="mvpy.signal" href="../../api/mvpy.signal.html" />
+    <link rel="next" title="R2" href="mvpy.metrics.R2.html" />
+    <link rel="prev" title="Metric" href="mvpy.metrics.Metric.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -398,10 +398,10 @@
 <li class="toctree-l2"><a class="reference internal" href="mvpy.math.spearmanr_d.html">spearmanr_d</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.metrics.html">mvpy.metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../api/mvpy.metrics.html">mvpy.metrics</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.Accuracy.html">Accuracy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.Metric.html">Metric</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.Pearsonr.html">Pearsonr</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Pearsonr</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.R2.html">R2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.Roc_auc.html">Roc_auc</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.score.html">score</a></li>
@@ -422,8 +422,8 @@
 <li class="toctree-l2"><a class="reference internal" href="mvpy.preprocessing.Scaler.html">Scaler</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../api/mvpy.signal.html">mvpy.signal</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">hamming_window</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.signal.html">mvpy.signal</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.signal.hamming_window.html">hamming_window</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.signal.hann_window.html">hann_window</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.signal.raised_cosine_window.html">raised_cosine_window</a></li>
 </ul>
@@ -481,9 +481,9 @@
     <li class="breadcrumb-item"><a href="../../api/index.html" class="nav-link">API Reference</a></li>
     
     
-    <li class="breadcrumb-item"><a href="../../api/mvpy.signal.html" class="nav-link">mvpy.signal</a></li>
+    <li class="breadcrumb-item"><a href="../../api/mvpy.metrics.html" class="nav-link">mvpy.metrics</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">hamming_window</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Pearsonr</span></li>
   </ul>
 </nav>
 </div>
@@ -500,12 +500,46 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="hamming-window">
-<h1>hamming_window<a class="headerlink" href="#hamming-window" title="Link to this heading">#</a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="mvpy.signal.hamming_window">
-<span class="sig-prename descclassname"><span class="pre">mvpy.signal.</span></span><span class="sig-name descname"><span class="pre">hamming_window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'torch'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'cpu'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/3583061/mvpy/signal/hammingwindow.py#L8"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.signal.hamming_window" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+  <section id="pearsonr">
+<h1>Pearsonr<a class="headerlink" href="#pearsonr" title="Link to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mvpy.metrics.Pearsonr">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.metrics.</span></span><span class="sig-name descname"><span class="pre">Pearsonr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'pearsonr'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">~typing.Tuple[str]</span> <span class="pre">=</span> <span class="pre">('y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'predict')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduce:</span> <span class="pre">int</span> <span class="pre">|</span> <span class="pre">~typing.Tuple[int]</span> <span class="pre">=</span> <span class="pre">(0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f:</span> <span class="pre">~typing.Callable</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">pearsonr&gt;</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/3583061/mvpy/metrics/pearsonr.py#L10"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.metrics.Pearsonr" title="Link to this definition">#</a></dt>
+<dd><p>Implements <a class="reference internal" href="../../source/mvpy.math.html#module-mvpy.math.pearsonr" title="mvpy.math.pearsonr"><code class="xref py py-func docutils literal notranslate"><span class="pre">mvpy.math.pearsonr()</span></code></a> as a <a class="reference internal" href="mvpy.metrics.Metric.html#mvpy.metrics.Metric" title="mvpy.metrics.Metric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metric</span></code></a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This class extends <a class="reference internal" href="mvpy.metrics.Metric.html#mvpy.metrics.Metric" title="mvpy.metrics.Metric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metric</span></code></a>. If you
+would like to apply this metric, please use the instance 
+exposed under <a class="reference internal" href="../../source/mvpy.metrics.html#module-mvpy.metrics.pearsonr" title="mvpy.metrics.pearsonr"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mvpy.metrics.pearsonr</span></code></a>.</p>
+<p>For more information on this, please consult the documentation
+of <a class="reference internal" href="mvpy.metrics.Metric.html#mvpy.metrics.Metric" title="mvpy.metrics.Metric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metric</span></code></a> and <a class="reference internal" href="../../source/mvpy.metrics.html#module-mvpy.metrics.score" title="mvpy.metrics.score"><code class="xref py py-func docutils literal notranslate"><span class="pre">score()</span></code></a>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>name</strong><span class="classifier">str, default=’pearsonr’</span></dt><dd><p>The name of this metric.</p>
+</dd>
+<dt><strong>request</strong><span class="classifier">str | tuple[str], default=(‘y’, ‘predict’)</span></dt><dd><p>The values to request for scoring.</p>
+</dd>
+<dt><strong>reduce</strong><span class="classifier">int | tuple[int], default= (0,)</span></dt><dd><p>The dimension(s) to reduce over.</p>
+</dd>
+<dt><strong>f</strong><span class="classifier">Callable, default=mvpy.math.pearsonr</span></dt><dd><p>The function to call.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_meeg_categorical</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.estimators</span><span class="w"> </span><span class="kn">import</span> <span class="n">RidgeDecoder</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.crossvalidation</span><span class="w"> </span><span class="kn">import</span> <span class="n">cross_val_score</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.metric</span><span class="w"> </span><span class="kn">import</span> <span class="n">pearsonr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_meeg_continuous</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">clf</span> <span class="o">=</span> <span class="n">RidgeClassifier</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cross_val_score</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">metric</span> <span class="o">=</span> <span class="n">pearsonr</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
 
 </section>
 
@@ -520,20 +554,20 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../../api/mvpy.signal.html"
+       href="mvpy.metrics.Metric.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">mvpy.signal</p>
+        <p class="prev-next-title">Metric</p>
       </div>
     </a>
     <a class="right-next"
-       href="mvpy.signal.hann_window.html"
+       href="mvpy.metrics.R2.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">hann_window</p>
+        <p class="prev-next-title">R2</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -557,7 +591,7 @@
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     
 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.signal.hamming_window"><code class="docutils literal notranslate"><span class="pre">hamming_window()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.metrics.Pearsonr"><code class="docutils literal notranslate"><span class="pre">Pearsonr</span></code></a></li>
 </ul>
 
 
@@ -568,7 +602,7 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../../_sources/modules/generated/mvpy.signal.hamming_window.rst.txt"
+      <li><a href="../../_sources/modules/generated/mvpy.metrics.Pearsonr.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div></div>

@@ -57,7 +57,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Roc_auc" href="mvpy.metrics.Roc_auc.html" />
-    <link rel="prev" title="Metric" href="mvpy.metrics.Metric.html" />
+    <link rel="prev" title="Pearsonr" href="mvpy.metrics.Pearsonr.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -401,9 +401,11 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../../api/mvpy.metrics.html">mvpy.metrics</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.Accuracy.html">Accuracy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.Metric.html">Metric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.Pearsonr.html">Pearsonr</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">R2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.Roc_auc.html">Roc_auc</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.score.html">score</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.metrics.Spearmanr.html">Spearmanr</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.model_selection.html">mvpy.model_selection</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -502,7 +504,7 @@
 <h1>R2<a class="headerlink" href="#r2" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="mvpy.metrics.R2">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.metrics.</span></span><span class="sig-name descname"><span class="pre">R2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'r2'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">~typing.Tuple[str]</span> <span class="pre">=</span> <span class="pre">('y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'predict')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduce:</span> <span class="pre">int</span> <span class="pre">|</span> <span class="pre">~typing.Tuple[int]</span> <span class="pre">=</span> <span class="pre">(0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f:</span> <span class="pre">~typing.Callable</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">r2&gt;</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/79a5a24/mvpy/metrics/r2.py#L10"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.metrics.R2" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.metrics.</span></span><span class="sig-name descname"><span class="pre">R2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'r2'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">~typing.Tuple[str]</span> <span class="pre">=</span> <span class="pre">('y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'predict')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduce:</span> <span class="pre">int</span> <span class="pre">|</span> <span class="pre">~typing.Tuple[int]</span> <span class="pre">=</span> <span class="pre">(0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f:</span> <span class="pre">~typing.Callable</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">r2&gt;</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/3583061/mvpy/metrics/r2.py#L10"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.metrics.R2" title="Link to this definition">#</a></dt>
 <dd><p>Implements <a class="reference internal" href="../../source/mvpy.math.html#module-mvpy.math.r2" title="mvpy.math.r2"><code class="xref py py-func docutils literal notranslate"><span class="pre">mvpy.math.r2()</span></code></a> as a <a class="reference internal" href="mvpy.metrics.Metric.html#mvpy.metrics.Metric" title="mvpy.metrics.Metric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metric</span></code></a>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -552,12 +554,12 @@ of <a class="reference internal" href="mvpy.metrics.Metric.html#mvpy.metrics.Met
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="mvpy.metrics.Metric.html"
+       href="mvpy.metrics.Pearsonr.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Metric</p>
+        <p class="prev-next-title">Pearsonr</p>
       </div>
     </a>
     <a class="right-next"

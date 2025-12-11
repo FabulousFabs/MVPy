@@ -26,6 +26,8 @@ mvpy.metrics
 
   Accuracy
   Metric
+  Pearsonr
   R2
   Roc_auc
   score
+  Spearmanr

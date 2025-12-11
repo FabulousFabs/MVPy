@@ -1,0 +1,13 @@
+﻿Spearmanr
+=========
+
+.. currentmodule:: mvpy.metrics
+
+.. autoclass:: Spearmanr
+   :members:
+   :special-members: __call__
+   :exclude-members: f
+
+.. minigallery:: mvpy.metrics.Spearmanr mvpy.metrics.Spearmanr.__call__ mvpy.metrics.Spearmanr.__delattr__ mvpy.metrics.Spearmanr.__dir__ mvpy.metrics.Spearmanr.__eq__ mvpy.metrics.Spearmanr.__format__ mvpy.metrics.Spearmanr.__ge__ mvpy.metrics.Spearmanr.__getattribute__ mvpy.metrics.Spearmanr.__gt__ mvpy.metrics.Spearmanr.__init__ mvpy.metrics.Spearmanr.__init_subclass__ mvpy.metrics.Spearmanr.__le__ mvpy.metrics.Spearmanr.__lt__ mvpy.metrics.Spearmanr.__ne__ mvpy.metrics.Spearmanr.__new__ mvpy.metrics.Spearmanr.__reduce__ mvpy.metrics.Spearmanr.__reduce_ex__ mvpy.metrics.Spearmanr.__repr__ mvpy.metrics.Spearmanr.__setattr__ mvpy.metrics.Spearmanr.__sizeof__ mvpy.metrics.Spearmanr.__str__ mvpy.metrics.Spearmanr.__subclasshook__ mvpy.metrics.Spearmanr.f mvpy.metrics.Spearmanr.mutate 
+   :add-heading: Gallery examples
+   :heading-level: -

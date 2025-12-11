@@ -779,6 +779,22 @@ This is the class and function reference of MVPy. Please also refer to the
 
 
 
+  * - :obj:`~mvpy.metrics.Pearsonr`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.metrics
+
+        .. autoshortsummary:: mvpy.metrics.Pearsonr
+
+        .. div:: caption
+
+          :mod:`mvpy.metrics`
+
+
+
+
+
   * - :obj:`~mvpy.metrics.R2`
 
     - .. div:: sk-apisearch-desc
@@ -818,6 +834,22 @@ This is the class and function reference of MVPy. Please also refer to the
         .. currentmodule:: mvpy.metrics
 
         .. autoshortsummary:: mvpy.metrics.score
+
+        .. div:: caption
+
+          :mod:`mvpy.metrics`
+
+
+
+
+
+  * - :obj:`~mvpy.metrics.Spearmanr`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.metrics
+
+        .. autoshortsummary:: mvpy.metrics.Spearmanr
 
         .. div:: caption
 
