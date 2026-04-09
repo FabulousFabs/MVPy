@@ -16,7 +16,8 @@ setup(
     extras_require={
         "dev": [
             "pytest>=6.0.0",
-            "flake8>=3.8.0"
+            "flake8>=3.8.0",
+            "asv>=0.6.5"
         ]
     },
 )
