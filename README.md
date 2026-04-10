@@ -1,5 +1,6 @@
 [![Unit Tests](https://github.com/FabulousFabs/MVPy/workflows/Unit%20tests/badge.svg)](https://github.com/FabulousFabs/MVPy/actions)
-[![Unit Tests](https://github.com/FabulousFabs/MVPy/workflows/Documentation/badge.svg)](https://github.com/FabulousFabs/MVPy/actions)
+[![Documentation](https://github.com/FabulousFabs/MVPy/workflows/Documentation/badge.svg)](https://github.com/FabulousFabs/MVPy/actions)
+[![ASV Benchmarks](https://img.shields.io/badge/benchmarked%20by-asv-blue.svg?style=flat)](https://mvpy.tools/benchmarks_asv/)
 
 
 [<img src="./docs/images/mvpy-large.png" width="500px">](http://mvpy.tools/)
@@ -55,7 +56,7 @@ validator, scores = cross_val_score(trf, X, y, verbose = True)
 # scores are now of shape (n_sets, n_folds, n_channels, n_timepoints)
 hierarchical, scores = hierarchical_score(trf, X, y, verbose = True)
 
-# maybe we want to know the share of unique variance each predictor explains?
+# maybe we want to know the fair share of variance each predictor explains?
 # scores are now of shape (n_permutations, n_sets, n_folds, n_channels, n_timepoints)
 shapley, scores = shapley_score(trf, X, y, verbose = True)
 ```

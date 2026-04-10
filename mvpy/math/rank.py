@@ -26,27 +26,58 @@ def _rank_numpy(x: np.ndarray) -> np.ndarray:
     if np.issubdtype(x.dtype, np.floating) == False:
         x = x.astype(float)
     
-    # get sorted indices
-    sorted_idx = np.argsort(x, axis = -1)
-    sorted_x = np.take_along_axis(x, sorted_idx, axis = -1)
+    # save shape
+    shape = x.shape
+    n_features = shape[-1]
     
-    # create rank tensor
-    r = np.zeros_like(sorted_x, dtype = x.dtype)
+    # flatten leading dimensions
+    x_f = x.reshape(-1, n_features)
     
-    # compute ranks (without ties)
-    for f_i in range(r.shape[-1]):
-        r[..., f_i] = np.sum(sorted_x < sorted_x[..., f_i, None], axis = -1).astype(np.float64) + 1.0
+    # sort along final dimension
+    i = np.argsort(x_f, axis = -1)
+    v = np.take_along_axis(x_f, i, axis = -1)
     
-    # resolve ties through averaging
-    for f_i in range(r.shape[-1]):
-        delta = np.sum(sorted_x == sorted_x[..., f_i, None], axis = -1).astype(np.float64) - 1.0
-        r[..., f_i] += delta / 2.0
+    # make positions
+    pos = np.arange(n_features, dtype = np.int64)[None,:]
     
-    # unsort the ranked data
-    inv_sorted_idx = np.argsort(sorted_idx, axis = -1)
-    r = np.take_along_axis(r, inv_sorted_idx, axis = -1)
+    # identitfy starts of tie groups
+    mask_s = np.empty(v.shape, dtype = bool)
+    mask_s[:,0] = True
+    mask_s[:,1:] = v[:,1:] != v[:,:-1]
     
-    return r
+    # forward fill group starts
+    group_s = np.maximum.accumulate(
+        np.where(
+            mask_s,
+            pos,
+            0
+        ),
+        axis = -1
+    )
+    
+    # identify ends of tie groups
+    mask_e = np.empty(v.shape, dtype = bool)
+    mask_e[:,-1] = True
+    mask_e[:,:-1] = v[:,:-1] != v[:,1:]
+    
+    # backward fill group ends
+    group_e = np.minimum.accumulate(
+        np.where(
+            mask_e,
+            pos,
+            n_features - 1
+        )[:,::-1],
+        axis = 1
+    )[:,::-1]
+    
+    # average rank of each tie group
+    ranks_sorted = (group_s + group_e).astype(x_f.dtype, copy = False) / 2.0 + 1.0
+    
+    # scatter ranks back to original order
+    out = np.empty_like(ranks_sorted, dtype = x_f.dtype)
+    np.put_along_axis(out, i, ranks_sorted, axis = 1)
+    
+    return out.reshape(shape)
 
 def _rank_torch(x: torch.Tensor) -> torch.Tensor:
     """Rank torch tensor along final dimension. Ties are computed as averages.
@@ -67,25 +98,55 @@ def _rank_torch(x: torch.Tensor) -> torch.Tensor:
         device = x.device
         x = x.to(torch.float64).to(device)
     
-    # sort tensor
-    v, i = x.sort(dim = -1)
+    # save shape
+    shape = x.shape
+    n_features = shape[-1]
     
-    # setup rank tensor
-    r = torch.zeros_like(v, dtype = x.dtype, device = x.device)
-
-    # loop over features to find ranks (with ties)
-    for f_i in range(r.shape[-1]):
-        r[...,f_i,None] = (v < v[...,f_i,None]).sum(-1, keepdim = True) + 1
-
-    # resolve ties through average
-    for f_i in range(r.shape[-1]):
-        delta = (v == v[...,f_i,None]).sum(-1, keepdim = True) - 1
-        r[...,f_i,None] += (delta / 2).to(dtype = x.dtype)
-
-    # unsort ranked data
-    r = r.gather(-1, i.argsort(-1))
+    # flatten leading dimensions
+    x_f = x.reshape(-1, n_features)
     
-    return r
+    # sort along final dimension
+    v, i = x_f.sort(-1)
+    
+    # make positions
+    pos = torch.arange(
+        n_features,
+        device = x_f.device,
+        dtype = torch.int64
+    ).unsqueeze(0)
+    
+    # identifiy starts of tie groups
+    mask_s = torch.empty(v.shape, dtype = torch.bool, device = x_f.device)
+    mask_s[:,0] = True
+    mask_s[:,1:] = v[:,1:] != v[:,:-1]
+    
+    # forward fill group starts
+    group_s = torch.where(
+        mask_s, 
+        pos,
+        0
+    ).cummax(1).values
+    
+    # identifiy ends of tie groups
+    mask_e = torch.empty(v.shape, dtype = torch.bool, device = x_f.device)
+    mask_e[:,-1] = True
+    mask_e[:,:-1] = v[:,:-1] != v[:,1:]
+    
+    # backward fill group ends
+    group_e = torch.where(
+        mask_e,
+        pos,
+        n_features - 1
+    ).flip(1).cummin(1).values.flip(1)
+    
+    # average rank of each tie group
+    ranks_sorted = (group_s + group_e).to(dtype = x_f.dtype) / 2.0 + 1.0
+    
+    # scatter back to original
+    out = torch.empty_like(ranks_sorted, dtype = x_f.dtype, device = x_f.device)
+    out.scatter_(1, i, ranks_sorted)
+    
+    return out.reshape(shape)
 
 def rank(x: Union[np.ndarray, torch.Tensor]) -> Union[np.ndarray, torch.Tensor]:
     """Rank data in x along its final feature dimension. Ties are computed as averages.
