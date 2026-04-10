@@ -31,6 +31,13 @@ jobs:
         run: |
           sphinx-apidoc -f -o docs/source mvpy/
           sphinx-build -b html docs/ docs/_build/html
+      
+      - name: Copy committed ASV site into docs build
+        run: |
+          mkdir -p docs/_build/html/benchmarks_asv
+          if [ -d benchmarks_asv/html ]; then
+            rsync -a benchmarks_asv/html/ docs/_build/html/benchmarks_asv/
+          fi
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
