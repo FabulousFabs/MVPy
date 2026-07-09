@@ -80,11 +80,13 @@ def _r2_torch(y: torch.Tensor, y_h: torch.Tensor, y_b: Optional[torch.Tensor] = 
     if y_b is None:
         y_b = y.mean(-1, keepdim = True)
     else:
-        # verify shape
-        if (len(y.shape) != len(y_b.shape)) or (y.shape[1:] != y_b.shape):
+        n_dim_y = len(y.shape)
+        n_dim_b = len(y_b.shape)
+        
+        if n_dim_y != n_dim_b:
             raise ValueError(
-                f'When supplying `y_b`, it must be of shape (1, **y.shape[1:]), ' + 
-                f'but got y={y.shape} and y_b={y_b.shape}.'
+                f'When supplying `y_b`, it must have the same number of ' + 
+                f'dimensions as `y`, but got {n_dim_y} and {n_dim_b}.'
             )
     
     # compute numerator and denominator
