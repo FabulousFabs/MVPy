@@ -6,7 +6,7 @@ import torch
 import numpy as np
 
 from dataclasses import dataclass, replace
-from typing import Union, Tuple, Any, Callable, Optional
+from typing import Union, Tuple, Any, Callable, Optional, Dict
 
 @dataclass
 class Metric:
@@ -49,6 +49,8 @@ class Metric:
         Dimensions that should be reduced when computing this metric. In practice, this means that the specified dimensions will be flattened and moved to the final dimension where :py:mod:`~mvpy.math` expects features to live. See :py:meth:`~mvpy.metrics.score` for more information.
     f : Callable, default=lambda x: x
         The math function that should be used for computing this particular metric.
+    metadata : Dict[str, float | np.ndarray | torch.Tensor], default=None
+        Additional metadata that was granted to this metric that is merged with requested data.
     
     Attributes
     ----------
@@ -60,6 +62,8 @@ class Metric:
         Dimensions that should be reduced when computing this metric. In practice, this means that the specified dimensions will be flattened and moved to the final dimension where :py:mod:`~mvpy.math` expects features to live. See :py:meth:`~mvpy.metrics.score` for more information.
     f : Callable, default=lambda x: x
         The math function that should be used for computing this particular metric.
+    metadata : Dict[str, float | np.ndarray | torch.Tensor], default=None
+        Additional metadata that was granted to this metric that is merged with requested data.
     
     Notes
     -----
@@ -109,6 +113,7 @@ class Metric:
     request: Tuple[str] = ('y', 'predict')
     reduce: Union[int, Tuple[int]] = (0,)
     f: Callable = lambda x: x
+    metadata: Dict[str, float | np.ndarray | torch.Tensor | None] = None
     
     def __call__(self, *args: Any, **kwargs: Any) -> Union[np.ndarray, torch.Tensor]:
         """Compute the desired metric.
@@ -128,7 +133,32 @@ class Metric:
         
         return self.f(*args, **kwargs)
     
-    def mutate(self, name: Optional[str] = None, request: Optional[str] = None, reduce: Optional[Union[int, Tuple[int]]] = None, f: Optional[Callable] = None) -> "Metric":
+    def grant(self, metadata: Dict[str, float | np.ndarray | torch.Tensor]) -> None:
+        """Grant additional metadata to this metric.
+        
+        Parameters
+        ----------
+        metadata : Dict[str, float | np.ndarray | torch.Tensor]
+            Additional metadata to be granted to this metric that may then be requested.
+        """
+        
+        # check type
+        if not isinstance(metadata, Dict):
+            raise ValueError(
+                f'When granting metadata, metadata must be a dictionary of '
+                f'`key` => `value` pairs, but got {type(metadata)}.'
+            )
+        
+        # check existing
+        if self.metadata is None:
+            # replace existing
+            self.metadata = metadata
+        else:
+            # copy into existing
+            for key in metadata:
+                self.metadata[key] = metadata[key]
+    
+    def mutate(self, name: Optional[str] = None, request: Optional[str] = None, reduce: Optional[Union[int, Tuple[int]]] = None, f: Optional[Callable] = None, metadata: Optional[Dict[str, float | np.ndarray | torch.Tensor]] = None) -> "Metric":
         """Mutate an existing metric.
         
         Parameters
@@ -152,5 +182,6 @@ class Metric:
             name = name or self.name,
             request = request or self.request,
             reduce = reduce or self.reduce,
-            f = f or self.f
+            f = f or self.f,
+            metadata = metadata or self.metadata
         )

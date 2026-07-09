@@ -7,9 +7,10 @@ import numpy as np
 import sklearn
 from sklearn.pipeline import Pipeline
 
+from copy import deepcopy
 from math import prod
 
-from typing import Union, Tuple, Optional, List
+from typing import Union, Tuple, Optional, Dict
 
 from .metric import Metric
 
@@ -45,7 +46,7 @@ def reduce_(X: Union[np.ndarray, torch.Tensor], dims: Union[int, Tuple[int]]) ->
     final = prod(X_m.shape[len(others):])
     return X_m.reshape(*X_m.shape[:len(others)], final)
 
-def score(model: Union[Pipeline, sklearn.base.BaseEstimator], metric: Union[Metric, Tuple[Metric]], X: Union[np.ndarray, torch.Tensor], y: Optional[Union[np.ndarray, torch.Tensor]] = None) -> List[Union[np.ndarray, torch.Tensor]]:
+def score(model: Union[Pipeline, sklearn.base.BaseEstimator], metric: Union[Metric, Tuple[Metric]], X: Union[np.ndarray, torch.Tensor], y: Optional[Union[np.ndarray, torch.Tensor]] = None) -> Union[np.ndarray, torch.Tensor, Dict[str, Union[np.ndarray, torch.Tensor]]]:
     """
     """
     
@@ -55,6 +56,9 @@ def score(model: Union[Pipeline, sklearn.base.BaseEstimator], metric: Union[Metr
     
     # setup cache
     cache = {'X': X, 'y': y}
+    
+    # setup reduced cache
+    cache_reduced = {}
     
     # setup dummy
     out = {m.name: [] for m in metric}
@@ -68,20 +72,45 @@ def score(model: Union[Pipeline, sklearn.base.BaseEstimator], metric: Union[Metr
         for r in m.request:
             # check cache status
             if r not in cache:
-                # if not available, grab name
-                cache[r] = getattr(model, r, None)
-                
-                # check validity
-                if cache[r] is None:
-                    raise ValueError(f'Attribute or method {r} requested by {m.name} does not exist in {model.__repr__}.')
+                # check metadata
+                if r in m.metadata:
+                    cache[r] = m.metadata[r]
+                # check model attributes
+                elif not hasattr(model, r):
+                    # check for pipeline
+                    if isinstance(model, Pipeline):
+                        # request from final element
+                        cache[r] = getattr(model[-1], r, None)
+                    else:
+                        # otherwise, unavailable element
+                        cache[r] = None
+                else:
+                    # retrieve directly
+                    cache[r] = getattr(model, r, None)
 
                 # check method
                 if callable(cache[r]):
                     cache[r] = cache[r](X)
             
-            # add as argument
-            arg_i = reduce_(cache[r], m.reduce)
-            arg.append(arg_i)
+            # check reduced cache
+            if m.reduce not in cache_reduced:
+                # setup cache
+                cache_reduced[m.reduce] = {}
+            
+            # search reduced cache
+            if r not in cache_reduced[m.reduce]:
+                # handle cache miss
+                arg_i = cache[r]
+                
+                # handle None types
+                if arg_i is not None:
+                    arg_i = reduce_(arg_i, m.reduce)
+                
+                # fill cache
+                cache_reduced[m.reduce][r] = arg_i
+            
+            # safely append argument
+            arg.append(cache_reduced[m.reduce][r])
         
         # compute metric
         out[m.name] = m(*arg)

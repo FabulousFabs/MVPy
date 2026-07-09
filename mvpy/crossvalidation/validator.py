@@ -45,6 +45,8 @@ def fit_model_(model: Union[sklearn.base.BaseEstimator, Pipeline], train: Union[
                 The scores from cross-validation.
             test : np.ndarray | torch.Tensor
                 The test indices.
+            metric : Metric
+                The metric instance(s) used.
     """
     
     # clone estimator or pipeline
@@ -52,6 +54,31 @@ def fit_model_(model: Union[sklearn.base.BaseEstimator, Pipeline], train: Union[
         model = model.clone()
     else:
         model = deepcopy(model)
+    
+    # clone metrics
+    metric = deepcopy(metric)
+    
+    # prepare metric
+    if y is not None:
+        if (metric is not None) and (len(metric) > 1):
+            for metric_i in metric:
+                if isinstance(y, np.ndarray):
+                    y_b = y[train].mean(metric_i.reduce, keepdims = True)
+                else:
+                    y_b = y[train].mean(metric_i.reduce, keepdim = True)
+                
+                metric_i.grant({
+                    'y_b': y_b
+                })
+        elif metric is not None:
+            if isinstance(y, np.ndarray):
+                y_b = y[train].mean(metric.reduce, keepdims = True)
+            else:
+                y_b = y[train].mean(metric.reduce, keepdim = True)
+            
+            metric.grant({
+                'y_b': y_b
+            })
     
     # fit model
     fit_args = (X[train], y[train]) if y is not None else (X[train],)
@@ -72,12 +99,12 @@ def fit_model_(model: Union[sklearn.base.BaseEstimator, Pipeline], train: Union[
         score_ = {}
         
         # add to dict
-        for metric in metric:
-            score_[metric.name] = score_i[metric.name]
+        for metric_i in metric:
+            score_[metric_i.name] = score_i[metric_i.name]
     else:
         score_ = score_i
     
-    return dict(model = model, score_ = score_, test = test)
+    return dict(model = model, score_ = score_, test = test, metric = metric)
 
 class Validator(sklearn.base.BaseEstimator):
     """Implements automated cross-validation and scoring over estimators or pipelines.
@@ -122,6 +149,8 @@ class Validator(sklearn.base.BaseEstimator):
         The scores of all models on test data of an arbitrary output shape.
     test_ : List[np.ndarray | torch.Tensor]
         A list of test indices used for scoring.
+    metric_ : List[Metric | None] | None
+        A list of metrics used for individual models.
     
     See also
     --------
@@ -279,6 +308,7 @@ class Validator(sklearn.base.BaseEstimator):
         self.model_ = []
         self.score_ = []
         self.test_ = []
+        self.metric_ = []
         
     def fit(self, X: Union[np.ndarray, torch.Tensor], y: Optional[Union[np.ndarray, torch.Tensor]] = None) -> "Validator":
         """Fit and score the validator.
@@ -328,6 +358,7 @@ class Validator(sklearn.base.BaseEstimator):
             model = result['model']
             score_ = result['score_']
             test = result['test']
+            metric_ = result['metric']
 
             # stack data
             self.model_.append(model)
@@ -337,6 +368,7 @@ class Validator(sklearn.base.BaseEstimator):
             else:
                 self.score_.append(score_)
             self.test_.append(test)
+            self.metric_.append(metric)
         
         # check metric
         if self.metric is not None and len(self.metric) > 1:
@@ -589,7 +621,7 @@ class Validator(sklearn.base.BaseEstimator):
 
         # otherwise, call score ourselves
         scores_ = [
-            score(self.model_[i], self.metric, *score_args)
+            score(self.model_[i], self.metric_[i], *score_args)
             for i in range(len(self.model_))
         ]
         
