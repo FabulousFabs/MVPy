@@ -13,7 +13,7 @@ from sklearn.pipeline import Pipeline
 
 from typing import Optional, Union, Dict, Tuple, Any
 
-def cross_val_score(model: Union[Pipeline, sklearn.base.BaseEstimator], X: Union[np.ndarray, torch.Tensor], y: Optional[Union[np.ndarray, torch.Tensor]] = None, cv: Optional[Union[int, Any]] = 5, metric: Optional[Union[Metric, Tuple[Metric]]] = None, return_validator: bool = True, n_jobs: Optional[int] = None, verbose: Union[int, bool] = False) -> Union[np.ndarray, torch.Tensor, Dict, Tuple[Validator, Union[np.ndarray, torch.Tensor, Dict]]]:
+def cross_val_score(model: Union[Pipeline, sklearn.base.BaseEstimator], X: Union[np.ndarray, torch.Tensor], y: Optional[Union[np.ndarray, torch.Tensor]] = None, groups: Optional[Union[np.ndarray, torch.Tensor]] = None, cv: Optional[Union[int, Any]] = 5, metric: Optional[Union[Metric, Tuple[Metric]]] = None, return_validator: bool = True, n_jobs: Optional[int] = None, verbose: Union[int, bool] = False) -> Union[np.ndarray, torch.Tensor, Dict, Tuple[Validator, Union[np.ndarray, torch.Tensor, Dict]]]:
     """Implements a shorthand for automated cross-validation scoring over estimators or pipelines.
     
     This function acts as a shorthand for :py:class:`~mvpy.crossvalidation.Validator` 
@@ -31,6 +31,8 @@ def cross_val_score(model: Union[Pipeline, sklearn.base.BaseEstimator], X: Union
         The input data of arbitrary shape.
     y : Optional[np.ndarray | torch.Tensor], default=None
         The outcome data of arbitrary shape.
+    groups : Optional[np.ndarray | torch.Tensor], default=None
+        Groups for the outcome data. Only useful if `cv` relies on `groups` parameter.
     cv : Optional[int | Any], default=5
         The cross-validation procedure to follow. Either an object exposing a ``split()`` method, such as :py:class:`~mvpy.crossvalidation.KFold` or an integer specifying the number of folds to use in :py:class:`~mvpy.crossvalidation.KFold`.
     metric : Optional[mvpy.metrics.Metric, Tuple[mvpy.metrics.Metric]], default=None
@@ -86,7 +88,7 @@ def cross_val_score(model: Union[Pipeline, sklearn.base.BaseEstimator], X: Union
         metric = metric,
         n_jobs = n_jobs,
         verbose = verbose
-    ).fit(X, y)
+    ).fit(X, y, groups = groups)
     
     # check return value
     if return_validator:

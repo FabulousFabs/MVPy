@@ -55,12 +55,20 @@ def fit_model_(model: Union[sklearn.base.BaseEstimator, Pipeline], train: Union[
     else:
         model = deepcopy(model)
     
+    # identify internal metric if required
+    if metric is None:
+        if isinstance(model, Pipeline):
+            if hasattr(model[-1], 'metric_'):
+                metric = model[-1].metric_
+        elif hasattr(model, 'metric_'):
+            metric = model.metric_,
+    
     # clone metrics
     metric = deepcopy(metric)
     
     # prepare metric
     if y is not None:
-        if (metric is not None) and (len(metric) > 1):
+        if (metric is not None) and (isinstance(metric, Tuple)):
             for metric_i in metric:
                 if isinstance(y, np.ndarray):
                     y_b = y[train].mean(metric_i.reduce, keepdims = True)
@@ -94,7 +102,7 @@ def fit_model_(model: Union[sklearn.base.BaseEstimator, Pipeline], train: Union[
         score_i = model.score(*score_args)
     
     # check metric
-    if metric is not None and len(metric) > 1:
+    if metric is not None and isinstance(metric, Tuple):
         # setup
         score_ = {}
         
@@ -310,7 +318,7 @@ class Validator(sklearn.base.BaseEstimator):
         self.test_ = []
         self.metric_ = []
         
-    def fit(self, X: Union[np.ndarray, torch.Tensor], y: Optional[Union[np.ndarray, torch.Tensor]] = None) -> "Validator":
+    def fit(self, X: Union[np.ndarray, torch.Tensor], y: Optional[Union[np.ndarray, torch.Tensor]] = None, groups: Optional[Union[np.ndarray, torch.Tensor]] = None) -> "Validator":
         """Fit and score the validator.
         
         Parameters
@@ -319,6 +327,8 @@ class Validator(sklearn.base.BaseEstimator):
             Input data of arbitrary shape.
         y : Optional[np.ndarray | torch.Tensor], default=None
             Output data of arbitrary shape.
+        groups : Optional[np.ndarray | torch.Tensor], default=None
+            Groups of the data. Only useful if :py:attr:`~mvpy.crossvalidation.Validator.cv_` requires them.
         
         Returns
         -------
@@ -333,6 +343,7 @@ class Validator(sklearn.base.BaseEstimator):
         
         # setup arguments for split
         split_args = (X, y) if y is not None else (X,)
+        split_kwargs = dict(groups = groups) if groups is not None else dict()
         
         # setup progressbar
         context = Progressbar(enabled = self.verbose, desc = "Validator", total = self.cv_n_)
@@ -348,7 +359,7 @@ class Validator(sklearn.base.BaseEstimator):
                         y = y,
                         metric = self.metric
                     )
-                    for f_i, (train, test) in enumerate(self.cv_.split(*split_args))
+                    for f_i, (train, test) in enumerate(self.cv_.split(*split_args, **split_kwargs))
                 )
             ][0]
         
@@ -368,7 +379,7 @@ class Validator(sklearn.base.BaseEstimator):
             else:
                 self.score_.append(score_)
             self.test_.append(test)
-            self.metric_.append(metric)
+            self.metric_.append(metric_)
         
         # check metric
         if self.metric is not None and len(self.metric) > 1:
