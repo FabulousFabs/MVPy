@@ -20,6 +20,14 @@ mvpy.crossvalidation.kfold module
    :undoc-members:
    :show-inheritance:
 
+mvpy.crossvalidation.lgo module
+-------------------------------
+
+.. automodule:: mvpy.crossvalidation.lgo
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 mvpy.crossvalidation.repeatedkfold module
 -----------------------------------------
 
