@@ -467,9 +467,9 @@ class Shapley:
         
         # stack order
         if is_torch:
-            self.order_ = torch.stack(order_, dim = 0)
+            self.order_ = torch.stack(self.order_, dim = 0)
         else:
-            self.order_ = np.array(order_)
+            self.order_ = np.array(self.order_)
         
         # check metric
         if self.validator.metric is not None and len(self.validator.metric) > 1:
