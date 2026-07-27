@@ -27,20 +27,20 @@ class LeaveGroupsOut:
     lead to leakage because of the dyadic relationship present in each sample :math:`A_{i,j}`. Consequently, we 
     must treat participants as grouping variables such that train and test sets are constructed over participants 
     rather than samples. In this case, we would construct :math:`G\\in\\mathcal{R}^{n\\times n\\times 2}` where 
-    :math:`G_{i,j} = \\left(\\begin{array}{c} i \\ j \\end{array}\\right)`to ensure that we train on a subset of 
+    :math:`G_{i,j} = \\left(i, j\\right)`to ensure that we train on a subset of 
     participants and test on a separate subset of participants.
     
     .. warning::
-        If multiple labels per sample are present in :py:attr:`~mvpy.crossvalidation.LeaveGroupsOut`'s `group` 
-        parameter such that `(n_samples, ..., n_groups)` where `n_groups > 1`, make sure that data 
+        If multiple labels per sample are present in :py:class:`~mvpy.crossvalidation.LeaveGroupsOut`'s ``group`` 
+        parameter such that ``(n_samples, ..., n_groups)`` where ``n_groups > 1``, make sure that data 
         are roughly balanced. Otherwise, fold sizes may vary greatly.
     
     Parameters
     ----------
     n_splits : int, default=5
         Number of splits to use.
-    shuffle : bool, default=False
-        Should we shuffle indices before splitting?
+    n_repeats : int, default=1
+        Number of repeats to perform.
     random_state : Optional[Union[int, np.random._generator.Generator, torch._C.Generator]], default=None
         Random state to use for shuffling (either integer seed or numpy/torch generator), if any.
     
@@ -48,93 +48,24 @@ class LeaveGroupsOut:
     ----------
     n_splits : int, default=5
         Number of splits to use.
-    shuffle : bool, default=False
-        Should we shuffle indices before splitting?
+    n_repeats : int, default=1
+        Number of repeats to perform.
     random_state : Optional[Union[int, np.random._generator.Generator, torch._C.Generator]], default=None
         Random state to use for shuffling (either integer seed or numpy/torch generator), if any.
-    rng_ : Union[np.random._generator.Generator, torch._C.Generator]
-        Random generator derived from random_state.
-    
-    Notes
-    -----
-    For reproducability when using shuffling, you can set the random_state to an integer.
-    
-    Note also that, when using shuffling, please make sure to instantiate and transform immediately to the backend you would like. Otherwise, each call to split will instantiate a new object with the same random seed. See examples for a demonstration.
+    rkf_ : RepeatedKFold
+        Repeated k-fold cross-validation object used under the hood.
     
     Examples
     --------
-    If we are not using shuffling, we can simply do:
-    
     >>> import torch
-    >>> from mvpy.crossvalidation import KFold
-    >>> X = torch.arange(10)
-    >>> kf = KFold()
-    >>> for f_i, (train, test) in enumerate(kf.split(X)):
-    >>>     print(f'Fold{f_i}: train={train}\ttest={test}')
-    Fold0: train=tensor([2, 3, 4, 5, 6, 7, 8, 9])	test=tensor([0, 1])
-    Fold1: train=tensor([0, 1, 4, 5, 6, 7, 8, 9])	test=tensor([2, 3])
-    Fold2: train=tensor([0, 1, 2, 3, 6, 7, 8, 9])	test=tensor([4, 5])
-    Fold3: train=tensor([0, 1, 2, 3, 4, 5, 8, 9])	test=tensor([6, 7])
-    Fold4: train=tensor([0, 1, 2, 3, 4, 5, 6, 7])	test=tensor([8, 9])
-    
-    However, let's assume we want to use shuffling. We might be inclined to do:
-    
-    >>> import torch
-    >>> from mvpy.crossvalidation import KFold
+    >>> from mvpy.crossvalidation import LeaveGroupsOut
     >>> X = torch.arange(6)
-    >>> kf = KFold(n_splits = 2, shuffle = True, random_state = 42)
-    >>> print(f'Run 1:')
-    >>> for f_i, (train, test) in enumerate(kf.split(X)):
-    >>>     print(f'Fold{f_i}: train={train}\ttest={test}')
-    >>> print(f'Run 2:')
-    >>> for f_i, (train, test) in enumerate(kf.split(X)):
-    >>>     print(f'Fold{f_i}: train={train}\ttest={test}')
-    Run 1:
-    Fold0: train=tensor([4, 1, 5])	test=tensor([0, 3, 2])
-    Fold1: train=tensor([0, 3, 2])	test=tensor([4, 1, 5])
-    Run 2:
-    Fold0: train=tensor([4, 1, 5])	test=tensor([0, 3, 2])
-    Fold1: train=tensor([0, 3, 2])	test=tensor([4, 1, 5])
-    
-    Note that here we pass random_state to make this reproducible on your end. As you can see, the randomisation is now static across runs. This occurs because, up until the call to split the data, MVPy cannot consistently infer the desired data type. Therefore, the backend class is instantiated only upon calling split where types become explicit. However, this means that each call to split will re-instantiate the class. We can easily work around this in two ways:
-    
-    >>> import torch
-    >>> from mvpy.crossvalidation import KFold
-    >>> X = torch.arange(6)
-    >>> kf = KFold(n_splits = 2, shuffle = True, random_state = 42).to_torch()
-    >>> print(f'Run 1:')
-    >>> for f_i, (train, test) in enumerate(kf.split(X)):
-    >>>     print(f'Fold{f_i}: train={train}\ttest={test}')
-    >>> print(f'Run 2:')
-    >>> for f_i, (train, test) in enumerate(kf.split(X)):
-    >>>     print(f'Fold{f_i}: train={train}\ttest={test}')
-    Run 1:
-    Fold0: train=tensor([4, 1, 5])	test=tensor([0, 3, 2])
-    Fold1: train=tensor([0, 3, 2])	test=tensor([4, 1, 5])
-    Run 2:
-    Fold0: train=tensor([4, 0, 3])	test=tensor([5, 1, 2])
-    Fold1: train=tensor([5, 1, 2])	test=tensor([4, 0, 3])
-    
-    Here, we explicitly instantiate a torch operator that is not reinstantiated across runs, which works perfectly. We could, however, also use an external generator to achieve the same result:
-    
-    >>> import torch
-    >>> from mvpy.crossvalidation import KFold
-    >>> X = torch.arange(6)
-    >>> rng = torch.Generator()
-    >>> rng.manual_seed(42)
-    >>> kf = KFold(n_splits = 2, shuffle = True, random_state = rng)
-    >>> print('Run 1:')
-    >>> for f_i, (train, test) in enumerate(kf.split(X)):
-    >>>     print(f'Fold{f_i}: train={train}\ttest={test}')
-    >>> print('Run 2:')
-    >>> for f_i, (train, test) in enumerate(kf.split(X)):
-    >>>     print(f'Fold{f_i}: train={train}\ttest={test}')
-    Run 1:
-    Fold0: train=tensor([4, 1, 5])	test=tensor([0, 3, 2])
-    Fold1: train=tensor([0, 3, 2])	test=tensor([4, 1, 5])
-    Run 2:
-    Fold0: train=tensor([4, 0, 3])	test=tensor([5, 1, 2])
-    Fold1: train=tensor([5, 1, 2])	test=tensor([4, 0, 3])
+    >>> g = torch.arange(2).repeat(3)
+    >>> kf = LeaveGroupsOut(n_splits = 2, n_repeats = 1)
+    >>> for f_i, (train, test) in enumerate(kf.split(X, groups = g)):
+    >>>     print(f'Fold{f_i}: train={train}|{g[train]}    test={test}|{g[test]}')
+    Fold0: train=tensor([1, 3, 5])|tensor([1, 1, 1])    test=tensor([0, 2, 4])|tensor([0, 0, 0])
+    Fold1: train=tensor([0, 2, 4])|tensor([0, 0, 0])    test=tensor([1, 3, 5])|tensor([1, 1, 1])
     """
     
     def __init__(self, n_splits: int = 5, n_repeats: int = 1, random_state: Optional[Union[int, np.random._generator.Generator, torch._C.Generator]] = None):

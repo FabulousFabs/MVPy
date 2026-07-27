@@ -107,10 +107,10 @@ API_REFERENCE = {
                 "autosummary": [
                     "cross_val_score",
                     "KFold",
-                    "LeaveGroupsOut",
                     "RepeatedKFold",
                     "StratifiedKFold",
                     "RepeatedStratifiedKFold",
+                    "LeaveGroupsOut",
                     "Validator"
                 ],
             }
