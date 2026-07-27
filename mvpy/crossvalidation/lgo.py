@@ -13,6 +13,28 @@ from .repeatedkfold import RepeatedKFold
 class LeaveGroupsOut:
     """Implements a leave-groups-out cross-validator.
     
+    Functionally, this class is analogous to using :py:class:`~mvpy.crossvalidation.RepeatedKFold` 
+    over unique values of the supplied :py:attr:`groups`. For example, for inputs :math:`X` of shape 
+    ``(100, ...)`` and ``groups`` :math:`G` of shape ``(100, 1)`` where :math:`G\\in {1...5}` with :math:`k = 5`, 
+    each group in :math:`G` corresponds to one fold :math:`k`. 
+    
+    However, :py:class:`~mvpy.crossvalidation.LeaveGroupsOut` also supports multi-label situations. For 
+    example, consider a gram matrix :math:`A(X, X^T)\\in\\mathcal{R}^{n\\times n}` where :math:`A_{i,j}` 
+    is the neural similarity between participants :math:`i` and :math:`j` that we wish to model as a function
+    of a gram matrix :math:`B(y, y^T)\\in\\mathcal{R}^{n\\times n}` where :math:`B_{i,j}` describes behavioural 
+    similarity of participants :math:`i` and :math:`j`. Typically, we would like to model :math:`u(A) = \\beta u(B) + \\varepsilon`
+    where :math:`u` simply defines the upper triangle of the matrix. In cross-validation, however, this would 
+    lead to leakage because of the dyadic relationship present in each sample :math:`A_{i,j}`. Consequently, we 
+    must treat participants as grouping variables such that train and test sets are constructed over participants 
+    rather than samples. In this case, we would construct :math:`G\\in\\mathcal{R}^{n\\times n\\times 2}` where 
+    :math:`G_{i,j} = \\left(\\begin{array}{c} i \\ j \\end{array}\\right)`to ensure that we train on a subset of 
+    participants and test on a separate subset of participants.
+    
+    .. warning::
+        If multiple labels per sample are present in :py:attr:`~mvpy.crossvalidation.LeaveGroupsOut`'s `group` 
+        parameter such that `(n_samples, ..., n_groups)` where `n_groups > 1`, make sure that data 
+        are roughly balanced. Otherwise, fold sizes may vary greatly.
+    
     Parameters
     ----------
     n_splits : int, default=5
