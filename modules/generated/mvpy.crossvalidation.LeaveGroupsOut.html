@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>B2B &#8212; MVPy</title>
+    <title>LeaveGroupsOut &#8212; MVPy</title>
   
   
   
@@ -52,15 +52,15 @@
     <script src="../../_static/sg-tags.js?v=d80f6fa4"></script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'modules/generated/mvpy.estimators.B2B';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modules/generated/mvpy.crossvalidation.LeaveGroupsOut';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <script src="../../_static/scripts/dropdown.js?v=5b9cef8c"></script>
     <script src="../../_static/scripts/version-switcher.js?v=6ebe4089"></script>
     <script src="../../_static/scripts/sg_plotly_resize.js?v=dc4a1e18"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Classifier" href="mvpy.estimators.Classifier.html" />
-    <link rel="prev" title="mvpy.estimators" href="../../api/mvpy.estimators.html" />
+    <link rel="next" title="RepeatedKFold" href="mvpy.crossvalidation.RepeatedKFold.html" />
+    <link rel="prev" title="KFold" href="mvpy.crossvalidation.KFold.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -372,10 +372,10 @@
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../api/mvpy.html">mvpy</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.crossvalidation.html">mvpy.crossvalidation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../api/mvpy.crossvalidation.html">mvpy.crossvalidation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.cross_val_score.html">cross_val_score</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.KFold.html">KFold</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.LeaveGroupsOut.html">LeaveGroupsOut</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">LeaveGroupsOut</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.RepeatedKFold.html">RepeatedKFold</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.StratifiedKFold.html">StratifiedKFold</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.crossvalidation.RepeatedStratifiedKFold.html">RepeatedStratifiedKFold</a></li>
@@ -390,8 +390,8 @@
 <li class="toctree-l2"><a class="reference internal" href="mvpy.dataset.make_meeg_layout.html">make_meeg_layout</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../api/mvpy.estimators.html">mvpy.estimators</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">B2B</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/mvpy.estimators.html">mvpy.estimators</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.B2B.html">B2B</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.Classifier.html">Classifier</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.Covariance.html">Covariance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvpy.estimators.KernelRidgeCV.html">KernelRidgeCV</a></li>
@@ -510,9 +510,9 @@
     <li class="breadcrumb-item"><a href="../../api/index.html" class="nav-link">API Reference</a></li>
     
     
-    <li class="breadcrumb-item"><a href="../../api/mvpy.estimators.html" class="nav-link">mvpy.estimators</a></li>
+    <li class="breadcrumb-item"><a href="../../api/mvpy.crossvalidation.html" class="nav-link">mvpy.crossvalidation</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">B2B</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">LeaveGroupsOut</span></li>
   </ul>
 </nav>
 </div>
@@ -529,158 +529,152 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="b2b">
-<h1>B2B<a class="headerlink" href="#b2b" title="Link to this heading">#</a></h1>
+  <section id="leavegroupsout">
+<h1>LeaveGroupsOut<a class="headerlink" href="#leavegroupsout" title="Link to this heading">#</a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="mvpy.estimators.B2B">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.estimators.</span></span><span class="sig-name descname"><span class="pre">B2B</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alphas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/fba9cbb/mvpy/estimators/b2b.py#L346"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.B2B" title="Link to this definition">#</a></dt>
-<dd><p>Implements a back-to-back regression to disentangle causal contributions of correlated features.</p>
-<p>The back-to-back estimator is a two-step estimator that consists of a decoder and an encoder. 
-Effectively, the idea is to split the data <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(y\)</span> into two folds, decode all 
-features in fold a, then use predictions from the decoder to encode all true features from all 
-predictions in fold b. Consequently, this allows us to obtain a disentangled estimate of the 
-causal contribution of each feature.</p>
-<p>In practice, this is implemented as:</p>
-<div class="math notranslate nohighlight">
-\[\hat{G} = (Y^T Y + \alpha_Y)^{-1}Y^T X\]</div>
-<div class="math notranslate nohighlight">
-\[\hat{H} = (X^T X + \alpha_X)^{-1}X^T Y\hat{G}\]</div>
-<p>where <span class="math notranslate nohighlight">\(\hat{G}\)</span> is the decoder and <span class="math notranslate nohighlight">\(\hat{H}\)</span> is the encoder, and <span class="math notranslate nohighlight">\(\alpha\)</span> 
-are regularisation parameters. Consequently, the diagonal of <span class="math notranslate nohighlight">\(\hat{H}\)</span> contains the 
-estimated causal contributions of our features.</p>
-<p>For more information on B2B regression, please see <a class="reference internal" href="#r068673cdeed2-1" id="id1">[1]</a>.</p>
+<dt class="sig sig-object py" id="mvpy.crossvalidation.LeaveGroupsOut">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.crossvalidation.</span></span><span class="sig-name descname"><span class="pre">LeaveGroupsOut</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_splits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_repeats</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Generator</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Generator</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/fba9cbb/mvpy/crossvalidation/lgo.py#L13"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.crossvalidation.LeaveGroupsOut" title="Link to this definition">#</a></dt>
+<dd><p>Implements a leave-groups-out cross-validator.</p>
+<p>Functionally, this class is analogous to using <a class="reference internal" href="mvpy.crossvalidation.RepeatedKFold.html#mvpy.crossvalidation.RepeatedKFold" title="mvpy.crossvalidation.RepeatedKFold"><code class="xref py py-class docutils literal notranslate"><span class="pre">RepeatedKFold</span></code></a> 
+over unique values of the supplied <code class="xref py py-attr docutils literal notranslate"><span class="pre">groups</span></code>. For example, for inputs <span class="math notranslate nohighlight">\(X\)</span> of shape 
+<code class="docutils literal notranslate"><span class="pre">(100,</span> <span class="pre">...)</span></code> and <code class="docutils literal notranslate"><span class="pre">groups</span></code> <span class="math notranslate nohighlight">\(G\)</span> of shape <code class="docutils literal notranslate"><span class="pre">(100,</span> <span class="pre">1)</span></code> where <span class="math notranslate nohighlight">\(G\in {1...5}\)</span> with <span class="math notranslate nohighlight">\(k = 5\)</span>, 
+each group in <span class="math notranslate nohighlight">\(G\)</span> corresponds to one fold <span class="math notranslate nohighlight">\(k\)</span>.</p>
+<p>However, <a class="reference internal" href="#mvpy.crossvalidation.LeaveGroupsOut" title="mvpy.crossvalidation.LeaveGroupsOut"><code class="xref py py-class docutils literal notranslate"><span class="pre">LeaveGroupsOut</span></code></a> also supports multi-label situations. For 
+example, consider a gram matrix <span class="math notranslate nohighlight">\(A(X, X^T)\in\mathcal{R}^{n\times n}\)</span> where <span class="math notranslate nohighlight">\(A_{i,j}\)</span> 
+is the neural similarity between participants <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span> that we wish to model as a function
+of a gram matrix <span class="math notranslate nohighlight">\(B(y, y^T)\in\mathcal{R}^{n\times n}\)</span> where <span class="math notranslate nohighlight">\(B_{i,j}\)</span> describes behavioural 
+similarity of participants <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span>. Typically, we would like to model <span class="math notranslate nohighlight">\(u(A) = \beta u(B) + \varepsilon\)</span>
+where <span class="math notranslate nohighlight">\(u\)</span> simply defines the upper triangle of the matrix. In cross-validation, however, this would 
+lead to leakage because of the dyadic relationship present in each sample <span class="math notranslate nohighlight">\(A_{i,j}\)</span>. Consequently, we 
+must treat participants as grouping variables such that train and test sets are constructed over participants 
+rather than samples. In this case, we would construct <span class="math notranslate nohighlight">\(G\in\mathcal{R}^{n\times n\times 2}\)</span> where 
+:math:<a href="#id1"><span class="problematic" id="id2">`</span></a>G_{i,j} = left(begin{array}{c} i j end{array}right)`to ensure that we train on a subset of 
+participants and test on a separate subset of participants.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If multiple labels per sample are present in <a class="reference internal" href="#mvpy.crossvalidation.LeaveGroupsOut" title="mvpy.crossvalidation.LeaveGroupsOut"><code class="xref py py-attr docutils literal notranslate"><span class="pre">LeaveGroupsOut</span></code></a>’s <cite>group</cite> 
+parameter such that <cite>(n_samples, …, n_groups)</cite> where <cite>n_groups &gt; 1</cite>, make sure that data 
+are roughly balanced. Otherwise, fold sizes may vary greatly.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>alphas</strong><span class="classifier">torch.Tensor | np.ndarray, default=torch.tensor([1])</span></dt><dd><p>The penalties to use for estimation.</p>
+<dt><strong>n_splits</strong><span class="classifier">int, default=5</span></dt><dd><p>Number of splits to use.</p>
 </dd>
-<dt><strong>fit_intercept</strong><span class="classifier">bool, default=True</span></dt><dd><p>Whether to fit an intercept.</p>
+<dt><strong>shuffle</strong><span class="classifier">bool, default=False</span></dt><dd><p>Should we shuffle indices before splitting?</p>
 </dd>
-<dt><strong>normalise</strong><span class="classifier">bool, default=True</span></dt><dd><p>Whether to normalise the data.</p>
-</dd>
-<dt><strong>alpha_per_target</strong><span class="classifier">bool, default=False</span></dt><dd><p>Whether to use a different penalty for each target.</p>
-</dd>
-<dt><strong>normalise_decoder</strong><span class="classifier">bool, default=True</span></dt><dd><p>Whether to normalise decoder ouputs.</p>
+<dt><strong>random_state</strong><span class="classifier">Optional[Union[int, np.random._generator.Generator, torch._C.Generator]], default=None</span></dt><dd><p>Random state to use for shuffling (either integer seed or numpy/torch generator), if any.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>alphas</strong><span class="classifier">torch.Tensor | np.ndarray</span></dt><dd><p>The penalties to use for estimation.</p>
+<dt><strong>n_splits</strong><span class="classifier">int, default=5</span></dt><dd><p>Number of splits to use.</p>
 </dd>
-<dt><strong>fit_intercept</strong><span class="classifier">bool</span></dt><dd><p>Whether to fit an intercept.</p>
+<dt><strong>shuffle</strong><span class="classifier">bool, default=False</span></dt><dd><p>Should we shuffle indices before splitting?</p>
 </dd>
-<dt><strong>normalise</strong><span class="classifier">bool</span></dt><dd><p>Whether to normalise the data</p>
+<dt><strong>random_state</strong><span class="classifier">Optional[Union[int, np.random._generator.Generator, torch._C.Generator]], default=None</span></dt><dd><p>Random state to use for shuffling (either integer seed or numpy/torch generator), if any.</p>
 </dd>
-<dt><strong>alpha_per_target</strong><span class="classifier">bool</span></dt><dd><p>Whether to use a different penalty for each target.</p>
-</dd>
-<dt><strong>normalise_decoder</strong><span class="classifier">bool</span></dt><dd><p>Whether to normalise decoder ouputs.</p>
-</dd>
-<dt><strong>decoder_</strong><span class="classifier">mvpy.estimators.RidgeDecoder</span></dt><dd><p>The decoder.</p>
-</dd>
-<dt><strong>encoder_</strong><span class="classifier">mvpy.estimators.RidgeDecoder</span></dt><dd><p>The encoder.</p>
-</dd>
-<dt><strong>scaler_</strong><span class="classifier">mvpy.estimators.Scaler</span></dt><dd><p>The scaler.</p>
-</dd>
-<dt><strong>causal_</strong><span class="classifier">torch.Tensor | np.ndarray</span></dt><dd><p>The causal contribution of each feature of shape <code class="docutils literal notranslate"><span class="pre">(n_features,)</span></code>.</p>
-</dd>
-<dt><strong>pattern_</strong><span class="classifier">torch.Tensor | np.ndarray</span></dt><dd><p>The decoded patterns of shape <code class="docutils literal notranslate"><span class="pre">(n_channels,</span> <span class="pre">n_features)</span></code>.</p>
+<dt><strong>rng_</strong><span class="classifier">Union[np.random._generator.Generator, torch._C.Generator]</span></dt><dd><p>Random generator derived from random_state.</p>
 </dd>
 </dl>
 </dd>
 </dl>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<dl class="simple">
-<dt><a class="reference internal" href="mvpy.preprocessing.Scaler.html#mvpy.preprocessing.Scaler" title="mvpy.preprocessing.Scaler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mvpy.preprocessing.Scaler</span></code></a></dt><dd><p>If applied, scalers used in this class.</p>
-</dd>
-<dt><a class="reference internal" href="mvpy.estimators.RidgeDecoder.html#mvpy.estimators.RidgeDecoder" title="mvpy.estimators.RidgeDecoder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mvpy.estimators.RidgeDecoder</span></code></a></dt><dd><p>Ridge decoders used for the two-step procedure here.</p>
-</dd>
-</dl>
-</div>
 <p class="rubric">Notes</p>
-<p>When penalising per target by setting <code class="xref py py-attr docutils literal notranslate"><span class="pre">alpha_per_target</span></code>
-to <code class="docutils literal notranslate"><span class="pre">True</span></code>, you may want to consider normalising the decoder by also setting 
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">normalise_decoder</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code>. This is because otherwise 
-decoder outputs may live on very different scales, potentially distorting the causal 
-estimates per predictor.</p>
-<p>Patterns are computed as per <a class="reference internal" href="#r068673cdeed2-2" id="id2">[2]</a>. However, these patterns are not disentangled and 
-may, consequently, be less informative than desired, depending on strength of existing
-correlations.</p>
-<p class="rubric">References</p>
-<div role="list" class="citation-list">
-<div class="citation" id="r068673cdeed2-1" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
-<p>King, J.R., Charton, F., Lopez-Paz, D., &amp; Oquab, M. (2020). Back-to-back regression: Disentangling the influence of correlated factors from multivariate observations. NeuroImage, 220, 117028. 10.1016/j.neuroimage.2020.117028</p>
-</div>
-<div class="citation" id="r068673cdeed2-2" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
-<p>Haufe, S., Meinecke, F., Görgen, K., Dähne, S., Haynes, J.D., Blankertz, B., &amp; Bießmann, F. (2014). On the interpretation of weight vectors of linear models in multivariate neuroimaging. NeuroImage, 87, 96-110. 10.1016/j.neuroimage.2013.10.067</p>
-</div>
-</div>
+<p>For reproducability when using shuffling, you can set the random_state to an integer.</p>
+<p>Note also that, when using shuffling, please make sure to instantiate and transform immediately to the backend you would like. Otherwise, each call to split will instantiate a new object with the same random seed. See examples for a demonstration.</p>
 <p class="rubric">Examples</p>
+<p>If we are not using shuffling, we can simply do:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.estimators</span><span class="w"> </span><span class="kn">import</span> <span class="n">B2B</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ß</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">60</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">ß</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">60</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> <span class="n">X</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">y</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">))),</span> <span class="mi">1</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">b2b</span> <span class="o">=</span> <span class="n">B2B</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">b2b</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">causal_</span>
-<span class="go">tensor([0.4470, 0.4594, 0.0060])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.crossvalidation</span><span class="w"> </span><span class="kn">import</span> <span class="n">KFold</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kf</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">f_i</span><span class="p">,</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">)):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fold</span><span class="si">{</span><span class="n">f_i</span><span class="si">}</span><span class="s1">: train=</span><span class="si">{</span><span class="n">train</span><span class="si">}</span><span class="s1">    test=</span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">Fold0: train=tensor([2, 3, 4, 5, 6, 7, 8, 9])       test=tensor([0, 1])</span>
+<span class="go">Fold1: train=tensor([0, 1, 4, 5, 6, 7, 8, 9])       test=tensor([2, 3])</span>
+<span class="go">Fold2: train=tensor([0, 1, 2, 3, 6, 7, 8, 9])       test=tensor([4, 5])</span>
+<span class="go">Fold3: train=tensor([0, 1, 2, 3, 4, 5, 8, 9])       test=tensor([6, 7])</span>
+<span class="go">Fold4: train=tensor([0, 1, 2, 3, 4, 5, 6, 7])       test=tensor([8, 9])</span>
+</pre></div>
+</div>
+<p>However, let’s assume we want to use shuffling. We might be inclined to do:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.crossvalidation</span><span class="w"> </span><span class="kn">import</span> <span class="n">KFold</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kf</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">shuffle</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Run 1:&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">f_i</span><span class="p">,</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">)):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fold</span><span class="si">{</span><span class="n">f_i</span><span class="si">}</span><span class="s1">: train=</span><span class="si">{</span><span class="n">train</span><span class="si">}</span><span class="s1">    test=</span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Run 2:&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">f_i</span><span class="p">,</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">)):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fold</span><span class="si">{</span><span class="n">f_i</span><span class="si">}</span><span class="s1">: train=</span><span class="si">{</span><span class="n">train</span><span class="si">}</span><span class="s1">    test=</span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">Run 1:</span>
+<span class="go">Fold0: train=tensor([4, 1, 5])      test=tensor([0, 3, 2])</span>
+<span class="go">Fold1: train=tensor([0, 3, 2])      test=tensor([4, 1, 5])</span>
+<span class="go">Run 2:</span>
+<span class="go">Fold0: train=tensor([4, 1, 5])      test=tensor([0, 3, 2])</span>
+<span class="go">Fold1: train=tensor([0, 3, 2])      test=tensor([4, 1, 5])</span>
+</pre></div>
+</div>
+<p>Note that here we pass random_state to make this reproducible on your end. As you can see, the randomisation is now static across runs. This occurs because, up until the call to split the data, MVPy cannot consistently infer the desired data type. Therefore, the backend class is instantiated only upon calling split where types become explicit. However, this means that each call to split will re-instantiate the class. We can easily work around this in two ways:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.crossvalidation</span><span class="w"> </span><span class="kn">import</span> <span class="n">KFold</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kf</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">shuffle</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span><span class="o">.</span><span class="n">to_torch</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Run 1:&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">f_i</span><span class="p">,</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">)):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fold</span><span class="si">{</span><span class="n">f_i</span><span class="si">}</span><span class="s1">: train=</span><span class="si">{</span><span class="n">train</span><span class="si">}</span><span class="s1">    test=</span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Run 2:&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">f_i</span><span class="p">,</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">)):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fold</span><span class="si">{</span><span class="n">f_i</span><span class="si">}</span><span class="s1">: train=</span><span class="si">{</span><span class="n">train</span><span class="si">}</span><span class="s1">    test=</span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">Run 1:</span>
+<span class="go">Fold0: train=tensor([4, 1, 5])      test=tensor([0, 3, 2])</span>
+<span class="go">Fold1: train=tensor([0, 3, 2])      test=tensor([4, 1, 5])</span>
+<span class="go">Run 2:</span>
+<span class="go">Fold0: train=tensor([4, 0, 3])      test=tensor([5, 1, 2])</span>
+<span class="go">Fold1: train=tensor([5, 1, 2])      test=tensor([4, 0, 3])</span>
+</pre></div>
+</div>
+<p>Here, we explicitly instantiate a torch operator that is not reinstantiated across runs, which works perfectly. We could, however, also use an external generator to achieve the same result:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mvpy.crossvalidation</span><span class="w"> </span><span class="kn">import</span> <span class="n">KFold</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rng</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Generator</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rng</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kf</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">shuffle</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="n">rng</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Run 1:&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">f_i</span><span class="p">,</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">)):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fold</span><span class="si">{</span><span class="n">f_i</span><span class="si">}</span><span class="s1">: train=</span><span class="si">{</span><span class="n">train</span><span class="si">}</span><span class="s1">    test=</span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Run 2:&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">f_i</span><span class="p">,</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">)):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fold</span><span class="si">{</span><span class="n">f_i</span><span class="si">}</span><span class="s1">: train=</span><span class="si">{</span><span class="n">train</span><span class="si">}</span><span class="s1">    test=</span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">Run 1:</span>
+<span class="go">Fold0: train=tensor([4, 1, 5])      test=tensor([0, 3, 2])</span>
+<span class="go">Fold1: train=tensor([0, 3, 2])      test=tensor([4, 1, 5])</span>
+<span class="go">Run 2:</span>
+<span class="go">Fold0: train=tensor([4, 0, 3])      test=tensor([5, 1, 2])</span>
+<span class="go">Fold1: train=tensor([5, 1, 2])      test=tensor([4, 0, 3])</span>
 </pre></div>
 </div>
 <dl class="py method">
-<dt class="sig sig-object py" id="mvpy.estimators.B2B.clone">
-<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../../source/mvpy.estimators.html#mvpy.estimators.b2b.B2B" title="mvpy.estimators.b2b.B2B"><span class="pre">B2B</span></a></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/fba9cbb/mvpy/estimators/b2b.py#L507"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.B2B.clone" title="Link to this definition">#</a></dt>
-<dd><p>Clone this class.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>b2b</strong><span class="classifier">mvpy.estimators.B2B</span></dt><dd><p>The cloned estimator.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mvpy.estimators.B2B.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../../source/mvpy.estimators.html#mvpy.estimators.b2b.B2B" title="mvpy.estimators.b2b.B2B"><span class="pre">B2B</span></a></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/fba9cbb/mvpy/estimators/b2b.py#L473"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.B2B.fit" title="Link to this definition">#</a></dt>
-<dd><p>Fit the estimator.</p>
+<dt class="sig sig-object py" id="mvpy.crossvalidation.LeaveGroupsOut.split">
+<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/fba9cbb/mvpy/crossvalidation/lgo.py#L176"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.crossvalidation.LeaveGroupsOut.split" title="Link to this definition">#</a></dt>
+<dd><p>Split the dataset into iterable (train, test).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The neural data of shape <code class="docutils literal notranslate"><span class="pre">(n_trials,</span> <span class="pre">n_channels)</span></code>.</p>
+<dt><strong>X</strong><span class="classifier">Union[np.ndarray, torch.Tensor]</span></dt><dd><p>Input data of shape (n_samples, …)</p>
 </dd>
-<dt><strong>y</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The targets of shape <code class="docutils literal notranslate"><span class="pre">(n_trials,</span> <span class="pre">n_features)</span></code>.</p>
+<dt><strong>y</strong><span class="classifier">np.ndarray | torch.Tensor | None, default=None</span></dt><dd><p>Target data of shape (n_samples, …). Unused, but parameter available for consistency.</p>
+</dd>
+<dt><strong>groups</strong><span class="classifier">np.ndarray | torch.Tensor | None, default=None</span></dt><dd><p>Group labels of data. Labels are of shape (n_samples, …, n_labels). One sample may have multiple labels.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>b2b</strong><span class="classifier">mvpy.estimators.B2B</span></dt><dd><p>The fitted estimator.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mvpy.estimators.B2B.predict">
-<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/fba9cbb/mvpy/estimators/b2b.py#L491"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.B2B.predict" title="Link to this definition">#</a></dt>
-<dd><p>Predict from the estimator.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The neural data of shape <code class="docutils literal notranslate"><span class="pre">(n_trials,</span> <span class="pre">n_channels)</span></code>.</p>
-</dd>
-</dl>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><dl class="simple">
-<dt><strong>y_h</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The predictions of shape <code class="docutils literal notranslate"><span class="pre">(n_trials,</span> <span class="pre">n_features)</span></code>.</p>
+<dt><strong>kf</strong><span class="classifier">Union[collections.abc.Generator[tuple[np.ndarray, np.ndarray], None, None], collections.abc.Generator[tuple[torch.Tensor, torch.Tensor], None, None]]</span></dt><dd><p>Iterable generator of (train, test) pairs.</p>
 </dd>
 </dl>
 </dd>
@@ -702,20 +696,20 @@ correlations.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../../api/mvpy.estimators.html"
+       href="mvpy.crossvalidation.KFold.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">mvpy.estimators</p>
+        <p class="prev-next-title">KFold</p>
       </div>
     </a>
     <a class="right-next"
-       href="mvpy.estimators.Classifier.html"
+       href="mvpy.crossvalidation.RepeatedKFold.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Classifier</p>
+        <p class="prev-next-title">RepeatedKFold</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -739,10 +733,8 @@ correlations.</p>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     
 <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.B2B"><code class="docutils literal notranslate"><span class="pre">B2B</span></code></a><ul class="nav section-nav flex-column visible">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.B2B.clone"><code class="docutils literal notranslate"><span class="pre">clone()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.B2B.fit"><code class="docutils literal notranslate"><span class="pre">fit()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.estimators.B2B.predict"><code class="docutils literal notranslate"><span class="pre">predict()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.crossvalidation.LeaveGroupsOut"><code class="docutils literal notranslate"><span class="pre">LeaveGroupsOut</span></code></a><ul class="nav section-nav flex-column visible">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mvpy.crossvalidation.LeaveGroupsOut.split"><code class="docutils literal notranslate"><span class="pre">split()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -754,7 +746,7 @@ correlations.</p>
   <div class="sidebar-secondary-item">
 
   <div class="tocsection sourcelink">
-    <a href="../../_sources/modules/generated/mvpy.estimators.B2B.rst.txt">
+    <a href="../../_sources/modules/generated/mvpy.crossvalidation.LeaveGroupsOut.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

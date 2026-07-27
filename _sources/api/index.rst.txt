@@ -91,6 +91,22 @@ This is the class and function reference of MVPy. Please also refer to the
 
 
 
+  * - :obj:`~mvpy.crossvalidation.LeaveGroupsOut`
+
+    - .. div:: sk-apisearch-desc
+
+        .. currentmodule:: mvpy.crossvalidation
+
+        .. autoshortsummary:: mvpy.crossvalidation.LeaveGroupsOut
+
+        .. div:: caption
+
+          :mod:`mvpy.crossvalidation`
+
+
+
+
+
   * - :obj:`~mvpy.crossvalidation.RepeatedKFold`
 
     - .. div:: sk-apisearch-desc

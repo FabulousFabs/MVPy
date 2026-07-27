@@ -1,0 +1,13 @@
+﻿LeaveGroupsOut
+==============
+
+.. currentmodule:: mvpy.crossvalidation
+
+.. autoclass:: LeaveGroupsOut
+   :members:
+   :special-members: __call__
+   :inherited-members:
+
+.. minigallery:: mvpy.crossvalidation.LeaveGroupsOut mvpy.crossvalidation.LeaveGroupsOut.__delattr__ mvpy.crossvalidation.LeaveGroupsOut.__dir__ mvpy.crossvalidation.LeaveGroupsOut.__eq__ mvpy.crossvalidation.LeaveGroupsOut.__format__ mvpy.crossvalidation.LeaveGroupsOut.__ge__ mvpy.crossvalidation.LeaveGroupsOut.__getattribute__ mvpy.crossvalidation.LeaveGroupsOut.__gt__ mvpy.crossvalidation.LeaveGroupsOut.__hash__ mvpy.crossvalidation.LeaveGroupsOut.__init__ mvpy.crossvalidation.LeaveGroupsOut.__init_subclass__ mvpy.crossvalidation.LeaveGroupsOut.__le__ mvpy.crossvalidation.LeaveGroupsOut.__lt__ mvpy.crossvalidation.LeaveGroupsOut.__ne__ mvpy.crossvalidation.LeaveGroupsOut.__new__ mvpy.crossvalidation.LeaveGroupsOut.__reduce__ mvpy.crossvalidation.LeaveGroupsOut.__reduce_ex__ mvpy.crossvalidation.LeaveGroupsOut.__repr__ mvpy.crossvalidation.LeaveGroupsOut.__setattr__ mvpy.crossvalidation.LeaveGroupsOut.__sizeof__ mvpy.crossvalidation.LeaveGroupsOut.__str__ mvpy.crossvalidation.LeaveGroupsOut.__subclasshook__ mvpy.crossvalidation.LeaveGroupsOut.split 
+   :add-heading: Gallery examples
+   :heading-level: -
