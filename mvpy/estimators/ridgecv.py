@@ -6,15 +6,14 @@ import numpy as np
 import torch
 import sklearn
 
-from typing import Union, Any
+from typing import Union, Dict, Tuple, Optional, Any
 
 from sklearn.linear_model import RidgeCV as _RidgeCV_numpy
 
 from .. import metrics
-from typing import Dict, Tuple, Optional
 
 class _RidgeCV_torch(sklearn.base.BaseEstimator):
-    """Implements RidgeCV using torch as our backend. This class owes greatly to J.R. King's RidgeCV implementation[3]_.
+    """Implements RidgeCV using torch as our backend.
     
     Attributes
     ----------
@@ -26,10 +25,6 @@ class _RidgeCV_torch(sklearn.base.BaseEstimator):
         The coefficients.
     metric_ : mvpy.metrics.r2
         The default metric to use.
-    
-    References
-    ----------
-    .. [3] King, J.R. (2020). torch_ridge. https://github.com/kingjr/torch_ridge
     """
     
     def __init__(self, alphas: Union[torch.Tensor, list, float, int] = 1, fit_intercept: bool = True, normalise: bool = True, alpha_per_target: bool = False):
@@ -98,6 +93,7 @@ class _RidgeCV_torch(sklearn.base.BaseEstimator):
             # same for scale, if required
             if self.normalise:
                 X_scale = torch.sqrt((X**2).sum(0))
+                X_scale.masked_fill_(X_scale == 0, 1.0) # avoid NaNs
                 X /= X_scale
             else:
                 X_scale = torch.ones(X.shape[1], dtype = X.dtype, device = X.device)
@@ -119,14 +115,17 @@ class _RidgeCV_torch(sklearn.base.BaseEstimator):
         Parameters
         ----------
         X : torch.Tensor
-            The features.
+            Input data of shape ``(n_samples, n_features)``.
         y : torch.Tensor
-            The targets.
+            Output data of shape ``(n_samples[, n_targets])``.
         """
         
         # check shapes
         if X.shape[0] != y.shape[0]:
-            raise ValueError(f'`X` and `y` must have the same number of samples, but got {X.shape[0]} and {y.shape[0]}')
+            raise ValueError(
+                f'`X` and `y` must have the same number of samples, ' + 
+                f'but got {X.shape[0]} and {y.shape[0]}'
+            )
 
         # check y shape
         if len(y.shape) == 1:
@@ -141,47 +140,119 @@ class _RidgeCV_torch(sklearn.base.BaseEstimator):
         X, y, X_offset, X_scale, y_offset = self._preprocess(X, y)
         self.alphas = self.alphas.to(X.dtype).to(X.device)
         
-        # decomposition
-        U, S, _ = torch.linalg.svd(X, full_matrices = False)
-        v = S ** 2
-        Uy = U.transpose(0, 1) @ y
+        n_alphas = self.alphas.numel()
+        n_targets = y.shape[-1]
         
-        # perform LOO per alpha
-        cv_duals = torch.zeros((self.alphas.shape[0], n, n_y), dtype = X.dtype, device = X.device)
-        cv_errors = torch.zeros_like(cv_duals, dtype = X.dtype, device = X.device)
-        
-        for a_i, alpha in enumerate(self.alphas):
-            # solve for duals
-            w = ((v + alpha) ** - 1) - alpha ** -1
-            cv_duals[a_i] = U @ torch.diag(w) @ Uy + alpha ** -1 * y
+        # disable gradients and check optimal decomposition structure
+        with torch.no_grad():
+            if n <= n_x:
+                # for samples < features, use gram matrix formulation
+                gram = X @ X.mT
+                eigenvalues, Q = torch.linalg.eigh(gram)
+                
+                # avoid floating point artifacts
+                eigenvalues.clamp_min_(0.0)
+                
+                Qty = Q.mT @ y
+                Q2 = Q.square()
+                
+                # @TODO: Consider batching operations here
+                # We are looking to implement that anyway. #7
+                inverse = (
+                    eigenvalues[None,:] + self.alphas[:,None]
+                ).reciprocal() # (a, n)
+                
+                duals = torch.matmul(
+                    Q, inverse[:,:,None] * Qty[None,:,:]
+                ) # (a, n, t)
+                
+                diagonal = (Q2 @ inverse.mT).mT
+                
+                duals.div_(diagonal[:,:,None])
+                losses = duals.square().mean(1)
             
-            # compute errors
-            G = ((w * U**2).sum(-1) + alpha ** -1)[:,None]
-            cv_errors[a_i] = cv_duals[a_i] / G
-        
-        # if required, find alpha per feature
-        if self.alpha_per_target:
-            best = (cv_errors**2).mean(1).argmin(0)
+                # check alphas per target
+                if self.alpha_per_target:
+                    best = losses.argmin(0)
+                    selected_alphas = self.alphas[best]
+                    
+                    inverse = (
+                        eigenvalues[:,None] + selected_alphas[None,:]
+                    ).reciprocal()
+                    
+                    duals = Q @ (inverse * Qty)
+                else:
+                    best = losses.mean(1).argmin()
+                    selected_alphas = self.alphas[best]
+                    
+                    inverse = (eigenvalues + selected_alphas).reciprocal()
+                    duals = Q @ (inverse[:,None] * Qty)
+                
+                # set coefficients
+                coefs = duals.mT @ X
+            else:
+                # if samples > features, use primal formulation
+                covariance = X.mT @ X
+                eigenvalues, V = torch.linalg.eigh(covariance)
+                
+                # avoid floating point artifacts
+                eigenvalues.clamp_min_(0.0)
+                
+                # avoid reconstructing dense inverse matrices
+                Z = X @ V
+                Zy = Z.mT @ y
+                Z2 = Z.square()
+                
+                # @TODO: Consider batching operations here.
+                # We are looking to implement that anyway. #7
+                inverse = (
+                    eigenvalues[None,:] + self.alphas[:,None]
+                ).reciprocal()
+                
+                # fitted values
+                predictions = torch.matmul(
+                    Z,
+                    inverse[:,:,None] * Zy[None,:,:]
+                ) # (a, n, t)
+                
+                denominator = 1.0 - (Z2 @ inverse.mT).mT
+                
+                # compute loo residuals in place
+                predictions.neg_()
+                predictions.add_(y[None,:,:])
+                predictions.div_(denominator[:,:,None])
+                
+                losses = predictions.square().mean(1)
             
-            duals = torch.zeros((n, n_y), dtype = X.dtype, device = X.device)
-            errors = torch.zeros_like(duals, dtype = X.dtype, device = X.device)
+                # check alphas per target
+                if self.alpha_per_target:
+                    best = losses.argmin(0)
+                    selected_alphas = self.alphas[best]
+                    
+                    inverse = (
+                        eigenvalues[:,None] + selected_alphas[None,:]
+                    ).reciprocal()
+                    
+                    beta = V @ (inverse * Zy)
+                else:
+                    best = losses.mean(1).argmin()
+                    selected_alphas = self.alphas[best]
+                    
+                    inverse = (eigenvalues + selected_alphas).reciprocal()
+                    beta = V @ (inverse[:,None] * Zy)
+                
+                # set coefficients
+                coefs = beta.mT
             
-            for a_i, best_a in enumerate(best):
-                duals[:,a_i] = cv_duals[best_a,:,a_i]
-                errors[:,a_i] = cv_errors[best_a,:,a_i]
-        else:
-            best = (cv_errors.reshape(len(self.alphas), -1)**2).mean(1).argmin(0)
-            duals = cv_duals[best]
-            errors = cv_errors[best]
+        # set alphas and coefs
+        self.coef_ = coefs
+        self.alpha_ = selected_alphas
         
-        # set alpha and coef
-        self.alpha_ = self.alphas[best]
-        self.coef_ = duals.transpose(0, 1) @ X
-        
-        # find intercept
+        # rescale coefficients and find intercept
         if self.fit_intercept:
             self.coef_ = self.coef_ / X_scale[None,:]
-            Xoff_coef = X_offset[None,:] @ self.coef_.transpose(1, 0)
+            
+            Xoff_coef = X_offset[None,:] @ self.coef_.mT
             self.intercept_ = y_offset - Xoff_coef
         else:
             self.intercept_ = 0.0
@@ -194,19 +265,19 @@ class _RidgeCV_torch(sklearn.base.BaseEstimator):
         Parameters
         ----------
         X : torch.Tensor
-            The features.
+            Input data of shape ``(n_samples, n_channels)``.
         
         Returns
         -------
         y : torch.Tensor
-            The predictions.
+            Output data of shape ``(n_samples, n_features)``.
         """
         
         # make sure model has been fit
         if (self.coef_ is None) | (self.intercept_ is None):
             raise ValueError('Model has not been fit yet.')
 
-        return X @ self.coef_.transpose(1, 0) + self.intercept_
+        return X @ self.coef_.mT + self.intercept_
     
     def score(self, X: torch.Tensor, y: torch.Tensor, metric: Optional[Union[metrics.Metric, Tuple[metrics.Metric]]] = None) -> Union[torch.Tensor, Dict[str, torch.Tensor]]:
         """Make predictions from :math:`X` and score against :math:`y`.
@@ -247,10 +318,12 @@ class _RidgeCV_torch(sklearn.base.BaseEstimator):
             A clone of this class.
         """
         
-        return _RidgeCV_torch(alphas = self.alphas, 
-                              fit_intercept = self.fit_intercept, 
-                              normalise = self.normalise, 
-                              alpha_per_target = self.alpha_per_target)
+        return _RidgeCV_torch(
+            alphas = self.alphas, 
+            fit_intercept = self.fit_intercept, 
+            normalise = self.normalise, 
+            alpha_per_target = self.alpha_per_target
+        )
 
 class RidgeCV(sklearn.base.BaseEstimator):
     """Implements ridge regression with cross-validation.
@@ -282,8 +355,10 @@ class RidgeCV(sklearn.base.BaseEstimator):
     minimises the mean-squared loss. This is convenient because it is much
     faster than performing inner cross-validation to fine-tune penalties.
     
-    For more information on ridge regression, see [1]_. This implementation
-    follows [2]_.
+    For more information on ridge regression, see [1]_. Note that this implementation 
+    will automatically chose either the gram matrix formulation of the problem if 
+    ``n_samples`` is smaller than ``n_features`` or primal formulation otherwise for 
+    optimal speed.
     
     Parameters
     ----------
@@ -309,13 +384,12 @@ class RidgeCV(sklearn.base.BaseEstimator):
     
     Notes
     -----
-    If data are supplied as numpy, this class will fall back to :py:class:`sklearn.linear_model.RidgeCV`. See [3]_.
+    If data are supplied as numpy, this class will fall back to :py:class:`sklearn.linear_model.RidgeCV`. See [2]_.
     
     References
     ----------
     .. [1] McDonald, G.C. (2009). Ridge regression. Wiley Interdisciplinary Reviews: Computational Statistics, 1, 93-100. doi.org/10.1002/wics.14
-    .. [2] King, J.R. (2020). torch_ridge. https://github.com/kingjr/torch_ridge
-    .. [3] Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., ... & Vanderplas, J. (2011). Scikit-learn: Machine learning in Python. Journal of Machine Learning Research, 12, 2825-2830.
+    .. [2] Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., ... & Vanderplas, J. (2011). Scikit-learn: Machine learning in Python. Journal of Machine Learning Research, 12, 2825-2830.
     
     Examples
     --------
@@ -352,11 +426,23 @@ class RidgeCV(sklearn.base.BaseEstimator):
         
         # check model type
         if isinstance(alphas, torch.Tensor):
-            return _RidgeCV_torch(alphas = alphas, fit_intercept = fit_intercept, normalise = normalise, alpha_per_target = alpha_per_target)
+            return _RidgeCV_torch(
+                alphas = alphas, 
+                fit_intercept = fit_intercept, 
+                normalise = normalise, 
+                alpha_per_target = alpha_per_target
+            )
         elif isinstance(alphas, np.ndarray):
-            return _RidgeCV_numpy(alphas = alphas, fit_intercept = fit_intercept, alpha_per_target = alpha_per_target)
+            return _RidgeCV_numpy(
+                alphas = alphas, 
+                fit_intercept = fit_intercept, 
+                alpha_per_target = alpha_per_target
+            )
         
-        raise ValueError(f'Alphas should be of type np.ndarray or torch.tensor, but got {type(alphas)}.')
+        raise ValueError(
+            f'Alphas should be of type np.ndarray or torch.tensor, ' + 
+            f'but got {type(alphas)}.'
+        )
     
     def fit(self, X: Union[np.ndarray, torch.Tensor], y: Union[np.ndarray, torch.Tensor]) -> "RidgeCV":
         """Fit the estimator.
