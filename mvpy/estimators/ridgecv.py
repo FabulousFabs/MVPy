@@ -129,7 +129,7 @@ class _RidgeCV_torch(sklearn.base.BaseEstimator):
         
         # disable gradients and check optimal decomposition structure
         with torch.no_grad():
-            ones = torch.ones(n, dtype=X.dtype, device=X.device)
+            ones = torch.ones(n, dtype = X.dtype, device = X.device)
             normalized_ones = ones / torch.linalg.vector_norm(ones)
 
             if n <= n_x:
@@ -199,96 +199,92 @@ class _RidgeCV_torch(sklearn.base.BaseEstimator):
                         # remove intercept direction
                         inverse[intercept_dim] = 0.0
 
-                    duals = Q @ (inverse[:, None] * Qty)
+                    duals = Q @ (inverse[:,None] * Qty)
 
                 # prepare coefficients
                 coefs = duals.mT @ X
             else:
                 # otherwise, use SVD approach
-                if self.fit_intercept:
-                    # add intercept to matrix
-                    X_decomp = torch.cat(
-                        (X, ones[:, None]),
-                        dim=1,
-                    )
-                else:
-                    X_decomp = X
-
-                # decomposition
-                U, singular_values, _ = torch.linalg.svd(
-                    X_decomp, full_matrices = False,
+                U, singular_values, Vh = torch.linalg.svd(
+                    X, full_matrices = False
                 )
-
+                
                 singular_values_sq = singular_values.square()
                 Uy = U.mT @ y
                 U2 = U.square()
-
-                if self.fit_intercept:
-                    alignment = torch.abs(U.mT @ normalized_ones)
-                    intercept_dim = alignment.argmax()
-
-                alpha_inv = self.alphas.reciprocal()
-
-                weights = (
-                    singular_values_sq[None,:]
-                    + self.alphas[:,None]
-                ).reciprocal() - alpha_inv[:,None] # (n_alphas, rank)
-
-                if self.fit_intercept:
-                    # cancel regularisation for intercept dimension
-                    weights[:, intercept_dim] = -alpha_inv
-
-                duals = torch.matmul(
+                
+                # compute LOO errors
+                # NOTE: We are now doing this using alpha-scaled quantities to avoid
+                # having to compute inverses that cause numerical issues for low alphas.
+                M = (
+                    self.alphas[:,None]
+                    / (singular_values_sq[None,:] + self.alphas[:,None])
+                    - 1.0
+                ) # (n_alphas, n_components)
+                
+                # compute scaled duals
+                alpha_duals = torch.matmul(
                     U,
-                    weights[:,:,None] * Uy[None,:,:],
-                )
-                duals.add_(alpha_inv[:,None,None] * y[None,:,:])
-
-                diagonal = (U2 @ weights.mT).mT
-                diagonal.add_(alpha_inv[:,None])
-
-                loo_errors = duals / diagonal[:,:,None]
+                    M[:,:,None] * Uy[None,:,:]
+                ) # (n_alphas, n_samples, n_targets)
+                
+                alpha_duals.add_(y[None,:,:])
+                
+                # alpha diagonal of inverse
+                alpha_diagonal = (U2 @ M.mT).mT
+                alpha_diagonal.add_(1.0)
+                
+                if self.fit_intercept:
+                    # account for unregularised intercept
+                    Utones = U.mT @ ones
+                    
+                    alpha_Ginv_ones = torch.matmul(
+                        U,
+                        (M * Utones[None,:]).mT
+                    ).mT # (n_alphas, n_samples)
+                    
+                    alpha_Ginv_ones.add_(ones[None,:])
+                    
+                    alpha_diagonal.sub_(alpha_Ginv_ones / n)
+                
+                # compute LOO residuals
+                loo_errors = alpha_duals / alpha_diagonal[:,:,None]
                 losses = loo_errors.square().mean(1)
-
+                
+                # select alpha
                 if self.alpha_per_target:
                     # select best alpha per target
                     best = losses.argmin(0)
                     selected_alphas = self.alphas[best]
-
-                    selected_inv = selected_alphas.reciprocal()
-
-                    weights = (
-                        singular_values_sq[:,None]
-                        + selected_alphas[None,:]
-                    ).reciprocal() - selected_inv[None,:]
-
-                    if self.fit_intercept:
-                        # cancel regularisation for intercept
-                        weights[intercept_dim,:] = -selected_inv
-
-                    duals = U @ (weights * Uy)
-                    duals.add_(y * selected_inv[None,:])
+                    
+                    # direct ridge solution for betas
+                    ridge_factors = (
+                        singular_values[:,None]
+                        / (
+                            singular_values_sq[:,None]
+                            + selected_alphas[None,:]
+                        )
+                    ) # (n_components, n_targets)
+                    
+                    coefs = (
+                        Vh.mT
+                        @ (ridge_factors * Uy)
+                    ).mT
                 else:
                     # select best alpha overall
                     best = losses.mean(1).argmin()
                     selected_alphas = self.alphas[best]
-
-                    selected_inv = selected_alphas.reciprocal()
-
-                    weights = (
-                        singular_values_sq + selected_alphas
-                    ).reciprocal() - selected_inv
-
-                    if self.fit_intercept:
-                        # cancel intercept regularisation
-                        weights[intercept_dim] = -selected_inv
-
-                    duals = U @ (weights[:,None] * Uy)
-                    duals.add_(y, alpha=selected_inv)
-
-                # prepare coefficients
-                coefs = duals.mT @ X
-            
+                    
+                    ridge_factors = (
+                        singular_values
+                        / (singular_values_sq + selected_alphas)
+                    ) # (n_components,)
+                    
+                    coefs = (
+                        Vh.mT
+                        @ (ridge_factors[:,None] * Uy)
+                    ).mT
+        
         # set alphas and coefs
         self.coef_ = coefs
         self.alpha_ = selected_alphas
