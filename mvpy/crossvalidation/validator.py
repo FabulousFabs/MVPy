@@ -102,7 +102,7 @@ def fit_model_(model: Union[sklearn.base.BaseEstimator, Pipeline], train: Union[
         score_i = model.score(*score_args)
     
     # check metric
-    if metric is not None and isinstance(metric, Tuple):
+    if metric is not None and isinstance(metric, Tuple) and len(metric) > 1:
         # setup
         score_ = {}
         
