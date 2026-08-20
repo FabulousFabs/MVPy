@@ -27,8 +27,8 @@ class LeaveGroupsOut:
     lead to leakage because of the dyadic relationship present in each sample :math:`A_{i,j}`. Consequently, we 
     must treat participants as grouping variables such that train and test sets are constructed over participants 
     rather than samples. In this case, we would construct :math:`G\\in\\mathcal{R}^{n\\times n\\times 2}` where 
-    :math:`G_{i,j} = \\left(i, j\\right)`to ensure that we train on a subset of 
-    participants and test on a separate subset of participants.
+    :math:`G_{i,j} = (i, j)` to ensure that we train on a subset of participants and test on a 
+    separate subset of participants.
     
     .. warning::
         If multiple labels per sample are present in :py:class:`~mvpy.crossvalidation.LeaveGroupsOut`'s ``group`` 
@@ -102,7 +102,7 @@ class LeaveGroupsOut:
             String representation describing the class.
         """
         
-        return f'LeaveGroupsOut(n_splits={self.n_splits}, random_state={self.random_state}, shuffle={self.shuffle})'
+        return f'LeaveGroupsOut(n_splits={self.n_splits}, random_state={self.random_state})'
     
     def split(self, X: Union[np.ndarray, torch.Tensor], y: Optional[Union[np.ndarray, torch.Tensor]] = None, groups: Optional[Union[np.ndarray, torch.Tensor]] = None) -> Union[Generator[tuple[np.ndarray, np.ndarray], None, None], Generator[tuple[torch.Tensor, torch.Tensor], None, None]]:
         """Split the dataset into iterable (train, test).
@@ -147,58 +147,62 @@ class LeaveGroupsOut:
             )
         
         if is_torch:
-            # obtain unique groups
-            unq_groups = torch.unique(groups)
+            # encode group labels as integer
+            unq_groups, group_ids = torch.unique(
+                groups,
+                return_inverse = True
+            )
             
-            n_dims = len(groups.shape)
-            dims = torch.arange(n_dims)
-            if n_dims > 1:
-                dims = dims[1:]
+            # always represent labels as (n_samples, n_labels)
+            group_ids = group_ids.reshape(groups.shape[0], -1)
             
-            # obtain splits over groups
-            for i, (train, test) in enumerate(self.rkf_.split(unq_groups[:,None])):
-                # grab labels
-                train_i = unq_groups[train]
-                test_i = unq_groups[test]
+            # obtain splits over unique groups
+            for train, test in self.rkf_.split(unq_groups[:,None]):
+                # setup test fold groups
+                is_test_group = torch.zeros(
+                    len(unq_groups),
+                    dtype = torch.bool,
+                    device = groups.device
+                )
+                is_test_group[test] = True
                 
-                # find labels
-                train_j = torch.isin(groups, train_i)
-                test_j = torch.isin(groups, test_i)
+                # compute memberships
+                test_membership = is_test_group[group_ids]
                 
-                if n_dims > 1:
-                    train_j = train_j.all(dim = tuple(dims))
-                    test_j = test_j.all(dim = tuple(dims))
+                train_mask = ~test_membership.any(dim = 1)
+                test_mask = test_membership.all(dim = 1)
                 
-                train_j = torch.where(train_j)[0]
-                test_j = torch.where(test_j)[0]
+                # compute indices
+                train_idx = torch.where(train_mask)[0]
+                test_idx = torch.where(test_mask)[0]
                 
-                # yield final result
-                yield (train_j, test_j)
+                # hand off results
+                yield (train_idx, test_idx)
         else:
-            # obtain unique groups
-            unq_groups = np.unique(groups)
+            # encode group labels as integers
+            unq_groups, group_ids = np.unique(
+                groups,
+                return_inverse = True
+            )
             
-            n_dims = len(groups.shape)
-            dims = np.arange(n_dims)
-            if n_dims > 1:
-                dims = dims[1:]
+            # represent labels as (n_samples, n_labels)
+            group_ids = group_ids.reshape(groups.shape[0], -1)
             
-            # obtain splits over groups
-            for i, (train, test) in enumerate(self.rkf_.split(unq_groups[:,None])):
-                # grab labels
-                train_i = unq_groups[train]
-                test_i = unq_groups[test]
+            # obtain splits over unique groups
+            for train, test in self.rkf_.split(unq_groups[:,None]):
+                # setup test fold groups
+                is_test_group = np.zeros(len(unq_groups), dtype = bool)
+                is_test_group[test] = True
                 
-                # find labels
-                train_j = np.isin(groups, train_i)
-                test_j = np.isin(groups, test_i)
+                # compute memberships
+                test_membership = is_test_group[group_ids]
                 
-                if n_dims > 1:
-                    train_j = train_j.all(axis = tuple(dims))
-                    test_j = test_j.all(axis = tuple(dims))
+                train_mask = ~test_membership.any(axis = 1)
+                test_mask = test_membership.all(axis = 1)
                 
-                train_j = np.where(train_j)[0]
-                test_j = torch.where(test_j)[0]
+                # compute indices
+                train_idx = np.flatnonzero(train_mask)
+                test_idx = np.flatnonzero(test_mask)
                 
-                # yield final result
-                yield (train_j, test_j)
+                # hand off results
+                yield (train_idx, test_idx)
