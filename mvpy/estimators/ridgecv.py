@@ -124,6 +124,19 @@ class _RidgeCV_torch(sklearn.base.BaseEstimator):
         X, y, X_offset, y_offset = self._preprocess(X, y)
         self.alphas = self.alphas.to(X.dtype).to(X.device)
         
+        # guard alphas
+        if not torch.isfinite(self.alphas).all():
+            raise ValueError(
+                f'All alpha values must be finite, ' + 
+                f'but got {self.alphas}.'
+            )
+        
+        if (self.alphas <= 0).any():
+            raise ValueError(
+                f'All alpha values must be strictily positive, ' + 
+                f'but got {self.alphas}.'
+            )
+        
         n_alphas = self.alphas.numel()
         n_targets = y.shape[-1]
         
@@ -215,7 +228,8 @@ class _RidgeCV_torch(sklearn.base.BaseEstimator):
                 
                 # compute LOO errors
                 # NOTE: We are now doing this using alpha-scaled quantities to avoid
-                # having to compute inverses that cause numerical issues for low alphas.
+                # having to compute inverses that cause numerical issues for low alphas
+                # (see #58)
                 M = (
                     self.alphas[:,None]
                     / (singular_values_sq[None,:] + self.alphas[:,None])
