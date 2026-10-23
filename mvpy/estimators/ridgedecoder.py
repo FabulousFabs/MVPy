@@ -20,8 +20,6 @@ class _RidgeDecoder_numpy(sklearn.base.BaseEstimator):
         The penalties to use for estimation.
     fit_intercept : bool, default=True
         Whether to fit an intercept.
-    normalise : bool, default=True
-        Whether to normalise the data.
     alpha_per_target : bool, default=False
         Whether to use a different penalty for each target.
     
@@ -55,11 +53,14 @@ class _RidgeDecoder_numpy(sklearn.base.BaseEstimator):
         # setup opts
         self.alpha = alpha
         self.fit_intercept = True if 'fit_intercept' not in kwargs else kwargs['fit_intercept']
-        self.normalise = True if 'normalise' not in kwargs else kwargs['normalise']
         self.alpha_per_target = True if 'alpha_per_target' not in kwargs else kwargs['alpha_per_target']
         
         # setup estimator
-        self.estimator = RidgeCV(alphas = alpha, fit_intercept = self.fit_intercept, normalise = self.normalise, alpha_per_target = self.alpha_per_target)
+        self.estimator = RidgeCV(
+            alphas = alpha, 
+            fit_intercept = self.fit_intercept, 
+            alpha_per_target = self.alpha_per_target
+        )
         self.pattern_ = None
         self.coef_ = None
         self.intercept_ = None
@@ -195,8 +196,6 @@ class _RidgeDecoder_torch(sklearn.base.BaseEstimator):
         The penalties to use for estimation.
     fit_intercept : bool, default=True
         Whether to fit an intercept.
-    normalise : bool, default=True
-        Whether to normalise the data.
     alpha_per_target : bool, default=False
         Whether to use a different penalty for each target.
     
@@ -230,11 +229,14 @@ class _RidgeDecoder_torch(sklearn.base.BaseEstimator):
         # setup opts
         self.alpha = alpha
         self.fit_intercept = True if 'fit_intercept' not in kwargs else kwargs['fit_intercept']
-        self.normalise = True if 'normalise' not in kwargs else kwargs['normalise']
         self.alpha_per_target = True if 'alpha_per_target' not in kwargs else kwargs['alpha_per_target']
         
         # setup estimator
-        self.estimator = RidgeCV(alphas = alpha, fit_intercept = self.fit_intercept, normalise = self.normalise, alpha_per_target = self.alpha_per_target)
+        self.estimator = RidgeCV(
+            alphas = alpha, 
+            fit_intercept = self.fit_intercept, 
+            alpha_per_target = self.alpha_per_target
+        )
         self.pattern_ = None
         self.coef_ = None
         self.intercept_ = None
@@ -382,8 +384,6 @@ class RidgeDecoder(sklearn.base.BaseEstimator):
         The penalties to use for estimation.
     fit_intercept : bool, default=True
         Whether to fit an intercept.
-    normalise : bool, default=True
-        Whether to normalise the data.
     alpha_per_target : bool, default=False
         Whether to use a different penalty for each target.
     

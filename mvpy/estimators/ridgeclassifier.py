@@ -22,8 +22,6 @@ class _RidgeClassifier_numpy(sklearn.base.BaseEstimator):
         The penalties to use for estimation.
     fit_intercept : bool, default=True
         Whether to fit an intercept.
-    normalise : bool, default=True
-        Whether to normalise the data.
     alpha_per_target : bool, default=False
         Whether to fit individual alphas per target.
     
@@ -33,8 +31,6 @@ class _RidgeClassifier_numpy(sklearn.base.BaseEstimator):
         The penalties to use for estimation.
     fit_intercept : bool, default=True
         Whether to fit an intercept.
-    normalise : bool, default=True
-        Whether to normalise the data.
     alpha_per_target : bool, default=False
         Whether to fit individual alphas per target.
     estimator : _RidgeDecoder_numpy
@@ -51,7 +47,7 @@ class _RidgeClassifier_numpy(sklearn.base.BaseEstimator):
         The default metric to use.
     """
     
-    def __init__(self, alpha: np.ndarray, fit_intercept: bool = True, normalise: bool = True, alpha_per_target: bool = False):
+    def __init__(self, alpha: np.ndarray, fit_intercept: bool = True, alpha_per_target: bool = False):
         """Obtain a ridge classifier.
         
         Parameters
@@ -60,8 +56,6 @@ class _RidgeClassifier_numpy(sklearn.base.BaseEstimator):
             The penalties to use for estimation.
         fit_intercept : bool, default=True
             Whether to fit an intercept.
-        normalise : bool, default=True
-            Whether to normalise the data.
         alpha_per_target : bool, default=False
             Whether to fit individual alphas per target.
         """
@@ -69,14 +63,12 @@ class _RidgeClassifier_numpy(sklearn.base.BaseEstimator):
         # setup opts
         self.alpha = alpha
         self.fit_intercept = fit_intercept
-        self.normalise = normalise
         self.alpha_per_target = alpha_per_target
         
         # setup estimator
         self.estimator = _RidgeDecoder_numpy(
             self.alpha,
             fit_intercept = self.fit_intercept, 
-            normalise = self.normalise, 
             alpha_per_target = self.alpha_per_target
         )
         
@@ -259,7 +251,6 @@ class _RidgeClassifier_numpy(sklearn.base.BaseEstimator):
         return _RidgeClassifier_numpy(
             self.alphas,
             fit_intercept = self.fit_intercept,
-            normalise = self.normalise,
             alpha_per_target = self.alpha_per_target
         )
 
@@ -272,8 +263,6 @@ class _RidgeClassifier_torch(sklearn.base.BaseEstimator):
         The penalties to use for estimation.
     fit_intercept : bool, default=True
         Whether to fit an intercept.
-    normalise : bool, default=True
-        Whether to normalise the data.
     alpha_per_target : bool, default=False
         Whether to fit individual alphas per target.
     
@@ -283,8 +272,6 @@ class _RidgeClassifier_torch(sklearn.base.BaseEstimator):
         The penalties to use for estimation.
     fit_intercept : bool, default=True
         Whether to fit an intercept.
-    normalise : bool, default=True
-        Whether to normalise the data.
     alpha_per_target : bool, default=False
         Whether to fit individual alphas per target.
     estimator : _RidgeDecoder_torch
@@ -301,7 +288,7 @@ class _RidgeClassifier_torch(sklearn.base.BaseEstimator):
         The default metric to use.
     """
     
-    def __init__(self, alpha: torch.Tensor, fit_intercept: bool = True, normalise: bool = True, alpha_per_target: bool = False):
+    def __init__(self, alpha: torch.Tensor, fit_intercept: bool = True, alpha_per_target: bool = False):
         """Obtain a ridge classifier.
         
         Parameters
@@ -310,8 +297,6 @@ class _RidgeClassifier_torch(sklearn.base.BaseEstimator):
             The penalties to use for estimation.
         fit_intercept : bool, default=True
             Whether to fit an intercept.
-        normalise : bool, default=True
-            Whether to normalise the data.
         alpha_per_target : bool, default=False
             Whether to fit individual alphas per target.
         """
@@ -319,14 +304,12 @@ class _RidgeClassifier_torch(sklearn.base.BaseEstimator):
         # setup opts
         self.alpha = alpha
         self.fit_intercept = fit_intercept
-        self.normalise = normalise
         self.alpha_per_target = alpha_per_target
         
         # setup estimator
         self.estimator = _RidgeDecoder_torch(
             self.alpha,
             fit_intercept = self.fit_intercept, 
-            normalise = self.normalise, 
             alpha_per_target = self.alpha_per_target
         )
         
@@ -509,7 +492,6 @@ class _RidgeClassifier_torch(sklearn.base.BaseEstimator):
         return _RidgeClassifier_torch(
             self.alphas,
             fit_intercept = self.fit_intercept,
-            normalise = self.normalise,
             alpha_per_target = self.alpha_per_target
         )
 
@@ -543,8 +525,6 @@ class RidgeClassifier(sklearn.base.BaseEstimator):
         The penalties to use for estimation.
     fit_intercept : bool, default=True
         Whether to fit an intercept.
-    normalise : bool, default=True
-        Whether to normalise the data.
     alpha_per_target : bool, default=False
         Whether to fit individual alphas per target.
     
@@ -554,8 +534,6 @@ class RidgeClassifier(sklearn.base.BaseEstimator):
         The penalties to use for estimation.
     fit_intercept : bool, default=True
         Whether to fit an intercept.
-    normalise : bool, default=True
-        Whether to normalise the data.
     alpha_per_target : bool, default=False
         Whether to fit individual alphas per target.
     estimator : mvpy.estimators.RidgeDecoder
@@ -615,7 +593,7 @@ class RidgeClassifier(sklearn.base.BaseEstimator):
     torch.tensor([0.82, 0.75])
     """
     
-    def __new__(self, alphas: Union[torch.Tensor, np.ndarray, float, int] = 1, method: str = 'OvR', fit_intercept: bool = True, normalise: bool = True, alpha_per_target: bool = False) -> sklearn.base.BaseEstimator:
+    def __new__(self, alphas: Union[torch.Tensor, np.ndarray, float, int] = 1, method: str = 'OvR', fit_intercept: bool = True, alpha_per_target: bool = False) -> sklearn.base.BaseEstimator:
         """Obtain a new ridge classifier.
         
         Parameters
@@ -626,8 +604,6 @@ class RidgeClassifier(sklearn.base.BaseEstimator):
             Should we solve multiclass problems through one-versus-rest (OvR) or one-versus-one (OvO) classifiers?
         fit_intercept : bool, default=True
             Whether to fit an intercept.
-        normalise : bool, default=True
-            Whether to normalise the data.
         alpha_per_target : bool, default=False
             Whether to fit individual alphas per target.
         """
@@ -647,7 +623,6 @@ class RidgeClassifier(sklearn.base.BaseEstimator):
                 arguments = [alphas],
                 kwarguments = dict(
                     fit_intercept = fit_intercept,
-                    normalise = normalise,
                     alpha_per_target = alpha_per_target
                 )
             )
@@ -658,7 +633,6 @@ class RidgeClassifier(sklearn.base.BaseEstimator):
                 arguments = [alphas],
                 kwarguments = dict(
                     fit_intercept = fit_intercept,
-                    normalise = normalise,
                     alpha_per_target = alpha_per_target
                 )
             )
