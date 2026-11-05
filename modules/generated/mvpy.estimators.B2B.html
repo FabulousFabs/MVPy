@@ -31,7 +31,7 @@
 <link href="../../_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=c83e6b79" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
@@ -533,7 +533,7 @@
 <h1>B2B<a class="headerlink" href="#b2b" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="mvpy.estimators.B2B">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.estimators.</span></span><span class="sig-name descname"><span class="pre">B2B</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alphas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/9a5a850/mvpy/estimators/b2b.py#L346"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.B2B" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mvpy.estimators.</span></span><span class="sig-name descname"><span class="pre">B2B</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alphas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/4e39772/mvpy/estimators/b2b.py#L332"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.B2B" title="Link to this definition">#</a></dt>
 <dd><p>Implements a back-to-back regression to disentangle causal contributions of correlated features.</p>
 <p>The back-to-back estimator is a two-step estimator that consists of a decoder and an encoder. 
 Effectively, the idea is to split the data <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(y\)</span> into two folds, decode all 
@@ -556,8 +556,6 @@ estimated causal contributions of our features.</p>
 </dd>
 <dt><strong>fit_intercept</strong><span class="classifier">bool, default=True</span></dt><dd><p>Whether to fit an intercept.</p>
 </dd>
-<dt><strong>normalise</strong><span class="classifier">bool, default=True</span></dt><dd><p>Whether to normalise the data.</p>
-</dd>
 <dt><strong>alpha_per_target</strong><span class="classifier">bool, default=False</span></dt><dd><p>Whether to use a different penalty for each target.</p>
 </dd>
 <dt><strong>normalise_decoder</strong><span class="classifier">bool, default=True</span></dt><dd><p>Whether to normalise decoder ouputs.</p>
@@ -569,8 +567,6 @@ estimated causal contributions of our features.</p>
 <dt><strong>alphas</strong><span class="classifier">torch.Tensor | np.ndarray</span></dt><dd><p>The penalties to use for estimation.</p>
 </dd>
 <dt><strong>fit_intercept</strong><span class="classifier">bool</span></dt><dd><p>Whether to fit an intercept.</p>
-</dd>
-<dt><strong>normalise</strong><span class="classifier">bool</span></dt><dd><p>Whether to normalise the data</p>
 </dd>
 <dt><strong>alpha_per_target</strong><span class="classifier">bool</span></dt><dd><p>Whether to use a different penalty for each target.</p>
 </dd>
@@ -633,7 +629,7 @@ correlations.</p>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="mvpy.estimators.B2B.clone">
-<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../../source/mvpy.estimators.html#mvpy.estimators.b2b.B2B" title="mvpy.estimators.b2b.B2B"><span class="pre">B2B</span></a></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/9a5a850/mvpy/estimators/b2b.py#L507"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.B2B.clone" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../../source/mvpy.estimators.html#mvpy.estimators.b2b.B2B" title="mvpy.estimators.b2b.B2B"><span class="pre">B2B</span></a></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/4e39772/mvpy/estimators/b2b.py#L494"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.B2B.clone" title="Link to this definition">#</a></dt>
 <dd><p>Clone this class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -647,7 +643,7 @@ correlations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mvpy.estimators.B2B.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../../source/mvpy.estimators.html#mvpy.estimators.b2b.B2B" title="mvpy.estimators.b2b.B2B"><span class="pre">B2B</span></a></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/9a5a850/mvpy/estimators/b2b.py#L473"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.B2B.fit" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../../source/mvpy.estimators.html#mvpy.estimators.b2b.B2B" title="mvpy.estimators.b2b.B2B"><span class="pre">B2B</span></a></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/4e39772/mvpy/estimators/b2b.py#L455"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.B2B.fit" title="Link to this definition">#</a></dt>
 <dd><p>Fit the estimator.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -669,9 +665,9 @@ correlations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mvpy.estimators.B2B.predict">
-<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/9a5a850/mvpy/estimators/b2b.py#L491"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.B2B.predict" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span></span></span><a class="reference external" href="https://github.com/FabulousFabs/mvpy/blob/4e39772/mvpy/estimators/b2b.py#L473"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mvpy.estimators.B2B.predict" title="Link to this definition">#</a></dt>
 <dd><p>Predict from the estimator.</p>
-<dl class="field-list simple">
+<dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>X</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The neural data of shape <code class="docutils literal notranslate"><span class="pre">(n_trials,</span> <span class="pre">n_channels)</span></code>.</p>
@@ -680,9 +676,15 @@ correlations.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>y_h</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The predictions of shape <code class="docutils literal notranslate"><span class="pre">(n_trials,</span> <span class="pre">n_features)</span></code>.</p>
+<dt><strong>y_h</strong><span class="classifier">np.ndarray | torch.Tensor</span></dt><dd><p>The predictions from decoder of shape <code class="docutils literal notranslate"><span class="pre">(n_trials,</span> <span class="pre">n_features)</span></code>.</p>
 </dd>
 </dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Outputs from <a class="reference internal" href="#mvpy.estimators.B2B.predict" title="mvpy.estimators.B2B.predict"><code class="xref py py-meth docutils literal notranslate"><span class="pre">predict()</span></code></a> are outputs of the 
+first-stage decoding model. This is because back-to-back regression does 
+not principally have meaningful predictions.</p>
+</div>
 </dd>
 </dl>
 </dd></dl>
