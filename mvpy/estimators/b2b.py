@@ -23,7 +23,7 @@ class _B2B_numpy(sklearn.base.BaseEstimator):
         Whether to fit an intercept.
     alpha_per_target : bool, default=False
         Whether to use a different penalty for each target.
-    normalise_decoder : bool, default=True
+    normalise_decoder : bool, default=False
         Whether to normalise decoder ouputs.
     
     Attributes
@@ -50,7 +50,7 @@ class _B2B_numpy(sklearn.base.BaseEstimator):
         The default metric to use.
     """
     
-    def __init__(self, alphas: np.ndarray = np.array([1]), fit_intercept: bool = True, alpha_per_target: bool = False, normalise_decoder: bool = True):
+    def __init__(self, alphas: np.ndarray = np.array([1]), fit_intercept: bool = True, alpha_per_target: bool = False, normalise_decoder: bool = False):
         """Initialise a new estimator.
         
         Parameters
@@ -61,7 +61,7 @@ class _B2B_numpy(sklearn.base.BaseEstimator):
             Whether to fit an intercept.
         alpha_per_target : bool, default=False
             Whether to use a different penalty for each target.
-        normalise_decoder : bool, default=True
+        normalise_decoder : bool, default=False
             Whether to normalise decoder ouputs.
         """
         
@@ -215,7 +215,7 @@ class _B2B_torch(sklearn.base.BaseEstimator):
         Whether to fit an intercept.
     alpha_per_target : bool, default=False
         Whether to use a different penalty for each target.
-    normalise_decoder : bool, default=True
+    normalise_decoder : bool, default=False
         Whether to normalise decoder ouputs.
     
     Attributes
@@ -242,7 +242,7 @@ class _B2B_torch(sklearn.base.BaseEstimator):
         The default metric to use.
     """
     
-    def __init__(self, alphas: torch.Tensor = torch.tensor([1]), fit_intercept: bool = True, alpha_per_target: bool = False, normalise_decoder: bool = True):
+    def __init__(self, alphas: torch.Tensor = torch.tensor([1]), fit_intercept: bool = True, alpha_per_target: bool = False, normalise_decoder: bool = False):
         """Initialise a new estimator.
         
         Parameters
@@ -253,7 +253,7 @@ class _B2B_torch(sklearn.base.BaseEstimator):
             Whether to fit an intercept.
         alpha_per_target : bool, default=False
             Whether to use a different penalty for each target.
-        normalise_decoder : bool, default=True
+        normalise_decoder : bool, default=False
             Whether to normalise decoder ouputs.
         """
         
