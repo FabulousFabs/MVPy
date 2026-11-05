@@ -20,8 +20,6 @@ class _B2B_numpy(sklearn.base.BaseEstimator):
         The penalties to use for estimation.
     fit_intercept : bool, default=True
         Whether to fit an intercept.
-    normalise : bool, default=True
-        Whether to normalise the data.
     alpha_per_target : bool, default=False
         Whether to use a different penalty for each target.
     normalise_decoder : bool, default=True
@@ -33,8 +31,6 @@ class _B2B_numpy(sklearn.base.BaseEstimator):
         The penalties to use for estimation.
     fit_intercept : bool
         Whether to fit an intercept.
-    normalise : bool
-        Whether to normalise the data
     alpha_per_target : bool
         Whether to use a different penalty for each target.
     normalise_decoder : bool
@@ -51,7 +47,7 @@ class _B2B_numpy(sklearn.base.BaseEstimator):
         The decoded patterns.
     """
     
-    def __init__(self, alphas: np.ndarray = np.array([1]), fit_intercept: bool = True, normalise: bool = True, alpha_per_target: bool = False, normalise_decoder: bool = True):
+    def __init__(self, alphas: np.ndarray = np.array([1]), fit_intercept: bool = True, alpha_per_target: bool = False, normalise_decoder: bool = True):
         """Initialise a new estimator.
         
         Parameters
@@ -60,8 +56,6 @@ class _B2B_numpy(sklearn.base.BaseEstimator):
             The penalties to use for estimation.
         fit_intercept : bool, default=True
             Whether to fit an intercept.
-        normalise : bool, default=True
-            Whether to normalise the data.
         alpha_per_target : bool, default=False
             Whether to use a different penalty for each target.
         normalise_decoder : bool, default=True
@@ -71,7 +65,6 @@ class _B2B_numpy(sklearn.base.BaseEstimator):
         # setup opts
         self.alphas = alphas
         self.fit_intercept = fit_intercept
-        self.normalise = normalise
         self.alpha_per_target = alpha_per_target
         self.normalise_decoder = normalise_decoder
 
@@ -79,14 +72,12 @@ class _B2B_numpy(sklearn.base.BaseEstimator):
         self.decoder_ = _RidgeDecoder_numpy(
             alpha = alphas, 
             fit_intercept = fit_intercept, 
-            normalise = normalise, 
             alpha_per_target = alpha_per_target
         )
         
         self.encoder_ = _RidgeDecoder_numpy(
             alpha = alphas, 
             fit_intercept = fit_intercept, 
-            normalise = normalise, 
             alpha_per_target = alpha_per_target
         )
         
@@ -125,11 +116,14 @@ class _B2B_numpy(sklearn.base.BaseEstimator):
         # fit decoder
         self.decoder_.fit(X[fold_a], y[fold_a])
         
-        # fit scaler
-        self.scaler_.fit(self.decoder_.predict(X[fold_b]))
+        # decode split b
+        b_hat = self.decoder_.predict(X[fold_b])
         
-        # fit encoder
-        self.encoder_.fit(self.scaler_.transform(self.decoder_.predict(X[fold_b])), y[fold_b])
+        self.scaler_.fit(b_hat)
+        b_hat = self.scaler_.transform(b_hat)
+        
+        # explain decoded outputs
+        self.encoder_.fit(y[fold_b], b_hat)
         
         # compute contributions
         self.causal_ = self.encoder_.coef_.diagonal()
@@ -158,7 +152,7 @@ class _B2B_numpy(sklearn.base.BaseEstimator):
             raise ValueError(f'Estimator has not been fit yet.')
         
         # make predictions
-        return self.encoder_.predict(self.scaler_.transform(self.decoder_.predict(X)))
+        return self.decoder_.predict(X)
     
     def clone(self) -> "_B2B_numpy":
         """Obtain a clone of the estimator.
@@ -172,7 +166,6 @@ class _B2B_numpy(sklearn.base.BaseEstimator):
         return _B2B_numpy(
             alphas = self.alphas, 
             fit_intercept = self.fit_intercept, 
-            normalise = self.normalise, 
             alpha_per_target = self.alpha_per_target, 
             normalise_decoder = self.normalise_decoder
         )
@@ -186,8 +179,6 @@ class _B2B_torch(sklearn.base.BaseEstimator):
         The penalties to use for estimation.
     fit_intercept : bool, default=True
         Whether to fit an intercept.
-    normalise : bool, default=True
-        Whether to normalise the data.
     alpha_per_target : bool, default=False
         Whether to use a different penalty for each target.
     normalise_decoder : bool, default=True
@@ -199,8 +190,6 @@ class _B2B_torch(sklearn.base.BaseEstimator):
         The penalties to use for estimation.
     fit_intercept : bool
         Whether to fit an intercept.
-    normalise : bool
-        Whether to normalise the data
     alpha_per_target : bool
         Whether to use a different penalty for each target.
     normalise_decoder : bool
@@ -217,7 +206,7 @@ class _B2B_torch(sklearn.base.BaseEstimator):
         The decoded patterns.
     """
     
-    def __init__(self, alphas: torch.Tensor = torch.tensor([1]), fit_intercept: bool = True, normalise: bool = True, alpha_per_target: bool = False, normalise_decoder: bool = True):
+    def __init__(self, alphas: torch.Tensor = torch.tensor([1]), fit_intercept: bool = True, alpha_per_target: bool = False, normalise_decoder: bool = True):
         """Initialise a new estimator.
         
         Parameters
@@ -226,8 +215,6 @@ class _B2B_torch(sklearn.base.BaseEstimator):
             The penalties to use for estimation.
         fit_intercept : bool, default=True
             Whether to fit an intercept.
-        normalise : bool, default=True
-            Whether to normalise the data.
         alpha_per_target : bool, default=False
             Whether to use a different penalty for each target.
         normalise_decoder : bool, default=True
@@ -237,7 +224,6 @@ class _B2B_torch(sklearn.base.BaseEstimator):
         # setup opts
         self.alphas = alphas
         self.fit_intercept = fit_intercept
-        self.normalise = normalise
         self.alpha_per_target = alpha_per_target
         self.normalise_decoder = normalise_decoder
 
@@ -245,14 +231,12 @@ class _B2B_torch(sklearn.base.BaseEstimator):
         self.decoder_ = _RidgeDecoder_torch(
             alpha = alphas, 
             fit_intercept = fit_intercept, 
-            normalise = normalise, 
             alpha_per_target = alpha_per_target
         )
         
         self.encoder_ = _RidgeDecoder_torch(
             alpha = alphas, 
             fit_intercept = fit_intercept, 
-            normalise = normalise, 
             alpha_per_target = alpha_per_target
         )
         
@@ -291,11 +275,14 @@ class _B2B_torch(sklearn.base.BaseEstimator):
         # fit decoder
         self.decoder_.fit(X[fold_a], y[fold_a])
         
-        # fit scaler
-        self.scaler_.fit(self.decoder_.predict(X[fold_b]))
+        # decode split b
+        b_hat = self.decoder_.predict(X[fold_b])
         
-        # fit encoder
-        self.encoder_.fit(self.scaler_.transform(self.decoder_.predict(X[fold_b])), y[fold_b])
+        self.scaler_.fit(b_hat)
+        b_hat = self.scaler_.transform(b_hat)
+        
+        # explain decoded outputs
+        self.encoder_.fit(y[fold_b], b_hat)
         
         # compute contributions
         self.causal_ = self.encoder_.coef_.diagonal()
@@ -324,7 +311,7 @@ class _B2B_torch(sklearn.base.BaseEstimator):
             raise ValueError(f'Estimator has not been fit yet.')
         
         # make predictions
-        return self.encoder_.predict(self.scaler_.transform(self.decoder_.predict(X)))
+        return self.decoder_.predict(X)
     
     def clone(self) -> "_B2B_torch":
         """Obtain a clone of the estimator.
@@ -338,7 +325,6 @@ class _B2B_torch(sklearn.base.BaseEstimator):
         return _B2B_torch(
             alphas = self.alphas, 
             fit_intercept = self.fit_intercept, 
-            normalise = self.normalise, 
             alpha_per_target = self.alpha_per_target, 
             normalise_decoder = self.normalise_decoder
         )
@@ -373,8 +359,6 @@ class B2B(sklearn.base.BaseEstimator):
         The penalties to use for estimation.
     fit_intercept : bool, default=True
         Whether to fit an intercept.
-    normalise : bool, default=True
-        Whether to normalise the data.
     alpha_per_target : bool, default=False
         Whether to use a different penalty for each target.
     normalise_decoder : bool, default=True
@@ -386,8 +370,6 @@ class B2B(sklearn.base.BaseEstimator):
         The penalties to use for estimation.
     fit_intercept : bool
         Whether to fit an intercept.
-    normalise : bool
-        Whether to normalise the data
     alpha_per_target : bool
         Whether to use a different penalty for each target.
     normalise_decoder : bool
@@ -499,7 +481,12 @@ class B2B(sklearn.base.BaseEstimator):
         Returns
         -------
         y_h : np.ndarray | torch.Tensor
-            The predictions of shape ``(n_trials, n_features)``.
+            The predictions from decoder of shape ``(n_trials, n_features)``.
+        
+        .. warning::
+            Outputs from :py:meth:`~mvpy.estimators.B2B.predict` are outputs of the 
+            first-stage decoding model. This is because back-to-back regression does 
+            not principally have meaningful predictions.
         """
         
         raise NotImplementedError('This method is not implemented in the base class.')
