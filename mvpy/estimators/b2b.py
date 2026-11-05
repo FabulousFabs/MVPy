@@ -8,8 +8,9 @@ import sklearn
 
 from .ridgedecoder import _RidgeDecoder_torch, _RidgeDecoder_numpy
 from ..preprocessing.scaler import _Scaler_torch, _Scaler_numpy
+from .. import metrics
 
-from typing import Union, Any
+from typing import Union, Any, Optional, Tuple, Dict
 
 class _B2B_numpy(sklearn.base.BaseEstimator):
     """Initialise a new estimator using numpy as our backend.
@@ -45,6 +46,8 @@ class _B2B_numpy(sklearn.base.BaseEstimator):
         The causal contribution of each feature.
     pattern_ : np.ndarray
         The decoded patterns.
+    metric_ : mvpy.metrics.r2
+        The default metric to use.
     """
     
     def __init__(self, alphas: np.ndarray = np.array([1]), fit_intercept: bool = True, alpha_per_target: bool = False, normalise_decoder: bool = True):
@@ -88,6 +91,7 @@ class _B2B_numpy(sklearn.base.BaseEstimator):
         
         self.causal_ = None
         self.pattern_ = None
+        self.metric_ = metrics.r2
     
     def fit(self, X: np.ndarray, y: np.ndarray) -> "_B2B_numpy":
         """Fit the back-to-back estimator.
@@ -153,6 +157,36 @@ class _B2B_numpy(sklearn.base.BaseEstimator):
         
         # make predictions
         return self.decoder_.predict(X)
+
+    def score(self, X: np.ndarray, y: np.ndarray, metric: Optional[Union[metrics.Metric, Tuple[metrics.Metric]]] = None) -> Union[np.ndarray, Dict[str, np.ndarray]]:
+        """Make predictions from :math:`X` and score against :math:`y`.
+        
+        Parameters
+        ----------
+        X : np.ndarray
+            Input data of shape ``(n_samples, n_channels)``.
+        y : np.ndarray
+            Output data of shape ``(n_samples, n_features)``.
+        metric : Optional[Metric], default=None
+            Metric or tuple of metrics to compute.  If ``None``, defaults to :py:attr:`~mvpy.estimators.RidgeCV.metric_`.
+        
+        Returns
+        -------
+        score : torch.Tensor | Dict[str, np.ndarray]
+            Scores of shape ``(n_features,)`` or, for multiple metrics, a dictionary of metric names and scores of shape ``(n_features,)``.
+        
+        .. warning::
+            If multiple values are supplied for ``metric``, this function will
+            output a dictionary of ``{Metric.name: score, ...}`` rather than
+            a stacked array. This is to provide consistency across cases where
+            metrics may or may not differ in their output shapes.
+        """
+        
+        # check metric
+        if metric is None:
+            metric = self.metric_
+        
+        return metrics.score(self, metric, X, y)
     
     def clone(self) -> "_B2B_numpy":
         """Obtain a clone of the estimator.
@@ -204,6 +238,8 @@ class _B2B_torch(sklearn.base.BaseEstimator):
         The causal contribution of each feature.
     pattern_ : torch.Tensor
         The decoded patterns.
+    metric_ : mvpy.metrics.r2
+        The default metric to use.
     """
     
     def __init__(self, alphas: torch.Tensor = torch.tensor([1]), fit_intercept: bool = True, alpha_per_target: bool = False, normalise_decoder: bool = True):
@@ -247,6 +283,7 @@ class _B2B_torch(sklearn.base.BaseEstimator):
         
         self.causal_ = None
         self.pattern_ = None
+        self.metric_ = metrics.r2
     
     def fit(self, X: torch.Tensor, y: torch.Tensor) -> "_B2B_torch":
         """Fit the back-to-back estimator.
@@ -312,6 +349,36 @@ class _B2B_torch(sklearn.base.BaseEstimator):
         
         # make predictions
         return self.decoder_.predict(X)
+
+    def score(self, X: torch.Tensor, y: torch.Tensor, metric: Optional[Union[metrics.Metric, Tuple[metrics.Metric]]] = None) -> Union[torch.Tensor, Dict[str, torch.Tensor]]:
+        """Make predictions from :math:`X` and score against :math:`y`.
+        
+        Parameters
+        ----------
+        X : torch.Tensor
+            Input data of shape ``(n_samples, n_channels)``.
+        y : torch.Tensor
+            Output data of shape ``(n_samples, n_features)``.
+        metric : Optional[Metric], default=None
+            Metric or tuple of metrics to compute.  If ``None``, defaults to :py:attr:`~mvpy.estimators.RidgeCV.metric_`.
+        
+        Returns
+        -------
+        score : torch.Tensor | Dict[str, torch.Tensor]
+            Scores of shape ``(n_features,)`` or, for multiple metrics, a dictionary of metric names and scores of shape ``(n_features,)``.
+        
+        .. warning::
+            If multiple values are supplied for ``metric``, this function will
+            output a dictionary of ``{Metric.name: score, ...}`` rather than
+            a stacked array. This is to provide consistency across cases where
+            metrics may or may not differ in their output shapes.
+        """
+        
+        # check metric
+        if metric is None:
+            metric = self.metric_
+        
+        return metrics.score(self, metric, X, y)
     
     def clone(self) -> "_B2B_torch":
         """Obtain a clone of the estimator.
@@ -351,7 +418,7 @@ class B2B(sklearn.base.BaseEstimator):
     are regularisation parameters. Consequently, the diagonal of :math:`\\hat{H}` contains the 
     estimated causal contributions of our features. 
     
-    For more information on B2B regression, please see [1]_.
+    For more information on back-to-back regression, please see [1]_.
     
     Parameters
     ----------
@@ -361,7 +428,7 @@ class B2B(sklearn.base.BaseEstimator):
         Whether to fit an intercept.
     alpha_per_target : bool, default=False
         Whether to use a different penalty for each target.
-    normalise_decoder : bool, default=True
+    normalise_decoder : bool, default=False
         Whether to normalise decoder ouputs.
     
     Attributes
@@ -384,6 +451,8 @@ class B2B(sklearn.base.BaseEstimator):
         The causal contribution of each feature of shape ``(n_features,)``.
     pattern_ : torch.Tensor | np.ndarray
         The decoded patterns of shape ``(n_channels, n_features)``.
+    metric_ : mvpy.metrics.r2
+        The default metric to use.
     
     See also
     --------
@@ -401,6 +470,13 @@ class B2B(sklearn.base.BaseEstimator):
     Patterns are computed as per [2]_. However, these patterns are not disentangled and 
     may, consequently, be less informative than desired, depending on strength of existing
     correlations.
+    
+    .. warning::
+        Back-to-back regression does not naturally lend itself to prediction. 
+        Therefore, :py:meth:`~mvpy.estimators.B2B.predict` and :py:meth:`~mvpy.estimators.B2B.score`
+        use and evaluate the first-stage decoder, not the full back-to-back 
+        regression. Causal coefficients from the encoder are available from 
+        :py:attr:`~mvpy.estimators.B2B.causal_` instead.
     
     References
     ----------
@@ -490,6 +566,41 @@ class B2B(sklearn.base.BaseEstimator):
         """
         
         raise NotImplementedError('This method is not implemented in the base class.')
+    
+    def score(self, X: np.ndarray | torch.Tensor, y: np.ndarray | torch.Tensor, metric: Optional[Union[metrics.Metric, Tuple[metrics.Metric]]] = None) -> Union[torch.Tensor, Dict[str, torch.Tensor | np.ndarray]]:
+        """Make predictions from :math:`X` and score against :math:`y`.
+        
+        Parameters
+        ----------
+        X : torch.Tensor | np.ndarray
+            Input data of shape ``(n_samples, n_channels)``.
+        y : torch.Tensor | np.ndarray
+            Output data of shape ``(n_samples, n_features)``.
+        metric : Optional[Metric], default=None
+            Metric or tuple of metrics to compute.  If ``None``, defaults to :py:attr:`~mvpy.estimators.RidgeCV.metric_`.
+        
+        Returns
+        -------
+        score : torch.Tensor | np.ndarray | Dict[str, torch.Tensor | np.ndarray]
+            Scores of shape ``(n_features,)`` or, for multiple metrics, a dictionary of metric names and scores of shape ``(n_features,)``.
+        
+        .. warning::
+            If multiple values are supplied for ``metric``, this function will
+            output a dictionary of ``{Metric.name: score, ...}`` rather than
+            a stacked array. This is to provide consistency across cases where
+            metrics may or may not differ in their output shapes.
+        
+        .. warning::
+            Calling :py:meth:`~mvpy.estimators.B2B.score` scores the first-stage 
+            decoder, not the full back-to-back regression model. This is because 
+            back-to-back regression has no meaningful predictions.
+        """
+        
+        # check metric
+        if metric is None:
+            metric = self.metric_
+        
+        return metrics.score(self, metric, X, y)
     
     def clone(self) -> "B2B":
         """Clone this class.

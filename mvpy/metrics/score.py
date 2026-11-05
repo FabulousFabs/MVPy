@@ -73,7 +73,7 @@ def score(model: Union[Pipeline, sklearn.base.BaseEstimator], metric: Union[Metr
             # check cache status
             if r not in cache:
                 # check metadata
-                if r in m.metadata:
+                if (m.metadata is not None) and (r in m.metadata):
                     cache[r] = m.metadata[r]
                 # check model attributes
                 elif not hasattr(model, r):

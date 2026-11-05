@@ -5,7 +5,7 @@ Base metric class.
 import torch
 import numpy as np
 
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, replace, field
 from typing import Union, Tuple, Any, Callable, Optional, Dict
 
 @dataclass
@@ -113,7 +113,7 @@ class Metric:
     request: Tuple[str] = ('y', 'predict')
     reduce: Union[int, Tuple[int]] = (0,)
     f: Callable = lambda x: x
-    metadata: Dict[str, float | np.ndarray | torch.Tensor | None] = None
+    metadata: Dict[str, float | np.ndarray | torch.Tensor | None] = field(default_factory = dict)
     
     def __call__(self, *args: Any, **kwargs: Any) -> Union[np.ndarray, torch.Tensor]:
         """Compute the desired metric.
